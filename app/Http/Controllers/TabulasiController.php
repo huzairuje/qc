@@ -29,7 +29,7 @@ class TabulasiController extends Controller
             // Setup the chart settings
             ->title("Penggunaan Surat Suara")
             // A dimension of 0 means it will take 100% of the space
-            ->dimensions(900, 500) // Width x Height
+            ->dimensions(900, 400) // Width x Height
             // This defines a preset of colors already done:)
             ->template("material")
             // You could always set them manually
@@ -43,7 +43,7 @@ class TabulasiController extends Controller
             // Setup the chart settings
             ->title("Jumlah Surat Suara")
             // A dimension of 0 means it will take 100% of the space
-            ->dimensions(900, 500) // Width x Height
+            ->dimensions(800, 400) // Width x Height
             // This defines a preset of colors already done:)
             ->template("material")
             // You could always set them manually
@@ -57,7 +57,7 @@ class TabulasiController extends Controller
             // Setup the chart settings
             ->title("Total Suara Calon")
             // A dimension of 0 means it will take 100% of the space
-            ->dimensions(900, 500) // Width x Height
+            ->dimensions(800, 400) // Width x Height
             // This defines a preset of colors already done:)
             ->template("material")
             // You could always set them manually
