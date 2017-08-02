@@ -40,19 +40,7 @@
             </div>
         </div>
 
-        
-
-
-
-
-
-
-
-
-
-
-        
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
             	<div class="form-line">
 					<table id="tableTabulasi" class="table table-bordered" style="cursor: pointer;">
@@ -77,63 +65,56 @@
 					    </tbody>
 
 					</table>
-
-
-
-					<table id="mainTable" class="table table-striped" style="cursor: pointer;">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Cost</th>
-                                        <th>Profit</th>
-                                        <th>Fun</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td tabindex="1">gg\</td>
-                                        <td tabindex="1">100</td>
-                                        <td tabindex="1">200</td>
-                                        <td tabindex="1">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td tabindex="1">Bike</td>
-                                        <td tabindex="1">330</td>
-                                        <td tabindex="1">240</td>
-                                        <td tabindex="1">1</td>
-                                    </tr>
-                                    <tr>
-                                        <td tabindex="1">Plane</td>
-                                        <td tabindex="1">430</td>
-                                        <td tabindex="1">540</td>
-                                        <td tabindex="1">3</td>
-                                    </tr>
-                                    <tr>
-                                        <td tabindex="1">Yacht</td>
-                                        <td tabindex="1">100</td>
-                                        <td tabindex="1">200</td>
-                                        <td tabindex="1">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td tabindex="1">Segway</td>
-                                        <td tabindex="1">330</td>
-                                        <td tabindex="1">240</td>
-                                        <td tabindex="1">1</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th><strong>TOTAL</strong></th>
-                                        <th>1290</th>
-                                        <th>1420</th>
-                                        <th>5</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-
-				</div>
+                </div>
 			</div>
-		</div>	
+		</div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="form-line">
+                    <div class="header">
+                        <h3>
+                            Dokumen C1
+                        </h3>
+                        <small>
+                            Daerah  DKI JAKARTA, JAKARTA TIMUR, MAKASSAR, HALIM PERDANA KUSUMA
+                        </small>
+                    </div>
+                    <div class="body">
+                     <!-- Cart 1-->
+                        <div class="row clearfix">
+                            <div class="col-xs-6 col-sm-6 col-md-2 col-lg-4">
+                                
+                                    {!! $chart_penggunaan_suara->render() !!}
+                                
+                            </div>
+                        </div>
+                    <!-- #END# Cart 1-->  
+                    <br/>
+                    <!-- Cart 2-->
+                        <div class="row clearfix">
+                            <div class="col-xs-6 col-sm-6 col-md-2 col-lg-4">
+                                
+                                    {!! $chart_jumlah_suara->render() !!}
+                                
+                            </div>
+                        </div>
+
+                    <!-- #END# Cart 2-->  
+                    <br/>
+                    <!-- Cart 3-->
+                        <div class="row clearfix">
+                            <div class="col-xs-6 col-sm-6 col-md-2 col-lg-4">
+                                
+                                    {!! $chart_total_calon->render() !!}
+                                
+                            </div>
+                        </div>
+
+                    <!-- #END# Cart 3-->
+                    </div>  
+                </div>
+            </div>    
+        </div>    
     </div>
 </div>
 

@@ -1,5 +1,5 @@
 @extends('index')
-
+{!! Charts::assets() !!}
 @section('title')
 
 @endsection
@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="header bg-blue">
                     <h2>
-                        INPUT TABULASI
+                        HASIL TABULASI
                     </h2>
                 </div>
                 
@@ -39,7 +39,8 @@
 
 @section('extra-script')
 
-<script src="{{ asset('bsbmd/js/tables/editable-table.js') }}"></script>
-<script src="{{ asset('bsbmd/js/tables/jquery-datatable.js') }}"></script>
+    <script src="{{ asset('bsbmd/js/tables/editable-table.js') }}"></script>
+    <script src="{{ asset('bsbmd/js/tables/jquery-datatable.js') }}"></script>
+    
 
 @endsection

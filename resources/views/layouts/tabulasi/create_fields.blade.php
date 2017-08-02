@@ -39,7 +39,7 @@
 				</div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
             	<div class="form-line">
 					<table id="tableTabulasi" class="table table-bordered" style="cursor: pointer;">
@@ -64,61 +64,7 @@
 					    </tbody>
 
 					</table>
-
-
-
-					<table id="mainTable" class="table table-striped" style="cursor: pointer;">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Cost</th>
-                                        <th>Profit</th>
-                                        <th>Fun</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td tabindex="1">gg\</td>
-                                        <td tabindex="1">100</td>
-                                        <td tabindex="1">200</td>
-                                        <td tabindex="1">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td tabindex="1">Bike</td>
-                                        <td tabindex="1">330</td>
-                                        <td tabindex="1">240</td>
-                                        <td tabindex="1">1</td>
-                                    </tr>
-                                    <tr>
-                                        <td tabindex="1">Plane</td>
-                                        <td tabindex="1">430</td>
-                                        <td tabindex="1">540</td>
-                                        <td tabindex="1">3</td>
-                                    </tr>
-                                    <tr>
-                                        <td tabindex="1">Yacht</td>
-                                        <td tabindex="1">100</td>
-                                        <td tabindex="1">200</td>
-                                        <td tabindex="1">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td tabindex="1">Segway</td>
-                                        <td tabindex="1">330</td>
-                                        <td tabindex="1">240</td>
-                                        <td tabindex="1">1</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th><strong>TOTAL</strong></th>
-                                        <th>1290</th>
-                                        <th>1420</th>
-                                        <th>5</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-
-				</div>
+                </div>
 			</div>
 		</div>	
     </div>
