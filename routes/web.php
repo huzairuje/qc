@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::group(['middleware'=>'guest'],function(){
+Route::group(['middleware'=>'auth'],function(){
 	Route::get('/',['as'=>'dashboard','uses'=>'DashboardController@index']);
 	
 	Route::get('/helper',['as'=>'helper','uses'=>'HelperController@index']);
@@ -43,3 +43,5 @@ Route::group(['middleware'=>'guest'],function(){
 	Route::get('/datamaster',['as'=>'data_master','uses'=>'DataMasterController@index']);
 
 });
+
+Route::get('/home', 'HomeController@index')->name('home');
