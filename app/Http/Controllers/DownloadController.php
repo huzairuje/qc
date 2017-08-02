@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class TypographyController extends Controller
+class DownloadController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,6 +23,8 @@ class TypographyController extends Controller
      */
     public function index()
     {
-        return view('layouts.tabulasi.create');
+        return view('layouts.download.index');
     }
+
+    
 }

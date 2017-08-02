@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class TypographyController extends Controller
+class ApprovalController extends Controller
 {
-    /**
+   /**
      * Create a new controller instance.
      *
      * @return void
@@ -23,6 +23,11 @@ class TypographyController extends Controller
      */
     public function index()
     {
-        return view('layouts.tabulasi.create');
+        return view('layouts.approval.index');
+    }
+
+    public function create()
+    {
+        return view('layouts.approval.create');
     }
 }
