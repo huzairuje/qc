@@ -20,6 +20,9 @@
                             <li {{Route::is('tabulasi.index')? 'class=active':''}}>
                                 <a href="{{route('tabulasi.index')}}">Hasil Tabulasi</a>
                             </li>
+                            <li {{Route::is('tabulasi.hasil')? 'class=active':''}}>
+                                <a href="{{route('tabulasi.hasil')}}">Hasil Quick Count</a>
+                            </li>
                         </ul>
                     </li>
                     <li {{Route::is('download')? 'class=active':''}}>

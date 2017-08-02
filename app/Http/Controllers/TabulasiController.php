@@ -74,4 +74,9 @@ class TabulasiController extends Controller
     {
         return view('layouts.tabulasi.create');
     }
+
+    public function HasilQuickCount()
+    {
+        return view('layouts.tabulasi.hasil_quick_count');
+    }
 }

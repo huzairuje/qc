@@ -90,6 +90,10 @@
         <div class="col-md-12">
             <div class="form-group">
                 <div class="form-line">
+                    <button href="" type="button" class="btn btn-danger waves-effect">DOWNLOAD</button>
+                    <br>
+                    <br>
+                    
                     <table id="tableTabulasi" class="table table-bordered" style="cursor: pointer;">
                         <thead>
                           <tr>
