@@ -59,6 +59,6 @@ class MonitoringController extends Controller
 
     public function quickRealCount()
     {
-    	return view('layouts.monitoring.quick_real_count.blade.php');
+    	return view('layouts.monitoring.quick_real_count');
     }
 }
