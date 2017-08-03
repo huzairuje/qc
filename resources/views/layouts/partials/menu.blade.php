@@ -51,30 +51,30 @@
                             <span>Monitoring</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
-                            <li {{Route::is('monitoring')? 'class=active':''}}>
-                                <a href="{{route('monitoring')}}">
+                            <li {{Route::is('monitoring.datasaksi')? 'class=active':''}}>
+                                <a href="{{route('monitoring.datasaksi')}}">
                                 Data Saksi PKS</a>
-                            </li>
+                            </li {{Route::is('monitoring.datasaksi')? 'class=active':''}}>
                             <li >
-                                <a href="">Data Saksi Gerindra</a>
+                                <a href="{{route('monitoring.datasaksi')}}">Data Saksi Gerindra</a>
                             </li>
-                            <li >
-                                <a href="">Data PJ TPS</a>
+                            <li {{Route::is('monitoring.datapjtps')? 'class=active':''}}>
+                                <a href="{{route('monitoring.datapjtps')}}">Data PJ TPS</a>
                             </li>
-                            <li >
-                                <a href="">Presensi Tugas</a>
+                            <li {{Route::is('monitoring.presensipetugas')? 'class=active':''}}>
+                                <a href="{{route('monitoring.presensipetugas')}}">Presensi Tugas</a>
                             </li>
-                            <li >
-                                <a href="">Tabulasi</a>
+                            <li {{Route::is('monitoring.tabulasi')? 'class=active':''}}>
+                                <a href="{{route('monitoring.tabulasi')}}">Tabulasi</a>
                             </li>
-                            <li >
-                                <a href="">Foto</a>
+                            <li {{Route::is('monitoring.foto')? 'class=active':''}}>
+                                <a href="{{route('monitoring.foto')}}">Foto</a>
                             </li>
-                            <li >
-                                <a href="">Login Terakhir</a>
+                            <li {{Route::is('monitoring.loginterakhir')? 'class=active':''}}>
+                                <a href="{{route('monitoring.loginterakhir')}}">Login Terakhir</a>
                             </li>
-                            <li >
-                                <a href="">Quick Real Count</a>
+                            <li {{Route::is('monitoring.quickrealcount')? 'class=active':''}}>
+                                <a href="{{route('monitoring.quickrealcount')}}">Quick Real Count</a>
                             </li>
                         </ul>
                     </li>

@@ -28,17 +28,17 @@
                                     <div class="form-line">
                                         <div class="body">
                                             <div class="row clearfix">
+                                                <div class="card">
                                                 <table id="tableTabulasi" class="table table-bordered" style="cursor: pointer;">
                                                     <thead>
-                                                      <tr>
-                                                        <th class="tg-yw4l">TPS</th>
-                                                        @for ($x = 1; $x <= 6; $x++)
-                                                            <th class="tg-yw4l">Pasangan Calon {{ $x }}</th>
-                                                        @endfor
-                                                        <th class="tg-yw4l">Suara Sah</th>
-                                                        <th class="tg-yw4l">Suara Tidak Sah</th>
-
-                                                      </tr>
+                                                        <tr>
+                                                            <th class="tg-yw4l">TPS</th>
+                                                            @for ($x = 1; $x <= 6; $x++)
+                                                                <th class="tg-yw4l">Pasangan Calon {{ $x }}</th>
+                                                            @endfor
+                                                            <th class="tg-yw4l">Suara Sah</th>
+                                                            <th class="tg-yw4l">Suara Tidak Sah</th>
+                                                        </tr>
                                                     </thead>
                                                     <tbody>
                                                         @for ($y = 1; $y <= 20; $y++)
@@ -52,6 +52,7 @@
                                                     </tbody>
 
                                                 </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

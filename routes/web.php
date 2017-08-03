@@ -37,8 +37,13 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/approval/create',['as'=>'approval.create','uses'=>'ApprovalController@create']);
 
 	//Route for Monitoring
-	Route::get('/monitoring',['as'=>'monitoring','uses'=>'MonitoringController@index']);
-
+	Route::get('/monitoring/datasaksi',['as'=>'monitoring.datasaksi','uses'=>'MonitoringController@dataSaksi']);
+	Route::get('/monitoring/datapjtps',['as'=>'monitoring.datapjtps','uses'=>'MonitoringController@dataPjTps']);
+	Route::get('/monitoring/tabulasi',['as'=>'monitoring.tabulasi','uses'=>'MonitoringController@tabulasi']);
+	Route::get('/monitoring/foto',['as'=>'monitoring.foto','uses'=>'MonitoringController@foto']);
+	Route::get('/monitoring/loginterakhir',['as'=>'monitoring.loginterakhir','uses'=>'MonitoringController@loginTerakhir']);
+	Route::get('/monitoring/quickrealcount',['as'=>'monitoring.quickrealcount','uses'=>'MonitoringController@quickRealCount']);
+	Route::get('/monitoring/presensipetugas',['as'=>'monitoring.presensipetugas','uses'=>'MonitoringController@presensiPetugas']);
 	//Route for data master
 	Route::get('/datamaster',['as'=>'data_master','uses'=>'DataMasterController@index']);
 

@@ -54,7 +54,7 @@
                     <div class="body">
                      <!-- Cart 1-->
                         <div class="row clearfix">
-                            <div class="col-xs-6 col-sm-6 col-md-2 col-lg-4">
+                            <div class="col-md-12">
                                 
                                     {!! $chart_penggunaan_suara->render() !!}
                                 
@@ -64,7 +64,7 @@
                     <br/>
                     <!-- Cart 2-->
                         <div class="row clearfix">
-                            <div class="col-xs-6 col-sm-6 col-md-2 col-lg-4">
+                            <div class="col-md-12">
                                 
                                     {!! $chart_jumlah_suara->render() !!}
                                 
@@ -75,7 +75,8 @@
                     <br/>
                     <!-- Cart 3-->
                         <div class="row clearfix">
-                            <div class="col-xs-6 col-sm-6 col-md-2 col-lg-4">
+                            <div class="col-md-12">
+                           
                                 
                                     {!! $chart_total_calon->render() !!}
                                 
