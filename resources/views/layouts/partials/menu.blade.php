@@ -40,7 +40,7 @@
                             <li {{Route::is('approval.create')? 'class=active':''}}>
                                 <a href="{{route('approval.create')}}">Input Approval</a>
                             </li>
-                            <li>
+                            <li {{Route::is('approval.index')? 'class=active':''}}>
                                 <a href="{{route('approval.index')}}">Hasil Approval</a>
                             </li>
                         </ul>
@@ -84,11 +84,11 @@
                             <span>Data Master</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
-                            <li {{Route::is('data_master')? 'class=active':''}}>
-                                <a href="{{route('data_master')}}">Input Data Master</a>
+                            <li {{Route::is('data_master.create')? 'class=active':''}}>
+                                <a href="{{route('data_master.create')}}">Input Data Master</a>
                             </li>
-                            <li>
-                                <a href="">Hasil Data Master</a>
+                            <li {{Route::is('data_master.index')? 'class=active':''}}>
+                                <a href="{{route('data_master.index')}}">Hasil Data Master</a>
                             </li>
                         </ul>
                     </li>

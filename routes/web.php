@@ -45,7 +45,8 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/monitoring/quickrealcount',['as'=>'monitoring.quickrealcount','uses'=>'MonitoringController@quickRealCount']);
 	Route::get('/monitoring/presensipetugas',['as'=>'monitoring.presensipetugas','uses'=>'MonitoringController@presensiPetugas']);
 	//Route for data master
-	Route::get('/datamaster',['as'=>'data_master','uses'=>'DataMasterController@index']);
+	Route::get('/datamaster',['as'=>'data_master.index','uses'=>'DataMasterController@index']);
+	Route::get('/datamaster/create',['as'=>'data_master.create','uses'=>'DataMasterController@create']);
 
 });
 
