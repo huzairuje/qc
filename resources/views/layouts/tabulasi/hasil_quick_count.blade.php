@@ -31,7 +31,7 @@
                                                 <div class="card">
                                                 <table id="tableTabulasi" class="table table-bordered" style="cursor: pointer;">
                                                     <thead>
-                                                        <tr>
+                                                        <tr class="bg-blue" style="color: white;">
                                                             <th class="tg-yw4l">TPS</th>
                                                             @for ($x = 1; $x <= 6; $x++)
                                                                 <th class="tg-yw4l">Pasangan Calon {{ $x }}</th>

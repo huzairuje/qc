@@ -44,7 +44,7 @@
             	<div class="form-line">
 					<table id="tableTabulasi" class="table table-bordered" style="cursor: pointer;">
 					    <thead>
-					      <tr>
+					      <tr class="bg-blue" style="color: white;">
 					        @for ($x = 1; $x <= 20; $x++)
 					    		<th class="tg-yw4l">X{{ $x }}</th>
 					   		@endfor
