@@ -9,7 +9,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block" >
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('tabulasi.create', 'tabulasi.index', 'tabulasi.hasil')? 'toggled':''}}">
                             <i class="material-icons">trending_up</i>
                             <span>Tabulasi</span>
                         </a>
@@ -32,7 +32,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block" >
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('approval.create', 'approval.index')? 'toggled':''}}" >
                             <i class="material-icons">notifications_none</i>
                             <span>Approval</span>
                         </a>
@@ -46,7 +46,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block" >
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('monitoring.datasaksi', 'monitoring.datapjtps', 'monitoring.presensipetugas', 'monitoring.tabulasi', 'monitoring.foto', 'monitoring.loginterakhir', 'monitoring.quickrealcount' )? 'toggled':''}}" >
                             <i class="material-icons">library_books</i>
                             <span>Monitoring</span>
                         </a>
@@ -79,7 +79,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block" >
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('data_master.create', 'data_master.index')? 'toggled':''}}" >
                             <i class="material-icons">dns</i>
                             <span>Data Master</span>
                         </a>

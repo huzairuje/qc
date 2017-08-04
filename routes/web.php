@@ -26,7 +26,7 @@ Route::group(['middleware'=>'auth'],function(){
 
 	//Route for Tabulasi
 	Route::get('/tabulasi',['as'=>'tabulasi.index','uses'=>'TabulasiController@index']);
-	Route::get('/tabulasi/input',['as'=>'tabulasi.create','uses'=>'TabulasiController@create']);
+	Route::get('/tabulasi/create',['as'=>'tabulasi.create','uses'=>'TabulasiController@create']);
 	Route::get('/tabulasi/hasil',['as'=>'tabulasi.hasil','uses'=>'TabulasiController@HasilQuickCount']);
 
 	//Route for download
