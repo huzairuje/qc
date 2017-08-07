@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="header bg-blue">
                     <h2>
-                        TABULASI
+                        HASIL QUICK COUNT
                     </h2>
                 </div>
                 

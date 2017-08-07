@@ -4,7 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Tabulasi;
+use App\Dokumen;
+use App\Provinsi;
+use App\KotaKab;
+use App\Kecamatan;
+use App\Kelurahan;
 use Charts;
+use Flash;
+
 
 class TabulasiController extends Controller
 {
@@ -23,60 +31,73 @@ class TabulasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function quickCount()
+    {
+        return view('layouts.tabulasi.quick_count');
+
+    }
+
     public function index()
     {
-        $chart_penggunaan_suara = Charts::multi('bar', 'material')
-            // Setup the chart settings
-            ->title("Penggunaan Surat Suara")
-            // A dimension of 0 means it will take 100% of the space
-            ->dimensions(900, 400) // Width x Height
-            // This defines a preset of colors already done:)
-            ->template("material")
-            // You could always set them manually
-            // ->colors(['#2196F3', '#F44336', '#FFC107'])
-            // Setup the diferent datasets (this is a multi chart)
-            ->dataset('Surat Suara', [30,4,20,80])
-            // Setup what the values mean
-            ->labels(['Surat suara yang diterima dan cadangan', 'Surat suara dikembalikan', 'Surat suara tidak digunakan', 'Surat suara yang digunakan']);
+        // return $tabulasiDataTable->render('tabulasi.index');
+        return view('layouts.tabulasi.index');
 
-        $chart_jumlah_suara = Charts::multi('bar', 'material')
-            // Setup the chart settings
-            ->title("Jumlah Surat Suara")
-            // A dimension of 0 means it will take 100% of the space
-            ->dimensions(800, 400) // Width x Height
-            // This defines a preset of colors already done:)
-            ->template("material")
-            // You could always set them manually
-            // ->colors(['#2196F3', '#F44336', '#FFC107'])
-            // Setup the diferent datasets (this is a multi chart)
-            ->dataset('Surat Suara', [70,4,100])
-            // Setup what the values mean
-            ->labels(['Surat sah seluruh salon', 'Surat tidak sah', 'Suara sah dan tidak sah']);
+    }
 
-        $chart_total_calon = Charts::multi('bar', 'material')
-            // Setup the chart settings
-            ->title("Total Suara Calon")
-            // A dimension of 0 means it will take 100% of the space
-            ->dimensions(800, 400) // Width x Height
-            // This defines a preset of colors already done:)
-            ->template("material")
-            // You could always set them manually
-            // ->colors(['#2196F3', '#F44336', '#FFC107'])
-            // Setup the diferent datasets (this is a multi chart)
-            ->dataset('Suara Calon', [30,65,5])
-            // Setup what the values mean
-            ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
+    public function show($id)
+    {
 
-       return view('layouts.tabulasi.index', ['chart_penggunaan_suara' => $chart_penggunaan_suara,'chart_jumlah_suara' => $chart_jumlah_suara, 'chart_total_calon' => $chart_total_calon]);
+        $tabulasi = Tabulasi::find($id);
+
+        if (empty($tabulasi)) {
+            flash('Tabulasi not found')->error();
+
+            return redirect(route('tabulasi.index'));
+        }
+
+        return view('layouts.tabulasi.show',compact('tabulasi'));
+
+
     }
 
     public function create()
     {
-        return view('layouts.tabulasi.create');
+        $dokumen = Dokumen::pluck('tipe_dokumen','id')->all();
+        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
+        $kota_kabupaten = array();
+
+        return view('layouts.tabulasi.create', compact('dokumen','provinsi','kota_kabupaten'));
     }
 
-    public function HasilQuickCount()
+    public function store(Request $request)
     {
-        return view('layouts.tabulasi.hasil_quick_count');
+        $input = $request->all();
+
+        $tabulasi = Tabulasi::create($input);
+
+        flash('Data Tabulasi updated successfully.')->success();
+        return redirect(route('tabulasi.show', $tabulasi->id));
     }
+
+    
+
+    public function edit ($id)
+    {
+        $dokumen = Dokumen::pluck('tipe_dokumen','id')->all();
+        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
+        $kota_kabupaten = array();
+        return view('layouts.tabulasi.create', compact('dokumen','provinsi','kota_kabupaten'));
+
+    }
+    public function update($id)
+    {
+        $dokumen = Dokumen::pluck('tipe_dokumen','id')->all();
+        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
+        $kota_kabupaten = array();
+        return view('layouts.tabulasi.create', compact('dokumen','provinsi','kota_kabupaten'));
+        
+    }
+
+    
 }

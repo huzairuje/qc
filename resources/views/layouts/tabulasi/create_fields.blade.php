@@ -1,25 +1,24 @@
 <div class="body">
     <div class="row clearfix">
+
         <div class="col-md-12">
             <div class="form-group">
                 <div class="form-line">
-                    <input type="select" id="name" class="form-control" placeholder="Dokumen*" value="">
+                    {{ Form::select('dokumen_id', $dokumen,null, ['class' => 'form-control select-zone','id' => 'dokumen_id','placeholder' => 'Select Dokumen']) }}
 				</div>
             </div>
         </div>
     	
     	<div class="col-md-6">
             <div class="form-group">
-                <div class="form-line">
-                    <input type="select" id="name" class="form-control" placeholder="Provinsi*" value="">
-				</div>
+                    {{ Form::select('provinsi_id', $provinsi, null, ['class' => 'form-control', 'placeholder' => 'Pilih Provinsi']) }}
             </div>
         </div>
     
 		<div class="col-md-6">
             <div class="form-group">
                 <div class="form-line">
-                    <input type="select" id="name" class="form-control" placeholder="Kota/Kabupaten*" value="">
+                    {!! Form::text('kota_kabupaten_id', null, ['class' => 'form-control', 'placeholder' => 'Pilih Kota/Kabupaten']); !!}
 				</div>
             </div>
         </div>
@@ -27,7 +26,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <div class="form-line">
-                    <input type="select" id="name" class="form-control" placeholder="Kecamatan*" value="">
+                    {!! Form::text('kecamatan_id', null, ['class' => 'form-control' , 'placeholder' => 'Pilih Kecamatan']) !!}
 				</div>
             </div>
         </div>
@@ -35,7 +34,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <div class="form-line">
-                    <input type="select" id="name" class="form-control" placeholder="Kelurahan*" value="">
+                    {!! Form::text('kelurahan_id', null, ['class' => 'form-control', 'placeholder' => 'Pilih Kelurahan']); !!}
 				</div>
             </div>
         </div>
@@ -66,7 +65,13 @@
 					</table>
                 </div>
 			</div>
-		</div>	
+		</div>
+
+        <!-- Submit Field -->
+<div class="form-group col-sm-12">
+    {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
+    
+</div>	
     </div>
 </div>
 

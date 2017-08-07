@@ -22,9 +22,13 @@
                 <div class="box box-primary">
 
 		            <div class="box-body">
+                        @include('flash::message')
 		                <div class="row">
-		                   
-		                		@include('layouts.tabulasi.create_fields')
+                                {!! Form::open(['route' => 'tabulasi.store']) !!}
+
+                                    @include('layouts.tabulasi.create_fields')
+
+                                {!! Form::close() !!}
 
 		                </div>
 		            </div>
@@ -38,10 +42,5 @@
 @endsection
 
 @section('extra-script')
-
-<script src="{{ asset('bsbmd/js/tables/editable-table.js') }}"></script>
-<script src="{{ asset('bsbmd/js/tables/mindmup-editabletable.js') }}"></script>
-<script src="{{ asset('bsbmd/js/tables/numeric-input-e.js') }}"></script>
-<script src="{{ asset('bsbmd/js/tables/jquery-datatable.js') }}"></script>
 
 @endsection

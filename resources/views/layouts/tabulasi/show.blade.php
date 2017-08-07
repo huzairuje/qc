@@ -1,5 +1,5 @@
 @extends('index')
-{!! Charts::assets() !!}
+
 @section('title')
 
 @endsection
@@ -15,18 +15,18 @@
             <div class="card">
                 <div class="header bg-blue">
                     <h2>
-                        TABULASI
+                        SHOW TABULASI
                     </h2>
                 </div>
                 
                 <div class="box box-primary">
 
                     <div class="box-body">
-                     
-
+                        
                         <div class="row">
-                           
-                                
+
+                                    @include('layouts.tabulasi.show_fields')
+
 
                         </div>
                     </div>
@@ -40,9 +40,5 @@
 @endsection
 
 @section('extra-script')
-
-    <script src="{{ asset('bsbmd/js/tables/editable-table.js') }}"></script>
-    <script src="{{ asset('bsbmd/js/tables/jquery-datatable.js') }}"></script>
-    
 
 @endsection

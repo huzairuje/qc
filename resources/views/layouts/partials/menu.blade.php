@@ -9,7 +9,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('tabulasi.create', 'tabulasi.index', 'tabulasi.hasil')? 'toggled':''}}">
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('tabulasi.create', 'tabulasi.index', 'tabulasi.quickcount')? 'toggled':''}}">
                             <i class="material-icons">trending_up</i>
                             <span>Tabulasi</span>
                         </a>
@@ -20,9 +20,9 @@
                             <li {{Route::is('tabulasi.index')? 'class=active':''}}>
                                 <a href="{{route('tabulasi.index')}}">Hasil Tabulasi</a>
                             </li>
-                            <li {{Route::is('tabulasi.hasil')? 'class=active':''}}>
-                                <a href="{{route('tabulasi.hasil')}}">Hasil Quick Count</a>
-                            </li>
+                            <li {{Route::is('tabulasi.quickcount')? 'class=active':''}}>
+                                <a href="{{route('tabulasi.quickcount')}}">Hasil Quick Count</a>
+                            </li>   
                         </ul>
                     </li>
                     <li {{Route::is('download')? 'class=active':''}}>
