@@ -32,6 +32,7 @@
                                         
                                             <table id="tableTabulasi" class="table table-bordered" style="cursor: pointer;">
                                                 <tr class="bg-blue" style="color: white;">
+                                                    <th >No</th>
                                                     <th >Dokumen</th>
                                                     <th >Provinsi</th>
                                                     <th >Kota/Kabupaten</th>
@@ -39,9 +40,12 @@
                                                     <th >Kelurahan</th>
                                                     <th >Action</th>
                                                 </tr>
-                                                @foreach($tabulasis as $tabulasi)
+                                                <?php $i = 0 ?>
+                                                    @foreach($tabulasis as $tabulasi )
+                                                    <?php $i++ ?>
                                                 <tr>
-                                                    <td>{{ $tabulasi->dokumen_id }}</td>
+                                                    <td>{{ $i }}</td>
+                                                    <td>{{ $tabulasi->dokumen_id}}</td>
                                                     <td>{{ $tabulasi->provinsi_id }}</td>
                                                     <td>{{ $tabulasi->kota_kabupaten_id }}</td>
                                                     <td>{{ $tabulasi->kecamatan_id }}</td>
