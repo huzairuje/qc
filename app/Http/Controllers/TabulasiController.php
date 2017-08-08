@@ -40,8 +40,16 @@ class TabulasiController extends Controller
 
     public function index()
     {
-        // return $tabulasiDataTable->render('tabulasi.index');
-        return view('layouts.tabulasi.index');
+        $tabulasis = Tabulasi::all();
+        // dd($tabulasis);
+
+        $dokumen = Dokumen::pluck('tipe_dokumen','id')->all();
+        
+        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
+
+        $kota_kabupaten = array();
+
+        return view('layouts.tabulasi.index', compact('tabulasis','dokumen','provinsi','kota_kabupaten'));
 
     }
 
@@ -64,7 +72,9 @@ class TabulasiController extends Controller
     public function create()
     {
         $dokumen = Dokumen::pluck('tipe_dokumen','id')->all();
+
         $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
+
         $kota_kabupaten = array();
 
         return view('layouts.tabulasi.create', compact('dokumen','provinsi','kota_kabupaten'));
@@ -72,12 +82,14 @@ class TabulasiController extends Controller
 
     public function store(Request $request)
     {
+        
+
         $input = $request->all();
 
         $tabulasi = Tabulasi::create($input);
-
+       
         flash('Data Tabulasi updated successfully.')->success();
-        return redirect(route('tabulasi.show', $tabulasi->id));
+        return redirect(route('tabulasi.index', compact('dokumen', 'provinsi', 'kota_kabupaten')));
     }
 
     

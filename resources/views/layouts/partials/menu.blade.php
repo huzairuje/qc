@@ -9,16 +9,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('tabulasi.create', 'tabulasi.index', 'tabulasi.quickcount')? 'toggled':''}}">
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is( 'tabulasi.index', 'tabulasi.quickcount')? 'toggled':''}}">
                             <i class="material-icons">trending_up</i>
                             <span>Tabulasi</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
-                            <li {{Route::is('tabulasi.create')? 'class=active':''}}>
-                                <a href="{{route('tabulasi.create')}}">Input Tabulasi</a>
-                            </li>
                             <li {{Route::is('tabulasi.index')? 'class=active':''}}>
-                                <a href="{{route('tabulasi.index')}}">Hasil Tabulasi</a>
+                                <a href="{{route('tabulasi.index')}}">Tabulasi</a>
                             </li>
                             <li {{Route::is('tabulasi.quickcount')? 'class=active':''}}>
                                 <a href="{{route('tabulasi.quickcount')}}">Hasil Quick Count</a>
