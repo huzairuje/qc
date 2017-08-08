@@ -25,7 +25,7 @@
                                                     <i class="material-icons">autorenew</i>
                                                 </h2>
                                                 <div class="body">
-                                                    <button href="" type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#modalCreate">Buat Data</button>
+                                                    {{ Form::button('Buat Data', array('class' => 'btn btn-primary waves-effect', 'data-toggle' => 'modal', 'data-target' => '#modalCreate')) }}
                                                 </div>
 
                                             </div>
@@ -51,7 +51,12 @@
                                                     <td>{{ $tabulasi->kecamatan_id }}</td>
                                                     <td>{{ $tabulasi->kelurahan_id }} KIDUL</td>
                                                     <td>
-                                                        <button href="" type="button" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#myModal">Lihat Data</button>
+                                                        <button class="btn btn-warning btn-xs btn-detail open-modal" data-toggle="modal" data-target="#modalShow" value="{{$tabulasi->id}}">Lihat</button>
+
+                                                        <button class="btn btn-warning btn-xs btn-detail open-modal" data-toggle="modal" data-target="#modalEdit" value="{{$tabulasi->id}}">Edit</button>
+
+                                                        <button class="btn btn-danger btn-xs btn-delete open-modal" data-toggle="modal" data-target="#modalDelete" value="{{$tabulasi->id}}">Delete</button>
+
                                                     </td>
                                                 </tr>
                                                @endforeach
@@ -64,6 +69,9 @@
                                                 
                                             </div>
                                             <div class="modal fade" id="modalShow" role="dialog">
+                                                @include('layouts.tabulasi.modal_show')
+                                            </div>
+                                            <div class="modal fade" id="modalDelete" role="dialog">
                                                 @include('layouts.tabulasi.modal_show')
                                             </div>
                                             <!--End Modal -->

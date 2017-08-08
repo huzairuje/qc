@@ -42,6 +42,7 @@
                             </li>
                         </ul>
                     </li>
+                    
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('monitoring.datasaksi', 'monitoring.datapjtps', 'monitoring.presensipetugas', 'monitoring.tabulasi', 'monitoring.foto', 'monitoring.loginterakhir', 'monitoring.quickrealcount' )? 'toggled':''}}" >
                             <i class="material-icons">library_books</i>
