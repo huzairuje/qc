@@ -6,7 +6,6 @@
         </div>
         <div class="modal-body">
             <div class="row clearfix">
-                <div class="card">
                 <!-- Content Create-->
                 {!! Form::open(['route' => 'tabulasi.store']) !!}
                     <div class="col-md-12">
@@ -30,7 +29,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="form-line">
-                                {!! Form::text('kota_kabupaten_id', null, ['class' => 'form-control', 'placeholder' => 'Pilih Kota/Kabupaten']); !!}
+                                {{ Form::select('kota_kabupaten_id', $kota_kabupaten,null, ['class' => 'form-control select-zone','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
                             </div>
                         </div>
                     </div>
@@ -38,7 +37,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="form-line">
-                                {!! Form::text('kecamatan_id', null, ['class' => 'form-control' , 'placeholder' => 'Pilih Kecamatan']) !!}
+                                {{ Form::select('kecamatan_id', $kecamatan,null, ['class' => 'form-control select-zone','id' => 'kecamatan_id','placeholder' => 'Select Kecamatan']) }}
                             </div>
                         </div>
                     </div>
@@ -46,14 +45,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="form-line">
-                                {!! Form::text('kelurahan_id', null, ['class' => 'form-control', 'placeholder' => 'Pilih Kelurahan']); !!}
+                                {{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control select-zone','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-line">
-                                <table id="tableTabulasi" class="table table-bordered" style="cursor: pointer;">
+                                <table id="data_suara" class="table table-bordered" style="cursor: pointer;">
                                     <thead>
                                       <tr class="bg-blue" style="color: white;">
                                         @for ($x = 1; $x <= 20; $x++)
@@ -87,8 +86,67 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
         {!! Form::close() !!}
-    </div>
 </div>
 </div>
+    @section('extra-script')
+    <script src="{{ asset('bsbmd/js/pages/tables/mindmup-editabletable.js') }}"></script>
+    <script src="{{ asset('bsbmd/js/pages/tables/editable-table.js') }}"></script>
+    <script src="{{ asset('bsbmd/js/pages/tables/numeric-input-example.js') }}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
+    <script type="text/javascript" src="https://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready( function() {
+        $('.select-zone').select2();
+        var _url = '{{ route('tabulasi.ajax') }}';
+            $(document).on('change','#provinsi_id',function(){
+
+                var coba = $(this).val();
+                $.get(_url,{'type':'get-city','provinsi_id':coba})
+                .done(function(result) {
+                    var html = '';
+                    $.each(result,function(key,value){
+                        html += '<option value="'+key+'">'+value+'</option>';
+                    });
+
+                    $('#kota_kabupaten_id').html(html);
+                    
+                });
+            });
+            $(document).on('change','#kota_kabupaten_id',function(){
+
+                var coba = $(this).val();
+                $.get(_url,{'type':'get-kecamatan','kota_kabupaten_id':coba})
+                .done(function(result) {
+                    var html = '';
+                    $.each(result,function(key,value){
+                        html += '<option value="'+key+'">'+value+'</option>';
+                    });
+
+                    $('#kecamatan_id').html(html);
+                    
+                });
+            });
+
+            $(document).on('change','#kecamatan_id',function(){
+
+                var coba = $(this).val();
+                $.get(_url,{'type':'get-kelurahan','kecamatan_id':coba})
+                .done(function(result) {
+                    var html = '';
+                    $.each(result,function(key,value){
+                        html += '<option value="'+key+'">'+value+'</option>';
+                    });
+
+                    $('#kelurahan_id').html(html);
+                    
+                });
+            });
+        });
+    </script>
+    
+
+@endsection
+
 </div>
 </div>

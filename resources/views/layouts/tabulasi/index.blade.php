@@ -55,6 +55,7 @@
 
                                                         <button class="btn btn-warning btn-xs btn-detail open-modal" data-toggle="modal" data-target="#modalEdit" value="{{$tabulasi->id}}">Edit</button>
 
+
                                                         <button class="btn btn-danger btn-xs btn-delete open-modal" data-toggle="modal" data-target="#modalDelete" value="{{$tabulasi->id}}">Delete</button>
 
                                                     </td>
@@ -66,7 +67,7 @@
                                                 @include('layouts.tabulasi.modal_create')
                                             </div>
                                             <div class="modal fade" id="modalEdit" role="dialog">
-                                                
+                                                @include('layouts.tabulasi.modal_edit')
                                             </div>
                                             <div class="modal fade" id="modalShow" role="dialog">
                                                 @include('layouts.tabulasi.modal_show')
@@ -75,6 +76,7 @@
                                                 @include('layouts.tabulasi.modal_show')
                                             </div>
                                             <!--End Modal -->
+                                            
                                     </div>
                                 </div>
                             </div>
@@ -87,10 +89,8 @@
                 
 @endsection
 
-@section('extra-script')
+@section('footer-script')
 
-    <script src="{{ asset('bsbmd/js/tables/editable-table.js') }}"></script>
-    <script src="{{ asset('bsbmd/js/tables/jquery-datatable.js') }}"></script>
-    
 
 @endsection
+

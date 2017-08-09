@@ -3,6 +3,7 @@
         <div class="modal-header bg-blue">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title">LIHAT DATA</h4>
+              {!! Charts::assets() !!}
         </div>
         <div class="modal-body">
             <div class="row clearfix">
@@ -78,6 +79,9 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-md-12">
+                        {!! $chart->render() !!}                        
                     </div>
                     
                     <!-- END Content Create-->

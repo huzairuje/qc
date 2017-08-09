@@ -27,6 +27,15 @@ class Tabulasi extends Model
 
     public function kota_kabupaten()
     {
-        return $this->belongsTo(kota_kabupaten::class);
+        return $this->belongsTo(KotaKab::class,'nama','id');
+    }
+
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class,'nama','id');
+    }
+    public function kelurahan()
+    {
+        return $this->belongsTo(Kelurahan::class,'nama','id');
     }
 }

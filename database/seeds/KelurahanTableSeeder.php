@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class KotaKabsTableSeeder extends Seeder
+class KelurahanTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,14 +12,14 @@ class KotaKabsTableSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        DB::table('kota_kabupaten')->truncate();
+        DB::table('kelurahan')->truncate();
         Schema::enableForeignKeyConstraints();
-        Excel::filter('chunk')->load(public_path('csv/data_kabkota.csv'))->chunk(514, function($results) {
-            $header = [ 'id', 'provinsi_id', 'nama' ];
+        Excel::filter('chunk')->load(public_path('csv/data_kelurahan.csv'))->chunk(82043, function($results) {
+            $header = [ 'id', 'kecamatan_id', 'nama' ];
             foreach ($results->toArray() as $row) {
                 $data = array_combine($header, $row);
 
-                DB::table( 'kota_kabupaten' )->insert($data);
+                DB::table( 'kelurahan' )->insert($data);
             }
         });
     }

@@ -1,3 +1,6 @@
 $(function () {
-    $('#mainTable').editableTableWidget();
+    $('#data_suara').editableTableWidget();
+});
+$(function () {
+    $('#data_suara').numericInputExample();
 });
