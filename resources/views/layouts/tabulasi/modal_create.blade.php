@@ -96,9 +96,11 @@
     <script type="text/javascript" src="https://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script type="text/javascript">
+
     $(document).ready( function() {
         $('.select-zone').select2();
         var _url = '{{ route('tabulasi.ajax') }}';
+        
             $(document).on('change','#provinsi_id',function(){
 
                 var coba = $(this).val();
@@ -113,6 +115,7 @@
                     
                 });
             });
+
             $(document).on('change','#kota_kabupaten_id',function(){
 
                 var coba = $(this).val();
