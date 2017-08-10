@@ -2,6 +2,7 @@
 
 @section('title')
 
+    
 @endsection
 
 @section('extra-css')
@@ -51,13 +52,14 @@
                                                     <td>{{ $tabulasi->kecamatan_id }}</td>
                                                     <td>{{ $tabulasi->kelurahan_id }} KIDUL</td>
                                                     <td>
-                                                        <button class="btn btn-warning btn-xs btn-detail open-modal" data-toggle="modal" data-target="#modalShow" value="{{$tabulasi->id}}">Lihat</button>
+                                                        <button id="showDialog" class="btn btn-warning btn-xs btn-detail open-modal" data-toggle="modal" data-target="#modalShow" data-id="{{$tabulasi->id}}">Lihat</button>
 
                                                         <button class="btn btn-warning btn-xs btn-detail open-modal" data-toggle="modal" data-target="#modalEdit" value="{{$tabulasi->id}}">Edit</button>
 
 
                                                         <button class="btn btn-danger btn-xs btn-delete open-modal" data-toggle="modal" data-target="#modalDelete" value="{{$tabulasi->id}}">Delete</button>
 
+                                                        
                                                     </td>
                                                 </tr>
                                                @endforeach
@@ -86,11 +88,15 @@
             </div>
         </div>
     </div>
-                
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            console.log("hahaha")
+            $("#showDialog").click(function(){
+                 var myBookId = $(this).data('id');
+                 $(".modal-body #documentID").html( myBookId );
+                 console.log(myBookId);
+            });
+        })
+    </script>                
 @endsection
-
-@section('footer-script')
-
-
-@endsection
-

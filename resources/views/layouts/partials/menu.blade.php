@@ -90,6 +90,13 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="header">SETTING</li>
+                        <li {{Route::is('users.profile')? 'class=active':''}}>
+                        <a href="{{route('users.profile')}}">
+                            <i class="material-icons">perm_identity</i>
+                            <span>User</span>
+                        </a>
+                    </li>
             
                     <!-- <li {{Route::is('helper')? 'class=active':''}}>
                         <a href="{{route('helper')}}">

@@ -11,9 +11,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-line">
-                            
-
-                                {{ Form::select('dokumen_id', $dokumen,null, ['class' => 'form-control select-zone','id' => 'dokumen_id','placeholder' => 'Select Dokumen']) }}
+                            {{ Form::select('dokumen_id', $dokumen,null, ['class' => 'form-control select-zone','id' => 'dokumen_id','placeholder' => 'Select Dokumen']) }}
                             </div>
                         </div>
                     </div>
@@ -100,7 +98,7 @@
     $(document).ready( function() {
         $('.select-zone').select2();
         var _url = '{{ route('tabulasi.ajax') }}';
-        
+
             $(document).on('change','#provinsi_id',function(){
 
                 var coba = $(this).val();

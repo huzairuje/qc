@@ -12,7 +12,7 @@
                         <div class="form-group">
                             <div class="form-line">
                                 {!! Form::label('dokumen_id', 'Dokumen:') !!}
-                                {!! $tabulasi->dokumen_id !!}
+                                <label id="documentID"></label>
                             </div>
                         </div>
                     </div>
@@ -94,3 +94,4 @@
 </div>
 </div>
 </div>
+

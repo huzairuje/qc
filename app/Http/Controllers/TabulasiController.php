@@ -110,15 +110,6 @@ class TabulasiController extends Controller
 
     public function store(Request $request)
     {
-        
-        // $input = $request->except(['data_suara']);
-        // $data_suara = $this->($request->data_suara);
-        // $input['data_suara'] = $data_suara; 
-        // $dokumen = Dokumen::pluck('tipe_dokumen','id')->all();
-
-        // $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
-
-        // $kota_kabupaten = array();
 
         $input = $request->all();
 

@@ -22,7 +22,9 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/media',['as'=>'media','uses'=>'MediaController@index']);
 	Route::get('/chart',['as'=>'chart','uses'=>'ChartController@index']);
 
-
+	//Route For user
+	Route::get('/users', 'UserController@profile')->name('users.profile');
+	Route::patch('/users/{id}', 'UserController@update')->name('users.update');
 
 	//Route for Tabulasi
 
