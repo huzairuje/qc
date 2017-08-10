@@ -20,22 +20,27 @@ class Tabulasi extends Model
         'data_suara'
     ];
 
+    public function dokumen()
+    {
+        return $this->belongsTo(Dokumen::class);
+    }
+
     public function provinsi()
     {
-        return $this->belongsTo(Provinsi::class,'nama_provinsi','id');
+        return $this->belongsTo(Provinsi::class);
     }
 
     public function kota_kabupaten()
     {
-        return $this->belongsTo(KotaKab::class,'nama','id');
+        return $this->belongsTo(KotaKab::class);
     }
 
     public function kecamatan()
     {
-        return $this->belongsTo(Kecamatan::class,'nama','id');
+        return $this->belongsTo(Kecamatan::class);
     }
     public function kelurahan()
     {
-        return $this->belongsTo(Kelurahan::class,'nama','id');
+        return $this->belongsTo(Kelurahan::class);
     }
 }

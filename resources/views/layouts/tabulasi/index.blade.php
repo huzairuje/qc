@@ -46,11 +46,11 @@
                                                     <?php $i++ ?>
                                                 <tr>
                                                     <td>{{ $i }}</td>
-                                                    <td>{{ $tabulasi->dokumen_id}}</td>
-                                                    <td>{{ $tabulasi->provinsi_id }}</td>
-                                                    <td>{{ $tabulasi->kota_kabupaten_id }}</td>
-                                                    <td>{{ $tabulasi->kecamatan_id }}</td>
-                                                    <td>{{ $tabulasi->kelurahan_id }}</td>
+                                                    <td>{{ ($tabulasi->dokumen ? $tabulasi->dokumen->tipe_dokumen:'-') }}</td>
+                                                    <td>{{ ($tabulasi->provinsi ? $tabulasi->provinsi->nama_provinsi:'-') }}</td>
+                                                    <td>{{ ($tabulasi->kota_kabupaten ? $tabulasi->kota_kabupaten->nama:'-') }}</td>
+                                                    <td>{{ ($tabulasi->kecamatan ? $tabulasi->kecamatan->nama:'-' ) }}</td>
+                                                    <td>{{ ($tabulasi->kelurahan ? $tabulasi->kelurahan->nama:'-') }}</td>
                                                     <td>
                                                         <button id="showDialog" class="btn btn-warning btn-xs btn-detail open-modal" data-toggle="modal" data-target="#modalShow" data-id="{{$tabulasi->id}}">Lihat</button>
 

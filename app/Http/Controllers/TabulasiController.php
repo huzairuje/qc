@@ -56,7 +56,7 @@ class TabulasiController extends Controller
             ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']); 
  
  
-        $tabulasis = Tabulasi::all(); 
+        $tabulasis = Tabulasi::get(); 
  
         if (empty($tabulasis)) { 
             flash('Tabulasi not found')->error(); 
