@@ -11,10 +11,12 @@ class KotaKabsTableSeeder extends Seeder
      */
     public function run()
     {
-        Schema::disableForeignKeyConstraints();
-        DB::table('kota_kabupaten')->truncate();
-        Schema::enableForeignKeyConstraints();
-        Excel::filter('chunk')->load(public_path('csv/data_kabkota.csv'))->chunk(514, function($results) {
+        // Schema::disableForeignKeyConstraints();
+        // DB::table('kelurahan')->truncate();
+        // DB::table('kecamatan')->truncate();
+        // DB::table('kota_kabupaten')->truncate();
+        // Schema::enableForeignKeyConstraints();
+        Excel::filter('chunk')->load(public_path('csv/regencies.csv'))->chunk(250, function($results) {
             $header = [ 'id', 'provinsi_id', 'nama' ];
             foreach ($results->toArray() as $row) {
                 $data = array_combine($header, $row);

@@ -11,10 +11,10 @@ class KelurahanTableSeeder extends Seeder
      */
     public function run()
     {
-        Schema::disableForeignKeyConstraints();
-        DB::table('kelurahan')->truncate();
-        Schema::enableForeignKeyConstraints();
-        Excel::filter('chunk')->load(public_path('csv/data_kelurahan.csv'))->chunk(82043, function($results) {
+        // Schema::disableForeignKeyConstraints();
+        // DB::table('kelurahan')->truncate();
+        // Schema::enableForeignKeyConstraints();
+        Excel::filter('chunk')->load(public_path('csv/villages.csv'))->chunk(250, function($results) {
             $header = [ 'id', 'kecamatan_id', 'nama' ];
             foreach ($results->toArray() as $row) {
                 $data = array_combine($header, $row);

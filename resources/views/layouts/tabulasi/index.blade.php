@@ -50,7 +50,7 @@
                                                     <td>{{ $tabulasi->provinsi_id }}</td>
                                                     <td>{{ $tabulasi->kota_kabupaten_id }}</td>
                                                     <td>{{ $tabulasi->kecamatan_id }}</td>
-                                                    <td>{{ $tabulasi->kelurahan_id }} KIDUL</td>
+                                                    <td>{{ $tabulasi->kelurahan_id }}</td>
                                                     <td>
                                                         <button id="showDialog" class="btn btn-warning btn-xs btn-detail open-modal" data-toggle="modal" data-target="#modalShow" data-id="{{$tabulasi->id}}">Lihat</button>
 
