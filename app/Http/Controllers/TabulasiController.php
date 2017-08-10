@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
  
 use Illuminate\Http\Request; 
 use App\Http\Requests; 
+use DB;
 use App\Tabulasi; 
 use App\Dokumen; 
 use App\Provinsi; 
@@ -56,12 +57,9 @@ class TabulasiController extends Controller
             ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']); 
  
  
-        $tabulasis = Tabulasi::get(); 
- 
-        if (empty($tabulasis)) { 
-            flash('Tabulasi not found')->error(); 
- 
-        } 
+        // $tabulasis = Tabulasi::get(); 
+        // $tabulasis = DB::table('tabulasi')->simplePaginate(15);
+        $tabulasis = Tabulasi::paginate(50);
  
         $dokumen = Dokumen::pluck('tipe_dokumen','id')->all(); 
          

@@ -33,7 +33,6 @@
                                         
                                             <table id="tableTabulasi" class="table table-bordered" style="cursor: pointer;">
                                                 <tr class="bg-blue" style="color: white;">
-                                                    <th >No</th>
                                                     <th >Dokumen</th>
                                                     <th >Provinsi</th>
                                                     <th >Kota/Kabupaten</th>
@@ -41,11 +40,8 @@
                                                     <th >Kelurahan</th>
                                                     <th >Action</th>
                                                 </tr>
-                                                <?php $i = 0 ?>
                                                     @foreach($tabulasis as $tabulasi )
-                                                    <?php $i++ ?>
                                                 <tr>
-                                                    <td>{{ $i }}</td>
                                                     <td>{{ ($tabulasi->dokumen ? $tabulasi->dokumen->tipe_dokumen:'-') }}</td>
                                                     <td>{{ ($tabulasi->provinsi ? $tabulasi->provinsi->nama_provinsi:'-') }}</td>
                                                     <td>{{ ($tabulasi->kota_kabupaten ? $tabulasi->kota_kabupaten->nama:'-') }}</td>
@@ -63,7 +59,10 @@
                                                     </td>
                                                 </tr>
                                                @endforeach
+
                                             </table>
+
+                                            <div class="col-md-12">{{ $tabulasis->links() }} </div>
                                             <!-- Modal -->
                                             <div class="modal fade" id="modalCreate" role="dialog">
                                                 @include('layouts.tabulasi.modal_create')
