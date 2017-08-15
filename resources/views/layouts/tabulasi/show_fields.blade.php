@@ -9,7 +9,7 @@
 
 <div class="form-group">
     {!! Form::label('provinsi_id', 'Provinsi :') !!}
-    <p>{!! $tabulasi->dokumen_id !!}</p>
+    <p>{!! $tabulasi->provinsi_id !!}</p>
 </div>
 
 <div class="form-group">
@@ -22,9 +22,9 @@
     <p>{!! $tabulasi->kecamatan_id !!}</p>
 </div>
 
-<div class="form-group col-sm-12">
-    
-</div>    
+<div class="modal-footer">
+            <a href="{{ route('tabulasi.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Kembali</a>
+        </div>    
     </div>
 </div>
 

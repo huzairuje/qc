@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests; 
 use DB;
 use Yajra\Datatables\Facades\Datatables;
+use Yajra\Datatables\Services\DataTable;
 use Yajra\Datatables\Facades\Datatables\Editor;
 use Yajra\Datatables\Facades\Datatables\Field;
 use Yajra\Datatables\Facades\Datatables\Format;
@@ -49,59 +50,55 @@ class TabulasiController extends Controller
     public function index() 
     { 
 
-        
- 
- 
-        // // $tabulasis = Tabulasi::get(); 
-        // // dd($tabulasis);
-        // // $tabulasis = DB::table('tabulasi')->simplePaginate(15);
-        // $tabulasis = Tabulasi::paginate(50);
- 		
-        // $dokumen = Dokumen::pluck('tipe_dokumen','id')->all(); 
-         
-        // $provinsi = Provinsi::pluck('nama_provinsi','id')->all(); 
- 
-        // $kota_kabupaten = array(); 
- 
-        // $kecamatan = array(); 
- 
-        // $kelurahan = array(); 
- 		
- 		return view('layouts.tabulasi.index');
-        // return view('layouts.tabulasi.index',  compact('chart','tabulasis','dokumen','provinsi','kota_kabupaten','kecamatan','kelurahan')); 
+        return view('layouts.tabulasi.index');
  
     } 
     public function get_datatable()
     {
-        // $dokumen = Tabulasi::join('dokumen', 'dokumen.id', '=', 'tabulasi.dokumen_id')->select(['dokumen.id', 'dokumen.tipe_dokumen']);
-            // join it with drawing table
-            
-            //select columns for new virtual table. ID columns must be renamed, because they have the same title
-            
-    	// $kota_kabupaten = KotaKab::query();
-    	// $kecamatan = Kecamatan::query();
-    	// $kelurahan = Kelurahan::query();
+    	 $tabulasi = Tabulasi::query();
 
-    	// $dokumen = Tabulasi::query('dokumen.id', '=', 'dokumen_id')->select(['dokumen.id', 'dokumen.tipe_dokumen']);
+	    // $dataTable = Datatables::eloquent($tabulasi);
+	    // return $dataTable->make(true);
 
-   
-    	$tabulasi = Tabulasi::query();
-    	// $tabulasi = Tabulasi::query('dokumen')->where('dokumen_id.*')->value('dokumen_id');
-	    $dataTable = Datatables::eloquent($tabulasi);
-	    // $dataTable->where('id', 5);
-
-	    return $dataTable->make(true);
+        return Datatables::eloquent($tabulasi)
+            ->editColumn('provinsi_id', function ($tabulasi) {
+                return $tabulasi->provinsi->nama_provinsi;              
+            })
+            ->editColumn('kota_kabupaten_id', function ($tabulasi) {
+                return $tabulasi->kota_kabupaten->nama;
+            })
+            ->editColumn('kecamatan_id', function ($tabulasi) {
+                return $tabulasi->kecamatan->nama;
+            })
+            ->editColumn('kelurahan_id', function ($tabulasi) {
+                return $tabulasi->kelurahan->nama;
+            })
+            ->make(true);
     }
-
-    // 	$dokumen = Tabulasi::with('dokumen_id')->select('tipe_dokumen.*')->join('dokumen');
-    // 	dd($dokumen);
-    // 	$provinsi = Tabulasi::with('provinsi_id')->select('nama_provinsi.*')->join('provinsi')->where('id');
-    // 	$kota_kabupaten = Tabulasi::with('kota_kabupaten_id')->select('nama.*')->join('kota_kabupaten')->where('id');
-    // 	$kecamatan = Tabulasi::with('kecamatan_id')->select('nama.*')->join('kecamatan')->where('id');
-    // 	$kelurahan = Tabulasi::with('kelurahan_id')->select('nama.*')->join('kelurahan')->where('id');
-
-    // 	return Datatables::eloquent(Tabulasi::query())->make(true);
-    // }
+    public function data(Request $request)
+    {
+        // cek ajax request   
+        if($request->ajax()){
+            $tabulasi = Tabulasi::select('id', 'provinsi_id', 'kota_kabupaten_id', 'kecamatan_id', 'kelurahan_id')
+                        ->get();
+            return Datatables::of($tabulasi)
+                    // tambah kolom untuk aksi edit dan hapus
+                    ->addColumn('action', 
+                    '<a href="#" title="Edit" class="btn-sm btn-warning"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                    
+                    <form style="display: inline">
+                        <input name="_method" type="hidden" value="DELETE">
+                        <input name="_token" type="hidden" value="{!! csrf_token() !!}">
+                        <button class="btn-sm btn-danger" type="button" style="border: none"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                    </form>')
+                    ->editColumn('provinsi_id', function ($tabulasi) {
+                return $tabulasi->provinsi_id->nama_provinsi;              
+            })
+                    ->make(true);
+        } else {
+            exit("Not an AJAX request -_-");
+        }
+    }
  
     public function show($id) 
     { 
@@ -121,6 +118,7 @@ class TabulasiController extends Controller
         //     ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']); 
  
         $tabulasi = Tabulasi::find($id); 
+        // dd($tabulasi);
  
         if (empty($tabulasi)) { 
             flash('Tabulasi not found')->error(); 
@@ -146,7 +144,7 @@ class TabulasiController extends Controller
         $kecamatan = array(); 
  
         $kelurahan = array();
- 
+        
         return view('layouts.tabulasi.create', compact('provinsi','kota_kabupaten','kecamatan','kelurahan')); 
     } 
  
@@ -156,15 +154,11 @@ class TabulasiController extends Controller
 
 
         $input = $request->all();
-        $provinsi_id = $request->input('nama_provinsi');
-        $kota_kabupaten_id = $request->input('nama');
-        $kecamatan_id = $request->input('nama');
-        $kelurahan_id = $request->input('nama');
  
         $tabulasi = Tabulasi::create($input); 
         
-        flash('Data Tabulasi updated successfully.')->success(); 
-        return redirect(route('tabulasi.index')); 
+        flash('Data Tabulasi created successfully.')->success(); 
+        return redirect(route('tabulasi.show',$tabulasi)); 
     } 
  
      

@@ -18,11 +18,13 @@
                             <div class="form-line">
                                 <div class="body">
                                     <div class="row clearfix">
+                                    @include('flash::message')
                                             <div class="header">
                                                 <h2>
                                                     <span>TABULASI</span>
                                                     <i class="material-icons">autorenew</i>
                                                 </h2>
+
                                                 <div class="body">
                                                     <a href="{{ route('tabulasi.create') }}" class ="btn btn-primary waves-effect">Buat Data</a>
                                                 </div>
@@ -41,7 +43,16 @@
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
-                                            </table>  
+                                            </table><!-- Modal -->
+                                            <div class="modal fade" id="showModal" role="dialog">
+                                                 @include('layouts.monitoring.modal_foto_preview')
+                                            </div>
+                                            <div class="modal fade" id="editModal" role="dialog">
+                                                 @include('layouts.monitoring.modal_foto_preview')
+                                            </div>
+                                            <div class="modal fade" id="deleteModal" role="dialog">
+                                                 @include('layouts.monitoring.modal_foto_preview')
+                                            </div>  
                                             <script src="https://datatables.yajrabox.com/js/jquery.min.js"></script>
                                             <script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
                                             <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
@@ -54,6 +65,7 @@
                                                         ajax: '/tabulasi/getdatatable',
                                                         columns: 
                                                             [
+
                                                                 {data: 'dokumen_id'},
                                                                 {data: 'provinsi_id'},
                                                                 {data: 'kota_kabupaten_id'},
@@ -63,47 +75,12 @@
                                                                 return data == 1 ? 'Ada' : 'Tidak Ada'}},
                                                                 {
                                                                     className: "center",
-                                                                    defaultContent: '<button href="" class="editor_show">Lihat</button>  <button href="" class="editor_edit">Edit</button>  <button href="" class="editor_remove">Delete</button>'}
+                                                                    defaultContent: '<button href="" class="editor_show">Lihat</button>  <button href="" data-toggle="modal" data-target="#editModal" class="editor_edit">Edit</button>  <button href="" data-toggle="modal" data-target="#deleteModal"class="editor_remove">Delete</button>'}
                                                                 ]
                                                             } );
-                                                    // New record
-                                                    $('#editor_edit').on( 'click', function (e) {
-                                                        e.preventDefault();
-                                                 
-                                                        editor
-                                                            .title( 'Create new record' )
-                                                            .buttons( { "label": "Add", "fn": function () { editor.submit() } } )
-                                                            .create();
+                                                    
                                                     } );
-                                                    $('#example').DataTable( {
-                                                        serverSide: true,
-                                                        ajax: {
-                                                            url: '/tabulasi/create',
-                                                            type: 'POST'
-                                                        }
-                                                    } );
-                                                 
-                                                    // Edit record
-                                                    $('#editor_edit').on( 'click', 'a.editor_edit', function (e) {
-                                                        e.preventDefault();
-                                                 
-                                                        editor
-                                                            .title( 'Edit record' )
-                                                            .buttons( { "label": "Update", "fn": function () { editor.submit() } } )
-                                                            .edit( $(this).closest('tr') );
-                                                    } );
-                                                 
-                                                    // Delete a record
-                                                    $('#editor_remove').on( 'click', 'a.editor_remove', function (e) {
-                                                        e.preventDefault();
-                                                 
-                                                        editor
-                                                            .title( 'Edit record' )
-                                                            .message( "Are you sure you wish to delete this row?" )
-                                                            .buttons( { "label": "Delete", "fn": function () { editor.submit() } } )
-                                                            .remove( $(this).closest('tr') );
-                                                    });
-                                                });
+                                                                                                         
                                             </script>                                      
                                     </div>
                                 </div>

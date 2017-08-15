@@ -16,12 +16,6 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/',['as'=>'dashboard','uses'=>'DashboardController@index']);
 	
-	Route::get('/helper',['as'=>'helper','uses'=>'HelperController@index']);
-	Route::get('/widget',['as'=>'widget','uses'=>'WidgetController@index']);
-	Route::get('/table',['as'=>'table','uses'=>'TableController@index']);
-	Route::get('/media',['as'=>'media','uses'=>'MediaController@index']);
-	Route::get('/chart',['as'=>'chart','uses'=>'ChartController@index']);
-
 	//Route For user
 	Route::get('/users', 'UserController@profile')->name('users.profile');
 	Route::patch('/users/{id}', 'UserController@update')->name('users.update');
@@ -31,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/tabulasi', ['as'=>'tabulasi.index','uses'=>'TabulasiController@index']);
     Route::get('/tabulasi/getdatatable', ['as' => 'tabulasi.datatable',   'uses' => 'TabulasiController@get_datatable']);
 	Route::get('/tabulasi/create',['as'=>'tabulasi.create','uses'=>'TabulasiController@create']);	
+	Route::get('/tabulasi/show/{id}',['as'=>'tabulasi.show','uses'=>'TabulasiController@show']);	
 	Route::post('/tabulasi/store',['as'=>'tabulasi.store','uses'=>'TabulasiController@store']);
 	Route::get('/tabulasi/ajax',['as'=>'tabulasi.ajax','uses'=>'TabulasiController@ajax']);
 	Route::get('/tabulasi/quickcount',['as'=>'tabulasi.quickcount','uses'=>'TabulasiController@quickCount']);

@@ -17,13 +17,14 @@
                             <li {{Route::is('tabulasi.create')? 'class=active':''}}>
                                 <a href="{{route('tabulasi.create')}}">Create Data Tabulasi</a>
                             </li>
-                            <li {{Route::is('tabulasi.index')? 'class=active':''}}>
+                            <li {{Route::is('tabulasi.index') || Route::is('tabulasi.show')? 'class=active':''}}>
                                 <a href="{{route('tabulasi.index')}}">Tabulasi Index</a>
                             </li>
                             <li {{Route::is('tabulasi.quickcount')? 'class=active':''}}>
                                 <a href="{{route('tabulasi.quickcount')}}">Hasil Quick Count</a>
                             </li>    
-                        </ul>                    </li>
+                        </ul>                   
+                    </li>
                     <li {{Route::is('download')? 'class=active':''}}>
                         <a href="{{route('download')}}">
                             <i class="material-icons">file_download</i>
