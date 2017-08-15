@@ -13,8 +13,7 @@ use Yajra\Datatables\Facades\Datatables\Mjoin;
 use Yajra\Datatables\Facades\Datatables\Options;
 use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
-use App\Tabulasi; 
-use App\Dokumen; 
+use App\Tabulasi;  
 use App\Provinsi; 
 use App\KotaKab; 
 use App\Kecamatan; 
@@ -165,7 +164,7 @@ class TabulasiController extends Controller
         $tabulasi = Tabulasi::create($input); 
         
         flash('Data Tabulasi updated successfully.')->success(); 
-        return redirect(route('tabulasi.index', compact('dokumen', 'provinsi', 'kota_kabupaten','kecamatan','kelurahan'))); 
+        return redirect(route('tabulasi.index')); 
     } 
  
      
