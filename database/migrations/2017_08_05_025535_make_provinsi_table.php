@@ -14,7 +14,7 @@ class MakeProvinsiTable extends Migration
     public function up()
     {
         Schema::create('provinsi', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string( 'nama_provinsi' )->nullable();
             $table->timestamps();
         });

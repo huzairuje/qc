@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    var url = "/ajax-crud/public/tasks";
+    var url = "/tabulasi";
 
     //display modal form for task editing
     $('.open-modal').click(function(){
@@ -16,13 +16,6 @@ $(document).ready(function(){
 
             $('#myModal').modal('show');
         }) 
-    });
-
-    //display modal form for creating new task
-    $('#btn-add').click(function(){
-        $('#btn-save').val("add");
-        $('#frmTasks').trigger("reset");
-        $('#myModal').modal('show');
     });
 
     //delete task and remove it from list
@@ -61,10 +54,6 @@ $(document).ready(function(){
 
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save').val();
-
-        var type = "POST"; //for creating new resource
-        var task_id = $('#task_id').val();;
-        var my_url = url;
 
         if (state == "update"){
             type = "PUT"; //for updating existing resource

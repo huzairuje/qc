@@ -38,10 +38,14 @@
 
     @section('script')
         {{Html::script('bsbmd/plugins/jquery/jquery.min.js')}}
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
         {{Html::script('bsbmd/plugins/bootstrap/js/bootstrap.js')}}
+        <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/fixedheader/3.1.2/js/dataTables.fixedHeader.min.js"></script>
         {{Html::script('bsbmd/plugins/bootstrap-select/js/bootstrap-select.js')}}
         {{Html::script('bsbmd/plugins/jquery-slimscroll/jquery.slimscroll.js')}}
         {{Html::script('bsbmd/plugins/node-waves/waves.js')}}
+
 
     @show    
     @yield('extra-script')

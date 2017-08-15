@@ -14,9 +14,9 @@ class MakeTableKelurahan extends Migration
     public function up()
     {
         Schema::create('kelurahan', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('nama')->nullable();
-            $table->integer('kecamatan_id')->unsigned()->index();
+            $table->bigInteger('kecamatan_id')->unsigned()->index();
             $table->foreign('kecamatan_id')->references('id')->on('kecamatan')->onDelete('cascade');
             $table->timestamps();
         });

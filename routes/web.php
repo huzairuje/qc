@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::group(['middleware'=>'auth'],function(){
+Route::group(['middleware' => 'auth'], function () {
 	Route::get('/',['as'=>'dashboard','uses'=>'DashboardController@index']);
 	
 	Route::get('/helper',['as'=>'helper','uses'=>'HelperController@index']);
@@ -29,10 +29,10 @@ Route::group(['middleware'=>'auth'],function(){
 	//Route for Tabulasi
 
 	Route::get('/tabulasi', ['as'=>'tabulasi.index','uses'=>'TabulasiController@index']);
-    Route::get('/tabulasi/ajax', ['as' => 'tabulasi.ajax',   'uses' => 'TabulasiController@ajax']);
-	// Route::get('/tabulasi/create',['as'=>'tabulasi.create','uses'=>'TabulasiController@create']);
-	// Route::get('/tabulasi/show/{id}',['as'=>'tabulasi.show','uses'=>'TabulasiController@show']);
+    Route::get('/tabulasi/getdatatable', ['as' => 'tabulasi.datatable',   'uses' => 'TabulasiController@get_datatable']);
+	Route::get('/tabulasi/create',['as'=>'tabulasi.create','uses'=>'TabulasiController@create']);	
 	Route::post('/tabulasi/store',['as'=>'tabulasi.store','uses'=>'TabulasiController@store']);
+	Route::get('/tabulasi/ajax',['as'=>'tabulasi.ajax','uses'=>'TabulasiController@ajax']);
 	Route::get('/tabulasi/quickcount',['as'=>'tabulasi.quickcount','uses'=>'TabulasiController@quickCount']);
 
 	

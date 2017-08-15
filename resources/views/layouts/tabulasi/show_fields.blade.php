@@ -23,7 +23,7 @@
 </div>
 
 <div class="form-group col-sm-12">
-    <a href="{!! route('tabulasi.create') !!}" class="btn btn-default">Kembali</a>
+    
 </div>    
     </div>
 </div>

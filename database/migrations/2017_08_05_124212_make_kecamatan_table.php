@@ -14,9 +14,9 @@ class MakeKecamatanTable extends Migration
     public function up()
     {
         Schema::create('kecamatan', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('nama')->nullable();
-            $table->integer('kota_kabupaten_id')->unsigned()->index();
+            $table->bigInteger('kota_kabupaten_id')->unsigned()->index();
             $table->foreign('kota_kabupaten_id')->references('id')->on('kota_kabupaten')->onDelete('cascade');
             $table->timestamps();
         });

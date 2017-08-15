@@ -14,7 +14,7 @@ class MakeTabulasiTable extends Migration
     public function up()
     {
         Schema::create('tabulasi', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('dokumen_id')->nullable();
             $table->string('provinsi_id')->nullable();
             $table->string('kota_kabupaten_id')->nullable();

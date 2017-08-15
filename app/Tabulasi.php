@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tabulasi extends Model
 {
 	protected $table = 'tabulasi';
+    public $primaryKey ='id';
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -21,7 +22,8 @@ class Tabulasi extends Model
     ];
 
     public function dokumen()
-    {
+    {   
+
         return $this->belongsTo(Dokumen::class);
     }
 

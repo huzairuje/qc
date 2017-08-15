@@ -90,6 +90,33 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#example').DataTable( {
+                    responsive: {
+                        details: {
+                            display: $.fn.dataTable.Responsive.display.modal( {
+                                header: function ( row ) {
+                                    var data = row.data();
+                                    return 'Details for '+data[0]+' '+data[1];
+                                }
+                            } ),
+                            renderer: function ( api, rowIdx, columns ) {
+                                var data = $.map( columns, function ( col, i ) {
+                                    return '<tr>'+
+                                            '<td>'+col.title+':'+'</td> '+
+                                            '<td>'+col.data+'</td>'+
+                                        '</tr>';
+                                } ).join('');
+             
+                                return $('<table/>').append( data );
+                            }
+                        }
+                    }
+                } );
+            } );
+        </script>
+
 </div>
 </div>
 </div>

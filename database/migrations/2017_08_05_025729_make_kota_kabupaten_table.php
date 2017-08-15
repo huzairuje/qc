@@ -14,9 +14,9 @@ class MakeKotaKabupatenTable extends Migration
     public function up()
     {
         Schema::create('kota_kabupaten', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('nama')->nullable();
-            $table->integer('provinsi_id')->unsigned()->index();
+            $table->bigInteger('provinsi_id')->unsigned()->index();
             $table->foreign('provinsi_id')->references('id')->on('provinsi')->onDelete('cascade');
             $table->timestamps();
         });
