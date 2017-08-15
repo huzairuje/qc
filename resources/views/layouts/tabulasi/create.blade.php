@@ -34,20 +34,20 @@
                     </div>
 
                     <div class="col-md-6">
-                           {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control show-tick','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}     
+                           {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}     
                     </div>
         
                     <div class="col-md-6">
-                                {{ Form::select('kota_kabupaten_id', $kota_kabupaten,null, ['class' => 'form-control show-tick','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
+                                {{ Form::select('kota_kabupaten_id', $kota_kabupaten,null, ['class' => 'form-control','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
                     </div>
 
                     <div class="col-md-6">
-                                {{ Form::select('kecamatan_id', $kecamatan,null, ['class' => 'form-control show-tick','id' => 'kecamatan_id','placeholder' => 'Select Kecamatan']) }}
+                                {{ Form::select('kecamatan_id', $kecamatan,null, ['class' => 'form-control','id' => 'kecamatan_id','placeholder' => 'Select Kecamatan']) }}
                     </div>
 
 
                     <div class="col-md-6">
-                                {{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control show-tick','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
+                                {{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
                     </div>
 
                     <div class="col-md-12">
@@ -103,7 +103,6 @@
 <script type="text/javascript">
     $(document).ready( function() {
         // select2
-        $('.select-zone').select2();
 
         var _url = '{{ route('tabulasi.ajax') }}';
 
@@ -112,9 +111,14 @@
             $.get(_url,{'type':'get-city','provinsi_id':_val})
             .done(function(result) {
                 var html = '';
+                $('#kota_kabupaten_id').selectpicker(html);
+
                 $.each(result,function(key,value){
                     html += '<option value="'+key+'">'+value+'</option>';
                 });
+
+                $('#kota_kabupaten_id').html(html);
+                $('#kota_kabupaten_id').selectpicker('refresh');
             });
         });
 
@@ -124,12 +128,13 @@
 	            $.get(_url,{'type':'get-kecamatan','kota_kabupaten_id':coba})
 	            .done(function(result) {
 	                var html = '';
+                    $('#kecamatan_id').selectpicker(html);
 	                $.each(result,function(key,value){
 	                    html += '<option value="'+key+'">'+value+'</option>';
 	                });
 
 	                $('#kecamatan_id').html(html);
-                    $('#kecamatan_id').select2("destroy").select2();
+                    $('#kecamatan_id').selectpicker('refresh');
 	                
 	            });
 	        });
@@ -140,13 +145,13 @@
 	            $.get(_url,{'type':'get-kelurahan','kecamatan_id':coba})
 	            .done(function(result) {
 	                var html = '';
+                    $('#kelurahan_id').selectpicker(html);
 	                $.each(result,function(key,value){
 	                    html += '<option value="'+key+'">'+value+'</option>';
 	                });
 
 	                $('#kelurahan_id').html(html);
-                    $('#kelurahan_id').select2("destroy").select2();
-	                
+	                $('#kelurahan_id').selectpicker('refresh');
 	            });
 	        });
 	    });
