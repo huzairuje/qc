@@ -171,7 +171,6 @@ class TabulasiController extends Controller
  
     public function edit ($id) 
     { 
-        $dokumen = Dokumen::pluck('tipe_dokumen','id')->all(); 
         $provinsi = Provinsi::pluck('nama_provinsi','id')->all(); 
         $kota_kabupaten = array(); 
         return view('layouts.tabulasi.create', compact('dokumen','provinsi','kota_kabupaten')); 
@@ -179,7 +178,6 @@ class TabulasiController extends Controller
     } 
     public function update($id) 
     { 
-        $dokumen = Dokumen::pluck('tipe_dokumen','id')->all(); 
         $provinsi = Provinsi::pluck('nama_provinsi','id')->all(); 
         $kota_kabupaten = array(); 
         return view('layouts.tabulasi.index', compact('dokumen','provinsi','kota_kabupaten','kecamatan','kelurahan')); 
@@ -204,7 +202,7 @@ class TabulasiController extends Controller
         $type = $request->type; 
         switch ($type) { 
             case 'get-city': 
-                 return KotaKab::where('provinsi_id',$request->provinsi_id->nama_provinsi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all(); 
+                 return KotaKab::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all(); 
  
                 return $result; 
                 break; 

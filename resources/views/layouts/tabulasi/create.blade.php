@@ -27,43 +27,54 @@
             <div class="row clearfix">
                 <!-- Content Create-->
                 {!! Form::open(['route' => 'tabulasi.store']) !!}
+
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-line">
-                            {!! Form::select('dokumen_id', ['C1' => 'C1', 'C2' => 'C2', 'C3' => 'C3', 'C3' => 'C3', 'C4' => 'C4'], null, ['class' => 'form-control'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}
-                            </div>
-    						
-                        </div>
+                            {!! Form::select('dokumen_id', ['C1' => 'C1', 'C2' => 'C2', 'C3' => 'C3', 'C3' => 'C3', 'C4' => 'C4'], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}    						
+                        
                     </div>
-            
+
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <div class="form-line">
-                                {{ Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control select-zone','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) }}
-                            </div>
-                        </div>
+                           {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control show-tick','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}     
                     </div>
         
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <div class="form-line">
-                                {{ Form::select('kota_kabupaten_id', $kota_kabupaten,null, ['class' => 'form-control select-zone','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
-                            </div>
-                        </div>
+                                {{ Form::select('kota_kabupaten_id', $kota_kabupaten,null, ['class' => 'form-control show-tick','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
                     </div>
 
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <div class="form-line">
-                                {{ Form::select('kecamatan_id', $kecamatan,null, ['class' => 'form-control select-zone','id' => 'kecamatan_id','placeholder' => 'Select Kecamatan']) }}
-                            </div>
-                        </div>
+                                {{ Form::select('kecamatan_id', $kecamatan,null, ['class' => 'form-control show-tick','id' => 'kecamatan_id','placeholder' => 'Select Kecamatan']) }}
                     </div>
 
+
                     <div class="col-md-6">
+                                {{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control show-tick','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
+                    </div>
+
+                    <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-line">
-                                {{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control select-zone','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
+                                <table id="data_suara" class="table table-bordered" style="cursor: pointer;">
+                                    <thead>
+                                      <tr class="bg-blue" style="color: white;">
+                                        @for ($x = 1; $x <= 20; $x++)
+                                            <th class="tg-yw4l">X{{ $x }}</th>
+                                        @endfor
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for ($y = 1; $y <= 20; $y++)
+                                          <tr>
+                                            @for ($x = 1; $x <= 20; $x++)
+                                                <td class="tg-yw4l" tabindex="1">
+                                                    
+                                                </td>
+                                            @endfor
+                                          </tr>
+                                        @endfor
+                                      
+                                    </tbody>
+
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -74,7 +85,7 @@
                     <!-- Modal -->
         <div class="modal-footer">
             {!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <a href="{{ route('tabulasi.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Kembali</a>
         </div>
         {!! Form::close() !!}
 </div>
@@ -95,7 +106,8 @@
         $('.select-zone').select2();
 
         var _url = '{{ route('tabulasi.ajax') }}';
-        $(document).on('change','#provinsi',function(){
+
+        $(document).on('change','#provinsi_id',function(){
             var _val = $(this).val();
             $.get(_url,{'type':'get-city','provinsi_id':_val})
             .done(function(result) {
@@ -103,13 +115,10 @@
                 $.each(result,function(key,value){
                     html += '<option value="'+key+'">'+value+'</option>';
                 });
-
-                $('#kota_kabupaten').html(html);
-                $('#kota_kabupaten').select2("destroy").select2();
             });
         });
 
-	        $(document).on('change','#kota_kabupaten',function(){
+	        $(document).on('change','#kota_kabupaten_id',function(){
 
 	            var coba = $(this).val();
 	            $.get(_url,{'type':'get-kecamatan','kota_kabupaten_id':coba})
@@ -119,8 +128,8 @@
 	                    html += '<option value="'+key+'">'+value+'</option>';
 	                });
 
-	                $('#kecamatan').html(html);
-                    $('#kecamatan').select2("destroy").select2();
+	                $('#kecamatan_id').html(html);
+                    $('#kecamatan_id').select2("destroy").select2();
 	                
 	            });
 	        });
@@ -135,8 +144,8 @@
 	                    html += '<option value="'+key+'">'+value+'</option>';
 	                });
 
-	                $('#kelurahan').html(html);
-                    $('#kelurahan').select2("destroy").select2();
+	                $('#kelurahan_id').html(html);
+                    $('#kelurahan_id').select2("destroy").select2();
 	                
 	            });
 	        });

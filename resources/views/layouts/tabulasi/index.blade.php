@@ -66,6 +66,33 @@
                                                                     defaultContent: '<button href="" class="editor_show">Lihat</button>  <button href="" class="editor_edit">Edit</button>  <button href="" class="editor_remove">Delete</button>'}
                                                                 ]
                                                             } );
+                                                    // New record
+                                                    $('#editor_edit').on( 'click', function (e) {
+                                                        e.preventDefault();
+                                                 
+                                                        editor
+                                                            .title( 'Create new record' )
+                                                            .buttons( { "label": "Add", "fn": function () { editor.submit() } } )
+                                                            .create();
+                                                    } );
+                                                    $('#example').DataTable( {
+                                                        serverSide: true,
+                                                        ajax: {
+                                                            url: '/tabulasi/create',
+                                                            type: 'POST'
+                                                        }
+                                                    } );
+                                                 
+                                                    // Edit record
+                                                    $('#editor_edit').on( 'click', 'a.editor_edit', function (e) {
+                                                        e.preventDefault();
+                                                 
+                                                        editor
+                                                            .title( 'Edit record' )
+                                                            .buttons( { "label": "Update", "fn": function () { editor.submit() } } )
+                                                            .edit( $(this).closest('tr') );
+                                                    } );
+                                                 
                                                     // Delete a record
                                                     $('#editor_remove').on( 'click', 'a.editor_remove', function (e) {
                                                         e.preventDefault();
