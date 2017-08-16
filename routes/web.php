@@ -21,17 +21,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::patch('/users/{id}', 'UserController@update')->name('users.update');
 
 	//Route for Tabulasi
-
+	Route::get('/tabulasi/ajax',['as'=>'tabulasi.ajax','uses'=>'TabulasiController@ajax']);
 	Route::get('/tabulasi', ['as'=>'tabulasi.index','uses'=>'TabulasiController@index']);
     Route::get('/tabulasi/getdatatable', ['as' => 'tabulasi.datatable',   'uses' => 'TabulasiController@get_datatable']);
 	Route::get('/tabulasi/create',['as'=>'tabulasi.create','uses'=>'TabulasiController@create']);	
-	Route::get('/tabulasi/{id}/show',['as'=>'tabulasi.show','uses'=>'TabulasiController@show']);	
-	Route::get('/tabulasi/{id}/edit',['as'=>'tabulasi.edit','uses'=>'TabulasiController@edit']);	
-	Route::patch('/tabulasi/{id}/update',['as'=>'tabulasi.update','uses'=>'TabulasiController@update']);	
+	Route::get('/tabulasi/show/{id}',['as'=>'tabulasi.show','uses'=>'TabulasiController@show']);	
+	Route::get('/tabulasi/edit/{id}',['as'=>'tabulasi.edit','uses'=>'TabulasiController@edit']);	
+	Route::patch('/tabulasi/update/{id}',['as'=>'tabulasi.update','uses'=>'TabulasiController@update']);	
 	Route::post('/tabulasi/store',['as'=>'tabulasi.store','uses'=>'TabulasiController@store']);
-	Route::get('tabulasi/{id}', ['as' => 'tabulasi.delete', 'uses' => 'TabulasiController@destroy']);
+	Route::get('/tabulasi/{id}', ['as' => 'tabulasi.delete', 'uses' => 'TabulasiController@destroy']);
 	Route::delete('/tabulasi/{id}',['as'=>'tabulasi.delete','uses'=>'TabulasiController@destroy']);
-	Route::get('/tabulasi/ajax',['as'=>'tabulasi.ajax','uses'=>'TabulasiController@ajax']);
+	
 	Route::get('/tabulasi/quickcount',['as'=>'tabulasi.quickcount','uses'=>'TabulasiController@quickCount']);
 
 	

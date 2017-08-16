@@ -57,6 +57,8 @@ class TabulasiController extends Controller
     {
          // $tabulasi = Tabulasi::query();
         $tabulasi = Tabulasi::select(['id','dokumen_id', 'provinsi_id', 'kota_kabupaten_id', 'kecamatan_id', 'kelurahan_id']);
+        // $dataTable = Datatables::eloquent($tabulasi);
+        // return $dataTable->make(true);
 
         return Datatables::eloquent($tabulasi)
 
@@ -89,12 +91,14 @@ class TabulasiController extends Controller
                 }
             })
             ->addColumn('action', function ($tabulasi) {
-            return '<a href="'.route('tabulasi.show', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('tabulasi.edit', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('tabulasi.delete', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
-            })
+            return '<a href="'.route('tabulasi.show', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('tabulasi.edit', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('tabulasi.delete', $tabulasi->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+        })
             
             ->make(true);
     }
-     
+    
+    
+ 
     public function show($id) 
     { 
     	$chart = Charts::multi('bar', 'material') 
@@ -128,10 +132,14 @@ class TabulasiController extends Controller
  
     public function create() 
     { 	
+
+
         $provinsi = Provinsi::pluck('nama_provinsi','id')->all(); 
+        // dd($provinsi);
  		
         $kota_kabupaten = array(); 
-        
+        // dd($kota_kabupaten);
+ 
         $kecamatan = array(); 
  
         $kelurahan = array();
@@ -156,6 +164,7 @@ class TabulasiController extends Controller
  
     public function edit ($id) 
     { 
+        // $tabulasi = $this->findWithoutFail($id);
         $tabulasi = Tabulasi::find($id);
         $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
         $kota_kabupaten = KotaKab::pluck('nama','id')->all();
@@ -190,7 +199,7 @@ class TabulasiController extends Controller
             $tabulasi->kelurahan_id    = $request->kelurahan_id;
             
             $tabulasi->update();
-        
+       
 
         flash('Data Tabulasi saved successfully')->success();
         return redirect(route('tabulasi.index')); 
