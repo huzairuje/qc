@@ -17,7 +17,7 @@
                             <li {{Route::is('tabulasi.create')? 'class=active':''}}>
                                 <a href="{{route('tabulasi.create')}}">Create Data Tabulasi</a>
                             </li>
-                            <li {{Route::is('tabulasi.index') || Route::is('tabulasi.show')? 'class=active':''}}>
+                            <li {{Route::is('tabulasi.index') || Route::is('tabulasi.show') || Route::is('tabulasi.edit')? 'class=active':''}}>
                                 <a href="{{route('tabulasi.index')}}">Tabulasi Index</a>
                             </li>
                             <li {{Route::is('tabulasi.quickcount')? 'class=active':''}}>

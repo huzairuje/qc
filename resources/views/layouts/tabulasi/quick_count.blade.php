@@ -22,12 +22,39 @@
                 <div class="box box-primary">
 
                     <div class="box-body">
-                     
+                        <div class="card">
+                        <div class="row clearfix">
+                            
+                            
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <table id="data_suara" class="table table-bordered" style="cursor: pointer;">
+                                                <thead>
+                                                  <tr class="bg-blue" style="color: white;">
+                                                    @for ($x = 1; $x <= 20; $x++)
+                                                        <th class="tg-yw4l">X{{ $x }}</th>
+                                                    @endfor
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for ($y = 1; $y <= 20; $y++)
+                                                      <tr>
+                                                        @for ($x = 1; $x <= 20; $x++)
+                                                            <td class="tg-yw4l" tabindex="1">
+                                                                
+                                                            </td>
+                                                        @endfor
+                                                      </tr>
+                                                    @endfor
+                                                  
+                                                </tbody>
 
-                        <div class="row">
-                           
-                                
-
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>    

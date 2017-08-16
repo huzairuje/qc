@@ -21,12 +21,6 @@ class Tabulasi extends Model
         'data_suara'
     ];
 
-    public function dokumen()
-    {   
-
-        return $this->belongsTo(Dokumen::class);
-    }
-
     public function provinsi()
     {
         return $this->belongsTo(Provinsi::class);

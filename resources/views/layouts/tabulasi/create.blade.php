@@ -3,7 +3,7 @@
 @section('title')
 
 @endsection
-
+{!! Charts::assets() !!}
 @section('extra-css')
 
 @endsection
@@ -85,7 +85,7 @@
                     <!-- Modal -->
         <div class="modal-footer">
             {!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
-            <a href="{{ route('tabulasi.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Kembali</a>
+            <a href="{{ route('tabulasi.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Tabulasi</a>
         </div>
         {!! Form::close() !!}
 </div>

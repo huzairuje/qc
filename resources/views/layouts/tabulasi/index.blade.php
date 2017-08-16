@@ -34,11 +34,11 @@
                                             <table id="table-Tabulasi" class="table table-striped">
                                                 <thead>
                                                     <tr style="background-color: lightblue">
-                                                        <th >Dokumen</th>
-                                                        <th >Provinsi</th>
-                                                        <th >Kota/Kabupaten</th>
-                                                        <th >Kecamatan</th>
-                                                        <th >Kelurahan</th>
+                                                        <th>Dokumen</th>
+                                                        <th>Provinsi</th>
+                                                        <th>Kota/Kabupaten</th>
+                                                        <th>Kecamatan</th>
+                                                        <th>Kelurahan</th>
                                                         <th>Data Suara</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -73,9 +73,7 @@
                                                                 {data: 'kelurahan_id'},
                                                                 {data: 'data_suara', render: function (data, type, row, meta) {
                                                                 return data == 1 ? 'Ada' : 'Tidak Ada'}},
-                                                                {
-                                                                    className: "center",
-                                                                    defaultContent: '<button href="" class="editor_show">Lihat</button>  <button href="" data-toggle="modal" data-target="#editModal" class="editor_edit">Edit</button>  <button href="" data-toggle="modal" data-target="#deleteModal"class="editor_remove">Delete</button>'}
+                                                                {data: 'action'}
                                                                 ]
                                                             } );
                                                     

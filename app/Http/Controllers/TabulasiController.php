@@ -55,67 +55,80 @@ class TabulasiController extends Controller
     } 
     public function get_datatable()
     {
-    	 $tabulasi = Tabulasi::query();
-
-	    // $dataTable = Datatables::eloquent($tabulasi);
-	    // return $dataTable->make(true);
+         // $tabulasi = Tabulasi::query();
+        $tabulasi = Tabulasi::select(['id','dokumen_id', 'provinsi_id', 'kota_kabupaten_id', 'kecamatan_id', 'kelurahan_id']);
+        // $dataTable = Datatables::eloquent($tabulasi);
+        // return $dataTable->make(true);
 
         return Datatables::eloquent($tabulasi)
+
             ->editColumn('provinsi_id', function ($tabulasi) {
-                return $tabulasi->provinsi->nama_provinsi;              
+                if ($tabulasi->provinsi) {
+                    return $tabulasi->provinsi->nama_provinsi;
+                } else {
+                    return 'Data PROVINSI tidak ada';
+                }              
             })
             ->editColumn('kota_kabupaten_id', function ($tabulasi) {
-                return $tabulasi->kota_kabupaten->nama;
+                if ($tabulasi->kota_kabupaten) {
+                    return $tabulasi->kota_kabupaten->nama;
+                } else {
+                    return 'Data KOTA/KABUPATEN tidak ada';
+                }
             })
             ->editColumn('kecamatan_id', function ($tabulasi) {
-                return $tabulasi->kecamatan->nama;
+                if ($tabulasi->kecamatan) {
+                    return $tabulasi->kecamatan->nama;
+                } else {
+                    return 'Data KECAMATAN tidak ada';
+                }
             })
             ->editColumn('kelurahan_id', function ($tabulasi) {
-                return $tabulasi->kelurahan->nama;
+                if ($tabulasi->kecamatan) {
+                    return $tabulasi->kelurahan->nama;
+                } else {
+                    return 'Data KELURAHAN tidak ada';
+                }
             })
+            ->addColumn('action', function ($tabulasi) {
+            return '<a href="'.route('tabulasi.show', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('tabulasi.edit', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a>';
+        })
+            // ->addColumn('action', function ($tabulasi) {
+            //     return '<a href="{{ route("tabulasi.show", $tabulasi->id) }}" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+            // })
+            // ->addColumn('action', function ($tabulasi) {
+            // return '<a href="'.route('tabulasi.create').'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+            // })
             ->make(true);
     }
-    public function data(Request $request)
-    {
-        // cek ajax request   
-        if($request->ajax()){
-            $tabulasi = Tabulasi::select('id', 'provinsi_id', 'kota_kabupaten_id', 'kecamatan_id', 'kelurahan_id')
-                        ->get();
-            return Datatables::of($tabulasi)
-                    // tambah kolom untuk aksi edit dan hapus
-                    ->addColumn('action', 
-                    '<a href="#" title="Edit" class="btn-sm btn-warning"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                    
-                    <form style="display: inline">
-                        <input name="_method" type="hidden" value="DELETE">
-                        <input name="_token" type="hidden" value="{!! csrf_token() !!}">
-                        <button class="btn-sm btn-danger" type="button" style="border: none"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-                    </form>')
-                    ->editColumn('provinsi_id', function ($tabulasi) {
-                return $tabulasi->provinsi_id->nama_provinsi;              
-            })
-                    ->make(true);
-        } else {
-            exit("Not an AJAX request -_-");
-        }
-    }
+    
+    // public function getAddEditRemoveColumnData()
+    // {
+    //     $users = User::select(['id', 'name', 'email', 'password', 'created_at', 'updated_at']);
+
+    //     return Datatables::of($users)
+    //         ->addColumn('action', function ($user) {
+    //             return '<a href="{{ route("tabulasi.show", $tabulasi->id) }}" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+    //         })
+    //         ->make(true);
+    // }
  
     public function show($id) 
     { 
-    	// $chart = Charts::multi('bar', 'material') 
-        //     // Setup the chart settings 
-        //     ->title("Hasil Data Suara") 
-        //     // A dimension of 0 means it will take 100% of the space 
-        //     ->dimensions(500, 300) // Width x Height 
-        //     // This defines a preset of colors already done:) 
-        //     ->template("material") 
-        //     // You could always set them manually 
-        //      ->colors(['#2196F3', '#F44336', '#FFC107']) 
-        //     // Setup the diferent datasets (this is a multi chart) 
-        //     ->dataset('Data Suara', [5,20,100]) 
-        //     ->responsive(false) 
-        //     // Setup what the values mean 
-        //     ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']); 
+    	$chart = Charts::multi('bar', 'material') 
+            // Setup the chart settings 
+            ->title("Hasil Data Suara") 
+            // A dimension of 0 means it will take 100% of the space 
+            ->dimensions(700, 300) // Width x Height 
+            // This defines a preset of colors already done:) 
+            ->template("material") 
+            // You could always set them manually 
+             ->colors(['#2196F3', '#F44336', '#FFC107']) 
+            // Setup the diferent datasets (this is a multi chart) 
+            ->dataset('Data Suara', [5,20,100]) 
+            ->responsive(false) 
+            // Setup what the values mean 
+            ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']); 
  
         $tabulasi = Tabulasi::find($id); 
         // dd($tabulasi);
@@ -126,7 +139,7 @@ class TabulasiController extends Controller
             return redirect(route('tabulasi.index')); 
         } 
  
-        return view('layouts.tabulasi.show',compact('tabulasi')); 
+        return view('layouts.tabulasi.show',compact('tabulasi','chart')); 
  
  
     } 
@@ -167,14 +180,17 @@ class TabulasiController extends Controller
     { 
         $provinsi = Provinsi::pluck('nama_provinsi','id')->all(); 
         $kota_kabupaten = array(); 
-        return view('layouts.tabulasi.create', compact('dokumen','provinsi','kota_kabupaten')); 
+        $kecamatan = array(); 
+        $kelurahan = array();
+        return view('layouts.tabulasi.create', compact('provinsi','kota_kabupaten','kecamatan','kelurahan')); 
  
     } 
     public function update($id) 
     { 
         $provinsi = Provinsi::pluck('nama_provinsi','id')->all(); 
-        $kota_kabupaten = array(); 
-        return view('layouts.tabulasi.index', compact('dokumen','provinsi','kota_kabupaten','kecamatan','kelurahan')); 
+        $kota_kabupaten = array();
+
+        return view('layouts.tabulasi.index',$tabulasi); 
          
     } 
 
