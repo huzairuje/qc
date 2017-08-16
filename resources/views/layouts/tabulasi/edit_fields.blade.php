@@ -1,11 +1,8 @@
 <div class="body">
             <div class="row clearfix">
-                <!-- Content Create-->
-                {!! Form::model(['route' => 'tabulasi.update']) !!}
-
+                <!-- Content Edit-->
                     <div class="col-md-12">
                             {!! Form::select('dokumen_id', ['C1' => 'C1', 'C2' => 'C2', 'C3' => 'C3', 'C3' => 'C3', 'C4' => 'C4'], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}    						
-                        
                     </div>
 
                     <div class="col-md-6">
@@ -59,7 +56,7 @@
 
                     <!-- Modal -->
         <div class="modal-footer">
-            {!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
+            {!! Form::submit('Update', ['class' => 'btn btn-primary waves-effect']) !!}
             <a href="{{ route('tabulasi.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Kembali</a>
         </div>
         {!! Form::close() !!}

@@ -86,7 +86,8 @@
 
 
 <div class="modal-footer">
-            <a href="{{ route('tabulasi.create')}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Kembali</a>
+            <a href="{{ route('tabulasi.edit', $tabulasi->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Edit Data</a>
+            <a href="{{ route('tabulasi.create')}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Create Data</a>
             <a href="{{ route('tabulasi.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Tabulasi</a>
         </div>    
     </div>

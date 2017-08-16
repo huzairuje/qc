@@ -170,7 +170,7 @@ class TabulasiController extends Controller
  
         $tabulasi = Tabulasi::create($input); 
         
-        flash('Data Tabulasi created successfully.')->success(); 
+        flash('Data Tabulasi created successfully')->success(); 
         return redirect(route('tabulasi.show',$tabulasi)); 
     } 
  
@@ -178,19 +178,49 @@ class TabulasiController extends Controller
  
     public function edit ($id) 
     { 
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all(); 
-        $kota_kabupaten = array(); 
-        $kecamatan = array(); 
-        $kelurahan = array();
-        return view('layouts.tabulasi.create', compact('provinsi','kota_kabupaten','kecamatan','kelurahan')); 
- 
-    } 
-    public function update($id) 
-    { 
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all(); 
-        $kota_kabupaten = array();
+        // $tabulasi = $this->findWithoutFail($id);
+        $tabulasi = Tabulasi::find($id);
+        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
+        $kota_kabupaten = KotaKab::pluck('nama','id')->all();
+        $kecamatan = Kecamatan::pluck('nama','id')->all();
+        $kelurahan = Kelurahan::pluck('nama','id')->all();
 
-        return view('layouts.tabulasi.index',$tabulasi); 
+
+        if (empty($tabulasi)) {
+            flash('Data Tabulasi Tidak Ada');
+
+            return redirect(route('tabulasi.index'));
+        }
+
+        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota_kabupaten','kecamatan','kelurahan'));
+    }
+        
+         
+ 
+    public function update(Request $request,$id) 
+    { 
+        $tabulasi = Tabulasi::find($id);
+            if (empty($tabulasi)) {
+
+                flash('Tabulasi not found');
+
+            return redirect(route('layouts.tabulasi.index'));
+        }
+         
+            $tabulasi->dokumen_id       = $request->dokumen_id;
+            $tabulasi->provinsi_id       = $request->provinsi_id;
+            $tabulasi->kota_kabupaten_id    = $request->kota_kabupaten_id;
+            $tabulasi->kelurahan_id    = $request->kelurahan_id;
+            
+            $tabulasi->update();
+        // // $input->save();
+        // dd($input);
+
+        // $tabulasi = Tabulasi::save($input);
+        // dd($tabulasi);
+
+        flash('Data Tabulasi saved successfully')->success();
+        return redirect(route('tabulasi.index')); 
          
     } 
 
