@@ -19,7 +19,6 @@
                             <div class="form-line">
                                 <div class="body">
                                     <div class="row clearfix">
-                                        <div class="card">
                                             <div class="header">
                                                 <h2>
                                                     <span>MAKASAR</span>
@@ -120,7 +119,6 @@
                                                  @include('layouts.monitoring.modal_data_saksi')
                                             </div>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -2,7 +2,7 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li {{Route::is('dashboard')? 'class=active':''}}>
+                    <li {{Route::is('dashboard') || Route::is('users.profile')? 'class=active':''}}>
                         <a href="{{route('dashboard')}}">
                             <i class="material-icons">home</i>
                             <span>Dashboard</span>
@@ -52,10 +52,10 @@
                         </a>
                         <ul class="ml-menu" style="display: none;">
                             <li {{Route::is('monitoring.datasaksi')? 'class=active':''}}>
-                                <a href="{{route('monitoring.datasaksi')}}">Data Saksi</a>
+                                <a href="{{route('monitoring.datasaksi')}}">Data Saksi PAN</a>
                             </li>
                             <li {{Route::is('monitoring.datapjtps')? 'class=active':''}}>
-                                <a href="{{route('monitoring.datapjtps')}}">Hasil Approval</a>
+                                <a href="{{route('monitoring.datapjtps')}}">Data PJ TPS</a>
                             </li>
                             <li {{Route::is('monitoring.tabulasi')? 'class=active':''}}>
                                 <a href="{{route('monitoring.tabulasi')}}">Tabulasi</a>
@@ -87,17 +87,7 @@
                                 <a href="{{route('approval.index')}}">Hasil Approval</a>
                             </li>
                         </ul>
-                    </li>
-                    
-                    
-                    <li class="header">SETTING</li>
-                        <li {{Route::is('users.profile')? 'class=active':''}}>
-                        <a href="{{route('users.profile')}}">
-                            <i class="material-icons">perm_identity</i>
-                            <span>User</span>
-                        </a>
-                    </li>
-            
+                    </li>          
                    
                 </ul>
             </div>

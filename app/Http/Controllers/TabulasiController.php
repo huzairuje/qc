@@ -202,7 +202,7 @@ class TabulasiController extends Controller
        
 
         flash('Data Tabulasi saved successfully')->success();
-        return redirect(route('tabulasi.index')); 
+        return redirect(route('tabulasi.show', $tabulasi)); 
          
     } 
 

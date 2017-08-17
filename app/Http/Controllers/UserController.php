@@ -30,7 +30,7 @@ class UserController extends Controller
             
             $user->update();
 
-
+            flash('User Profile updated successfully')->success();
         return redirect(route('users.profile'));
     }
 }
