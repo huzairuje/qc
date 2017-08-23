@@ -167,10 +167,10 @@ class TabulasiController extends Controller
         // $tabulasi = $this->findWithoutFail($id);
         $tabulasi = Tabulasi::find($id);
         $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
-        $kota_kabupaten = KotaKab::pluck('nama','id')->all();
-        $kecamatan = Kecamatan::pluck('nama','id')->all();
-        $kelurahan = Kelurahan::pluck('nama','id')->all();
-
+        $kota_kabupaten = KotaKab::where('provinsi_id', $tabulasi->provinsi_id)->pluck('nama','id')->all();
+        $kecamatan = Kecamatan::where('kota_kabupaten_id', $tabulasi->kota_kabupaten_id)->pluck('nama','id')->all();
+        $kelurahan = Kelurahan::where('kecamatan_id', $tabulasi->kecamatan_id)->pluck('nama','id')->all();
+        // dd($kota_kabupaten);
 
         if (empty($tabulasi)) {
             flash('Data Tabulasi Tidak Ada');
