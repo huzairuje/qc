@@ -9,8 +9,8 @@
 @endsection
 
 @section('content')
-	
-	<div class="row clearfix">
+    
+    <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="header bg-blue">
@@ -21,17 +21,17 @@
                 
                 <div class="box box-primary">
 
-		            <div class="box-body">
-		                <div class="row">
-		                   <!-- CONTENT HERE -->
+                    <div class="box-body">
+                        <div class="row">
+                           <!-- CONTENT HERE -->
 
                            <!-- #END OF CONTENT -->
 
-		                </div>
-		            </div>
-		        </div>    
+                        </div>
+                    </div>
+                </div>    
                 
-            	
+                
             </div>
         </div>
     </div>

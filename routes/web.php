@@ -12,6 +12,12 @@
 */
 
 Auth::routes();
+// Route::post('/register', 'RegisterController@register');
+// Route::post('/login', 'LoginController@login');
+// Route::post('/logout', 'LoginController@logout');
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::get('user', 'UserController@getAuthUser');
+});
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/',['as'=>'dashboard','uses'=>'DashboardController@index']);
@@ -42,14 +48,46 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/approval',['as'=>'approval.index','uses'=>'ApprovalController@index']);
 	Route::get('/approval/create',['as'=>'approval.create','uses'=>'ApprovalController@create']);
 
-	//Route for Monitoring
-	Route::get('/monitoring/datasaksi',['as'=>'monitoring.datasaksi','uses'=>'MonitoringController@dataSaksi']);
-	Route::get('/monitoring/datapjtps',['as'=>'monitoring.datapjtps','uses'=>'MonitoringController@dataPjTps']);
-	Route::get('/monitoring/tabulasi',['as'=>'monitoring.tabulasi','uses'=>'MonitoringController@tabulasi']);
-	Route::get('/monitoring/foto',['as'=>'monitoring.foto','uses'=>'MonitoringController@foto']);
-	Route::get('/monitoring/loginterakhir',['as'=>'monitoring.loginterakhir','uses'=>'MonitoringController@loginTerakhir']);
-	Route::get('/monitoring/quickrealcount',['as'=>'monitoring.quickrealcount','uses'=>'MonitoringController@quickRealCount']);
-	Route::get('/monitoring/presensipetugas',['as'=>'monitoring.presensipetugas','uses'=>'MonitoringController@presensiPetugas']);
+
+	//Route For Menu MONITORING----------------------- 	
+	
+		//Route for Monitoring SubMenu DataSaksi
+		Route::get('/monitoring/datasaksi',['as'=>'monitoring.datasaksi','uses'=>'monitoring\DataSaksiController@index']);
+		
+
+
+		//Route for Monitoring SubMenu Data PJ TPS
+		Route::get('/monitoring/datapjtps',['as'=>'monitoring.datapjtps','uses'=>'monitoring\DataPJTPSController@index']);
+
+
+
+		//Route for Monitoring SubMenu Tabulasi
+		Route::get('/monitoring/tabulasi',['as'=>'monitoring.tabulasi','uses'=>'monitoring\TabulasiController@index']);
+
+
+
+		//Route for Monitoring SubMenu Foto
+		Route::get('/monitoring/foto',['as'=>'monitoring.foto','uses'=>'monitoring\FotoController@index']);
+
+
+
+		//Route for Monitoring SubMenu Login Terakhir
+		Route::get('/monitoring/loginterakhir',['as'=>'monitoring.loginterakhir','uses'=>'monitoring\LoginTerakhirController@index']);
+
+
+
+		//Route for Monitoring SubMenu quick Real Count
+		Route::get('/monitoring/quickrealcount',['as'=>'monitoring.quickrealcount','uses'=>'monitoring\QuickRealCountController@index']);
+
+
+
+		//Route for Monitoring SubMenu Foto	
+		Route::get('/monitoring/presensipetugas',['as'=>'monitoring.presensipetugas','uses'=>'monitoring\PresensiPetugasController@index']);
+
+	//End Route For Menu MONITORING-----------------------
+
+
+
 	//Route for data master
 	Route::get('/datamaster',['as'=>'data_master.index','uses'=>'DataMasterController@index']);
 	Route::get('/datamaster/create',['as'=>'data_master.create','uses'=>'DataMasterController@create']);

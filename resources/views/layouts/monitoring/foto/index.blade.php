@@ -164,7 +164,7 @@
                                             <div><strong>%</strong>: Jumlah Prosentase</div>
                                             <!-- Modal -->
                                             <div class="modal fade" id="myModal" role="dialog">
-                                                 @include('layouts.monitoring.modal_foto')
+                                                 @include('layouts.monitoring.foto.modal_foto')
                                             </div>
                                         </div>
                                     </div>

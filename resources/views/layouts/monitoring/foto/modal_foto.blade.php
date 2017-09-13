@@ -94,7 +94,7 @@
                 </table>
                 <!-- Modal -->
                 <div class="modal fade" id="Modalfoto" role="dialog">
-                     @include('layouts.monitoring.modal_foto_preview')
+                     @include('layouts.monitoring.foto.modal_foto_preview')
                 </div>
             </div>
         </div>

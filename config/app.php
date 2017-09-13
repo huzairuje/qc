@@ -182,6 +182,8 @@ return [
         ConsoleTVs\Charts\ChartsServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        
 
     ],
 
@@ -236,7 +238,7 @@ return [
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
     ],
 
 ];

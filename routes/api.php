@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+	//Route API for Tabulasi
+	Route::get('v1/tabulasi', 'API\TabulasiAPIController@index');
+	// Route::post('v1/tabulasi/create', 'TabulasiController@create');
+	// Route::get('v1/tabulasi/show/{id}','TabulasiController@show');	
+	
+    

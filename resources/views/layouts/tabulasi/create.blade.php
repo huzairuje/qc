@@ -3,7 +3,7 @@
 @section('title')
 
 @endsection
-{!! Charts::assets() !!}
+
 @section('extra-css')
 
 @endsection

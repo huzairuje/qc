@@ -62,7 +62,7 @@
                                             </table>
                                             <!-- Modal -->
                                             <div class="modal fade" id="myModal" role="dialog">
-                                                 @include('layouts.monitoring.modal_presensi_petugas')
+                                                 @include('layouts.monitoring.presensi_petugas.modal_presensi_petugas')
                                             </div>
                                         </div>
                                     </div>

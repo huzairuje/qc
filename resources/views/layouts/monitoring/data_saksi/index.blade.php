@@ -21,7 +21,7 @@
                                     <div class="row clearfix">
                                             <div class="header">
                                                 <h2>
-                                                    <span>MAKASAR</span>
+                                                    <span>DATA SAKSI</span>
                                                     <i class="material-icons">autorenew</i>
                                                 </h2>
                                             </div>
@@ -116,7 +116,7 @@
                                             </table>
                                             <!-- Modal -->
                                             <div class="modal fade" id="myModal" role="dialog">
-                                                 @include('layouts.monitoring.modal_data_saksi')
+                                                 @include('layouts.monitoring.data_saksi.modal_data_saksi')
                                             </div>
                                         </div>
                                 </div>

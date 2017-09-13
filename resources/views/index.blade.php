@@ -51,8 +51,8 @@
     @show    
     @yield('extra-script')
     @section('script-bottom')
-        {{Html::script('bsbmd/js/admin.js')}}
-        {{Html::script('bsbmd/js/demo.js')}}
+    {{Html::script('bsbmd/js/admin.js')}}
+    {{Html::script('bsbmd/js/demo.js')}}
     @show
 </body>
 

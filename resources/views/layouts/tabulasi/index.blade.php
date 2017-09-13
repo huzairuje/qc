@@ -44,15 +44,6 @@
                                                     </tr>
                                                 </thead>
                                             </table><!-- Modal -->
-                                            <div class="modal fade" id="showModal" role="dialog">
-                                                 @include('layouts.monitoring.modal_foto_preview')
-                                            </div>
-                                            <div class="modal fade" id="editModal" role="dialog">
-                                                 @include('layouts.monitoring.modal_foto_preview')
-                                            </div>
-                                            <div class="modal fade" id="deleteModal" role="dialog">
-                                                 @include('layouts.monitoring.modal_foto_preview')
-                                            </div>  
                                             <script src="https://datatables.yajrabox.com/js/jquery.min.js"></script>
                                             <script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
                                             <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
