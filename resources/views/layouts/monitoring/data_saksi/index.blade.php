@@ -9,7 +9,6 @@
 @endsection
 
 @section('content')
-    
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
@@ -19,106 +18,59 @@
                             <div class="form-line">
                                 <div class="body">
                                     <div class="row clearfix">
+                                    @include('flash::message')
                                             <div class="header">
                                                 <h2>
                                                     <span>DATA SAKSI</span>
                                                     <i class="material-icons">autorenew</i>
                                                 </h2>
+
+                                                <div class="body">
+                                                    <a href="{{ route('monitoring.datasaksi.create') }}" class ="btn btn-primary waves-effect">Buat Data</a>
+                                                </div>
+
                                             </div>
                                         
-                                            <table id="tableTabulasi" class="table table-bordered" style="cursor: pointer;">
-                                                <tr class="bg-blue" style="color: white;">
-                                                    <th rowspan="2">Wilayah</th>
-                                                    <th colspan="3">Korsak TPS</th>
-                                                    <th colspan="3">Saksi TPS</th>
-                                                    <th rowspan="2">Action</th>
-                                                </tr>
-                                                <tr class="bg-blue" style="color: white;">
-                                                    <td>S</td>
-                                                    <td>T</td>
-                                                    <td>%</td>
-                                                    <td>S</td>
-                                                    <td>T</td>
-                                                    <td>%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Cipinang Melayu</td>
-                                                    <td>7</td>
-                                                    <td>7</td>
-                                                    <td>100</td>
-                                                    <td>69</td>
-                                                    <td>69</td>
-                                                    <td>100</td>
-                                                    <td>
-                                                        <button href="" type="button" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#myModal">Lihat Data</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Halim Perdana Kusuma</td>
-                                                    <td>4</td>
-                                                    <td>4</td>
-                                                    <td>100</td>
-                                                    <td>36</td>
-                                                    <td>36</td>
-                                                    <td>100</td>
-                                                    <td>
-                                                        <button href="" type="button" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#myModal">Lihat Data</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Kebon Pala</td>
-                                                    <td>4</td>
-                                                    <td>4</td>
-                                                    <td>100</td>
-                                                    <td>36</td>
-                                                    <td>36</td>
-                                                    <td>100</td>
-                                                    <td>
-                                                        <button href="" type="button" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#myModal">Lihat Data</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Makasar</td>
-                                                    <td>4</td>
-                                                    <td>4</td>
-                                                    <td>100</td>
-                                                    <td>36</td>
-                                                    <td>36</td>
-                                                    <td>100</td>
-                                                    <td>
-                                                        <button href="" type="button" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#myModal">Lihat Data</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>PinangRanti</td>
-                                                    <td>4</td>
-                                                    <td>4</td>
-                                                    <td>100</td>
-                                                    <td>36</td>
-                                                    <td>36</td>
-                                                    <td>100</td>
-                                                    <td>
-                                                        <button href="" type="button" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#myModal">Lihat Data</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Total</td>
-                                                    <td>32</td>
-                                                    <td>29</td>
-                                                    <td>100.34</td>
-                                                    <td>268</td>
-                                                    <td>268</td>
-                                                    <td>100</td>
-                                                    <td>
-                                                        <button href="" type="button" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#myModal">Lihat Data</button>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="myModal" role="dialog">
-                                                 @include('layouts.monitoring.data_saksi.modal_data_saksi')
-                                            </div>
-                                        </div>
+                                            <table id="table-Datasaksi" class="table table-striped">
+                                                <thead>
+                                                    <tr style="background-color: lightblue">
+                                                        <th>Nama</th>
+                                                        <th>Alamat</th>
+                                                        <th>Nomor Telepon</th>
+                                                        <th>Email</th>
+                                                        <th>ID TPS</th>
+                                                        <th>Foto</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                            </table><!-- Modal -->
+                                            <script src="https://datatables.yajrabox.com/js/jquery.min.js"></script>
+                                            <script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
+                                            <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
+                                            <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
+                                            <script type="text/javascript">
+                                                $(function() {
+                                                    $('#table-Datasaksi').DataTable({
+                                                        processing: true,
+                                                        serverSide: true,
+                                                        ajax: '/monitoring/datasaksi/getdatatable',
+                                                        columns: 
+                                                            [
+
+                                                                {data: 'nama'},
+                                                                {data: 'alamat'},
+                                                                {data: 'no_telpon'},
+                                                                {data: 'email'},
+                                                                {data: 'id_tps'},
+                                                                {data: 'foto'},
+                                                                {data: 'action'}
+                                                                ]
+                                                            } );
+                                                    
+                                                    } );
+                                                                                                         
+                                            </script>                                      
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -127,13 +79,4 @@
             </div>
         </div>
     </div>
-                
-@endsection
-
-@section('extra-script')
-
-    <script src="{{ asset('bsbmd/js/tables/editable-table.js') }}"></script>
-    <script src="{{ asset('bsbmd/js/tables/jquery-datatable.js') }}"></script>
-    
-
 @endsection

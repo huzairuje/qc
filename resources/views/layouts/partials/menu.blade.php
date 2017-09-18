@@ -51,9 +51,10 @@
                             <span>Monitoring</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
-                            <li {{Route::is('monitoring.datasaksi')? 'class=active':''}}>
+                             <li {{Route::is('monitoring.datasaksi') || Route::is('monitoring.datasaksi.create') || Route::is('monitoring.datasaksi.show') || Route::is('monitoring.datasaksi.edit')? 'class=active':''}}>
                                 <a href="{{route('monitoring.datasaksi')}}">Data Saksi PAN</a>
                             </li>
+
                             <li {{Route::is('monitoring.datapjtps')? 'class=active':''}}>
                                 <a href="{{route('monitoring.datapjtps')}}">Data PJ TPS</a>
                             </li>

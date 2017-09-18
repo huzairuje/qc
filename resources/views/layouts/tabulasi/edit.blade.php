@@ -16,7 +16,7 @@
             
                 <div class="header bg-blue">
                     <h2>
-                        SHOW TABULASI
+                        EDIT DATA TABULASI
                     </h2>
                 </div>
                 @include('flash::message')
