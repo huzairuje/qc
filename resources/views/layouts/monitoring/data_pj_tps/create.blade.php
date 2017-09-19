@@ -26,7 +26,7 @@
         <div class="body">
             <div class="row clearfix">
                 <!-- Content Create-->
-                {!! Form::open(['route' => 'monitoring.datasaksi.store']) !!}
+                {!! Form::open(['route' => 'monitoring.datapjtps.store']) !!}
 
                     <div class="col-md-12">
                         <div class="form-group">
@@ -67,8 +67,8 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-line">
-                                {!! Form::label('id_tps', 'Id TPS:') !!}
-                                {{ Form::number('id_tps', null, ['class' => 'form-control', 'placeholder' => 'Isi ID TPS']) }}
+                                {!! Form::label('list_id_tps', 'List Id TPS:') !!}
+                                {{ Form::number('list_id_tps', null, ['class' => 'form-control', 'placeholder' => 'Isi ID TPS']) }}
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                     <!-- Modal -->
         <div class="modal-footer">
             {!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
-            <a href="{{ route('monitoring.datasaksi')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Data Saksi</a>
+            <a href="{{ route('monitoring.datapjtps')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Data Saksi</a>
         </div>
         {!! Form::close() !!}
 </div>

@@ -32,11 +32,11 @@ class DataPJTPSController extends Controller
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $data_korsak = Datasaksi_monitoring::select(['id','nama', 'alamat', 'no_telpon', 'email', 'password', 'list_id_tps', 'foto']);
+        $datapjtps = DataPJTPSMonitoring::select(['id','nama', 'alamat', 'no_telpon', 'email', 'password', 'list_id_tps', 'foto']);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
 
-        return Datatables::eloquent($data_korsak)
+        return Datatables::eloquent($datapjtps)
 
             // ->editColumn('provinsi_id', function ($tabulasi) {
             //     if ($tabulasi->provinsi) {
@@ -66,8 +66,8 @@ class DataPJTPSController extends Controller
             //         return 'Data KELURAHAN tidak ada';
             //     }
             // })
-            ->addColumn('action', function ($data_korsak) {
-            return '<a href="'.route('monitoring.datakorsak.show', $data_korsak->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('monitoring.datakorsak.edit', $data_korsak->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('monitoring.datakorsak.delete', $data_korsak->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+            ->addColumn('action', function ($datapjtps) {
+            return '<a href="'.route('monitoring.datapjtps.show', $datapjtps->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('monitoring.datapjtps.edit', $datapjtps->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('monitoring.datapjtps.delete', $datapjtps->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
             
             ->make(true);
@@ -77,61 +77,61 @@ class DataPJTPSController extends Controller
     { 
  		$input = $request->all();
  
-        $data_korsak = DataPJTPSMonitoring::create($input); 
+        $datapjtps = DataPJTPSMonitoring::create($input); 
         
         flash('Data Korsak created successfully')->success(); 
-        return redirect(route('monitoring.datapjs.show',$data_korsak)); 
+        return redirect(route('monitoring.datapjtps.show',$datapjtps)); 
     }
 
     public function edit($id)
     {
-        $data_korsak = DataPJTPSMonitoring::find($id);
+        $datapjtps = DataPJTPSMonitoring::find($id);
 
-        if (empty($data_korsak)) {
+        if (empty($datapjtps)) {
             flash('Data Saksi Tidak Ada');
 
-            return redirect(route('monitoring.datapjs'));
+            return redirect(route('monitoring.datapjtps'));
         }
-        return view('layouts.monitoring.data_pj_tps.edit', compact('data_korsak'));
+        return view('layouts.monitoring.data_pj_tps.edit', compact('datapjtps'));
 
     }
     public function update(Request $request,$id) 
     { 
-        $data_korsak = DataPJTPSMonitoring::find($id);
-            if (empty($data_korsak)) {
+        $datapjtps = DataPJTPSMonitoring::find($id);
+            if (empty($datapjtps)) {
 
                 flash('Data Saksi not found');
 
-            return redirect(route('monitoring.datapjs'));
+            return redirect(route('monitoring.datapjtps'));
         }
          
-            $data_korsak->nama       = $request->nama;
-            $data_korsak->alamat       = $request->alamat;
-            $data_korsak->no_telpon    = $request->no_telpon;
-            $data_korsak->email    = $request->email;
-            $data_korsak->list_id_tps    = $request->list_id_tps;
-            $data_korsak->foto    = $request->foto;
+            $datapjtps->nama       = $request->nama;
+            $datapjtps->alamat       = $request->alamat;
+            $datapjtps->no_telpon    = $request->no_telpon;
+            $datapjtps->email    = $request->email;
+            $datapjtps->list_id_tps    = $request->list_id_tps;
+            $datapjtps->foto    = $request->foto;
             
-            $data_korsak->update();
+            $datapjtps->update();
        
 
         flash('Data Saksi saved successfully')->success();
-        return redirect(route('monitoring.datapjs.show', $data_saksi)); 
+        return redirect(route('monitoring.datapjtps.show', $datapjtps)); 
          
     } 
 
     public function show($id) 
     {  
-        $data_korsak = DataPJTPSMonitoring::find($id); 
+        $datapjtps = DataPJTPSMonitoring::find($id); 
         // dd($tabulasi);
  
-        if (empty($data_korsak)) { 
+        if (empty($datapjtps)) { 
             flash('Data Saksi not found')->error(); 
  
-            return redirect(route('monitoring.datapjs')); 
+            return redirect(route('monitoring.datapjtps')); 
         } 
  
-        return view('layouts.monitoring.data_pj_tps.show',compact('data_korsak')); 
+        return view('layouts.monitoring.data_pj_tps.show',compact('datapjtps')); 
  
  
     } 
@@ -139,16 +139,16 @@ class DataPJTPSController extends Controller
     public function destroy($id) 
     {
 
-    	$data_korsak = DataPJTPSMonitoring::findOrFail($id);
-            if (empty($data_korsak)) {
+    	$datapjtps = DataPJTPSMonitoring::findOrFail($id);
+            if (empty($datapjtps)) {
 
                     flash('Data Saksi not found');
 
-                return redirect(route('monitoring.datapjs'));
+                return redirect(route('monitoring.datapjtps'));
             }
-        $data_korsak->delete();
+        $datapjtps->delete();
 
         flash('Data Saksi deleted successfully')->success();
-        return redirect(route('monitoring.datapjs')); 
+        return redirect(route('monitoring.datapjtps')); 
 	}
 }

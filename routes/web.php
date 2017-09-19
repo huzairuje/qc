@@ -63,11 +63,12 @@ Route::group(['middleware' => 'auth'], function () {
 
 		//Route for Monitoring SubMenu Data PJ TPS
 		Route::get('/monitoring/datapjtps',['as'=>'monitoring.datapjtps','uses'=>'monitoring\DataPJTPSController@index']);
+		Route::get('/monitoring/datapjtps/getdatatable', ['as'=>'monitoring.datapjtps.datatable', 'uses' => 'monitoring\DataPJTPSController@get_datatable']);
 		Route::get('/monitoring/datapjtps/create',['as'=>'monitoring.datapjtps.create','uses'=>'monitoring\DataPJTPSController@create']);
 		Route::get('/monitoring/datapjtps/show/{id}',['as'=>'monitoring.datapjtps.show','uses'=>'monitoring\DataPJTPSController@show']);
 		Route::get('/monitoring/datapjtps/edit/{id}',['as'=>'monitoring.datapjtps.edit','uses'=>'monitoring\DataPJTPSController@edit']);
-		Route::get('/monitoring/datapjtps/update/{id}',['as'=>'monitoring.datapjtps.update','uses'=>'monitoring\DataPJTPSController@update']);
-		Route::get('/monitoring/datapjtps/store',['as'=>'monitoring.datapjtps.store','uses'=>'monitoring\DataPJTPSController@store']);
+		Route::patch('/monitoring/datapjtps/update/{id}',['as'=>'monitoring.datapjtps.update','uses'=>'monitoring\DataPJTPSController@update']);
+		Route::post('/monitoring/datapjtps/store',['as'=>'monitoring.datapjtps.store','uses'=>'monitoring\DataPJTPSController@store']);
 		Route::get('/monitoring/datapjtps/{id}',['as'=>'monitoring.datapjtps.delete','uses'=>'monitoring\DataPJTPSController@destroy']);
 
 

@@ -5,7 +5,7 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('nama', 'Nama:') !!}
-                    {!! $data_saksi->nama !!}
+                    {!! $datapjtps->nama !!}
                 </div>
             </div>
         </div>
@@ -14,7 +14,7 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('alamat', 'Alamat:') !!}
-                    {!! $data_saksi->alamat !!}
+                    {!! $datapjtps->alamat !!}
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('no_telpon', 'Nomor Telepon:') !!}
-                    {!! $data_saksi->no_telpon !!}
+                    {!! $datapjtps->no_telpon !!}
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('email', 'Email:') !!}
-                    {!! $data_saksi->email !!}
+                    {!! $datapjtps->email !!}
                 </div>
             </div>
         </div>
@@ -40,8 +40,8 @@
         <div class="col-md-6">
             <div class="form-group">
                 <div class="form-line">
-                    {!! Form::label('id_tps', 'Id TPS:') !!}
-                    {!! $data_saksi->id_tps !!}
+                    {!! Form::label('list_id_tps', 'List Id TPS:') !!}
+                    {!! $datapjtps->list_id_tps !!}
                 </div>
             </div>
         </div>
@@ -50,16 +50,16 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('foto', 'Foto:') !!}
-                    {!! $data_saksi->foto !!}
+                    {!! $datapjtps->foto !!}
                 </div>
             </div>
         </div>
 
 <div class="modal-footer">
-            <a href="{{ route('monitoring.datasaksi.edit', $data_saksi->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Edit Data</a>
-            <a href="{{ route('monitoring.datasaksi.create')}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Create Data</a>
-            <a href="{{ route('monitoring.datasaksi')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Data Saksi</a>
-            <a href="{{ route('monitoring.datasaksi.delete', $data_saksi->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Delete Data</a>
+            <a href="{{ route('monitoring.datapjtps.edit', $datapjtps->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Edit Data</a>
+            <a href="{{ route('monitoring.datapjtps.create')}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Create Data</a>
+            <a href="{{ route('monitoring.datapjtps')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Data Saksi</a>
+            <a href="{{ route('monitoring.datapjtps.delete', $datapjtps->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Delete Data</a>
         </div>    
     </div>
 </div>

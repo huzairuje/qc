@@ -55,7 +55,7 @@
                                 <a href="{{route('monitoring.datasaksi')}}">Data Saksi PAN</a>
                             </li>
 
-                            <li {{Route::is('monitoring.datapjtps')? 'class=active':''}}>
+                            <li {{Route::is('monitoring.datapjtps') || Route::is('monitoring.datapjtps.create') || Route::is('monitoring.datapjtps.show') || Route::is('monitoring.datapjtps.edit')? 'class=active':''}}>
                                 <a href="{{route('monitoring.datapjtps')}}">Data PJ TPS</a>
                             </li>
                             <li {{Route::is('monitoring.tabulasi')? 'class=active':''}}>

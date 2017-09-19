@@ -25,9 +25,9 @@
                     <div class="box-body">
                         
                         <div class="row">
-                                {!! Form::model($data_saksi, ['route' => ['monitoring.datasaksi.update', $data_saksi->id], 'method' => 'patch']) !!}
+                                {!! Form::model($datapjtps, ['route' => ['monitoring.datapjtps.update', $datapjtps->id], 'method' => 'patch']) !!}
 
-                                    @include('layouts.monitoring.data_saksi.edit_fields')
+                                    @include('layouts.monitoring.data_pj_tps.edit_fields')
 
                                 {!! Form::close() !!}
                                     

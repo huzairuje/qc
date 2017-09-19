@@ -26,7 +26,7 @@
                         
                         <div class="row">
 
-                                    @include('layouts.monitoring.data_saksi.show_fields')
+                                    @include('layouts.monitoring.data_pj_tps.show_fields')
 
 
                         </div>
