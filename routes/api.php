@@ -18,7 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 	//Route API for Tabulasi
 	Route::get('v1/tabulasi', 'API\TabulasiAPIController@index');
+	
 	// Route::post('v1/tabulasi/create', 'TabulasiController@create');
 	// Route::get('v1/tabulasi/show/{id}','TabulasiController@show');	
 	
     
+Route::get('v1/datasaksi', 'API\MonitoringDataSaksiAPIController@index');
+	Route::get('v1/datapjtps', 'API\MonitoringDatapjtpsAPIController@index');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\monitoring;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,10 +15,9 @@ use Yajra\Datatables\Facades\Datatables\Mjoin;
 use Yajra\Datatables\Facades\Datatables\Options;
 use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
-use Flash; 
+use Flash;
 
-
-class DataSaksiController extends Controller
+class EventController extends Controller
 {
     public function index()
     {
@@ -151,5 +150,4 @@ class DataSaksiController extends Controller
         flash('Data Saksi deleted successfully')->success();
         return redirect(route('monitoring.datasaksi')); 
 	}
-
 }

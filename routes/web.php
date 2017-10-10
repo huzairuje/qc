@@ -99,10 +99,19 @@ Route::group(['middleware' => 'auth'], function () {
 
 	//End Route For Menu MONITORING--------------------------------------------------------------------------------------------
 
-
+	//Route for Event
+		Route::get('/event',['as'=>'event.index','uses'=>'EventController@index']);
+		Route::get('/event/getdatatable', ['as'=>'event.datatable', 'uses' => 'EventController@get_datatable']);
+		Route::get('/event/create',['as'=>'event.create','uses'=>'EventController@create']);
+		Route::get('/event/show/{id}',['as'=>'event.show','uses'=>'EventController@show']);
+		Route::get('/event/edit/{id}',['as'=>'event.edit','uses'=>'EventController@edit']);
+		Route::patch('/event/update/{id}',['as'=>'event.update','uses'=>'EventController@update']);
+		Route::post('/event/store',['as'=>'event.store','uses'=>'EventController@store']);
+		Route::get('/event/{id}',['as'=>'event.delete','uses'=>'EventController@destroy']);
+	//End Route for Event
 
 	//Route for data master
-	Route::get('/datamaster',['as'=>'data_master.index','uses'=>'DataMasterController@index']);
-	Route::get('/datamaster/create',['as'=>'data_master.create','uses'=>'DataMasterController@create']);
+	Route::get('/datamaster',['as'=>'datamaster.index','uses'=>'DataMasterController@index']);
+	Route::get('/datamaster/create',['as'=>'datamaster.create','uses'=>'DataMasterController@create']);
 
 });

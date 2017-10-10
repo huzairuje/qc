@@ -76,16 +76,19 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('approval*')? 'toggled':''}}" >
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('datamaster*')? 'toggled':''}}" >
                             <i class="material-icons">notifications_none</i>
-                            <span>Approval</span>
+                            <span>Data Master</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
-                            <li {{Route::is('approval.create')? 'class=active':''}}>
-                                <a href="{{route('approval.create')}}">Input Approval</a>
+                            <li {{Route::is('datamaster.index')? 'class=active':''}}>
+                                <a href="{{route('datamaster.index')}}">TPS</a>
                             </li>
-                            <li {{Route::is('approval.index')? 'class=active':''}}>
-                                <a href="{{route('approval.index')}}">Hasil Approval</a>
+                            <li {{Route::is('datamaster.create')? 'class=active':''}}>
+                                <a href="{{route('datamaster.create')}}">Dapil</a>
+                            </li>
+                            <li {{Route::is('datamaster.create')? 'class=active':''}}>
+                                <a href="{{route('datamaster.create')}}">Calon</a>
                             </li>
                         </ul>
                     </li>          
