@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Datasaksi_monitoring;
+use App\Event;
 use DB;
 use Yajra\Datatables\Facades\Datatables;
 use Yajra\Datatables\Services\DataTable;
@@ -21,22 +21,22 @@ class EventController extends Controller
 {
     public function index()
     {
-        return view('layouts.monitoring.data_saksi.index');
+        return view('layouts.event.index');
     }
 
     public function create()
     {
-    	return view('layouts.monitoring.data_saksi.create');
+    	return view('layouts.event.create');
     }
 
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $data_saksi = Datasaksi_monitoring::select(['id','nama', 'alamat', 'no_telpon', 'email', 'password', 'id_tps', 'foto']);
+        $data_event = Event::select(['id','nama_event', 'provinsi', 'kabupaten_kota', 'dapil']);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
 
-        return Datatables::eloquent($data_saksi)
+        return Datatables::eloquent($data_event)
 
             // ->editColumn('provinsi_id', function ($tabulasi) {
             //     if ($tabulasi->provinsi) {
@@ -66,8 +66,8 @@ class EventController extends Controller
             //         return 'Data KELURAHAN tidak ada';
             //     }
             // })
-            ->addColumn('action', function ($data_saksi) {
-            return '<a href="'.route('monitoring.datasaksi.show', $data_saksi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('monitoring.datasaksi.edit', $data_saksi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('monitoring.datasaksi.delete', $data_saksi->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+            ->addColumn('action', function ($data_event) {
+            return '<a href="'.route('event.show', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('event.edit', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('event.delete', $data_event->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
             
             ->make(true);
@@ -76,61 +76,58 @@ class EventController extends Controller
     public function store(Request $request) 
     { 
  		$input = $request->all();
-        $data_saksi = Datasaksi_monitoring::create($input); 
+        $data_event = Event::create($input); 
         
-        flash('Data Saksi created successfully')->success(); 
-        return redirect(route('monitoring.datasaksi.show',$data_saksi)); 
+        flash('Event created successfully')->success(); 
+        return redirect(route('event.show',$data_event)); 
     }
 
     public function edit($id)
     {
-        $data_saksi = Datasaksi_monitoring::find($id);
+        $data_event = Event::find($id);
 
-        if (empty($data_saksi)) {
-            flash('Data Saksi Tidak Ada');
+        if (empty($data_event)) {
+            flash('Event Tidak Ada');
 
-            return redirect(route('monitoring.datasaksi'));
+            return redirect(route('event.index'));
         }
-        return view('layouts.monitoring.data_saksi.edit', compact('data_saksi'));
+        return view('layouts.event.edit', compact('data_event'));
 
     }
     public function update(Request $request,$id) 
     { 
-        $data_saksi = Datasaksi_monitoring::find($id);
-            if (empty($data_saksi)) {
+        $data_event = Event::find($id);
+            if (empty($data_event)) {
 
-                flash('Data Saksi not found');
+                flash('Event not found');
 
-            return redirect(route('monitoring.datasaksi'));
+            return redirect(route('event.index'));
         }
          
-            $data_saksi->nama       = $request->nama;
-            $data_saksi->alamat       = $request->alamat;
-            $data_saksi->no_telpon    = $request->no_telpon;
-            $data_saksi->email    = $request->email;
-            $data_saksi->id_tps    = $request->id_tps;
-            $data_saksi->foto    = $request->foto;
-            
-            $data_saksi->update();
+            $data_event->nama_event       = $request->nama_event;
+            $data_event->provinsi       = $request->provinsi;
+            $data_event->kabupaten_kota    = $request->kabupaten_kota;
+            $data_event->dapil    = $request->dapil;
+            $data_event->update();
        
 
-        flash('Data Saksi saved successfully')->success();
-        return redirect(route('monitoring.datasaksi.show', $data_saksi)); 
+        flash('Event saved successfully')->success();
+        return redirect(route('event.show', $data_event)); 
          
     } 
 
     public function show($id) 
     {  
-        $data_saksi = Datasaksi_monitoring::find($id); 
+        $data_event = Event::find($id); 
         // dd($tabulasi);
  
-        if (empty($data_saksi)) { 
-            flash('Data Saksi not found')->error(); 
+        if (empty($data_event)) { 
+            flash('Event not found')->error(); 
  
-            return redirect(route('monitoring.datasaksi')); 
+            return redirect(route('event.index')); 
         } 
  
-        return view('layouts.monitoring.data_saksi.show',compact('data_saksi')); 
+        return view('layouts.event.show',compact('data_event')); 
  
  
     } 
@@ -138,16 +135,16 @@ class EventController extends Controller
     public function destroy($id) 
     {
 
-    	$data_saksi = Datasaksi_monitoring::findOrFail($id);
-            if (empty($data_saksi)) {
+    	$data_event = Event::findOrFail($id);
+            if (empty($data_event)) {
 
-                    flash('Data Saksi not found');
+                    flash('Event not found');
 
-                return redirect(route('monitoring.datasaksi'));
+                return redirect(route('event.index'));
             }
-        $data_saksi->delete();
+        $data_event->delete();
 
         flash('Data Saksi deleted successfully')->success();
-        return redirect(route('monitoring.datasaksi')); 
+        return redirect(route('event.index')); 
 	}
 }

@@ -114,4 +114,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/datamaster',['as'=>'datamaster.index','uses'=>'DataMasterController@index']);
 	Route::get('/datamaster/create',['as'=>'datamaster.create','uses'=>'DataMasterController@create']);
 
+	//Route for User Management
+	Route::get('/usermanagement',['as'=>'usermanagement.index','uses'=>'UserManagementController@index']);
+	Route::get('/usermanagement/user/create',['as'=>'usermanagement.user.create','uses'=>'UserManagementController@create']);
+
 });

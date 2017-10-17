@@ -9,6 +9,20 @@
                         </a>
                     </li>
                     <li>
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is( 'event*')? 'toggled':''}}">
+                            <i class="material-icons">trending_up</i>
+                            <span>Event</span>
+                        </a>
+                        <ul class="ml-menu" style="display: none;">
+                            <li {{Route::is('event.create')? 'class=active':''}}>
+                                <a href="{{route('event.create')}}">Create Event</a>
+                            </li>
+                            <li {{Route::is('event.index') || Route::is('event.show') || Route::is('event.edit')? 'class=active':''}}>
+                                <a href="{{route('event.index')}}">Event Index</a>
+                            </li>    
+                        </ul>                   
+                    </li>
+                    <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is( 'tabulasi*')? 'toggled':''}}">
                             <i class="material-icons">trending_up</i>
                             <span>Tabulasi</span>
@@ -91,7 +105,18 @@
                                 <a href="{{route('datamaster.create')}}">Calon</a>
                             </li>
                         </ul>
-                    </li>          
+                    </li>       
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('usermanagement*')? 'toggled':''}}" >
+                            <i class="material-icons">notifications_none</i>
+                            <span>User Management</span>
+                        </a>
+                        <ul class="ml-menu" style="display: none;">
+                            <li {{Route::is('usermanagement.index')? 'class=active':''}}>
+                                <a href="{{route('usermanagement.index')}}">Index</a>
+                            </li>
+                        </ul>
+                    </li>   
                    
                 </ul>
             </div>
