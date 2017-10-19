@@ -18,4 +18,18 @@ class Event extends Model
         'kabupaten_kota',
         'dapil',
     ];
+
+    public function provinsi()
+    {
+        return $this->belongsTo(Provinsi::class);
+    }
+
+    public function kota_kabupaten()
+    {
+        return $this->belongsTo(KotaKab::class);
+    }
+    public function dapil()
+    {
+        return $this->belongsTo(Dapil::class);
+    }
 }

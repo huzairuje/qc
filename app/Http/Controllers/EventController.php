@@ -16,6 +16,10 @@ use Yajra\Datatables\Facades\Datatables\Options;
 use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
 use Flash;
+use App\Provinsi; 
+use App\KotaKab; 
+use Charts; 
+
 
 class EventController extends Controller
 {
@@ -26,7 +30,12 @@ class EventController extends Controller
 
     public function create()
     {
-    	return view('layouts.event.create');
+        $provinsi = Provinsi::pluck('nama_provinsi','id')->all(); 
+        // dd($provinsi);
+        
+        $kota_kabupaten = array(); 
+
+    	return view('layouts.event.create', compact('provinsi','kota_kabupaten'));
     }
 
     public function get_datatable()
@@ -118,6 +127,21 @@ class EventController extends Controller
 
     public function show($id) 
     {  
+        $chart = Charts::multi('bar', 'material') 
+            // Setup the chart settings 
+            ->title("Hasil Data Suara") 
+            // A dimension of 0 means it will take 100% of the space 
+            ->dimensions(700, 300) // Width x Height 
+            // This defines a preset of colors already done:) 
+            ->template("material") 
+            // You could always set them manually 
+             ->colors(['#2196F3', '#F44336', '#FFC107']) 
+            // Setup the diferent datasets (this is a multi chart) 
+            ->dataset('Data Suara', [5,20,100]) 
+            ->responsive(false) 
+            // Setup what the values mean 
+            ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']); 
+
         $data_event = Event::find($id); 
         // dd($tabulasi);
  
@@ -127,7 +151,7 @@ class EventController extends Controller
             return redirect(route('event.index')); 
         } 
  
-        return view('layouts.event.show',compact('data_event')); 
+        return view('layouts.event.show',compact('data_event','chart')); 
  
  
     } 
@@ -147,4 +171,26 @@ class EventController extends Controller
         flash('Data Saksi deleted successfully')->success();
         return redirect(route('event.index')); 
 	}
+
+    public function ajax(Request $request) 
+    { 
+        $type = $request->type; 
+        switch ($type) { 
+            case 'get-city': 
+                 return KotaKab::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all(); 
+ 
+                return $result; 
+                break; 
+ 
+            case 'get-kecamatan': 
+                return Kecamatan::where('kota_kabupaten_id', $request->kota_kabupaten_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all(); 
+                break; 
+ 
+            default: 
+                return $result['status'] = false; 
+                break; 
+        } 
+ 
+ 
+    }
 }

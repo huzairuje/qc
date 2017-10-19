@@ -101,6 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	//Route for Event
 		Route::get('/event',['as'=>'event.index','uses'=>'EventController@index']);
+		Route::get('/event/ajax',['as'=>'event.ajax','uses'=>'EventController@ajax']);
 		Route::get('/event/getdatatable', ['as'=>'event.datatable', 'uses' => 'EventController@get_datatable']);
 		Route::get('/event/create',['as'=>'event.create','uses'=>'EventController@create']);
 		Route::get('/event/show/{id}',['as'=>'event.show','uses'=>'EventController@show']);
