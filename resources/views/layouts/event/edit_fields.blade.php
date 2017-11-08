@@ -61,8 +61,3 @@
         {!! Form::close() !!}
 </div>
 </div>        
-        
-        <div class="modal-footer">
-            {!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
-            <a href="{{ route('event.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Data Saksi</a>
-        </div>

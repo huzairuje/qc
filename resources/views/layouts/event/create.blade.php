@@ -32,7 +32,7 @@
                         <div class="form-group">
                             <div class="form-line">
                             {!! Form::label('nama_event', 'Nama Event:') !!}
-                            {{ Form::text('nama',null, ['class' => 'form-control','placeholder' => 'Isi Nama Event Dengan Lengkap']) }}	
+                                {{ Form::text('nama_event',null, ['class' => 'form-control','placeholder' => 'Isi Nama Event Dengan Lengkap']) }}	
                             </div>
                         </div>					
                     </div>
@@ -56,7 +56,7 @@
                         <div class="form-group">
                             <div class="form-line">
                             {!! Form::label('dapil', 'Dapil:') !!}
-                            {{ Form::text('nama',null, ['class' => 'form-control','placeholder' => 'Isi Dapil']) }}
+                            {{ Form::text('dapil',null, ['class' => 'form-control','placeholder' => 'Isi Dapil']) }}
                             </div>
                         </div>    
                     </div>

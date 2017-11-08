@@ -47,20 +47,20 @@ class EventController extends Controller
 
         return Datatables::eloquent($data_event)
 
-            ->editColumn('provinsi_id', function ($tabulasi) {
-                if ($data_event->provinsi) {
-                    return $tabulasi->provinsi->nama_provinsi;
-                } else {
-                    return 'Data PROVINSI tidak ada';
-                }              
-            })
-            ->editColumn('kota_kabupaten_id', function ($tabulasi) {
-                if ($data_event->kota_kabupaten) {
-                    return $tabulasi->kota_kabupaten->nama;
-                } else {
-                    return 'Data KOTA/KABUPATEN tidak ada';
-                }
-            })
+            // ->editColumn('provinsi_id', function ($tabulasi) {
+            //     if ($data_event->provinsi) {
+            //         return $tabulasi->provinsi->nama_provinsi;
+            //     } else {
+            //         return 'Data PROVINSI tidak ada';
+            //     }              
+            // })
+            // ->editColumn('kota_kabupaten_id', function ($tabulasi) {
+            //     if ($data_event->kota_kabupaten) {
+            //         return $tabulasi->kota_kabupaten->nama;
+            //     } else {
+            //         return 'Data KOTA/KABUPATEN tidak ada';
+            //     }
+            // })
             
             ->addColumn('action', function ($data_event) {
             return '<a href="'.route('event.show', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('event.edit', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('event.delete', $data_event->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
@@ -74,6 +74,7 @@ class EventController extends Controller
  		$input = $request->all();
  
         $data_event = Event::create($input); 
+        
         
         flash('Data Event created successfully')->success(); 
         return redirect(route('event.show',$data_event)); 
@@ -91,7 +92,7 @@ class EventController extends Controller
 
             return redirect(route('event.index'));
         }
-        return view('layouts.event.edit', compact('data_event'));
+        return view('layouts.event.edit', compact('data_event','provinsi','kota_kabupaten'));
 
     }
     public function update(Request $request,$id) 
@@ -105,6 +106,8 @@ class EventController extends Controller
         }
          
             $data_event->nama_event       = $request->nama_event;
+            $data_event->tahun_event       = $request->tahun_event;
+            $data_event->jenis_event       = $request->jenis_event;
             $data_event->provinsi       = $request->provinsi;
             $data_event->kabupaten_kota    = $request->kabupaten_kota;
             $data_event->dapil    = $request->dapil;
