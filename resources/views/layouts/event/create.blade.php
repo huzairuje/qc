@@ -32,9 +32,15 @@
                         <div class="form-group">
                             <div class="form-line">
                             {!! Form::label('nama_event', 'Nama Event:') !!}
-                            {{ Form::text('nama',null, ['class' => 'form-control','placeholder' => 'Isi Nama Event Dengan Lengkap']) }}
-                            </div>  
-                        </div>   						
+                            {{ Form::text('nama',null, ['class' => 'form-control','placeholder' => 'Isi Nama Event Dengan Lengkap']) }}	
+                            </div>
+                        </div>					
+                    </div>
+                    <div class="col-md-6">
+                            {!! Form::select('tahun_event', ['2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019', '2020' => '2020', '2021' => '2021', '2022' => '2022', '2023' => '2023', '2024' => '2024', '2025' => '2025', '2026' => '2026', '2027' => '2027', '2028' => '2028', '2029' => '2029', '2030' => '2030', ], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}                       
+                    </div>
+                    <div class="col-md-6">
+                            {!! Form::select('jenis_event', ['PILKADA' => 'PILKADA  (Pemilihan Kepala Daerah)', 'PILEG' => 'PILEG  (Pemilihan Legislatif)', 'PILPRES ' => 'PILPRES (Pemilihan Presiden dan Wakil Presiden)'], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Event']); !!}                       
                     </div>
 
                     <div class="col-md-6">
@@ -55,11 +61,6 @@
                         </div>    
                     </div>
 
-                    
-                    
-                    <!-- END Content Create-->
-
-                    <!-- Modal -->
         <div class="modal-footer">
             {!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
             <a href="{{ route('event.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Event</a>

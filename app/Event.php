@@ -14,6 +14,8 @@ class Event extends Model
 	
     protected $fillable = [
         'nama_event',
+        'tahun_event',
+        'jenis_event',
         'provinsi',
         'kabupaten_kota',
         'dapil',

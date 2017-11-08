@@ -112,8 +112,36 @@ Route::group(['middleware' => 'auth'], function () {
 	//End Route for Event
 
 	//Route for data master
-	Route::get('/datamaster',['as'=>'datamaster.index','uses'=>'DataMasterController@index']);
-	Route::get('/datamaster/create',['as'=>'datamaster.create','uses'=>'DataMasterController@create']);
+	// Route::get('/datamaster',['as'=>'datamaster.index','uses'=>'DataMasterController@index']);
+	// Route::get('/datamaster/create',['as'=>'datamaster.create','uses'=>'DataMasterController@create']);
+		//TPS
+	Route::get('/datamaster/TPS',['as'=>'datamaster.TPS.index', 'uses'=>'data_master\TPSController@index']);
+	Route::get('/datamaster/TPS/ajax',['as'=>'datamaster.TPS.ajax', 'uses'=>'data_master\TPSController@ajax']);
+	Route::get('/datamaster/TPS/getdatatable',['as'=>'datamaster.TPS.datatable', 'uses'=>'data_master\TPSController@get_datatable']);
+	Route::get('/datamaster/TPS/create',['as'=>'datamaster.TPS.create', 'uses'=>'data_master\TPSController@create']);
+	Route::get('/datamaster/TPS/edit/{id}',['as'=>'datamaster.TPS.edit', 'uses'=>'data_master\TPSController@edit']);
+	Route::get('/datamaster/TPS/update/{id}',['as'=>'datamaster.TPS.update', 'uses'=>'data_master\TPSController@update']);
+	Route::get('/datamaster/TPS/store',['as'=>'datamaster.TPS.store', 'uses'=>'data_master\TPSController@update']);
+	Route::get('/datamaster/TPS/{id}',['as'=>'datamaster.TPS.delete', 'uses'=>'datamaster\TPSController@destroy']);
+		//EndTPS
+		//Dapil
+	Route::get('/datamaster/dapil',['as'=>'datamaster.dapil.index', 'uses'=>'data_master\DapilController@index']);
+	Route::get('/datamaster/dapil/ajax',['as'=>'datamaster.dapil.ajax', 'uses'=>'data_master\DapilController@ajax']);
+	Route::get('/datamaster/dapil/getdatatable',['as'=>'datamaster.dapil.datatable', 'uses'=>'data_master\DapilController@get_datatable']);
+	Route::get('/datamaster/dapil/create',['as'=>'datamaster.dapil.create', 'uses'=>'data_master\DapilController@create']);
+	Route::get('/datamaster/dapil/edit/{id}',['as'=>'datamaster.dapil.edit', 'uses'=>'data_master\DapilController@edit']);
+	Route::patch('/datamaster/dapil/update/{id}',['as'=>'datamaster.dapil.edit', 'uses'=>'data_master\DapilController@edit']);
+	Route::patch('/datamaster/dapil/store',['as'=>'datamaster.dapil.edit', 'uses'=>'data_master\DapilController@edit']);
+	Route::get('/datamaster/dapil/{id}',['as'=>'datamaster.dapil.delete', 'uses'=>'data_master\DapilController@destroy']);
+		//EndDapil
+		//Calon
+	Route::get('/datamaster/calon', ['as'=>'datamaster.calon.index', 'uses'=>'data_master\TPSController@index']);
+	Route::get('/datamaster/calon/create',['as'=>'datamaster.calon.create', 'uses'=>'data_master\TPSController@create']);
+	Route::get('/datamaster/calon/edit/{id}',['as'=>'datamaster.calon.edit', 'uses'=>'data_master\TPSController@edit']);
+	Route::get('/datamaster/calon/update/{id}',['as'=>'datamaster.calon.edit', 'uses'=>'data_master\TPSController@update']);
+	Route::get('/datamaster/calon/store',['as'=>'datamaster.calon.store', 'uses'=>'data_master\TPSController@update']);
+	Route::get('/datamaster/calon/{id}',['as'=>'datamaster.calon.delete', 'uses'=>'data_master\TPSController@destroy']);
+		//EndCalon
 
 	//Route for User Management
 	Route::get('/usermanagement',['as'=>'usermanagement.index','uses'=>'UserManagementController@index']);

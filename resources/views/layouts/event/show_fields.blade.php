@@ -79,7 +79,7 @@
 <div class="modal-footer">
             <a href="{{ route('event.edit', $data_event->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Edit Data</a>
             <a href="{{ route('event.create')}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Create Data</a>
-            <a href="{{ route('event.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Tabulasi</a>
+            <a href="{{ route('event.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Event</a>
             <a href="{{ route('event.delete', $data_event->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Delete Data</a>
         </div>    
     </div>

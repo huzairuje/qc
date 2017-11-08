@@ -31,13 +31,16 @@
 
                                             </div>
                                         
-                                            <table id="table-Datapjtps" class="table table-striped">
+                                            <table id="table-Dataevent" class="table table-striped">
                                                 <thead>
                                                     <tr style="background-color: lightblue">
                                                         <th>Nama Event</th>
+                                                        <th>Tahun Event</th>
+                                                        <th>Jenis Event</th>
                                                         <th>Provinsi</th>
                                                         <th>Kabupaten/Kota</th>
                                                         <th>Dapil</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                             </table><!-- Modal -->
@@ -47,14 +50,16 @@
                                             <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
                                             <script type="text/javascript">
                                                 $(function() {
-                                                    $('#table-Datapjtps').DataTable({
+                                                    $('#table-Dataevent').DataTable({
                                                         processing: true,
                                                         serverSide: true,
-                                                        ajax: '/monitoring/datapjtps/getdatatable',
+                                                        ajax: '/event/getdatatable',
                                                         columns: 
                                                             [
 
                                                                 {data: 'nama_event'},
+                                                                {data: 'tahun_event'},
+                                                                {data: 'jenis_event'},
                                                                 {data: 'provinsi'},
                                                                 {data: 'kabupaten_kota'},
                                                                 {data: 'dapil'},

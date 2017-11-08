@@ -16,7 +16,7 @@
             
                 <div class="header bg-blue">
                     <h2>
-                        EDIT DATA TABULASI
+                        EDIT DATA EVENT
                     </h2>
                 </div>
                 @include('flash::message')
@@ -25,9 +25,9 @@
                     <div class="box-body">
                         
                         <div class="row">
-                                {!! Form::model($tabulasi, ['route' => ['tabulasi.update', $tabulasi->id], 'method' => 'patch']) !!}
+                                {!! Form::model($data_event, ['route' => ['event.update', $data_event->id], 'method' => 'patch']) !!}
 
-                                    @include('layouts.tabulasi.edit_fields')
+                                    @include('layouts.event.edit_fields')
 
                                 {!! Form::close() !!}
                                     

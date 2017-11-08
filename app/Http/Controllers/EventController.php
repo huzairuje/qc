@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Event;
 use DB;
 use Yajra\Datatables\Facades\Datatables;
 use Yajra\Datatables\Services\DataTable;
@@ -16,6 +15,7 @@ use Yajra\Datatables\Facades\Datatables\Options;
 use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
 use Flash;
+use App\Event;
 use App\Provinsi; 
 use App\KotaKab; 
 use Charts; 
@@ -41,40 +41,27 @@ class EventController extends Controller
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $data_event = Event::select(['id','nama_event', 'provinsi', 'kabupaten_kota', 'dapil']);
+        $data_event = Event::select(['id','nama_event','tahun_event','jenis_event', 'provinsi', 'kabupaten_kota', 'dapil']);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
 
         return Datatables::eloquent($data_event)
 
-            // ->editColumn('provinsi_id', function ($tabulasi) {
-            //     if ($tabulasi->provinsi) {
-            //         return $tabulasi->provinsi->nama_provinsi;
-            //     } else {
-            //         return 'Data PROVINSI tidak ada';
-            //     }              
-            // })
-            // ->editColumn('kota_kabupaten_id', function ($tabulasi) {
-            //     if ($tabulasi->kota_kabupaten) {
-            //         return $tabulasi->kota_kabupaten->nama;
-            //     } else {
-            //         return 'Data KOTA/KABUPATEN tidak ada';
-            //     }
-            // })
-            // ->editColumn('kecamatan_id', function ($tabulasi) {
-            //     if ($tabulasi->kecamatan) {
-            //         return $tabulasi->kecamatan->nama;
-            //     } else {
-            //         return 'Data KECAMATAN tidak ada';
-            //     }
-            // })
-            // ->editColumn('kelurahan_id', function ($tabulasi) {
-            //     if ($tabulasi->kecamatan) {
-            //         return $tabulasi->kelurahan->nama;
-            //     } else {
-            //         return 'Data KELURAHAN tidak ada';
-            //     }
-            // })
+            ->editColumn('provinsi_id', function ($tabulasi) {
+                if ($data_event->provinsi) {
+                    return $tabulasi->provinsi->nama_provinsi;
+                } else {
+                    return 'Data PROVINSI tidak ada';
+                }              
+            })
+            ->editColumn('kota_kabupaten_id', function ($tabulasi) {
+                if ($data_event->kota_kabupaten) {
+                    return $tabulasi->kota_kabupaten->nama;
+                } else {
+                    return 'Data KOTA/KABUPATEN tidak ada';
+                }
+            })
+            
             ->addColumn('action', function ($data_event) {
             return '<a href="'.route('event.show', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('event.edit', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('event.delete', $data_event->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
@@ -85,15 +72,19 @@ class EventController extends Controller
     public function store(Request $request) 
     { 
  		$input = $request->all();
+ 
         $data_event = Event::create($input); 
         
-        flash('Event created successfully')->success(); 
+        flash('Data Event created successfully')->success(); 
         return redirect(route('event.show',$data_event)); 
     }
+    
 
     public function edit($id)
     {
         $data_event = Event::find($id);
+        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
+        $kota_kabupaten = KotaKab::where('provinsi_id', $data_event->provinsi_id)->pluck('nama','id')->all();
 
         if (empty($data_event)) {
             flash('Event Tidak Ada');

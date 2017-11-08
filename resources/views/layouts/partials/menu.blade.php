@@ -95,14 +95,14 @@
                             <span>Data Master</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
-                            <li {{Route::is('datamaster.index')? 'class=active':''}}>
-                                <a href="{{route('datamaster.index')}}">TPS</a>
+                            <li {{Route::is('datamaster.TPS*')? 'class=active':''}}>
+                                <a href="{{route('datamaster.TPS.index')}}">TPS</a>
                             </li>
-                            <li {{Route::is('datamaster.create')? 'class=active':''}}>
-                                <a href="{{route('datamaster.create')}}">Dapil</a>
+                            <li {{Route::is('datamaster.dapil*')? 'class=active':''}}>
+                                <a href="{{route('datamaster.dapil.index')}}">Dapil</a>
                             </li>
-                            <li {{Route::is('datamaster.create')? 'class=active':''}}>
-                                <a href="{{route('datamaster.create')}}">Calon</a>
+                            <li {{Route::is('datamaster.calon*')? 'class=active':''}}>
+                                <a href="{{route('datamaster.calon.index')}}">Calon</a>
                             </li>
                         </ul>
                     </li>       
