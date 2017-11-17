@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request; 
+use App\Http\Requests; 
 use DB;
 use Yajra\Datatables\Facades\Datatables;
 use Yajra\Datatables\Services\DataTable;
@@ -14,11 +14,11 @@ use Yajra\Datatables\Facades\Datatables\Mjoin;
 use Yajra\Datatables\Facades\Datatables\Options;
 use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
-use Flash;
-use App\Event;
+use App\Event;  
 use App\Provinsi; 
 use App\KotaKab; 
 use Charts; 
+use Flash; 
 
 
 class EventController extends Controller
@@ -31,7 +31,6 @@ class EventController extends Controller
     public function create()
     {
         $provinsi = Provinsi::pluck('nama_provinsi','id')->all(); 
-        // dd($provinsi);
         
         $kota_kabupaten = array(); 
 
@@ -41,7 +40,7 @@ class EventController extends Controller
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $data_event = Event::select(['id','nama_event','tahun_event','jenis_event', 'provinsi', 'kabupaten_kota', 'dapil']);
+        $data_event = Event::select(['id','nama','tahun','jenis','tingkat', 'provinsi', 'kabupaten_kota', 'dapil']);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
 
@@ -75,7 +74,6 @@ class EventController extends Controller
  
         $data_event = Event::create($input); 
         
-        
         flash('Data Event created successfully')->success(); 
         return redirect(route('event.show',$data_event)); 
     }
@@ -105,9 +103,10 @@ class EventController extends Controller
             return redirect(route('event.index'));
         }
          
-            $data_event->nama_event       = $request->nama_event;
-            $data_event->tahun_event       = $request->tahun_event;
-            $data_event->jenis_event       = $request->jenis_event;
+            $data_event->nama       = $request->nama;
+            $data_event->tahun       = $request->tahun;
+            $data_event->jenis       = $request->jenis;
+            $data_event->tingkat       = $request->tingkat;
             $data_event->provinsi       = $request->provinsi;
             $data_event->kabupaten_kota    = $request->kabupaten_kota;
             $data_event->dapil    = $request->dapil;
@@ -170,6 +169,10 @@ class EventController extends Controller
     { 
         $type = $request->type; 
         switch ($type) { 
+            case 'get-provincy':
+                $result = Provinsi::get()->pluck( 'nama_provinsi', 'id' )->all();
+                return $result; 
+                break;
             case 'get-city': 
                  return KotaKab::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all(); 
  

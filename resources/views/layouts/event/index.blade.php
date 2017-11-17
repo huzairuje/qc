@@ -34,9 +34,10 @@
                                             <table id="table-Dataevent" class="table table-striped">
                                                 <thead>
                                                     <tr style="background-color: lightblue">
-                                                        <th>Nama Event</th>
                                                         <th>Tahun Event</th>
+                                                        <th>Nama Event</th>
                                                         <th>Jenis Event</th>
+                                                        <th>Tingkat Event</th>
                                                         <th>Provinsi</th>
                                                         <th>Kabupaten/Kota</th>
                                                         <th>Dapil</th>
@@ -56,10 +57,10 @@
                                                         ajax: '/event/getdatatable',
                                                         columns: 
                                                             [
-
-                                                                {data: 'nama_event'},
-                                                                {data: 'tahun_event'},
-                                                                {data: 'jenis_event'},
+                                                                {data: 'tahun'},
+                                                                {data: 'nama'},
+                                                                {data: 'jenis'},
+                                                                {data: 'tingkat'},
                                                                 {data: 'provinsi'},
                                                                 {data: 'kabupaten_kota'},
                                                                 {data: 'dapil'},

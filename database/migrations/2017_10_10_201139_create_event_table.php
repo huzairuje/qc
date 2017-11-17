@@ -15,7 +15,10 @@ class CreateEventTable extends Migration
     {
          Schema::create('event', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nama_event')->nullable();
+            $table->string('nama')->nullable();
+            $table->string('jenis')->nullable();
+            $table->string('tingkat')->nullable();
+            $table->string('tahun')->nullable();
             $table->string('provinsi')->nullable();
             $table->string('kabupaten_kota')->nullable();
             $table->string('dapil')->nullable();

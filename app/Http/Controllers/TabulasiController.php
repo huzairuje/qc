@@ -154,7 +154,8 @@ class TabulasiController extends Controller
 
         $input = $request->all();
  
-        $tabulasi = Tabulasi::create($input); 
+        $tabulasi = Tabulasi::create($input);
+        dd($tabulasi); 
         
         flash('Data Tabulasi created successfully')->success(); 
         return redirect(route('tabulasi.show',$tabulasi)); 

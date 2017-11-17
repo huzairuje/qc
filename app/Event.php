@@ -13,9 +13,10 @@ class Event extends Model
     const UPDATED_AT = 'updated_at';
 	
     protected $fillable = [
-        'nama_event',
-        'tahun_event',
-        'jenis_event',
+        'nama',
+        'jenis',
+        'tingkat',
+        'tahun',
         'provinsi',
         'kabupaten_kota',
         'dapil',

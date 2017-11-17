@@ -25,34 +25,56 @@
 		                <div class="row">
         <div class="body">
             <div class="row clearfix">
+
                 <!-- Content Create-->
                 {!! Form::open(['route' => 'event.store']) !!}
 
-                    <div class="col-md-12">
+                    <div class="col-md-4">
+                        <select class="form-control show-tick" name="tahun" id="tahun" placeholder="Pilih Tahun" >
+                            <option value=''>Pilih Tahun</option><option value='2017'>2017</option>
+                            <option value='2018'>2018</option><option value='2019'>2019</option>
+                            <option value='2020'>2020</option><option value='2021'>2021</option>
+                            <option value='2022'>2022</option><option value='2023'>2023</option>
+                            <option value='2024'>2024</option><option value='2025'>2025</option>
+                            <option value='2026'>2026</option><option value='2027'>2027</option>
+                            <option value='2028'>2028</option><option value='2029'>2029</option>
+                            <option value='2030'>2030</option>
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-10">
                         <div class="form-group">
                             <div class="form-line">
-                            {!! Form::label('nama_event', 'Nama Event:') !!}
-                                {{ Form::text('nama_event',null, ['class' => 'form-control','placeholder' => 'Isi Nama Event Dengan Lengkap']) }}	
+                            {!! Form::label('nama', 'Nama Event:') !!}
+                                {{ Form::text('nama',null, ['class' => 'form-control','placeholder' => 'Isi Nama Event Dengan Lengkap']) }}	
                             </div>
                         </div>					
                     </div>
-                    <div class="col-md-6">
-                            {!! Form::select('tahun_event', ['2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019', '2020' => '2020', '2021' => '2021', '2022' => '2022', '2023' => '2023', '2024' => '2024', '2025' => '2025', '2026' => '2026', '2027' => '2027', '2028' => '2028', '2029' => '2029', '2030' => '2030', ], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}                       
-                    </div>
-                    <div class="col-md-6">
-                            {!! Form::select('jenis_event', ['PILKADA' => 'PILKADA  (Pemilihan Kepala Daerah)', 'PILEG' => 'PILEG  (Pemilihan Legislatif)', 'PILPRES ' => 'PILPRES (Pemilihan Presiden dan Wakil Presiden)'], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Event']); !!}                       
-                    </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-8">  
+                        <select class="form-control show-tick" name="jenis" id="jenis" placeholder="Pilih Jenis Event" >
+                            <option value=''>Pilih Jenis Event</option>
+                            <option value='PILKADA'>PILKADA (Pemilihan Kepala Daerah)</option>
+                            <option value='PILEG'>PILEG (Pemilihan Legislatif)</option>
+                            <option value='PILPRES'>PILPRES (Pemilihan Presiden)</option>
+                        </select>                   
+                    </div>
+                    <div class="col-md-8 select-tingkat">
+                        <select class="form-control show-tick" name="tingkat" id="tingkat" placeholder="Pilih Tingkat Event" ></select>
+                    </div>                       
+                    
 
-                           {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}     
+                    <div class="provinsi col-md-8">
+                           {!! Form::select('provinsi', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}     
                     </div>
         
-                    <div class="col-md-6">
-                            {{ Form::select('kota_kabupaten_id', $kota_kabupaten,null, ['class' => 'form-control','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
+                    <div class="kabupaten col-md-8">
+                            {{ Form::select('kabupaten_kota', $kota_kabupaten,null, ['class' => 'form-control','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
+
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="form-group">
                             <div class="form-line">
                             {!! Form::label('dapil', 'Dapil:') !!}
@@ -60,6 +82,7 @@
                             </div>
                         </div>    
                     </div>
+            </div>
 
         <div class="modal-footer">
             {!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
@@ -76,26 +99,83 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+
 <script type="text/javascript">
     $(document).ready( function() {
-        // select2
-
         var _url = '{{ route('event.ajax') }}';
+        // select2
+        $(document).on('change','#jenis',function(){
+            var _val = $(this).val();
+            $(".select-tingkat").html('<select class="form-control show-tick" name="tingkat" id="tingkat" placeholder="Pilih Tingkat Event" ></select>');
+            
+                var html = '';
+                $('#tingkat').selectpicker(html);
+                
+            if (_val == 'PILKADA'){
+                var html = '';
+                html += '<option value="">Pilih Tingkat PILKADA</option>';
+                html += '<option value="PILKADA Tingkat Provinsi">PILKADA Tingkat Provinsi</option>';
+                html += '<option value="PILKADA Tingkat Kota/Kabupaten">PILKADA Tingkat Kota/Kabupaten</option>';
+                $('#tingkat').html(html);
+                $('#tingkat').selectpicker('refresh');
+            } 
+            else if (_val == 'PILEG'){
+                var html = '';
+                html += '<option value="">Pilih Tingkat PILEG</option>';
+                html += '<option value="PILEG DPR RI">PILEG DPR RI (Nasional)</option>';
+                html += '<option value="PILEG DPRD Provinsi">PILEG DPRD Provinsi (Provinsi)</option>';
+                html += '<option value="PILEG DPRD Kota/Kabupaten">PILEG DPRD Kota/Kabupaten (Kota/Kabupaten)</option>';
+                $('#tingkat').html(html);
+                $('#tingkat').selectpicker('refresh');
+            }
+
+            else {
+                $('#provinsi_id').selectpicker('destroy');
+                $('#provinsi_id').remove();
+                $('#kota_kabupaten_id').selectpicker('destroy');
+                $('#kota_kabupaten_id').remove();
+                $('#tingkat').selectpicker('destroy');
+                $('#tingkat').remove();
+            } 
+        });
+
+
+        $(document).on('change','#tingkat',function(){
+            var _val = $(this).val();
+            $("#provinsi_id").html();
+
+            var html = '';
+            $('#provinsi_id').selectpicker(html);
+
+            if (_val == 'PILKADA Tingkat Provinsi' || _val == 'PILEG DPRD Provinsi' || _val == 'PILEG DPR RI'){
+                $('#kota_kabupaten_id').selectpicker('destroy');
+                $('#kota_kabupaten_id').remove();
+                if (_val == 'PILKADA Tingkat Provinsi' || _val == 'PILEG DPRD Provinsi'){
+                    $('.provinsi').html('<select class="form-control show-tick" name="provinsi" id="provinsi_id" placeholder="Pilih Jenis Event" ></select>');
+                    getProvincy(_url);
+
+                }
+
+            }
+            else if (_val == 'PILKADA Tingkat Kota/Kabupaten'){
+                var html = '';
+                var _val = $(this).val();
+                getProvincy(_url);
+                if (_val == 'PILKADA Tingkat Kota/Kabupaten'){
+                    $('.kabupaten').html('<select class="form-control show-tick" name="kabupaten_kota" id="kota_kabupaten_id" placeholder="Pilih Jenis Event" ></select>');
+                }
+            } 
+            // else {
+            //     $('#provinsi_id').selectpicker('destroy');
+            //     $('#provinsi_id').remove();
+            // }
+            
+        });
 
         $(document).on('change','#provinsi_id',function(){
             var _val = $(this).val();
-            $.get(_url,{'type':'get-city','provinsi_id':_val})
-            .done(function(result) {
-                var html = '';
-                $('#kota_kabupaten_id').selectpicker(html);
-
-                $.each(result,function(key,value){
-                    html += '<option value="'+key+'">'+value+'</option>';
-                });
-
-                $('#kota_kabupaten_id').html(html);
-                $('#kota_kabupaten_id').selectpicker('refresh');
-            });
+            getCity(_val,_url);
         });
 
 	        $(document).on('change','#kota_kabupaten_id',function(){
@@ -115,7 +195,41 @@
 	            });
 	        });
 
+
 	    });
+
+            function getCity(val,url)
+            {
+                $.get(url,{'type':'get-city','provinsi_id':val})
+            .done(function(result) {
+                var html = '';
+                $('#kota_kabupaten_id').selectpicker(html);
+
+                $.each(result,function(key,value){
+                    html += '<option value="'+key+'">'+value+'</option>';
+                });
+
+                $('#kota_kabupaten_id').html(html);
+                $('#kota_kabupaten_id').selectpicker('refresh');
+            });
+            }
+
+            function getProvincy(url)
+            {
+                $.get(url,{'type':'get-provincy'})
+            .done(function(result) {
+                
+                var html = '';
+                $('#provinsi_id').selectpicker(html);
+
+                $.each(result,function(key,value){
+                    html += '<option value="'+key+'">'+value+'</option>';
+                });
+
+                $('#provinsi_id').html(html);
+                $('#provinsi_id').selectpicker('refresh');
+            });
+            }
 </script>
     
 
