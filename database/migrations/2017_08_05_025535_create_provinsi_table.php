@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MakeKotaKabupatenTable extends Migration
+class CreateProvinsiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class MakeKotaKabupatenTable extends Migration
      */
     public function up()
     {
-        Schema::create('kota_kabupaten', function (Blueprint $table) {
+        Schema::create('provinsi', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nama')->nullable();
-            $table->bigInteger('provinsi_id')->unsigned()->index();
-            $table->foreign('provinsi_id')->references('id')->on('provinsi')->onDelete('cascade');
+            $table->string( 'nama_provinsi' )->nullable();
             $table->timestamps();
         });
 
@@ -30,6 +28,6 @@ class MakeKotaKabupatenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kota_kabupaten');
+        Schema::dropIfExists('provinsi');
     }
 }

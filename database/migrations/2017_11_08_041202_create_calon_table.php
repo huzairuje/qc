@@ -21,6 +21,7 @@ class CreateCalonTable extends Migration
             $table->string('email')->nullable();
             $table->string('list_id_event')->nullable();
             $table->string('list_id_dapil')->nullable();
+            $table->string('list_id_tps')->nullable();
             $table->string('foto')->nullable();
             $table->timestamps();
         });
@@ -33,6 +34,6 @@ class CreateCalonTable extends Migration
      */
     public function down()
     {
-        
+        Schema::dropIfExists('calon');
     }
 }

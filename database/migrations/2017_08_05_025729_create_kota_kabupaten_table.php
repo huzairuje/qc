@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDapilTable extends Migration
+class CreateKotaKabupatenTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateDapilTable extends Migration
      */
     public function up()
     {
-        Schema::create('dapil', function (Blueprint $table) {
+        Schema::create('kota_kabupaten', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nama_dapil')->nullable();
-            $table->string('kabupaten_kota_id')->nullable();
+            $table->string('nama')->nullable();
+            $table->bigInteger('provinsi_id')->unsigned()->index();
+            $table->foreign('provinsi_id')->references('id')->on('provinsi')->onDelete('cascade');
             $table->timestamps();
         });
+
     }
 
     /**
@@ -28,6 +30,6 @@ class CreateDapilTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('kota_kabupaten');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MakeTabulasiTable extends Migration
+class CreateTpsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class MakeTabulasiTable extends Migration
      */
     public function up()
     {
-        Schema::create('tabulasi', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('dokumen')->nullable();
+         Schema::create('tps', function (Blueprint $table) {
+           $table->bigIncrements('id');
+           $table->bigInteger('no_tps');
+           $table->string('nama_tps');
+            $table->bigInteger('id_dapil');
+            $table->string('calon')->nullable();
             $table->string('provinsi_id')->nullable();
             $table->string('kota_kabupaten_id')->nullable();
             $table->string('kecamatan_id')->nullable();
             $table->string('kelurahan_id')->nullable();
-            $table->json('data_suara')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +34,6 @@ class MakeTabulasiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tabulasi');
+        Schema::dropIfExists('tps');
     }
 }
