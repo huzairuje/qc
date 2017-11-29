@@ -12,7 +12,7 @@ class DokumensTableSeeder extends Seeder
     public function run()
     {
         DB::table('dokumen')->insert([
-            
+
             [
                 'tipe_dokumen' => 'C1',
             ],
@@ -25,7 +25,7 @@ class DokumensTableSeeder extends Seeder
             [
             	'tipe_dokumen' => 'C4',
             ]
-            
+
         ]);
     }
 }

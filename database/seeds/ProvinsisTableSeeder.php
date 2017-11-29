@@ -11,13 +11,15 @@ class ProvinsisTableSeeder extends Seeder
      */
     public function run()
     {
-        Excel::filter('chunk')->load(public_path('csv/provinces.csv'))->chunk(250, function($results) {
-            $header = [ 'id', 'nama_provinsi' ];
-            foreach ($results->toArray() as $row) {
-                $data = array_combine($header, $row);
+      // DB::table('provinsi')->truncate();
 
-                DB::table( 'provinsi' )->insert($data);
-            }
-        });
+      Excel::filter('chunk')->load(public_path('csv/provinces.csv'))->chunk(250, function($results) {
+          $header = [ 'id', 'nama_provinsi' ];
+          foreach ($results->toArray() as $row) {
+              $data = array_combine($header, $row);
+
+              DB::table( 'provinsi' )->insert($data);
+          }
+      });
     }
 }
