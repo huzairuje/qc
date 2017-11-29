@@ -24,7 +24,7 @@ class UsersSeeder extends Seeder
 
     	$datas = [
     		[
-    			'email' => 'admin@paradise-store.com',
+    			'email' => 'admin@quickcount.com',
     			'name' => 'Super Administrator',
     			'gender' => 'Male',
     			'role' => 'super-admin'

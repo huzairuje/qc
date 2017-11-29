@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Sentinel;
 
 class SentinelAuth
 {
@@ -16,14 +17,9 @@ class SentinelAuth
     public function handle($request, Closure $next)
     {
 
-        if (! \Sentinel::check() ) {
-            if ( $request->ajax() || $request->wantsJson() ) {
-                return response( 'Unauthorized.', 401 );
-            }
-
-            return redirect()->route( 'admin.auth.login' );
-        }
-        
-        return $next($request);
+        if(Sentinel::check())
+            return $next($request);
+        else
+            return redirect('/login');
     }
 }
