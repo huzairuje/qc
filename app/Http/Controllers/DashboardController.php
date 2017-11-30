@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Charts;
-use Sentinel;
 
 class DashboardController extends Controller
 {
@@ -13,10 +12,6 @@ class DashboardController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
 
     /**
      * Show the application dashboard.

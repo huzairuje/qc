@@ -16,25 +16,27 @@
 // Route::post('/login', 'LoginController@login');
 // Route::post('/logout', 'LoginController@logout');
 
-Route::get('/register', [
-	'as' => 'register',
-	'uses' => 'SentinelAuth\RegisterController@getRegister'
-]);
+Route::group(['middleware' => 'guest'], function () {
+	Route::get('/register', [
+		'as' => 'register',
+		'uses' => 'SentinelAuth\RegisterController@getRegister'
+	]);
 
-Route::get('/login', [
-	'as' => 'login',
-	'uses' => 'SentinelAuth\LoginController@getLogin'
-]);
+	Route::get('/login', [
+		'as' => 'login',
+		'uses' => 'SentinelAuth\LoginController@getLogin'
+	]);
 
-Route::post('/login', [
-	'as' => 'login',
-	'uses' => 'SentinelAuth\LoginController@postLogin'
-]);
+	Route::post('/login', [
+		'as' => 'login',
+		'uses' => 'SentinelAuth\LoginController@postLogin'
+	]);
 
-Route::get('/forgot-password', [
-	'as' => 'password.request',
-	'uses' => 'SentinelAuth\LoginController@getLogin'
-]);
+	Route::get('/forgot-password', [
+		'as' => 'password.request',
+		'uses' => 'SentinelAuth\LoginController@getLogin'
+	]);
+});
 
 Route::group(['middleware' => 'jwt.auth'], function () {
 	Route::get('user', 'UserController@getAuthUser');
@@ -165,8 +167,13 @@ Route::group(['middleware' => 'admin'], function () {
 		//EndCalon
 
 	//Route for User Management
-	Route::get('/usermanagement',['as'=>'usermanagement.index','uses'=>'UserManagementController@index']);
-	Route::get('/usermanagement/user/create',['as'=>'usermanagement.user.create','uses'=>'UserManagementController@create']);
+	Route::get('/user-management',['as'=>'usermanagement.index','uses'=>'UserManagementController@index']);
+	Route::get('/user-management/user/create',['as'=>'usermanagement.create','uses'=>'UserManagementController@create']);
+	Route::post('/user-management',['as'=>'usermanagement','uses'=>'UserManagementController@store']);
+	Route::get('/user-management/user/edit/{id}',['as'=>'usermanagement.edit','uses'=>'UserManagementController@edit']);
+	Route::put('/user-management',['as'=>'usermanagement','uses'=>'UserManagementController@update']);
+	Route::get('/user-management/user/detail/{id}',['as'=>'usermanagement.show','uses'=>'UserManagementController@show']);
+	Route::delete('/user-management',['as'=>'usermanagement','uses'=>'UserManagementController@destroy']);
 
 	Route::post('/logout', [
 		'as' => 'logout',

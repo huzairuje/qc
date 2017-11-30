@@ -11,17 +11,17 @@
 
     <!-- Bootstrap Core Css -->
     @section('css')
-        {{ Html::style('bsbmd/plugins/bootstrap/css/bootstrap.css') }}
-        {{ Html::style('bsbmd/plugins/node-waves/waves.css') }}
-        {{ Html::style('bsbmd/plugins/animate-css/animate.css') }}
-        {{ Html::style('bsbmd/plugins/morrisjs/morris.css') }}
-        {{ Html::style('bsbmd/css/style.css') }}
-        {{ Html::style('bsbmd/css/themes/all-themes.css') }}
-        {{ Html::style('bsbmd/plugins/bootstrap-select/css/bootstrap-select.css')}}
+    {{ Html::style('bsbmd/plugins/bootstrap/css/bootstrap.css') }}
+    {{ Html::style('bsbmd/plugins/node-waves/waves.css') }}
+    {{ Html::style('bsbmd/plugins/animate-css/animate.css') }}
+    {{ Html::style('bsbmd/plugins/morrisjs/morris.css') }}
+    {{ Html::style('bsbmd/css/style.css') }}
+    {{ Html::style('bsbmd/css/themes/all-themes.css') }}
+    {{ Html::style('bsbmd/plugins/bootstrap-select/css/bootstrap-select.css')}}
 
-         <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
     @show
 
     @yield('extra-css')
@@ -38,14 +38,14 @@
     </section>
 
     @section('script')
-        {{Html::script('bsbmd/plugins/jquery/jquery.min.js')}}
-        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-        {{Html::script('bsbmd/plugins/bootstrap/js/bootstrap.js')}}
-        <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/fixedheader/3.1.2/js/dataTables.fixedHeader.min.js"></script>
-        {{Html::script('bsbmd/plugins/bootstrap-select/js/bootstrap-select.js')}}
-        {{Html::script('bsbmd/plugins/jquery-slimscroll/jquery.slimscroll.js')}}
-        {{Html::script('bsbmd/plugins/node-waves/waves.js')}}
+    {{Html::script('bsbmd/plugins/jquery/jquery.min.js')}}
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    {{Html::script('bsbmd/plugins/bootstrap/js/bootstrap.js')}}
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.2/js/dataTables.fixedHeader.min.js"></script>
+    {{Html::script('bsbmd/plugins/bootstrap-select/js/bootstrap-select.js')}}
+    {{Html::script('bsbmd/plugins/jquery-slimscroll/jquery.slimscroll.js')}}
+    {{Html::script('bsbmd/plugins/node-waves/waves.js')}}
 
 
     @show    

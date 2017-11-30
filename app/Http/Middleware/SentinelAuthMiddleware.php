@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Sentinel;
 
-class SentinelAuth
+class SentinelAuthMiddleware
 {
     /**
      * Handle an incoming request.

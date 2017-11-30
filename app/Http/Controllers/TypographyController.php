@@ -11,10 +11,6 @@ class TypographyController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
 
     /**
      * Show the application dashboard.
