@@ -19,8 +19,8 @@
                             </li>
                             <li {{Route::is('event.index') || Route::is('event.show') || Route::is('event.edit')? 'class=active':''}}>
                                 <a href="{{route('event.index')}}">Event Index</a>
-                            </li>    
-                        </ul>                   
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is( 'tabulasi*')? 'toggled':''}}">
@@ -36,8 +36,8 @@
                             </li>
                             <li {{Route::is('tabulasi.quickcount')? 'class=active':''}}>
                                 <a href="{{route('tabulasi.quickcount')}}">Hasil Quick Count</a>
-                            </li>    
-                        </ul>                   
+                            </li>
+                        </ul>
                     </li>
                     <li {{Route::is('download')? 'class=active':''}}>
                         <a href="{{route('download')}}">
@@ -104,20 +104,27 @@
                             <li {{Route::is('datamaster.TPS*')? 'class=active':''}}>
                                 <a href="{{route('datamaster.TPS.index')}}">TPS</a>
                             </li>
+                            <li {{Route::is('datamaster.partai*')? 'class=active':''}}>
+                                <a href="{{route('datamaster.partai.index')}}">TPS</a>
+                            </li>
                         </ul>
-                    </li>       
+                    </li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('usermanagement*')? 'toggled':''}}" >
                             <i class="material-icons">notifications_none</i>
                             <span>User Management</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
-                            <li {{Route::is('usermanagement.index')? 'class=active':''}}>
-                                <a href="{{route('usermanagement.index')}}">Index</a>
+                            <li {{Route::is('usermanagement*')? 'class=active':''}}>
+                                <a href="{{route('usermanagement.create')}}">Index</a>
+                            </li>
+
+                            <li {{Route::is('usermanagement.index') || Route::is('usermanagement.show') || Route::is('usermanagement.edit')? 'class=active':''}}>
+                                <a href="{{route('usermanagement.index')}}">Event Index</a>
                             </li>
                         </ul>
-                    </li>   
-                   
+                    </li>
+
                 </ul>
             </div>
-            <!-- #Menu 
+            <!-- #Menu

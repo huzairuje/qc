@@ -44,7 +44,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
 Route::group(['middleware' => 'admin'], function () {
 	Route::get('/',['as'=>'dashboard','uses'=>'DashboardController@index']);
-	
+
 	//Route For user
 	Route::get('/users', 'UserController@profile')->name('users.profile');
 	Route::patch('/users/{id}', 'UserController@update')->name('users.update');
@@ -54,10 +54,10 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::get('/tabulasi/ajax',['as'=>'tabulasi.ajax','uses'=>'TabulasiController@ajax']);
 	Route::get('/tabulasi', ['as'=>'tabulasi.index','uses'=>'TabulasiController@index']);
 	Route::get('/tabulasi/getdatatable', ['as' => 'tabulasi.datatable',   'uses' => 'TabulasiController@get_datatable']);
-	Route::get('/tabulasi/create',['as'=>'tabulasi.create','uses'=>'TabulasiController@create']);	
-	Route::get('/tabulasi/show/{id}',['as'=>'tabulasi.show','uses'=>'TabulasiController@show']);	
-	Route::get('/tabulasi/edit/{id}',['as'=>'tabulasi.edit','uses'=>'TabulasiController@edit']);	
-	Route::patch('/tabulasi/update/{id}',['as'=>'tabulasi.update','uses'=>'TabulasiController@update']);	
+	Route::get('/tabulasi/create',['as'=>'tabulasi.create','uses'=>'TabulasiController@create']);
+	Route::get('/tabulasi/show/{id}',['as'=>'tabulasi.show','uses'=>'TabulasiController@show']);
+	Route::get('/tabulasi/edit/{id}',['as'=>'tabulasi.edit','uses'=>'TabulasiController@edit']);
+	Route::patch('/tabulasi/update/{id}',['as'=>'tabulasi.update','uses'=>'TabulasiController@update']);
 	Route::post('/tabulasi/store',['as'=>'tabulasi.store','uses'=>'TabulasiController@store']);
 	Route::get('/tabulasi/{id}', ['as' => 'tabulasi.delete', 'uses' => 'TabulasiController@destroy']);
 
@@ -71,7 +71,7 @@ Route::group(['middleware' => 'admin'], function () {
 
 
 	//Route For Menu MONITORING--------------------------------------------------------------------------------------------
-	
+
 		//Route for Monitoring SubMenu DataSaksi
 	Route::get('/monitoring/datasaksi',['as'=>'monitoring.datasaksi','uses'=>'monitoring\DataSaksiController@index']);
 	Route::get('/monitoring/datasaksi/getdatatable', ['as'=>'monitoring.datasaksi.datatable', 'uses' => 'monitoring\DataSaksiController@get_datatable']);
@@ -117,7 +117,7 @@ Route::group(['middleware' => 'admin'], function () {
 
 
 
-		//Route for Monitoring SubMenu Foto	
+		//Route for Monitoring SubMenu Foto
 	Route::get('/monitoring/presensipetugas',['as'=>'monitoring.presensipetugas','uses'=>'monitoring\PresensiPetugasController@index']);
 
 	//End Route For Menu MONITORING--------------------------------------------------------------------------------------------
@@ -165,15 +165,26 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::get('/datamaster/calon/store',['as'=>'datamaster.calon.store', 'uses'=>'data_master\TPSController@update']);
 	Route::get('/datamaster/calon/{id}',['as'=>'datamaster.calon.delete', 'uses'=>'data_master\TPSController@destroy']);
 		//EndCalon
-
+		//Partai
+		Route::get('/datamaster/partai',['as'=>'datamaster.partai.index', 'uses'=>'data_master\DapilController@index']);
+		Route::get('/datamaster/partai/ajax',['as'=>'datamaster.partai.ajax', 'uses'=>'data_master\DapilController@ajax']);
+		Route::get('/datamaster/partai/getdatatable',['as'=>'datamaster.partai.datatable', 'uses'=>'data_master\DapilController@get_datatable']);
+		Route::get('/datamaster/partai/create',['as'=>'datamaster.partai.create', 'uses'=>'data_master\DapilController@create']);
+		Route::get('/datamaster/partai/edit/{id}',['as'=>'datamaster.partai.edit', 'uses'=>'data_master\DapilController@edit']);
+		Route::patch('/datamaster/partai/update/{id}',['as'=>'datamaster.partai.edit', 'uses'=>'data_master\DapilController@edit']);
+		Route::patch('/datamaster/partai/store',['as'=>'datamaster.partai.edit', 'uses'=>'data_master\DapilController@edit']);
+		Route::get('/datamaster/partai/{id}',['as'=>'datamaster.partai.delete', 'uses'=>'data_master\DapilController@destroy']);
+		//EndPartai
 	//Route for User Management
 	Route::get('/user-management',['as'=>'usermanagement.index','uses'=>'UserManagementController@index']);
-	Route::get('/user-management/user/create',['as'=>'usermanagement.create','uses'=>'UserManagementController@create']);
-	Route::post('/user-management',['as'=>'usermanagement','uses'=>'UserManagementController@store']);
-	Route::get('/user-management/user/edit/{id}',['as'=>'usermanagement.edit','uses'=>'UserManagementController@edit']);
-	Route::put('/user-management',['as'=>'usermanagement','uses'=>'UserManagementController@update']);
-	Route::get('/user-management/user/detail/{id}',['as'=>'usermanagement.show','uses'=>'UserManagementController@show']);
-	Route::delete('/user-management',['as'=>'usermanagement','uses'=>'UserManagementController@destroy']);
+	Route::get('/user-management/ajax',['as'=>'user-management.ajax','uses'=>'UserManagementController@ajax']);
+	Route::get('/user-management/getdatatable', ['as'=>'user-management.datatable', 'uses' => 'UserManagementController@get_datatable']);
+	Route::get('/user-management/create',['as'=>'usermanagement.create','uses'=>'UserManagementController@create']);
+	Route::post('/user-management',['as'=>'usermanagement.store','uses'=>'UserManagementController@store']);
+	Route::get('/user-management/edit/{id}',['as'=>'usermanagement.edit','uses'=>'UserManagementController@edit']);
+	Route::put('/user-management/update/{id}',['as'=>'usermanagement.update','uses'=>'UserManagementController@update']);
+	Route::get('/user-management/show/{id}',['as'=>'usermanagement.show','uses'=>'UserManagementController@show']);
+	Route::delete('/user-management/{id}',['as'=>'usermanagement.destroy','uses'=>'UserManagementController@destroy']);
 
 	Route::post('/logout', [
 		'as' => 'logout',
