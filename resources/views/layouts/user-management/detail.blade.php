@@ -9,69 +9,68 @@
 @endsection
 
 @section('content')
+
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
-            <div class="row clearfix">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <div class="form-line">
-                            <div class="body">
-                                <div class="row clearfix">
-                                    @include('flash::message')
-                                    <div class="header">
-                                        <h2>
-                                            <span>User Management</span>
-                                            <i class="material-icons">autorenew</i>
-                                        </h2>
+            <div class="header bg-blue">
+                <h2>
+                    Detail User
+                </h2>
+            </div>
 
-                                        <div class="body">
-                                            <a href="{{ route('usermanagement.user.create') }}" class ="btn btn-primary waves-effect">Buat Data</a>
-                                        </div>
+            <div class="box box-primary">
 
-                                    </div>
-
-                                    <table id="table-Dataevent" class="table table-striped">
-                                        <thead>
-                                            <tr style="background-color: lightblue">
-                                                <th>Nama</th>
-                                                <th>Email</th>
-                                                <th>Event</th>
-                                                <th>Posisi</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                    </table><!-- Modal -->
-                                    <script src="https://datatables.yajrabox.com/js/jquery.min.js"></script>
-                                    <script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
-                                    <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
-                                    <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
-                                    <script type="text/javascript">
-                                        $(function() {
-                                            $('#table-Dataevent').DataTable({
-                                                processing: true,
-                                                serverSide: true,
-                                                ajax: '/event/getdatatable',
-                                                columns: 
-                                                [
-                                                {data: 'nama'},
-                                                {data: 'email'},
-                                                {data: 'event'},
-                                                {data: 'posisi'},
-                                                {data: 'action'}
-                                                ]
-                                            } );
-
-                                        } );
-
-                                    </script>                                      
+                <div class="box-body">
+                    <div class="container">
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <th>
+                                                Name
+                                            </th>
+                                            <td>
+                                                {{ $user->first_name }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Email
+                                            </th>
+                                            <td>
+                                                {{ $user->email }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Username
+                                            </th>
+                                            <td>
+                                                {{ $user->username }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Posisi
+                                            </th>
+                                            <td>
+                                                {{ $user->roles()->first()->name }}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <a href="{{ route('usermanagement.edit', $user->id) }}" class="btn btn-success">Edit</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
 </div>
+@endsection
+@section('extra-script')
+
 @endsection

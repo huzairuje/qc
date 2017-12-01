@@ -116,11 +116,7 @@
                         </a>
                         <ul class="ml-menu" style="display: none;">
                             <li {{Route::is('usermanagement*')? 'class=active':''}}>
-                                <a href="{{route('usermanagement.create')}}">Index</a>
-                            </li>
-
-                            <li {{Route::is('usermanagement.index') || Route::is('usermanagement.show') || Route::is('usermanagement.edit')? 'class=active':''}}>
-                                <a href="{{route('usermanagement.index')}}">Event Index</a>
+                                <a href="{{route('usermanagement.index')}}">Index</a>
                             </li>
                         </ul>
                     </li>

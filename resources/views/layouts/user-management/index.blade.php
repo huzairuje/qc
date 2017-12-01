@@ -26,7 +26,7 @@
                                         </h2>
 
                                         <div class="body">
-                                            <a href="{{ route('usermanagement.user.create') }}" class ="btn btn-primary waves-effect">Buat Data</a>
+                                            <a href="{{ route('usermanagement.create') }}" class ="btn btn-primary waves-effect">Buat Data</a>
                                         </div>
 
                                     </div>

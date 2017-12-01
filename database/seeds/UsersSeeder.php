@@ -26,26 +26,34 @@ class UsersSeeder extends Seeder
     		[
     			'email' => 'admin@quickcount.com',
     			'name' => 'Super Administrator',
-    			'gender' => 'Male',
-    			'role' => 'super-admin'
+                'gender' => 'Male',
+                'username' => 'admin',
+                'phone' => '+6281212345678',
+    			'role' => 'admin-pusat'
     		],
     		[
     			'email' => 'Ark@paradise-store.com',
     			'name' => 'Ark Island',
     			'gender' => 'Male',
-    			'role' => 'super-admin'
+                'username' => 'ark',
+                'phone' => '+6281223456781',
+    			'role' => 'admin-kota'
     		],
     		[
     			'email' => 'johndoe@paradise-store.com',
     			'name' => 'John Doe',
     			'gender' => 'Male',
-    			'role' => 'admin'
+                'username' => 'john',
+                'phone' => '+6281234567812',
+    			'role' => 'admin-kecamatan'
     		]
     	];
 
     	foreach ( $datas as $key => $data ) {
     		$user = Sentinel::registerAndActivate( [
-    			'email' => $data[ 'email' ],
+                'email' => $data[ 'email' ],
+                'username' => $data[ 'username' ],
+                'phone' => $data[ 'phone' ],
     			'password' => '12345678',
     			'first_name' => $data[ 'name' ],
     		] );
@@ -53,9 +61,11 @@ class UsersSeeder extends Seeder
     	}
 
     	$faker = \Faker\Factory::create();
-    	for ($i = 2; $i <= 5; $i++) {
+    	for ($i = 0; $i < 3; $i++) {
     		$user = Sentinel::registerAndActivate( [
     			'email' => $faker->freeEmail,
+                'username' => $data[ 'username' ],
+                'phone' => $data[ 'phone' ],
     			'password' => '12345678',
     			'first_name' => $faker->firstName . ' ' . $faker->lastName,
     		] );

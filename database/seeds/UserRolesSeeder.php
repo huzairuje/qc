@@ -15,24 +15,48 @@ class UserRolesSeeder extends Seeder
         DB::table('roles')->truncate();
 
         Sentinel::getRoleRepository()->createModel()->create([
-            'slug' => 'super-admin',
-            'name' => 'Super Administrator',
+            'slug' => 'admin-pusat',
+            'name' => 'Admin Pusat',
             'permissions' => [
                 'admin' => true
             ]
         ]);
 
         Sentinel::getRoleRepository()->createModel()->create([
-            'slug' => 'admin',
-            'name' => 'Administrator',
+            'slug' => 'admin-event',
+            'name' => 'Admin Event',
             'permissions' => [
                 'admin' => true
             ]
         ]);
 
         Sentinel::getRoleRepository()->createModel()->create([
-            'slug' => 'customer',
-            'name' => 'Customer',
+            'slug' => 'admin-kota',
+            'name' => 'Admin Kota',
+            'permissions' => [
+                'admin' => true
+            ]
+        ]);
+
+        Sentinel::getRoleRepository()->createModel()->create([
+            'slug' => 'admin-kecamatan',
+            'name' => 'Admin Kecamatan',
+            'permissions' => [
+                'admin' => true
+            ]
+        ]);
+
+        Sentinel::getRoleRepository()->createModel()->create([
+            'slug' => 'korsak',
+            'name' => 'Korsak',
+            'permissions' => [
+                'admin' => false
+            ]
+        ]);
+
+        Sentinel::getRoleRepository()->createModel()->create([
+            'slug' => 'saksi',
+            'name' => 'Saksi',
             'permissions' => [
                 'admin' => false
             ]
