@@ -29,5 +29,8 @@ class DatabaseSeeder extends Seeder
         $this->call(KotaKabsTableSeeder::class);
         $this->call(KecamatansTableSeeder::class);
         $this->call(KelurahanTableSeeder::class);
+        $this->call(KelurahanTableSeeder::class);
+        $this->call(UserRolesSeeder::class);
+        $this->call(UsersSeeder::class);
     }
 }
