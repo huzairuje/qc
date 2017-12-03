@@ -67,7 +67,7 @@ class UserManagementController extends Controller
     public function edit($id){
         $data['user'] = User::where('id' , '=', $id)->first();
 
-        if($data['user']->roles()->first()->id < Sentinel::getUser()->id){
+        if($data['user']->roles()->first()->id <= Sentinel::getUser()->id){
             return 'You are not authorized.';
         }
         else
