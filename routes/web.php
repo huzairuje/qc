@@ -182,7 +182,7 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::get('/user-management/create',['as'=>'usermanagement.create','uses'=>'UserManagementController@create']);
 	Route::post('/user-management',['as'=>'usermanagement.store','uses'=>'UserManagementController@store']);
 	Route::get('/user-management/edit/{id}',['as'=>'usermanagement.edit','uses'=>'UserManagementController@edit']);
-	Route::put('/user-management/update/{id}',['as'=>'usermanagement.update','uses'=>'UserManagementController@update']);
+	Route::patch('/user-management/update/{id}',['as'=>'usermanagement.update','uses'=>'UserManagementController@update']);
 	Route::get('/user-management/show/{id}',['as'=>'usermanagement.show','uses'=>'UserManagementController@show']);
 	Route::delete('/user-management/{id}',['as'=>'usermanagement.destroy','uses'=>'UserManagementController@destroy']);
 

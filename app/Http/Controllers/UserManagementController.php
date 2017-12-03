@@ -9,7 +9,8 @@ use Sentinel;
 class UserManagementController extends Controller
 {
     public function index(){
-    	return view('layouts.user-management.index');
+        $data['users'] = User::paginate(10);
+        return view('layouts.user-management.index', $data);
     }
     
     public function create(){
@@ -60,42 +61,48 @@ class UserManagementController extends Controller
     
     public function show($id){
         $data['user'] = User::where('id' , '=', $id)->first();
-    	return view('layouts.user-management.detail', $data);
+        return view('layouts.user-management.detail', $data);
     }
     
     public function edit($id){
-        $role = Sentinel::getUser()->roles()->first()->slug;
-
-        if ($role == 'admin-pusat')
-        {
-            $data['roleList']['admin-event'] = 'Admin Event';
-            $data['roleList']['admin-kota'] = 'Admin Kota';
-            $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
-        }
-        elseif  ($role == 'admin-event')
-        {
-            $data['roleList']['admin-kota'] = 'Admin Kota';
-            $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
-        }
-        elseif ($role == 'admin-kota')
-        {
-            $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
-        }
-        else 
-        {
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
-        }
-
         $data['user'] = User::where('id' , '=', $id)->first();
-        
-    	return view('layouts.user-management.edit', $data);
+
+        if($data['user']->roles()->first()->id < Sentinel::getUser()->id){
+            return 'You are not authorized.';
+        }
+        else
+        {
+            $role = Sentinel::getUser()->roles()->first()->slug;
+
+            if ($role == 'admin-pusat')
+            {
+                $data['roleList']['admin-event'] = 'Admin Event';
+                $data['roleList']['admin-kota'] = 'Admin Kota';
+                $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
+                $data['roleList']['korsak'] = 'Admin Korsak';
+                $data['roleList']['saksi'] = 'Saksi';
+            }
+            elseif  ($role == 'admin-event')
+            {
+                $data['roleList']['admin-kota'] = 'Admin Kota';
+                $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
+                $data['roleList']['korsak'] = 'Admin Korsak';
+                $data['roleList']['saksi'] = 'Saksi';
+            }
+            elseif ($role == 'admin-kota')
+            {
+                $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
+                $data['roleList']['korsak'] = 'Admin Korsak';
+                $data['roleList']['saksi'] = 'Saksi';
+            }
+            else 
+            {
+                $data['roleList']['korsak'] = 'Admin Korsak';
+                $data['roleList']['saksi'] = 'Saksi';
+            }
+
+            return view('layouts.user-management.edit', $data);
+        }
     }
     
     public function update(Request $request, $id){

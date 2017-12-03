@@ -77,7 +77,7 @@
                                             <select class="form-control show-tick" name="role" id="tahun" placeholder="Role" >
                                                 <option value=''>User Role</option>
                                                 @foreach( $roleList as $key => $val )
-                                                <option value="{{ $key }}">{{ $val }}</option>
+                                                <option value="{{ $key }}" @if( $key == $user->roles()->first()->slug ) selected @endif>{{ $val }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

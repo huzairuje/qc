@@ -60,7 +60,9 @@
                                             </td>
                                         </tr>
                                     </table>
+                                    @if($user->roles()->first()->id > Sentinel::getUser()->id)
                                     <a href="{{ route('usermanagement.edit', $user->id) }}" class="btn btn-success">Edit</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -40,31 +40,30 @@
                                                 <th>Posisi</th>
                                                 <th>Action</th>
                                             </tr>
+                                            @foreach($users as $user)
+                                            <tr>
+                                                <td>
+                                                    {{ $user->first_name }}
+                                                </td>
+                                                <td>
+                                                    {{ $user->email }}
+                                                </td>
+                                                <td>
+                                                    //
+                                                </td>
+                                                <td>
+                                                    {{ $user->roles()->first()->name }}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('usermanagement.show', $user->id ) }}" class="btn btn-xs btn-primary">
+                                                        <i class="material-icons">search</i>Lihat
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
                                         </thead>
-                                    </table><!-- Modal -->
-                                    <script src="https://datatables.yajrabox.com/js/jquery.min.js"></script>
-                                    <script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
-                                    <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
-                                    <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
-                                    <script type="text/javascript">
-                                        $(function() {
-                                            $('#table-Dataevent').DataTable({
-                                                processing: true,
-                                                serverSide: true,
-                                                ajax: '/event/getdatatable',
-                                                columns: 
-                                                [
-                                                {data: 'nama'},
-                                                {data: 'email'},
-                                                {data: 'event'},
-                                                {data: 'posisi'},
-                                                {data: 'action'}
-                                                ]
-                                            } );
-
-                                        } );
-
-                                    </script>                                      
+                                    </table>
+                                    {{ $users->links() }}
                                 </div>
                             </div>
                         </div>
