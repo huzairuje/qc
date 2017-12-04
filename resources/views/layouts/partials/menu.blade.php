@@ -8,23 +8,16 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is( 'event*')? 'toggled':''}}">
-                            <i class="material-icons">trending_up</i>
-                            <span>Event</span>
+
+                    <li {{Route::is('event.*')? 'class=active':''}}>
+                        <a href="{{route('event.index')}}">
+                          <i class="material-icons">event</i>
+                            <span>Event Management</span>
                         </a>
-                        <ul class="ml-menu" style="display: none;">
-                            <li {{Route::is('event.create')? 'class=active':''}}>
-                                <a href="{{route('event.create')}}">Create Event</a>
-                            </li>
-                            <li {{Route::is('event.index') || Route::is('event.show') || Route::is('event.edit')? 'class=active':''}}>
-                                <a href="{{route('event.index')}}">Event Index</a>
-                            </li>
-                        </ul>
                     </li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is( 'tabulasi*')? 'toggled':''}}">
-                            <i class="material-icons">trending_up</i>
+                            <i class="material-icons">tab</i>
                             <span>Tabulasi</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
@@ -61,7 +54,7 @@
                     </li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('monitoring*')? 'toggled':''}}" >
-                            <i class="material-icons">notifications_none</i>
+                            <i class="material-icons">remove_red_eye</i>
                             <span>Monitoring</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
@@ -91,7 +84,7 @@
                     </li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('datamaster*')? 'toggled':''}}" >
-                            <i class="material-icons">notifications_none</i>
+                            <i class="material-icons">input</i>
                             <span>Data Master</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
@@ -105,13 +98,13 @@
                                 <a href="{{route('datamaster.TPS.index')}}">TPS</a>
                             </li>
                             <li {{Route::is('datamaster.partai*')? 'class=active':''}}>
-                                <a href="{{route('datamaster.partai.index')}}">TPS</a>
+                                <a href="{{route('datamaster.partai.index')}}">Partai</a>
                             </li>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('usermanagement*')? 'toggled':''}}" >
-                            <i class="material-icons">notifications_none</i>
+                            <i class="material-icons">people</i>
                             <span>User Management</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
