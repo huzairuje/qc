@@ -1,9 +1,9 @@
-<?php 
- 
-namespace App\Http\Controllers; 
- 
-use Illuminate\Http\Request; 
-use App\Http\Requests; 
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Http\Requests;
 use DB;
 use Yajra\Datatables\Facades\Datatables;
 use Yajra\Datatables\Services\DataTable;
@@ -14,45 +14,45 @@ use Yajra\Datatables\Facades\Datatables\Mjoin;
 use Yajra\Datatables\Facades\Datatables\Options;
 use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
-use App\Tabulasi;  
-use App\Provinsi; 
-use App\KotaKab; 
-use App\Kecamatan; 
-use App\Kelurahan; 
-use Charts; 
-use Flash; 
- 
- 
-class TabulasiController extends Controller 
-{ 
-   /** 
-     * Create a new controller instance. 
-     * 
-     * @return void 
-     */ 
- 
-    /** 
-     * Show the application dashboard. 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
- 
-    public function quickCount() 
-    { 
-        return view('layouts.tabulasi.quick_count'); 
- 
-    } 
- 
-    public function index() 
-    { 
+use App\Tabulasi;
+use App\Provinsi;
+use App\KotaKab;
+use App\Kecamatan;
+use App\Kelurahan;
+use Charts;
+use Flash;
+
+
+class TabulasiController extends Controller
+{
+   /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function quickCount()
+    {
+        return view('layouts.tabulasi.quick_count');
+
+    }
+
+    public function index()
+    {
 
         return view('layouts.tabulasi.index');
- 
-    } 
+
+    }
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $tabulasi = Tabulasi::select(['id','dokumen_id', 'provinsi_id', 'kota_kabupaten_id', 'kecamatan_id', 'kelurahan_id']);
+        $tabulasi = Tabulasi::select(['id','dokumen', 'provinsi_id', 'kota_kabupaten_id', 'kecamatan_id', 'kelurahan_id']);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
 
@@ -63,7 +63,7 @@ class TabulasiController extends Controller
                     return $tabulasi->provinsi->nama_provinsi;
                 } else {
                     return 'Data PROVINSI tidak ada';
-                }              
+                }
             })
             ->editColumn('kota_kabupaten_id', function ($tabulasi) {
                 if ($tabulasi->kota_kabupaten) {
@@ -89,78 +89,78 @@ class TabulasiController extends Controller
             ->addColumn('action', function ($tabulasi) {
             return '<a href="'.route('tabulasi.show', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('tabulasi.edit', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('tabulasi.delete', $tabulasi->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
-            
+
             ->make(true);
     }
-    
-    
- 
-    public function show($id) 
-    { 
-    	$chart = Charts::multi('bar', 'material') 
-            // Setup the chart settings 
-            ->title("Hasil Data Suara") 
-            // A dimension of 0 means it will take 100% of the space 
-            ->dimensions(700, 300) // Width x Height 
-            // This defines a preset of colors already done:) 
-            ->template("material") 
-            // You could always set them manually 
-             ->colors(['#2196F3', '#F44336', '#FFC107']) 
-            // Setup the diferent datasets (this is a multi chart) 
-            ->dataset('Data Suara', [5,20,100]) 
-            ->responsive(false) 
-            // Setup what the values mean 
-            ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']); 
- 
-        $tabulasi = Tabulasi::find($id); 
+
+
+
+    public function show($id)
+    {
+    	$chart = Charts::multi('bar', 'material')
+            // Setup the chart settings
+            ->title("Hasil Data Suara")
+            // A dimension of 0 means it will take 100% of the space
+            ->dimensions(700, 300) // Width x Height
+            // This defines a preset of colors already done:)
+            ->template("material")
+            // You could always set them manually
+             ->colors(['#2196F3', '#F44336', '#FFC107'])
+            // Setup the diferent datasets (this is a multi chart)
+            ->dataset('Data Suara', [5,20,100])
+            ->responsive(false)
+            // Setup what the values mean
+            ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
+
+        $tabulasi = Tabulasi::find($id);
         // dd($tabulasi);
- 
-        if (empty($tabulasi)) { 
-            flash('Tabulasi not found')->error(); 
- 
-            return redirect(route('tabulasi.index')); 
-        } 
- 
-        return view('layouts.tabulasi.show',compact('tabulasi','chart')); 
- 
- 
-    } 
- 
-    public function create() 
-    { 	
+
+        if (empty($tabulasi)) {
+            flash('Tabulasi not found')->error();
+
+            return redirect(route('tabulasi.index'));
+        }
+
+        return view('layouts.tabulasi.show',compact('tabulasi','chart'));
 
 
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all(); 
+    }
+
+    public function create()
+    {
+
+
+        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
         // dd($provinsi);
- 		
-        $kota_kabupaten = array(); 
+
+        $kota_kabupaten = array();
         // dd($kota_kabupaten);
- 
-        $kecamatan = array(); 
- 
+
+        $kecamatan = array();
+
         $kelurahan = array();
-        
-        return view('layouts.tabulasi.create', compact('provinsi','kota_kabupaten','kecamatan','kelurahan')); 
-    } 
- 
-    public function store(Request $request) 
-    { 
- 		
+
+        return view('layouts.tabulasi.create', compact('provinsi','kota_kabupaten','kecamatan','kelurahan'));
+    }
+
+    public function store(Request $request)
+    {
+
 
 
         $input = $request->all();
- 
+
         $tabulasi = Tabulasi::create($input);
-        dd($tabulasi); 
-        
-        flash('Data Tabulasi created successfully')->success(); 
-        return redirect(route('tabulasi.show',$tabulasi)); 
-    } 
- 
-     
- 
-    public function edit ($id) 
-    { 
+        // dd($tabulasi);
+
+        flash('Data Tabulasi created successfully')->success();
+        return redirect(route('tabulasi.show',$tabulasi));
+    }
+
+
+
+    public function edit ($id)
+    {
         // $tabulasi = $this->findWithoutFail($id);
         $tabulasi = Tabulasi::find($id);
         $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
@@ -177,11 +177,11 @@ class TabulasiController extends Controller
 
         return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota_kabupaten','kecamatan','kelurahan'));
     }
-        
-         
- 
-    public function update(Request $request,$id) 
-    { 
+
+
+
+    public function update(Request $request,$id)
+    {
         $tabulasi = Tabulasi::find($id);
             if (empty($tabulasi)) {
 
@@ -189,21 +189,21 @@ class TabulasiController extends Controller
 
             return redirect(route('layouts.tabulasi.index'));
         }
-         
-            $tabulasi->dokumen_id       = $request->dokumen_id;
+
+            $tabulasi->dokumen       = $request->dokumen;
             $tabulasi->provinsi_id       = $request->provinsi_id;
             $tabulasi->kota_kabupaten_id    = $request->kota_kabupaten_id;
             $tabulasi->kelurahan_id    = $request->kelurahan_id;
-            
+
             $tabulasi->update();
-       
+
 
         flash('Data Tabulasi saved successfully')->success();
-        return redirect(route('tabulasi.show', $tabulasi)); 
-         
-    } 
+        return redirect(route('tabulasi.show', $tabulasi));
 
-    public function destroy($id) 
+    }
+
+    public function destroy($id)
     {
 
     	$tabulasi = Tabulasi::findOrFail($id);
@@ -216,34 +216,34 @@ class TabulasiController extends Controller
         $tabulasi->delete();
 
         flash('Data Tabulasi deleted successfully')->success();
-        return redirect(route('tabulasi.index')); 
+        return redirect(route('tabulasi.index'));
 	}
 
-    public function ajax(Request $request) 
-    { 
-        $type = $request->type; 
-        switch ($type) { 
-            case 'get-city': 
-                 return KotaKab::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all(); 
- 
-                return $result; 
-                break; 
- 
-            case 'get-kecamatan': 
-                return Kecamatan::where('kota_kabupaten_id', $request->kota_kabupaten_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all(); 
-                break; 
- 
-            case 'get-kelurahan': 
-                return Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all(); 
-                break; 
- 
-            default: 
-                return $result['status'] = false; 
-                break; 
-        } 
- 
- 
-    } 
- 
-     
-} 
+    public function ajax(Request $request)
+    {
+        $type = $request->type;
+        switch ($type) {
+            case 'get-city':
+                 return KotaKab::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+
+                return $result;
+                break;
+
+            case 'get-kecamatan':
+                return Kecamatan::where('kota_kabupaten_id', $request->kota_kabupaten_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+                break;
+
+            case 'get-kelurahan':
+                return Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+                break;
+
+            default:
+                return $result['status'] = false;
+                break;
+        }
+
+
+    }
+
+
+}

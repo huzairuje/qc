@@ -30,7 +30,7 @@
                                                 </div>
 
                                             </div>
-                                        
+
                                             <table id="table-Tabulasi" class="table table-striped">
                                                 <thead>
                                                     <tr style="background-color: lightblue">
@@ -54,10 +54,10 @@
                                                         processing: true,
                                                         serverSide: true,
                                                         ajax: '/tabulasi/getdatatable',
-                                                        columns: 
+                                                        columns:
                                                             [
 
-                                                                {data: 'dokumen_id'},
+                                                                {data: 'dokumen'},
                                                                 {data: 'provinsi_id'},
                                                                 {data: 'kota_kabupaten_id'},
                                                                 {data: 'kecamatan_id'},
@@ -67,16 +67,16 @@
                                                                 {data: 'action'}
                                                                 ]
                                                             } );
-                                                    
+
                                                     } );
-                                                                                                         
-                                            </script>                                      
+
+                                            </script>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </div>

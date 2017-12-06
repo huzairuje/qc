@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-	
+
 	<div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
@@ -18,7 +18,7 @@
                         BUAT DATA TABULASI
                     </h2>
                 </div>
-                
+
                 <div class="box box-primary">
 
 		            <div class="box-body">
@@ -29,14 +29,14 @@
                 {!! Form::open(['route' => 'tabulasi.store']) !!}
 
                     <div class="col-md-12">
-                            {!! Form::select('dokumen_id', ['C1' => 'C1', 'C2' => 'C2', 'C3' => 'C3', 'C3' => 'C3', 'C4' => 'C4'], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}    						
-                        
+                            {!! Form::select('dokumen', ['C1' => 'C1', 'C2' => 'C2', 'C3' => 'C3', 'C3' => 'C3', 'C4' => 'C4'], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}    						
+
                     </div>
 
                     <div class="col-md-6">
-                           {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}     
+                           {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}
                     </div>
-        
+
                     <div class="col-md-6">
                                 {{ Form::select('kota_kabupaten_id', $kota_kabupaten,null, ['class' => 'form-control','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
                     </div>
@@ -66,20 +66,20 @@
                                           <tr>
                                             @for ($x = 1; $x <= 20; $x++)
                                                 <td class="tg-yw4l" tabindex="1">
-                                                    
+
                                                 </td>
                                             @endfor
                                           </tr>
                                         @endfor
-                                      
+
                                     </tbody>
 
                                 </table>
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                     <!-- END Content Create-->
 
                     <!-- Modal -->
@@ -135,7 +135,7 @@
 
 	                $('#kecamatan_id').html(html);
                     $('#kecamatan_id').selectpicker('refresh');
-	                
+
 	            });
 	        });
 
@@ -156,7 +156,7 @@
 	        });
 	    });
 </script>
-    
+
 
 @endsection
 

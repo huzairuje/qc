@@ -11,9 +11,9 @@ class Tabulasi extends Model
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
-	
+
     protected $fillable = [
-        'dokumen_id',
+        'dokumen',
         'provinsi_id',
         'kota_kabupaten_id',
         'kecamatan_id',
