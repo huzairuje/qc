@@ -19,12 +19,21 @@ class UserManagementController extends Controller
         if ($role == 'admin-pusat')
         {
             $data['roleList']['admin-event'] = 'Admin Event';
+            $data['roleList']['admin-provinsi'] = 'Admin Provinsi';
             $data['roleList']['admin-kota'] = 'Admin Kota';
             $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
             $data['roleList']['korsak'] = 'Admin Korsak';
             $data['roleList']['saksi'] = 'Saksi';
         }
         elseif  ($role == 'admin-event')
+        {
+            $data['roleList']['admin-provinsi'] = 'Admin Provinsi';
+            $data['roleList']['admin-kota'] = 'Admin Kota';
+            $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
+            $data['roleList']['korsak'] = 'Admin Korsak';
+            $data['roleList']['saksi'] = 'Saksi';
+        }
+        elseif ($role == 'admin-provinsi')
         {
             $data['roleList']['admin-kota'] = 'Admin Kota';
             $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
