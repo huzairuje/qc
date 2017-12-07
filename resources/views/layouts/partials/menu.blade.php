@@ -8,7 +8,7 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-
+                    @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
                     <li {{Route::is('event.*')? 'class=active':''}}>
                         <a href="{{route('event.index')}}">
                           <i class="material-icons">event</i>
@@ -32,6 +32,8 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
+                    @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
                     <li {{Route::is('download')? 'class=active':''}}>
                         <a href="{{route('download')}}">
                             <i class="material-icons">file_download</i>
@@ -52,6 +54,8 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
+                    @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('monitoring*')? 'toggled':''}}" >
                             <i class="material-icons">remove_red_eye</i>
@@ -82,6 +86,8 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
+                    @if( Sentinel::getUser()->roles->first()->slug == 'admin-event' || Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('datamaster*')? 'toggled':''}}" >
                             <i class="material-icons">input</i>
@@ -102,6 +108,7 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('usermanagement*')? 'toggled':''}}" >
                             <i class="material-icons">people</i>
