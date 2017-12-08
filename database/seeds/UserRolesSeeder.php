@@ -31,6 +31,15 @@ class UserRolesSeeder extends Seeder
         ]);
 
         Sentinel::getRoleRepository()->createModel()->create([
+            'slug' => 'admin-provinsi',
+            'name' => 'Admin Provinsi',
+            'permissions' => [
+                'admin' => true
+            ]
+        ]);
+
+        // kota/kabupaten
+        Sentinel::getRoleRepository()->createModel()->create([
             'slug' => 'admin-kota',
             'name' => 'Admin Kota',
             'permissions' => [

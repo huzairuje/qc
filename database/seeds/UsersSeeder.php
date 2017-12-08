@@ -24,54 +24,73 @@ class UsersSeeder extends Seeder
 
     	$datas = [
     		[
-    			'email' => 'admin@quickcount.com',
-    			'name' => 'Super Administrator',
+    			'email' => 'pusat@quickcount.com',
+    			'name' => 'Admin Pusat',
                 'gender' => 'Male',
-                'username' => 'admin',
+                'username' => 'pusat',
                 'phone' => '+6281212345678',
-    			'role' => 'admin-pusat'
-    		],
-    		[
-    			'email' => 'Ark@paradise-store.com',
-    			'name' => 'Ark Island',
-    			'gender' => 'Male',
-                'username' => 'ark',
-                'phone' => '+6281223456781',
-    			'role' => 'admin-kota'
-    		],
-    		[
-    			'email' => 'johndoe@paradise-store.com',
-    			'name' => 'John Doe',
-    			'gender' => 'Male',
-                'username' => 'john',
-                'phone' => '+6281234567812',
-    			'role' => 'admin-kecamatan'
-    		]
-    	];
+                'role' => 'admin-pusat'
+            ],
+            [
+               'email' => 'event@quickcount.com',
+               'name' => 'Admin Event',
+               'gender' => 'Male',
+               'username' => 'event',
+               'phone' => '+6281223456781',
+               'role' => 'admin-event'
+           ],
+            [
+               'email' => 'provinsi@quickcount.com',
+               'name' => 'Admin Provinsi',
+               'gender' => 'Male',
+               'username' => 'provinsi',
+               'phone' => '+6281234567812',
+               'role' => 'admin-provinsi'
+           ],
+           [
+               'email' => 'kota@quickcount.com',
+               'name' => 'Admin Kota',
+               'gender' => 'Male',
+               'username' => 'kota',
+               'phone' => '+6281245678123',
+               'role' => 'admin-kota'
+           ],
+           [
+               'email' => 'kecamatan@quickcount.com',
+               'name' => 'Admin Kecamatan',
+               'gender' => 'Male',
+               'username' => 'kecamatan',
+               'phone' => '+6281256781234',
+               'role' => 'admin-kecamatan'
+           ],
+           [
+               'email' => 'korsak@quickcount.com',
+               'name' => 'Korsak',
+               'gender' => 'Male',
+               'username' => 'korsak',
+               'phone' => '+6281267812345',
+               'role' => 'korsak'
+           ],
+           [
+               'email' => 'saksi@quickcount.com',
+               'name' => 'Saksi',
+               'gender' => 'Male',
+               'username' => 'saksi',
+               'phone' => '+6281278123456',
+               'role' => 'saksi'
+           ]
+       ];
 
-    	foreach ( $datas as $key => $data ) {
-    		$user = Sentinel::registerAndActivate( [
-                'email' => $data[ 'email' ],
-                'username' => $data[ 'username' ],
-                'phone' => $data[ 'phone' ],
-    			'password' => '12345678',
-    			'first_name' => $data[ 'name' ],
-    		] );
-    		Sentinel::findRoleBySlug( $data[ 'role' ] )->users()->attach( $user );
-    	}
-
-    	$faker = \Faker\Factory::create();
-    	for ($i = 0; $i < 3; $i++) {
-    		$user = Sentinel::registerAndActivate( [
-    			'email' => $faker->freeEmail,
-                'username' => $data[ 'username' ],
-                'phone' => $data[ 'phone' ],
-    			'password' => '12345678',
-    			'first_name' => $faker->firstName . ' ' . $faker->lastName,
-    		] );
-
-    		Sentinel::findRoleBySlug('admin')->users()->attach( $user );
-    	}
-    	Schema::enableForeignKeyConstraints();
-    }
+       foreach ( $datas as $key => $data )
+       {
+          $user = Sentinel::registerAndActivate([
+            'email' => $data[ 'email' ],
+            'username' => $data[ 'username' ],
+            'phone' => $data[ 'phone' ],
+            'password' => '12345678',
+            'first_name' => $data[ 'name' ]]);
+          Sentinel::findRoleBySlug( $data[ 'role' ] )->users()->attach( $user );
+      }
+      Schema::enableForeignKeyConstraints();
+  }
 }
