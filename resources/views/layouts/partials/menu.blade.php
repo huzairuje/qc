@@ -40,6 +40,8 @@
                             <span>Download</span>
                         </a>
                     </li>
+                    @endif
+                    @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' )
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('approval*')? 'toggled':''}}" >
                             <i class="material-icons">notifications_none</i>

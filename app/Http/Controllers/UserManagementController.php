@@ -60,7 +60,15 @@ class UserManagementController extends Controller
             'password' => '12345678',
         ]);
         // dd($request->all());
-        $user = Sentinel::registerAndActivate($request->all());
+        if($request->role == 'korsak' || $request->role == 'saksi')
+        {
+            $user = Sentinel::register($request->all());
+        }
+        else
+        {
+            $user = Sentinel::registerAndActivate($request->all());
+        }
+
         $insertedId = $user->id;
 
         Sentinel::findRoleBySlug($request->role)->users()->attach( $user );
