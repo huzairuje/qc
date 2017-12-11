@@ -11,4 +11,14 @@ class KotaKab extends Model
     protected $fillable = [
         'nama'
     ];
+
+    public function provinsi()
+    {
+        return $this->belongsTo('App\Provinsi');
+    }
+
+    public function kecamatan()
+    {
+        return $this->hasMany('App\Kecamatan', 'kota_kabupaten_id', 'id');
+    }
 }

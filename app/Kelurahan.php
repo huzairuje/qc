@@ -11,4 +11,14 @@ class Kelurahan extends Model
     protected $fillable = [
         'nama'
     ];
+
+    public function kecamatan()
+    {
+        return $this->belongsTo('App\Kecamatan');
+    }
+
+    public function tps()
+    {
+        return $this->hasMany('App\Tps');
+    }
 }
