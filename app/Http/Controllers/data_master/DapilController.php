@@ -12,12 +12,12 @@ class DapilController extends Controller
     {
 
     }
- 
+
 
     public function index()
     {
 
-        return view('layouts.data_master.tps.index');
+        return view('layouts.data_master.dapil.index');
 
     }
     public function get_datatable()
