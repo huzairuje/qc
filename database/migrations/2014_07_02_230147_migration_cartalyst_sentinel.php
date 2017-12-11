@@ -94,7 +94,7 @@ class MigrationCartalystSentinel extends Migration
         });
 
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('email');
             $table->string('username');
             $table->string('phone');
@@ -103,13 +103,18 @@ class MigrationCartalystSentinel extends Migration
             $table->timestamp('last_login')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
+            $table->unique('email');
+            $table->unique('username');
+            $table->unique('phone');
+            $table->boolean('approval');
+            $table->string('gcm_token');
+            $table->bigInteger('parent_id');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
             $table->engine = 'InnoDB';
-            $table->unique('email');
-            $table->unique('username');
-            $table->unique('phone');
+
+
 
 
         });

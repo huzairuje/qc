@@ -22,6 +22,7 @@ class CreateEventTable extends Migration
             $table->string('provinsi')->nullable();
             $table->string('kabupaten_kota')->nullable();
             $table->string('dapil')->nullable();
+            $table->date('expired')->nullable();
             $table->timestamps();
         });
     }

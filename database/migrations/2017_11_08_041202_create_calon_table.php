@@ -19,9 +19,8 @@ class CreateCalonTable extends Migration
             $table->string('alamat')->nullable();
             $table->string('no_telpon')->nullable();
             $table->string('email')->nullable();
-            $table->string('list_id_event')->nullable();
-            $table->string('list_id_dapil')->nullable();
-            $table->string('list_id_tps')->nullable();
+            $table->string('event_id')->nullable();
+            $table->string('list_dapil_id')->nullable();
             $table->string('foto')->nullable();
             $table->timestamps();
         });
