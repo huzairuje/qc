@@ -158,12 +158,14 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::get('/datamaster/dapil/{id}',['as'=>'datamaster.dapil.delete', 'uses'=>'data_master\DapilController@destroy']);
 		//EndDapil
 		//Calon
-	Route::get('/datamaster/calon', ['as'=>'datamaster.calon.index', 'uses'=>'data_master\TPSController@index']);
-	Route::get('/datamaster/calon/create',['as'=>'datamaster.calon.create', 'uses'=>'data_master\TPSController@create']);
-	Route::get('/datamaster/calon/edit/{id}',['as'=>'datamaster.calon.edit', 'uses'=>'data_master\TPSController@edit']);
-	Route::get('/datamaster/calon/update/{id}',['as'=>'datamaster.calon.edit', 'uses'=>'data_master\TPSController@update']);
-	Route::get('/datamaster/calon/store',['as'=>'datamaster.calon.store', 'uses'=>'data_master\TPSController@update']);
-	Route::get('/datamaster/calon/{id}',['as'=>'datamaster.calon.delete', 'uses'=>'data_master\TPSController@destroy']);
+	Route::get('/datamaster/calon', ['as'=>'datamaster.calon.index', 'uses'=>'data_master\CalonController@index']);
+	Route::get('/datamaster/calon/ajax', ['as'=>'datamaster.calon.ajax', 'uses'=>'data_master\CalonController@ajax']);
+	Route::get('/datamaster/calon/getdatatable', ['as'=>'datamaster.calon.datatable', 'uses'=>'data_master\CalonController@get_datatable']);
+	Route::get('/datamaster/calon/create',['as'=>'datamaster.calon.create', 'uses'=>'data_master\CalonController@create']);
+	Route::get('/datamaster/calon/edit/{id}',['as'=>'datamaster.calon.edit', 'uses'=>'data_master\CalonController@edit']);
+	Route::get('/datamaster/calon/update/{id}',['as'=>'datamaster.calon.edit', 'uses'=>'data_master\CalonController@update']);
+	Route::get('/datamaster/calon/store',['as'=>'datamaster.calon.store', 'uses'=>'data_master\CalonController@update']);
+	Route::get('/datamaster/calon/{id}',['as'=>'datamaster.calon.delete', 'uses'=>'data_master\CalonController@destroy']);
 		//EndCalon
 		//Partai
 		Route::get('/datamaster/partai',['as'=>'datamaster.partai.index', 'uses'=>'data_master\DapilController@index']);

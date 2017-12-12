@@ -106,9 +106,10 @@ class MigrationCartalystSentinel extends Migration
             $table->unique('email');
             $table->unique('username');
             $table->unique('phone');
-            $table->boolean('approval');
-            $table->string('gcm_token');
-            $table->bigInteger('parent_id');
+            $table->boolean('approval')->default('false');
+            $table->string('gcm_token')->nullable();
+            $table->unique('gcm_token');
+            $table->bigInteger('parent_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
