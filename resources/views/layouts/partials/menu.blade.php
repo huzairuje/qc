@@ -8,7 +8,6 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
                     <li {{Route::is('event.*')? 'class=active':''}}>
                         <a href="{{route('event.index')}}">
                           <i class="material-icons">event</i>
@@ -32,7 +31,6 @@
                             </li>
                         </ul>
                     </li>
-                    @endif
                     @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
                     <li {{Route::is('download')? 'class=active':''}}>
                         <a href="{{route('download')}}">

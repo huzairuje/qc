@@ -35,4 +35,9 @@ class Event extends Model
     {
         return $this->belongsTo(Dapil::class);
     }
+
+    public function userEvent()
+    {
+        return $this->hasMany('App\UserEvent');
+    }
 }
