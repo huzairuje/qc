@@ -16,8 +16,8 @@ class CreateTpsTable extends Migration
          Schema::create('tps', function (Blueprint $table) {
           $table->bigIncrements('id');
           $table->bigInteger('no_tps');
+          $table->bigInteger('event_id');
           $table->string('nama_tps');
-          $table->string('calon')->nullable();
           $table->string('provinsi_id')->nullable();
           $table->string('kota_kabupaten_id')->nullable();
           $table->string('kecamatan_id')->nullable();
