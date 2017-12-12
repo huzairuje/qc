@@ -1,0 +1,24 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Calon extends Model
+{
+  protected $table = 'calon';
+  public $primaryKey ='id';
+
+  const CREATED_AT = 'created_at';
+  const UPDATED_AT = 'updated_at';
+
+  protected $fillable = [
+      'nama',
+      'alamat',
+      'no_telpon',
+      'email',
+      'event_id',
+      'list_dapil_id',
+      'foto',
+  ];
+}

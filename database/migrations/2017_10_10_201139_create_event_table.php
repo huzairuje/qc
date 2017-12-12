@@ -21,7 +21,7 @@ class CreateEventTable extends Migration
             $table->string('tahun')->nullable();
             $table->string('provinsi')->nullable();
             $table->string('kabupaten_kota')->nullable();
-            $table->string('dapil')->nullable();
+            $table->string('list_dapil_id')->nullable();
             $table->BigInteger('calon_id')->nullable();
             $table->date('expired')->nullable();
             $table->timestamps();
