@@ -36,7 +36,7 @@
                                             <tr style="background-color: lightblue">
                                                 <th>Nama</th>
                                                 <th>Email</th>
-                                                <th>Event</th>
+                                                <th>Didaftarkan Oleh</th>
                                                 <th>Posisi</th>
                                                 <th>Action</th>
                                             </tr>
@@ -49,7 +49,7 @@
                                                     {{ $user->email }}
                                                 </td>
                                                 <td>
-                                                    //
+                                                    {{ $user->parent()->first()->email or 'Developer' }}
                                                 </td>
                                                 <td>
                                                     {{ $user->roles()->first()->name }}

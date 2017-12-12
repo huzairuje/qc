@@ -20,6 +20,11 @@ class Suara extends Model
 
     public function tps()
     {
-        return $this->belongsTo(Tps::class);
+        return $this->belongsTo('App\Tps');
+    }
+
+    public function calon()
+    {
+        return $this->belongsTo('App\Calon');
     }
 }

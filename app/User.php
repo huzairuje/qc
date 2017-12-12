@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Cartalyst\Sentinel\Users\EloquentUser;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends EloquentUser
 {
@@ -16,7 +15,7 @@ class User extends EloquentUser
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name', 'email', 'password', 'username', 'phone'
+        'parent_id', 'first_name','last_name', 'email', 'password', 'username', 'phone'
     ];
 
     protected $loginNames = ['email', 'username', 'phone'];
@@ -29,4 +28,19 @@ class User extends EloquentUser
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function childs()
+    {
+        return $this->hasMany('App\User', 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo('App\User', 'parent_id');
+    }
+
+    public function userEvent()
+    {
+        return $this->hasMany('App\UserEvent');
+    }
 }
