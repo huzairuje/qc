@@ -51,7 +51,7 @@ class EventController extends Controller
         }
         else
         {
-            $data_event = Event::select(['id','nama','tahun','jenis','tingkat', 'provinsi', 'kabupaten_kota', 'dapil']);
+            $data_event = Event::select(['id','nama','tahun','jenis','tingkat', 'provinsi', 'kabupaten_kota', 'dapil'])->where('id', 0);
         }
 
         return Datatables::eloquent($data_event)->addColumn('action', function ($data_event) {
