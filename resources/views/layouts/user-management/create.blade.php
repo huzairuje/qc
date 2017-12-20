@@ -85,6 +85,19 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select class="form-control show-tick" name="event" id="tahun" placeholder="Role" >
+                                                <option value=''>User Event</option>
+                                                @foreach( $eventList as $key => $val )
+                                                <option value="{{ $val->id }}">{{ $val->nama }} ({{ $val->tingkat }})</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <div class="form-line">
                                         {!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
                                     </div>
