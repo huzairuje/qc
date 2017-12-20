@@ -20,6 +20,8 @@ use App\Kecamatan;
 use App\Kelurahan;
 use Charts;
 use Flash;
+use App\Models\Calon;
+use App\Models\Event;
 
 class CalonController extends Controller
 {
@@ -30,7 +32,7 @@ class CalonController extends Controller
      */
     public function __construct()
     {
-      
+
     }
 
     /**
@@ -48,42 +50,22 @@ class CalonController extends Controller
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $tabulasi = Tabulasi::select(['id','dokumen_id', 'provinsi_id', 'kota_kabupaten_id', 'kecamatan_id', 'kelurahan_id']);
+        $calon = Calon::select(['id','nama', 'dapil_id', 'no_telpon', 'email', 'tipe', 'partai_id','nomor','alamat', 'foto']);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
 
-        return Datatables::eloquent($tabulasi)
+        return Datatables::eloquent($calon)
 
-            ->editColumn('provinsi_id', function ($tabulasi) {
-                if ($tabulasi->provinsi) {
-                    return $tabulasi->provinsi->nama_provinsi;
+            ->editColumn('event_id', function ($calon) {
+                if ($calon->event) {
+                    return $calon->event->nama;
                 } else {
-                    return 'Data PROVINSI tidak ada';
+                    return 'Data Event tidak ada';
                 }
             })
-            ->editColumn('kota_kabupaten_id', function ($tabulasi) {
-                if ($tabulasi->kota_kabupaten) {
-                    return $tabulasi->kota_kabupaten->nama;
-                } else {
-                    return 'Data KOTA/KABUPATEN tidak ada';
-                }
-            })
-            ->editColumn('kecamatan_id', function ($tabulasi) {
-                if ($tabulasi->kecamatan) {
-                    return $tabulasi->kecamatan->nama;
-                } else {
-                    return 'Data KECAMATAN tidak ada';
-                }
-            })
-            ->editColumn('kelurahan_id', function ($tabulasi) {
-                if ($tabulasi->kecamatan) {
-                    return $tabulasi->kelurahan->nama;
-                } else {
-                    return 'Data KELURAHAN tidak ada';
-                }
-            })
-            ->addColumn('action', function ($tabulasi) {
-            return '<a href="'.route('tabulasi.show', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('tabulasi.edit', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('tabulasi.delete', $tabulasi->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+
+            ->addColumn('action', function ($calon) {
+            return '<a href="'.route('datamaster.calon.show', $calon->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.calon.edit', $calon->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.calon.delete', $calon->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
 
             ->make(true);
@@ -108,48 +90,35 @@ class CalonController extends Controller
             // Setup what the values mean
             ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
 
-        $tabulasi = Tabulasi::find($id);
+        $calon = Calon::find($id);
         // dd($tabulasi);
 
-        if (empty($tabulasi)) {
-            flash('Tabulasi not found')->error();
+        if (empty($calon)) {
+            flash('Calon not found')->error();
 
-            return redirect(route('tabulasi.index'));
+            return redirect(route('datamaster.calon.index'));
         }
 
-        return view('layouts.tabulasi.show',compact('tabulasi','chart'));
+        return view('layouts.data_master.calon.show',compact('calon','chart'));
 
 
     }
 
     public function create()
     {
+        $event = Event::pluck('nama','id')->all();
 
-
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
-        // dd($provinsi);
-
-        $kota_kabupaten = array();
-        // dd($kota_kabupaten);
-
-        $kecamatan = array();
-
-        $kelurahan = array();
-
-        return view('layouts.tabulasi.create', compact('provinsi','kota_kabupaten','kecamatan','kelurahan'));
+        return view('layouts.data_master.calon.create', compact('event'));
     }
 
     public function store(Request $request)
     {
-
-
-
         $input = $request->all();
 
-        $tabulasi = Tabulasi::create($input);
+        $calon = Calon::create($input);
 
-        flash('Data Tabulasi created successfully')->success();
-        return redirect(route('tabulasi.show',$tabulasi));
+        flash('Data Calon created successfully')->success();
+        return redirect(route('datamaster.calon.show',$calon));
     }
 
 
@@ -157,61 +126,60 @@ class CalonController extends Controller
     public function edit ($id)
     {
         // $tabulasi = $this->findWithoutFail($id);
-        $tabulasi = Tabulasi::find($id);
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
-        $kota_kabupaten = KotaKab::where('provinsi_id', $tabulasi->provinsi_id)->pluck('nama','id')->all();
-        $kecamatan = Kecamatan::where('kota_kabupaten_id', $tabulasi->kota_kabupaten_id)->pluck('nama','id')->all();
-        $kelurahan = Kelurahan::where('kecamatan_id', $tabulasi->kecamatan_id)->pluck('nama','id')->all();
-        // dd($kota_kabupaten);
+        $calon = Calon::find($id);
+        $event = Event::where('id', $calon->event_id)->pluck('nama','id')->all();
 
-        if (empty($tabulasi)) {
-            flash('Data Tabulasi Tidak Ada');
+        if (empty($calon)) {
+            flash('Data Calon Tidak Ada');
 
-            return redirect(route('tabulasi.index'));
+            return redirect(route('calon.index'));
         }
 
-        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota_kabupaten','kecamatan','kelurahan'));
+        return view('layouts.data_master.calon.edit', compact('calon','event'));
     }
 
 
 
     public function update(Request $request,$id)
     {
-        $tabulasi = Tabulasi::find($id);
-            if (empty($tabulasi)) {
+        $calon = Calon::find($id);
+            if (empty($calon)) {
 
-                flash('Tabulasi not found');
+                flash('Calon not found');
 
-            return redirect(route('layouts.tabulasi.index'));
+            return redirect(route('layouts.data_master.calon.index'));
         }
 
-            $tabulasi->dokumen_id       = $request->dokumen_id;
-            $tabulasi->provinsi_id       = $request->provinsi_id;
-            $tabulasi->kota_kabupaten_id    = $request->kota_kabupaten_id;
-            $tabulasi->kelurahan_id    = $request->kelurahan_id;
+            $calon->nama            = $request->nama;
+            $calon->alamat          = $request->alamat;
+            $calon->no_telpon       = $request->no_telpon;
+            $calon->email           = $request->email;
+            $calon->event_id        = $request->event_id;
+            $calon->list_dapil_id   = $request->list_dapil_id;
+            $calon->foto            = $request->foto;
 
-            $tabulasi->update();
+            $calon->update();
 
 
-        flash('Data Tabulasi saved successfully')->success();
-        return redirect(route('tabulasi.show', $tabulasi));
+        flash('Data Calon saved successfully')->success();
+        return redirect(route('datamaster.calon.show', $calon));
 
     }
 
     public function destroy($id)
     {
 
-    	$tabulasi = Tabulasi::findOrFail($id);
-            if (empty($tabulasi)) {
+    	$calon = Calon::findOrFail($id);
+            if (empty($calon)) {
 
-                    flash('Tabulasi not found');
+                    flash('Calon not found');
 
-                return redirect(route('layouts.tabulasi.index'));
+                return redirect(route('layouts.data_master.calon.index'));
             }
-        $tabulasi->delete();
+        $calon->delete();
 
-        flash('Data Tabulasi deleted successfully')->success();
-        return redirect(route('tabulasi.index'));
+        flash('Data Calon deleted successfully')->success();
+        return redirect(route('datamaster.calon.index'));
 	}
 
     public function ajax(Request $request)

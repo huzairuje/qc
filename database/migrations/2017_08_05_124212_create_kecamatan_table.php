@@ -13,13 +13,12 @@ class CreateKecamatanTable extends Migration
      */
     public function up()
     {
-        Schema::create('kecamatan', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nama')->nullable();
-            $table->bigInteger('kota_kabupaten_id')->unsigned()->index();
-            $table->foreign('kota_kabupaten_id')->references('id')->on('kota_kabupaten')->onDelete('cascade');
-            $table->timestamps();
-        });
+      Schema::create('kecamatan', function (Blueprint $table) {
+          $table->bigIncrements('id');
+          $table->bigInteger('kota_id');
+          $table->string('nama');
+          $table->timestamps();
+      });
     }
 
     /**

@@ -14,16 +14,10 @@ class CreatePartaiTable extends Migration
     public function up()
     {
       Schema::create('partai', function (Blueprint $table) {
-         $table->bigIncrements('id');
-         $table->string('nama')->nullable();
-         $table->string('alamat')->nullable();
-         $table->string('no_telpon')->nullable();
-         $table->string('email')->nullable();
-         $table->string('list_event_id')->nullable();
-         $table->string('list_dapil_id')->nullable();
-         $table->string('foto')->nullable();
-         $table->timestamps();
-     });
+          $table->increments('id');
+          $table->string('nama');
+          $table->timestamps();
+      });
     }
 
     /**

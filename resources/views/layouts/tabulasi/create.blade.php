@@ -29,7 +29,7 @@
                 {!! Form::open(['route' => 'tabulasi.store']) !!}
 
                     <div class="col-md-12">
-                            {!! Form::select('dokumen', ['C1' => 'C1', 'C2' => 'C2', 'C3' => 'C3', 'C3' => 'C3', 'C4' => 'C4'], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}    						
+                            {!! Form::select('dokumen', ['C1' => 'C1', 'C2' => 'C2', 'C3' => 'C3', 'C3' => 'C3', 'C4' => 'C4'], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}
 
                     </div>
 
@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="col-md-6">
-                                {{ Form::select('kota_kabupaten_id', $kota_kabupaten,null, ['class' => 'form-control','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
+                                {{ Form::select('kota_kabupaten_id', $kota,null, ['class' => 'form-control','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
                     </div>
 
                     <div class="col-md-6">

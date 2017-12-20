@@ -16,7 +16,138 @@
 
             <div class="card">
                     <div class="body bg-light-blue">
-                        Portal ini dibuat untuk memberikan pelayanan kepada masyarakat untuk mengetahui hasil Pilkada Serentak 15 Februari 2017 di seluruh wilayah yang menyelenggarakan Pilkada dengan lebih cepat dan akurat. Data hasil Pilkada berdasarkan entry data Model C1 merupakan hasil sementara dan bukan hasil final. Jika terdapat kesalahan dalam Model C1 akan dilakukan perbaikan pada proses rekapitulasi ditingkat atasnya.
+											<ul>
+													@foreach($events as $event)
+													<li>
+															{{ $event->nama . ' ' . $event->tahun }}
+															<ul>
+																	@foreach($event->dapil as $dapil)
+																	<li>
+																			{{ $dapil->nama }}
+																			<ul>
+																					@foreach($dapil->dapil_lokasi as $lokasi)
+																					<li>
+																							{{ $lokasi->lokasi->nama }}
+																							@if(isset($lokasi->lokasi->kelurahan))
+																							<ul>
+																									@foreach($lokasi->lokasi->kelurahan as $kelurahan)
+																									<li>
+																											{{ $kelurahan->nama }}
+																											<ul>
+																													@foreach($kelurahan->tps as $tps)
+																													<li>
+																															{{ $tps->id }}
+																															<ul>
+																																	@foreach($tps->suara as $suara)
+																																	<li>
+																																			{{ $suara->calon->nama }}
+																																			{{ $suara->jumlah }}
+																																	</li>
+																																	@endforeach
+																															</ul>
+																													</li>
+																													@endforeach
+																											</ul>
+																									</li>
+																									@endforeach
+																							</ul>
+																							@elseif(isset($lokasi->lokasi->kecamatan))
+																							<ul>
+																									@foreach($lokasi->lokasi->kecamatan as $kecamatan)
+																									<li>
+																											{{ $kecamatan->nama }}
+																											<ul>
+																													@foreach($kecamatan->kelurahan as $kelurahan)
+																													<li>
+																															{{ $kelurahan->nama }}
+																															<ul>
+																																	@foreach($kelurahan->tps as $tps)
+																																	<li>
+																																			{{ $tps->id }}
+																																			<ul>
+																																					@foreach($tps->suara as $suara)
+																																					<li>
+																																							{{ $suara->calon->nama }}
+																																							{{ $suara->jumlah }}
+																																					</li>
+																																					@endforeach
+																																			</ul>
+																																	</li>
+																																	@endforeach
+																															</ul>
+																													</li>
+																													@endforeach
+																											</ul>
+																									</li>
+																									@endforeach
+																							</ul>
+																							@elseif(isset($lokasi->lokasi->kota))
+																							<ul>
+																									@foreach($lokasi->lokasi->kota as $kota)
+																									<li>
+																											{{ $kota->nama }}
+																											<ul>
+																													@foreach($kota->kecamatan as $kecamatan)
+																													<li>
+																															{{ $kecamatan->nama }}
+																															<ul>
+																																	@foreach($kecamatan->kelurahan as $kelurahan)
+																																	<li>
+																																			{{ $kelurahan->nama }}
+																																			@if(count($kelurahan->tps) > 0)
+																																			<ul>
+																																					@foreach($kelurahan->tps as $tps)
+																																					<li>
+																																							Tps : {{ $tps->id }}
+																																							<ul>
+																																									@foreach($tps->suara as $suara)
+																																									<li>
+																																											{{ $suara->calon->nama }}
+																																											{{ $suara->jumlah }}
+																																									</li>
+																																									@endforeach
+																																							</ul>
+																																					</li>
+																																					@endforeach
+																																			</ul>
+																																			@endif
+																																	</li>
+																																	@endforeach
+																															</ul>
+																													</li>
+																													@endforeach
+																											</ul>
+																									</li>
+																									@endforeach
+																							</ul>
+																							@endif
+																					</li>
+																					@endforeach
+																			</ul>
+																			<p>calon</p>
+																			<ul>
+																					@foreach($dapil->calon as $calon)
+																					<li>
+																							{{ $calon->nama }}
+																							{{ $calon->suara->sum('jumlah') }}
+																							@if($calon->has_wakil)
+																							<ul>
+																									@foreach($calon->wakil as $wakil)
+																									<li>
+																											{{ $wakil->nama }}
+																									</li>
+																									@endforeach
+																							</ul>
+																							@endif
+																					</li>
+																					@endforeach
+																			</ul>
+																	</li>
+																	@endforeach
+															</ul>
+													</li>
+													@endforeach
+											</ul>
                     </div>
             </div>
                 <div class="card">
@@ -39,75 +170,13 @@
                 <div class="body">
                     <div class="row clearfix">
                         <div class="col-md-7">
-                            {!! Charts::assets() !!}
-                            {!! $chart_hasil->render() !!}
+
                         </div>
 
                         <div class="col-md-5">
-                            <div class="table-responsive">
-                                <table class="table table-hover dashboard-task-infos">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Task</th>
-                                            <th>Status</th>
-                                            <th>Manager</th>
-                                            <th>Progress</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Pasangan A</td>
-                                            <td><span class="label bg-green">Doing</span></td>
-                                            <td>John Doe</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" style="width: 62%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Pasangan B</td>
-                                            <td><span class="label bg-blue">To Do</span></td>
-                                            <td>John Doe</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-blue" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Pasangan C</td>
-                                            <td><span class="label bg-light-blue">On Hold</span></td>
-                                            <td>John Doe</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-light-blue" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Pasangan D</td>
-                                            <td><span class="label bg-orange">Wait Approvel</span></td>
-                                            <td>John Doe</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <h3>Total Progress Masukkan Data</h3>
+													Dashboard
 
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">80%</div>                       
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -130,7 +199,7 @@
                                             <th>Laki-Laki</th>
                                             <th>Perempuan</th>
                                             <th>Total</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -159,10 +228,10 @@
                         </div>
                 </div>
             </div>
-            
+
         </div>
 
-            
+
             <!-- CPU Usage -->
             <div class="row clearfix">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -172,8 +241,8 @@
                     </div>
                 </div>
             </div>
-            <!-- #END# CPU Usage -->                
-                
+            <!-- #END# CPU Usage -->
+
         </div>
 @endsection
 

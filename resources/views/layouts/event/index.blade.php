@@ -30,17 +30,17 @@
                                                 </div>
 
                                             </div>
-                                        
+
                                             <table id="table-Dataevent" class="table table-striped">
                                                 <thead>
                                                     <tr style="background-color: lightblue">
+                                                        <th>No</th>
                                                         <th>Tahun Event</th>
+                                                        <th>Expired Event</th>
                                                         <th>Nama Event</th>
                                                         <th>Jenis Event</th>
                                                         <th>Tingkat Event</th>
-                                                        <th>Provinsi</th>
-                                                        <th>Kabupaten/Kota</th>
-                                                        <th>Dapil</th>
+                                                        <th>Lokasi</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -49,34 +49,49 @@
                                             <script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
                                             <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
                                             <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
+
                                             <script type="text/javascript">
                                                 $(function() {
                                                     $('#table-Dataevent').DataTable({
                                                         processing: true,
                                                         serverSide: true,
                                                         ajax: '/event/getdatatable',
-                                                        columns: 
+                                                        columns:
                                                             [
                                                                 {data: 'tahun'},
+                                                                {data: 'expired'},
                                                                 {data: 'nama'},
                                                                 {data: 'jenis'},
                                                                 {data: 'tingkat'},
-                                                                {data: 'provinsi'},
-                                                                {data: 'kabupaten_kota'},
-                                                                {data: 'dapil'},
+                                                                {data: 'lokasi'},
                                                                 {data: 'action'}
                                                                 ]
                                                             } );
-                                                    
+
+                                                            var t = $('#table-Dataevent').DataTable( {
+                                                                "columnDefs": [ {
+                                                                    "searchable": false,
+                                                                    "orderable": false,
+                                                                    "targets": 0
+                                                                } ],
+                                                                "order": [[ 1, 'asc' ]]
+                                                            } );
+
+                                                            t.on( 'order.dt search.dt', function () {
+                                                                t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                                                                    cell.innerHTML = i+1;
+                                                                } );
+                                                            } ).draw();
+
                                                     } );
-                                                                                                         
-                                            </script>                                      
+
+                                            </script>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </div>

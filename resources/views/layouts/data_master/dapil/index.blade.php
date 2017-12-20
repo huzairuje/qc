@@ -30,16 +30,12 @@
                                                 </div>
 
                                             </div>
-                                        
+
                                             <table id="table-Tabulasi" class="table table-striped">
                                                 <thead>
                                                     <tr style="background-color: lightblue">
                                                         <th>Nama Dapil</th>
-                                                        <th>Jenis Dapil</th>
-                                                        <th>Provinsi</th>
-                                                        <th>Kota/Kabupaten</th>
-                                                        <th>Kecamatan</th>
-                                                        <th>Kelurahan</th>
+                                                        <th>Event</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -53,30 +49,25 @@
                                                     $('#table-Tabulasi').DataTable({
                                                         processing: true,
                                                         serverSide: true,
-                                                        ajax: '/tabulasi/getdatatable',
-                                                        columns: 
+                                                        ajax: '/datamaster/dapil/getdatatable',
+                                                        columns:
                                                             [
 
-                                                                {data: 'dokumen_id'},
-                                                                {data: 'provinsi_id'},
-                                                                {data: 'kota_kabupaten_id'},
-                                                                {data: 'kecamatan_id'},
-                                                                {data: 'kelurahan_id'},
-                                                                {data: 'data_suara', render: function (data, type, row, meta) {
-                                                                return data == 1 ? 'Ada' : 'Tidak Ada'}},
+                                                                {data: 'nama'},
+                                                                {data: 'event_id'},
                                                                 {data: 'action'}
                                                                 ]
                                                             } );
-                                                    
+
                                                     } );
-                                                                                                         
-                                            </script>                                      
+
+                                            </script>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </div>

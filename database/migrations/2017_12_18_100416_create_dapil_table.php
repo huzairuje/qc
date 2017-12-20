@@ -13,17 +13,12 @@ class CreateDapilTable extends Migration
      */
     public function up()
     {
-        Schema::create('dapil', function (Blueprint $table) {
+      Schema::create('dapil', function (Blueprint $table) {
           $table->bigIncrements('id');
-          $table->bigInteger('id_event');
-          $table->string('nama')->nullable();
-          $table->string('provinsi_id')->nullable();
-          $table->string('list_kota_kabupaten')->nullable();
-          $table->string('kecamatan_id')->nullable();
-          $table->string('kelurahan_id')->nullable();
-          $table->string('tps_id')->nullable();
+          $table->bigInteger('event_id');
+          $table->string('nama');
           $table->timestamps();
-        });
+      });
     }
 
     /**

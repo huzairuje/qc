@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Charts;
-use App\Provinsi;
+use App\Models\Provinsi;
+use App\Models\Event;
+use App\Models\Dapil;
+use App\Models\DapilLokasi;
 
 class DashboardController extends Controller
 {
@@ -21,17 +24,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $data['chart_hasil'] = Charts::create('pie', 'highcharts')
-            ->title('Perolehan Suara')
-            ->labels(['A', 'B', 'C', 'D'])
-            ->values([5,10,15,10])
-            ->dimensions(700,400)
-            ->responsive(false);
 
-        // return view('layouts.dashboard.index', compact('chart_hasil'));
-
-        $data['listProvinsi'] = Provinsi::all();
-
-        return view('layouts.dashboard.index', $data);
+      $data['events'] = Event::all()->where('id', 1);
+      $data['dapilLokasi'] = DapilLokasi::all();
+      return view('layouts.dashboard.index', $data);
     }
 }

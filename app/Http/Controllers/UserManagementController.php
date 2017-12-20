@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Sentinel;
 
 class UserManagementController extends Controller
@@ -12,7 +12,7 @@ class UserManagementController extends Controller
         $data['users'] = User::paginate(10);
         return view('layouts.user-management.index', $data);
     }
-    
+
     public function create(){
         $role = Sentinel::getUser()->roles()->first()->slug;
 
@@ -46,7 +46,7 @@ class UserManagementController extends Controller
             $data['roleList']['korsak'] = 'Admin Korsak';
             $data['roleList']['saksi'] = 'Saksi';
         }
-        else 
+        else
         {
             $data['roleList']['korsak'] = 'Admin Korsak';
             $data['roleList']['saksi'] = 'Saksi';
@@ -54,7 +54,7 @@ class UserManagementController extends Controller
 
         return view('layouts.user-management.create', $data);
     }
-    
+
     public function store(Request $request){
         $request->merge([
             'password' => '12345678',
@@ -75,12 +75,12 @@ class UserManagementController extends Controller
 
         return redirect('/user-management/show/' . $insertedId);
     }
-    
+
     public function show($id){
         $data['user'] = User::where('id' , '=', $id)->first();
         return view('layouts.user-management.detail', $data);
     }
-    
+
     public function edit($id){
         $data['user'] = User::where('id' , '=', $id)->first();
 
@@ -112,7 +112,7 @@ class UserManagementController extends Controller
                 $data['roleList']['korsak'] = 'Admin Korsak';
                 $data['roleList']['saksi'] = 'Saksi';
             }
-            else 
+            else
             {
                 $data['roleList']['korsak'] = 'Admin Korsak';
                 $data['roleList']['saksi'] = 'Saksi';
@@ -121,11 +121,11 @@ class UserManagementController extends Controller
             return view('layouts.user-management.edit', $data);
         }
     }
-    
+
     public function update(Request $request, $id){
     	return redirect('/user-management/show/' . $id);
     }
-    
+
     public function destroy($id){
         return redirect('/user-management/show/' . $id);
     }

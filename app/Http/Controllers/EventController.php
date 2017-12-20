@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request; 
-use App\Http\Requests; 
+use Illuminate\Http\Request;
+use App\Http\Requests;
 use DB;
 use Yajra\Datatables\Facades\Datatables;
 use Yajra\Datatables\Services\DataTable;
@@ -14,13 +14,13 @@ use Yajra\Datatables\Facades\Datatables\Mjoin;
 use Yajra\Datatables\Facades\Datatables\Options;
 use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
-use App\Event;  
-use App\Provinsi; 
-use App\KotaKab; 
-use App\UserEvent;
+use App\Models\Event;
+use App\Models\Provinsi;
+use App\Models\Kota;
+use App\Models\UserEvent;
 use Sentinel;
-use Charts; 
-use Flash; 
+use Charts;
+use Flash;
 
 
 class EventController extends Controller
@@ -32,11 +32,11 @@ class EventController extends Controller
 
     public function create()
     {
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all(); 
-        
-        $kota_kabupaten = array(); 
+        $provinsi = Provinsi::pluck('nama','id')->all();
 
-        return view('layouts.event.create', compact('provinsi','kota_kabupaten'));
+        $kota = array();
+
+        return view('layouts.event.create', compact('provinsi','kota'));
     }
 
     public function get_datatable()
@@ -47,11 +47,11 @@ class EventController extends Controller
         }
         if(count($userEvents) != 0)
         {
-            $data_event = Event::select(['id','nama','tahun','jenis','tingkat', 'provinsi', 'kabupaten_kota', 'dapil'])->whereIn('id', $listEventId);
+            $data_event = Event::select(['id','nama','tahun','jenis','tingkat', 'lokasi', 'expired'])->whereIn('id', $listEventId);
         }
         else
         {
-            $data_event = Event::select(['id','nama','tahun','jenis','tingkat', 'provinsi', 'kabupaten_kota', 'dapil']);
+            $data_event = Event::select(['id','nama','tahun','jenis','tingkat', 'lokasi', 'expired']);
         }
 
         return Datatables::eloquent($data_event)->addColumn('action', function ($data_event) {
@@ -61,14 +61,26 @@ class EventController extends Controller
         ->make(true);
     }
 
-    public function store(Request $request) 
-    { 
-       $input = $request->all();
+    public function store(Request $request)
+    {
+      if ($request->tingkat == 1){
+        $request->merge(['lokasi' => $request->provinsi]);
+      }
+      else if ($request->tingkat == 2) {
+        $request->merge(['lokasi' => $request->kabupaten_kota]);
+      }
+      else {
+        $request->merge(['lokasi' => 0]);
+      }
 
-       $data_event = Event::create($input); 
+      $input = $request->all();
+      dd($input);
 
-       flash('Data Event created successfully')->success(); 
-       return redirect(route('event.show',$data_event)); 
+       $data_event = Event::create($input);
+
+
+       flash('Data Event created successfully')->success();
+       return redirect(route('event.show',$data_event));
    }
 
 
@@ -99,8 +111,8 @@ class EventController extends Controller
     }
 
 }
-public function update(Request $request,$id) 
-{ 
+public function update(Request $request,$id)
+{
     $data_event = Event::find($id);
     if (empty($data_event)) {
 
@@ -120,42 +132,42 @@ public function update(Request $request,$id)
 
 
     flash('Event saved successfully')->success();
-    return redirect(route('event.show', $data_event)); 
+    return redirect(route('event.show', $data_event));
 
-} 
+}
 
-public function show($id) 
-{  
-    $chart = Charts::multi('bar', 'material') 
-            // Setup the chart settings 
-    ->title("Hasil Data Suara") 
-            // A dimension of 0 means it will take 100% of the space 
-            ->dimensions(700, 300) // Width x Height 
-            // This defines a preset of colors already done:) 
-            ->template("material") 
-            // You could always set them manually 
-            ->colors(['#2196F3', '#F44336', '#FFC107']) 
-            // Setup the diferent datasets (this is a multi chart) 
-            ->dataset('Data Suara', [5,20,100]) 
-            ->responsive(false) 
-            // Setup what the values mean 
-            ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']); 
+public function show($id)
+{
+    $chart = Charts::multi('bar', 'material')
+            // Setup the chart settings
+    ->title("Hasil Data Suara")
+            // A dimension of 0 means it will take 100% of the space
+            ->dimensions(700, 300) // Width x Height
+            // This defines a preset of colors already done:)
+            ->template("material")
+            // You could always set them manually
+            ->colors(['#2196F3', '#F44336', '#FFC107'])
+            // Setup the diferent datasets (this is a multi chart)
+            ->dataset('Data Suara', [5,20,100])
+            ->responsive(false)
+            // Setup what the values mean
+            ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
 
-            $data_event = Event::find($id); 
+            $data_event = Event::find($id);
         // dd($tabulasi);
 
-            if (empty($data_event)) { 
-                flash('Event not found')->error(); 
+            if (empty($data_event)) {
+                flash('Event not found')->error();
 
-                return redirect(route('event.index')); 
-            } 
+                return redirect(route('event.index'));
+            }
 
-            return view('layouts.event.show',compact('data_event','chart')); 
+            return view('layouts.event.show',compact('data_event','chart'));
 
 
-        } 
+        }
 
-        public function destroy($id) 
+        public function destroy($id)
         {
 
          $data_event = Event::findOrFail($id);
@@ -168,31 +180,31 @@ public function show($id)
         $data_event->delete();
 
         flash('Data Saksi deleted successfully')->success();
-        return redirect(route('event.index')); 
+        return redirect(route('event.index'));
     }
 
-    public function ajax(Request $request) 
-    { 
-        $type = $request->type; 
-        switch ($type) { 
+    public function ajax(Request $request)
+    {
+        $type = $request->type;
+        switch ($type) {
             case 'get-provincy':
-            $result = Provinsi::get()->pluck( 'nama_provinsi', 'id' )->all();
-            return $result; 
+            $result = Provinsi::get()->pluck( 'nama', 'id' )->all();
+            return $result;
             break;
-            case 'get-city': 
-            return KotaKab::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all(); 
+            case 'get-city':
+            return Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
 
-            return $result; 
-            break; 
+            return $result;
+            break;
 
-            case 'get-kecamatan': 
-            return Kecamatan::where('kota_kabupaten_id', $request->kota_kabupaten_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all(); 
-            break; 
+            case 'get-kecamatan':
+            return Kecamatan::where('kota_id', $request->kota_kabupaten_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+            break;
 
-            default: 
-            return $result['status'] = false; 
-            break; 
-        } 
+            default:
+            return $result['status'] = false;
+            break;
+        }
 
 
     }

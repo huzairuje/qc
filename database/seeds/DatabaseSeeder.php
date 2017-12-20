@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $tables = [
             'kelurahan',
             'kecamatan',
-            'kota_kabupaten',
+            'kota',
             'provinsi'
         ];
 
@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call(ProvinsisTableSeeder::class);
-        $this->call(KotaKabsTableSeeder::class);
+        $this->call(KotaTableSeeder::class);
         $this->call(KecamatansTableSeeder::class);
         $this->call(KelurahanTableSeeder::class);
         $this->call(UserRolesSeeder::class);

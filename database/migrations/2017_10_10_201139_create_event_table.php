@@ -14,17 +14,14 @@ class CreateEventTable extends Migration
     public function up()
     {
          Schema::create('event', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nama')->nullable();
-            $table->string('jenis')->nullable();
-            $table->string('tingkat')->nullable();
-            $table->string('tahun')->nullable();
-            $table->string('provinsi')->nullable();
-            $table->string('kabupaten_kota')->nullable();
-            $table->string('list_dapil_id')->nullable();
-            $table->BigInteger('calon_id')->nullable();
-            $table->date('expired')->nullable();
-            $table->timestamps();
+           $table->increments('id');
+           $table->string('nama')->nullable();
+           $table->string('jenis')->nullable();
+           $table->string('tingkat')->nullable();
+           $table->bigInteger('lokasi');
+           $table->integer('tahun');
+           $table->date('expired')->nullable();
+           $table->timestamps();
         });
     }
 

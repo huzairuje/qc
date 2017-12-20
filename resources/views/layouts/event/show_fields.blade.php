@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 <div class="form-line">
-                    {!! Form::label('nama_event', 'Nama Event:') !!}
+                    {!! Form::label('nama_event', 'Nama Event :') !!}
                     {!! $data_event->nama_event !!}
                 </div>
             </div>
@@ -13,8 +13,8 @@
         <div class="col-md-6">
             <div class="form-group">
                 <div class="form-line">
-                    {!! Form::label('provinsi_id', 'Provinsi:') !!}
-                    {!! $data_event->provinsi_id !!}
+                    {!! Form::label('tahun', 'Tahun :') !!}
+                    {!! $data_event->tahun !!}
                 </div>
             </div>
         </div>
@@ -42,7 +42,6 @@
             <a href="{{ route('event.create')}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Create Data</a>
             <a href="{{ route('event.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Event</a>
             <a href="{{ route('event.delete', $data_event->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Delete Data</a>
-        </div>    
+        </div>
     </div>
 </div>
-

@@ -25,14 +25,14 @@
                     <div class="container">
                         <div class="body">
                             <div class="row clearfix">
-                                {!! Form::open(['route' => 'usermanagement.store']) !!}
+                                {!! Form::open(['route' => 'datamaster.calon.store','files' => true]) !!}
 
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-line">
                                                 {!! Form::label('nama', 'Nama:') !!}
-                                                {{ Form::text('first_name',null, ['class' => 'form-control','placeholder' => 'Nama']) }}
+                                                {{ Form::text('nama',null, ['class' => 'form-control','placeholder' => 'Nama']) }}
                                             </div>
                                         </div>
                                     </div>
@@ -42,8 +42,8 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-line">
-                                                {!! Form::label('email', 'Email:') !!}
-                                                {{ Form::text('email',null, ['class' => 'form-control','placeholder' => 'Email']) }}
+                                                {!! Form::label('alamat', 'Alamat:') !!}
+                                                {{ Form::text('alamat',null, ['class' => 'form-control','placeholder' => 'Alamat Lengkap']) }}
                                             </div>
                                         </div>
                                     </div>
@@ -53,8 +53,8 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-line">
-                                                {!! Form::label('email', 'Username:') !!}
-                                                {{ Form::text('username',null, ['class' => 'form-control','placeholder' => 'Username']) }}
+                                                {!! Form::label('no_telpon', 'Nomor Telepon:') !!}
+                                                {{ Form::number('no_telpon',null, ['class' => 'form-control','placeholder' => 'Nomor Telepon']) }}
                                             </div>
                                         </div>
                                     </div>
@@ -64,8 +64,8 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-line">
-                                                {!! Form::label('phone', 'Nomor Handphone:') !!}
-                                                {{ Form::text('phone',null, ['class' => 'form-control','placeholder' => '+62']) }}
+                                                {!! Form::label('email', 'Email :') !!}
+                                                {{ Form::email('email',null, ['class' => 'form-control','placeholder' => 'example@example.com']) }}
                                             </div>
                                         </div>
                                     </div>
@@ -74,12 +74,26 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <select class="form-control show-tick" name="role" id="tahun" placeholder="Role" >
-                                                <option value=''>User Role</option>
-                                                @foreach( $roleList as $key => $val )
-                                                <option value="{{ $key }}">{{ $val }}</option>
-                                                @endforeach
-                                            </select>
+                                            <div class="form-line">
+                                              {!! Form::select('event_id', $event,null, ['class' => 'form-control','id' => 'event_id','placeholder' => 'Select Event']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-line">
+                                                {!! Form::label('foto', 'Foto :') !!}
+                                                <div id="wrapper">
+                                                    <style type="text/css">.thumb-image{float:left;width:200px;position:relative;padding:5px;}</style>
+                                                    <div id="image-holder">
+                                                    </div>
+                                                    <br>
+                                                    {!! Form::file('foto', null, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

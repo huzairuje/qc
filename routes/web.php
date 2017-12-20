@@ -153,8 +153,9 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::get('/datamaster/dapil/getdatatable',['as'=>'datamaster.dapil.datatable', 'uses'=>'data_master\DapilController@get_datatable']);
 	Route::get('/datamaster/dapil/create',['as'=>'datamaster.dapil.create', 'uses'=>'data_master\DapilController@create']);
 	Route::get('/datamaster/dapil/edit/{id}',['as'=>'datamaster.dapil.edit', 'uses'=>'data_master\DapilController@edit']);
-	Route::patch('/datamaster/dapil/update/{id}',['as'=>'datamaster.dapil.edit', 'uses'=>'data_master\DapilController@edit']);
-	Route::patch('/datamaster/dapil/store',['as'=>'datamaster.dapil.edit', 'uses'=>'data_master\DapilController@edit']);
+	Route::patch('/datamaster/dapil/update/{id}',['as'=>'datamaster.dapil.update', 'uses'=>'data_master\DapilController@update']);
+	Route::post('/datamaster/dapil/store',['as'=>'datamaster.dapil.store', 'uses'=>'data_master\DapilController@store']);
+	Route::get('/datamaster/dapil/show/{id}',['as'=>'datamaster.dapil.show', 'uses'=>'data_master\DapilController@show']);
 	Route::get('/datamaster/dapil/{id}',['as'=>'datamaster.dapil.delete', 'uses'=>'data_master\DapilController@destroy']);
 		//EndDapil
 		//Calon
@@ -163,19 +164,21 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::get('/datamaster/calon/getdatatable', ['as'=>'datamaster.calon.datatable', 'uses'=>'data_master\CalonController@get_datatable']);
 	Route::get('/datamaster/calon/create',['as'=>'datamaster.calon.create', 'uses'=>'data_master\CalonController@create']);
 	Route::get('/datamaster/calon/edit/{id}',['as'=>'datamaster.calon.edit', 'uses'=>'data_master\CalonController@edit']);
-	Route::get('/datamaster/calon/update/{id}',['as'=>'datamaster.calon.edit', 'uses'=>'data_master\CalonController@update']);
-	Route::get('/datamaster/calon/store',['as'=>'datamaster.calon.store', 'uses'=>'data_master\CalonController@update']);
+	Route::patch('/datamaster/calon/update/{id}',['as'=>'datamaster.calon.update', 'uses'=>'data_master\CalonController@update']);
+	Route::post('/datamaster/calon/store',['as'=>'datamaster.calon.store', 'uses'=>'data_master\CalonController@store']);
+	Route::get('/datamaster/calon/show/{id}',['as'=>'datamaster.calon.show','uses'=>'data_master\CalonController@show']);
 	Route::get('/datamaster/calon/{id}',['as'=>'datamaster.calon.delete', 'uses'=>'data_master\CalonController@destroy']);
 		//EndCalon
 		//Partai
-		Route::get('/datamaster/partai',['as'=>'datamaster.partai.index', 'uses'=>'data_master\DapilController@index']);
-		Route::get('/datamaster/partai/ajax',['as'=>'datamaster.partai.ajax', 'uses'=>'data_master\DapilController@ajax']);
-		Route::get('/datamaster/partai/getdatatable',['as'=>'datamaster.partai.datatable', 'uses'=>'data_master\DapilController@get_datatable']);
-		Route::get('/datamaster/partai/create',['as'=>'datamaster.partai.create', 'uses'=>'data_master\DapilController@create']);
-		Route::get('/datamaster/partai/edit/{id}',['as'=>'datamaster.partai.edit', 'uses'=>'data_master\DapilController@edit']);
-		Route::patch('/datamaster/partai/update/{id}',['as'=>'datamaster.partai.edit', 'uses'=>'data_master\DapilController@edit']);
-		Route::patch('/datamaster/partai/store',['as'=>'datamaster.partai.edit', 'uses'=>'data_master\DapilController@edit']);
-		Route::get('/datamaster/partai/{id}',['as'=>'datamaster.partai.delete', 'uses'=>'data_master\DapilController@destroy']);
+		Route::get('/datamaster/partai',['as'=>'datamaster.partai.index', 'uses'=>'data_master\PartaiController@index']);
+		Route::get('/datamaster/partai/ajax',['as'=>'datamaster.partai.ajax', 'uses'=>'data_master\PartaiController@ajax']);
+		Route::get('/datamaster/partai/getdatatable',['as'=>'datamaster.partai.datatable', 'uses'=>'data_master\PartaiController@get_datatable']);
+		Route::get('/datamaster/partai/create',['as'=>'datamaster.partai.create', 'uses'=>'data_master\PartaiController@create']);
+		Route::get('/datamaster/partai/edit/{id}',['as'=>'datamaster.partai.edit', 'uses'=>'data_master\PartaiController@edit']);
+		Route::patch('/datamaster/partai/update/{id}',['as'=>'datamaster.partai.update', 'uses'=>'data_master\PartaiController@edit']);
+		Route::post('/datamaster/partai/store',['as'=>'datamaster.partai.edit', 'uses'=>'data_master\PartaiController@edit']);
+		Route::get('/datamaster/partai/show/{id}',['as'=>'datamaster.partai.show','uses'=>'data_master\PartaiController@show']);
+		Route::get('/datamaster/partai/{id}',['as'=>'datamaster.partai.delete', 'uses'=>'data_master\PartaiController@destroy']);
 		//EndPartai
 	//Route for User Management
 	Route::get('/user-management',['as'=>'usermanagement.index','uses'=>'UserManagementController@index']);

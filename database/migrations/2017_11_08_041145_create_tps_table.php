@@ -14,15 +14,11 @@ class CreateTpsTable extends Migration
     public function up()
     {
          Schema::create('tps', function (Blueprint $table) {
-          $table->bigIncrements('id');
-          $table->bigInteger('no_tps');
-          $table->bigInteger('event_id');
-          $table->string('nama_tps');
-          $table->string('provinsi_id')->nullable();
-          $table->string('kota_kabupaten_id')->nullable();
-          $table->string('kecamatan_id')->nullable();
-          $table->string('kelurahan_id')->nullable();
-          $table->timestamps();
+           $table->bigIncrements('id');
+           $table->bigInteger('kelurahan_id');
+           $table->string('nomor');
+           $table->timestamps();
+
         });
     }
 

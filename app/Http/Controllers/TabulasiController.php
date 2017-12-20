@@ -14,11 +14,11 @@ use Yajra\Datatables\Facades\Datatables\Mjoin;
 use Yajra\Datatables\Facades\Datatables\Options;
 use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
-use App\Tabulasi;
-use App\Provinsi;
-use App\KotaKab;
-use App\Kecamatan;
-use App\Kelurahan;
+use App\Models\Tabulasi;
+use App\Models\Provinsi;
+use App\Models\Kota;
+use App\Models\Kecamatan;
+use App\Models\Kelurahan;
 use Charts;
 use Flash;
 
@@ -130,17 +130,17 @@ class TabulasiController extends Controller
     {
 
 
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
+        $provinsi = Provinsi::pluck('nama','id')->all();
         // dd($provinsi);
 
-        $kota_kabupaten = array();
+        $kota = array();
         // dd($kota_kabupaten);
 
         $kecamatan = array();
 
         $kelurahan = array();
 
-        return view('layouts.tabulasi.create', compact('provinsi','kota_kabupaten','kecamatan','kelurahan'));
+        return view('layouts.tabulasi.create', compact('provinsi','kota','kecamatan','kelurahan'));
     }
 
     public function store(Request $request)
@@ -163,9 +163,9 @@ class TabulasiController extends Controller
     {
         // $tabulasi = $this->findWithoutFail($id);
         $tabulasi = Tabulasi::find($id);
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
-        $kota_kabupaten = KotaKab::where('provinsi_id', $tabulasi->provinsi_id)->pluck('nama','id')->all();
-        $kecamatan = Kecamatan::where('kota_kabupaten_id', $tabulasi->kota_kabupaten_id)->pluck('nama','id')->all();
+        $provinsi = Provinsi::pluck('nama','id')->all();
+        $kota = Kota::where('provinsi_id', $tabulasi->provinsi_id)->pluck('nama','id')->all();
+        $kecamatan = Kecamatan::where('kota_id', $tabulasi->kota_kabupaten_id)->pluck('nama','id')->all();
         $kelurahan = Kelurahan::where('kecamatan_id', $tabulasi->kecamatan_id)->pluck('nama','id')->all();
         // dd($kota_kabupaten);
 
@@ -224,13 +224,13 @@ class TabulasiController extends Controller
         $type = $request->type;
         switch ($type) {
             case 'get-city':
-                 return KotaKab::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+                 return Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
 
                 return $result;
                 break;
 
             case 'get-kecamatan':
-                return Kecamatan::where('kota_kabupaten_id', $request->kota_kabupaten_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+                return Kecamatan::where('kota_id', $request->kota_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
                 break;
 
             case 'get-kelurahan':

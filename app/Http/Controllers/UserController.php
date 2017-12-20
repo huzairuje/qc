@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Auth;
 use Flash;
 
@@ -11,8 +11,9 @@ class UserController extends Controller
 {
     public function profile(Request $id)
     {
-		return view('layouts.users.profile', array('user' => Auth::user()) );
-        
+        $user = Auth::user();
+		    return view('layouts.users.profile', compact('user'));
+
     }
 
     public function update($id, Request $request)
@@ -23,11 +24,11 @@ class UserController extends Controller
 
                     return redirect(route('users.profile'));
                 }
- 
+
             $user->name       = $request->name;
             $user->email       = $request->email;
             $user->password    = bcrypt($request->password);
-            
+
             $user->update();
 
             flash('User Profile updated successfully')->success();

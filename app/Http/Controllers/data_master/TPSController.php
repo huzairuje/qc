@@ -14,11 +14,11 @@ use Yajra\Datatables\Facades\Datatables\Mjoin;
 use Yajra\Datatables\Facades\Datatables\Options;
 use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
-use App\TPS;
-use App\Provinsi;
-use App\KotaKab;
-use App\Kecamatan;
-use App\Kelurahan;
+use App\Models\TPS;
+use App\Models\Provinsi;
+use App\Models\KotaKab;
+use App\Models\Kecamatan;
+use App\Models\Kelurahan;
 use Charts;
 use Flash;
 
@@ -31,7 +31,7 @@ class TPSController extends Controller
      */
     public function __construct()
     {
-         
+
     }
 
     /**
@@ -49,42 +49,22 @@ class TPSController extends Controller
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $tabulasi = Tabulasi::select(['id','dokumen_id', 'provinsi_id', 'kota_kabupaten_id', 'kecamatan_id', 'kelurahan_id']);
+        $tps = Tps::select(['id','nomor', 'kelurahan_id']);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
 
-        return Datatables::eloquent($tabulasi)
+        return Datatables::eloquent($tps)
 
-            ->editColumn('provinsi_id', function ($tabulasi) {
-                if ($tabulasi->provinsi) {
-                    return $tabulasi->provinsi->nama_provinsi;
-                } else {
-                    return 'Data PROVINSI tidak ada';
-                }
-            })
-            ->editColumn('kota_kabupaten_id', function ($tabulasi) {
-                if ($tabulasi->kota_kabupaten) {
-                    return $tabulasi->kota_kabupaten->nama;
-                } else {
-                    return 'Data KOTA/KABUPATEN tidak ada';
-                }
-            })
-            ->editColumn('kecamatan_id', function ($tabulasi) {
-                if ($tabulasi->kecamatan) {
-                    return $tabulasi->kecamatan->nama;
-                } else {
-                    return 'Data KECAMATAN tidak ada';
-                }
-            })
-            ->editColumn('kelurahan_id', function ($tabulasi) {
-                if ($tabulasi->kecamatan) {
-                    return $tabulasi->kelurahan->nama;
+
+            ->editColumn('kelurahan_id', function ($tps) {
+                if ($tps->kecamatan) {
+                    return $tps->kelurahan->nama;
                 } else {
                     return 'Data KELURAHAN tidak ada';
                 }
             })
-            ->addColumn('action', function ($tabulasi) {
-            return '<a href="'.route('tabulasi.show', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('tabulasi.edit', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('tabulasi.delete', $tabulasi->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+            ->addColumn('action', function ($tps) {
+            return '<a href="'.route('datamaster.tps.show', $tps->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.tps.edit', $tps->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.tps.delete', $tps->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
 
             ->make(true);
@@ -109,25 +89,23 @@ class TPSController extends Controller
             // Setup what the values mean
             ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
 
-        $tabulasi = Tabulasi::find($id);
+        $tps = Tps::find($id);
         // dd($tabulasi);
 
-        if (empty($tabulasi)) {
-            flash('Tabulasi not found')->error();
+        if (empty($tps)) {
+            flash('TPS not found')->error();
 
-            return redirect(route('tabulasi.index'));
+            return redirect(route('datamaster.tps.index'));
         }
 
-        return view('layouts.tabulasi.show',compact('tabulasi','chart'));
+        return view('layouts.data_master.tps.show',compact('tps','chart'));
 
 
     }
 
     public function create()
     {
-
-
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
+      $provinsi = Provinsi::pluck('nama','id')->all();
         // dd($provinsi);
 
         $kota_kabupaten = array();
@@ -137,7 +115,7 @@ class TPSController extends Controller
 
         $kelurahan = array();
 
-        return view('layouts.tabulasi.create', compact('provinsi','kota_kabupaten','kecamatan','kelurahan'));
+        return view('layouts.data_master.tps.create', compact('provinsi','kota_kabupaten','kecamatan','kelurahan'));
     }
 
     public function store(Request $request)
@@ -147,10 +125,10 @@ class TPSController extends Controller
 
         $input = $request->all();
 
-        $tabulasi = Tabulasi::create($input);
+        $tps = Tps::create($input);
 
-        flash('Data Tabulasi created successfully')->success();
-        return redirect(route('tabulasi.show',$tabulasi));
+        flash('Data TPS created successfully')->success();
+        return redirect(route('datamaster.tps.show',$tps));
     }
 
 
@@ -158,61 +136,59 @@ class TPSController extends Controller
     public function edit ($id)
     {
         // $tabulasi = $this->findWithoutFail($id);
-        $tabulasi = Tabulasi::find($id);
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
-        $kota_kabupaten = KotaKab::where('provinsi_id', $tabulasi->provinsi_id)->pluck('nama','id')->all();
-        $kecamatan = Kecamatan::where('kota_kabupaten_id', $tabulasi->kota_kabupaten_id)->pluck('nama','id')->all();
-        $kelurahan = Kelurahan::where('kecamatan_id', $tabulasi->kecamatan_id)->pluck('nama','id')->all();
+        $tps = Tps::find($id);
+        $provinsi = Provinsi::pluck('nama','id')->all();
+        $kota_kabupaten = KotaKab::where('provinsi_id', $tps->provinsi_id)->pluck('nama','id')->all();
+        $kecamatan = Kecamatan::where('kota_kabupaten_id', $tps->kota_kabupaten_id)->pluck('nama','id')->all();
+        $kelurahan = Kelurahan::where('kecamatan_id', $tps->kecamatan_id)->pluck('nama','id')->all();
         // dd($kota_kabupaten);
 
-        if (empty($tabulasi)) {
-            flash('Data Tabulasi Tidak Ada');
+        if (empty($tps)) {
+            flash('Data TPS Tidak Ada');
 
-            return redirect(route('tabulasi.index'));
+            return redirect(route('datamaster.tps.index'));
         }
 
-        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota_kabupaten','kecamatan','kelurahan'));
+        return view('layouts.data_master.tps.edit', compact('tps','provinsi','kota_kabupaten','kecamatan','kelurahan'));
     }
 
 
 
     public function update(Request $request,$id)
     {
-        $tabulasi = Tabulasi::find($id);
-            if (empty($tabulasi)) {
+        $tps = Tps::find($id);
+            if (empty($tps)) {
 
-                flash('Tabulasi not found');
+                flash('TPS not found');
 
             return redirect(route('layouts.tabulasi.index'));
         }
 
-            $tabulasi->dokumen_id       = $request->dokumen_id;
-            $tabulasi->provinsi_id       = $request->provinsi_id;
-            $tabulasi->kota_kabupaten_id    = $request->kota_kabupaten_id;
-            $tabulasi->kelurahan_id    = $request->kelurahan_id;
+            $tps->nomor           = $request->nomor;
+            $tps->kelurahan_id    = $request->kelurahan_id;
 
-            $tabulasi->update();
+            $tps->update();
 
 
-        flash('Data Tabulasi saved successfully')->success();
-        return redirect(route('tabulasi.show', $tabulasi));
+        flash('Data TPS saved successfully')->success();
+        return redirect(route('datamaster.tps.show', $tps));
 
     }
 
     public function destroy($id)
     {
 
-    	$tabulasi = Tabulasi::findOrFail($id);
-            if (empty($tabulasi)) {
+    	$tps = Tps::findOrFail($id);
+            if (empty($tps)) {
 
-                    flash('Tabulasi not found');
+                    flash('TPS not found');
 
-                return redirect(route('layouts.tabulasi.index'));
+                return redirect(route('layouts.data_master.tps.index'));
             }
-        $tabulasi->delete();
+        $tps->delete();
 
-        flash('Data Tabulasi deleted successfully')->success();
-        return redirect(route('tabulasi.index'));
+        flash('Data TPS deleted successfully')->success();
+        return redirect(route('datamaster.tps.index'));
 	}
 
     public function ajax(Request $request)
@@ -220,7 +196,7 @@ class TPSController extends Controller
         $type = $request->type;
         switch ($type) {
             case 'get-city':
-                 return KotaKab::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+                 return Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
 
                 return $result;
                 break;

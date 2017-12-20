@@ -4,15 +4,42 @@ namespace App\Http\Controllers\data_master;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
+use Yajra\Datatables\Facades\Datatables;
+use Yajra\Datatables\Services\DataTable;
+use Yajra\Datatables\Facades\Datatables\Editor;
+use Yajra\Datatables\Facades\Datatables\Field;
+use Yajra\Datatables\Facades\Datatables\Format;
+use Yajra\Datatables\Facades\Datatables\Mjoin;
+use Yajra\Datatables\Facades\Datatables\Options;
+use Yajra\Datatables\Facades\Datatables\Upload;
+use Yajra\Datatables\Facades\Datatables\Validate;
+use App\Models\Provinsi;
+use App\Models\Kota;
+use App\Models\Kecamatan;
+use App\Models\Kelurahan;
+use Charts;
+use Flash;
+use App\Models\Dapil;
+use App\Models\Event;
 
 class DapilController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+     public function __construct()
+     {
 
-    public function __construct()
-    {
+     }
 
-    }
-
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
     public function index()
     {
@@ -23,43 +50,22 @@ class DapilController extends Controller
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $tabulasi = Tabulasi::select(['id','dokumen_id', 'provinsi_id', 'kota_kabupaten_id', 'kecamatan_id', 'kelurahan_id']);
+        $dapil = Dapil::select(['id', 'nama', 'event_id']);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
+        return Datatables::eloquent($dapil)
 
-        return Datatables::eloquent($tabulasi)
+                ->editColumn('event_id', function ($dapil) {
+                    if ($dapil->event) {
+                        return $dapil->event->nama;
+                    } else {
+                        return 'Data Event tidak ada';
+                    }
+                })
 
-            ->editColumn('provinsi_id', function ($tabulasi) {
-                if ($tabulasi->provinsi) {
-                    return $tabulasi->provinsi->nama_provinsi;
-                } else {
-                    return 'Data PROVINSI tidak ada';
-                }
-            })
-            ->editColumn('kota_kabupaten_id', function ($tabulasi) {
-                if ($tabulasi->kota_kabupaten) {
-                    return $tabulasi->kota_kabupaten->nama;
-                } else {
-                    return 'Data KOTA/KABUPATEN tidak ada';
-                }
-            })
-            ->editColumn('kecamatan_id', function ($tabulasi) {
-                if ($tabulasi->kecamatan) {
-                    return $tabulasi->kecamatan->nama;
-                } else {
-                    return 'Data KECAMATAN tidak ada';
-                }
-            })
-            ->editColumn('kelurahan_id', function ($tabulasi) {
-                if ($tabulasi->kecamatan) {
-                    return $tabulasi->kelurahan->nama;
-                } else {
-                    return 'Data KELURAHAN tidak ada';
-                }
-            })
-            ->addColumn('action', function ($tabulasi) {
-            return '<a href="'.route('tabulasi.show', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('tabulasi.edit', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('tabulasi.delete', $tabulasi->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
-        })
+                ->addColumn('action', function ($dapil) {
+                    return '<a href="'.route('datamaster.dapil.show', $dapil->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.dapil.edit', $dapil->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.dapil.delete', $dapil->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+                })
 
             ->make(true);
     }
@@ -68,31 +74,16 @@ class DapilController extends Controller
 
     public function show($id)
     {
-    	$chart = Charts::multi('bar', 'material')
-            // Setup the chart settings
-            ->title("Hasil Data Suara")
-            // A dimension of 0 means it will take 100% of the space
-            ->dimensions(700, 300) // Width x Height
-            // This defines a preset of colors already done:)
-            ->template("material")
-            // You could always set them manually
-             ->colors(['#2196F3', '#F44336', '#FFC107'])
-            // Setup the diferent datasets (this is a multi chart)
-            ->dataset('Data Suara', [5,20,100])
-            ->responsive(false)
-            // Setup what the values mean
-            ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
-
-        $tabulasi = Tabulasi::find($id);
+      $dapil = Dapil::find($id);
         // dd($tabulasi);
 
-        if (empty($tabulasi)) {
-            flash('Tabulasi not found')->error();
+        if (empty($dapil)) {
+            flash('Dapil not found')->error();
 
-            return redirect(route('tabulasi.index'));
+            return redirect(route('datamaster.dapil.index'));
         }
 
-        return view('layouts.tabulasi.show',compact('tabulasi','chart'));
+        return view('layouts.data_master.dapil.show',compact('dapil'));
 
 
     }
@@ -100,31 +91,28 @@ class DapilController extends Controller
     public function create()
     {
 
+      $event = Event::pluck('nama','id')->all();
 
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
-        // dd($provinsi);
+      $provinsi = Provinsi::pluck('nama','id')->all();
+      // dd($provinsi);
 
-        $kota_kabupaten = array();
-        // dd($kota_kabupaten);
+      $kota = array();
+      // dd($kota_kabupaten);
 
-        $kecamatan = array();
+      $kecamatan = array();
 
-        $kelurahan = array();
-
-        return view('layouts.tabulasi.create', compact('provinsi','kota_kabupaten','kecamatan','kelurahan'));
+      $kelurahan = array();
+        return view('layouts.data_master.dapil.create', compact('provinsi','kota','kecamatan','kelurahan','event'));
     }
 
     public function store(Request $request)
     {
-
-
-
         $input = $request->all();
+        // dd($request);
+        $dapil = Dapil::create($input);
 
-        $tabulasi = Tabulasi::create($input);
-
-        flash('Data Tabulasi created successfully')->success();
-        return redirect(route('tabulasi.show',$tabulasi));
+        flash('Data Calon created successfully')->success();
+        return redirect(route('datamaster.dapil.show',$dapil));
     }
 
 
@@ -132,61 +120,57 @@ class DapilController extends Controller
     public function edit ($id)
     {
         // $tabulasi = $this->findWithoutFail($id);
-        $tabulasi = Tabulasi::find($id);
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
-        $kota_kabupaten = KotaKab::where('provinsi_id', $tabulasi->provinsi_id)->pluck('nama','id')->all();
-        $kecamatan = Kecamatan::where('kota_kabupaten_id', $tabulasi->kota_kabupaten_id)->pluck('nama','id')->all();
-        $kelurahan = Kelurahan::where('kecamatan_id', $tabulasi->kecamatan_id)->pluck('nama','id')->all();
-        // dd($kota_kabupaten);
+        $dapil = Dapil::find($id);
+        // $event = Event::where('id', $dapil->event_id)->pluck('nama','id')->all();
+        $event = Event::pluck('nama','id')->all();
 
-        if (empty($tabulasi)) {
-            flash('Data Tabulasi Tidak Ada');
 
-            return redirect(route('tabulasi.index'));
+        if (empty($dapil)) {
+            flash('Data Dapil Tidak Ada');
+
+            return redirect(route('datamaster.dapil.index'));
         }
 
-        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota_kabupaten','kecamatan','kelurahan'));
+        return view('layouts.data_master.dapil.edit', compact('dapil','event'));
     }
 
 
 
     public function update(Request $request,$id)
     {
-        $tabulasi = Tabulasi::find($id);
-            if (empty($tabulasi)) {
+        $dapil = Dapil::find($id);
+            if (empty($dapil)) {
 
-                flash('Tabulasi not found');
+                flash('Dapil not found');
 
-            return redirect(route('layouts.tabulasi.index'));
+            return redirect(route('layouts.data_master.dapil.index'));
         }
 
-            $tabulasi->dokumen_id       = $request->dokumen_id;
-            $tabulasi->provinsi_id       = $request->provinsi_id;
-            $tabulasi->kota_kabupaten_id    = $request->kota_kabupaten_id;
-            $tabulasi->kelurahan_id    = $request->kelurahan_id;
+            $dapil->nama            = $request->nama;
+            $dapil->event_id          = $request->event_id;
 
-            $tabulasi->update();
+            $dapil->update();
 
 
-        flash('Data Tabulasi saved successfully')->success();
-        return redirect(route('tabulasi.show', $tabulasi));
+        flash('Data Dapil saved successfully')->success();
+        return redirect(route('datamaster.dapil.show', $dapil));
 
     }
 
     public function destroy($id)
     {
 
-    	$tabulasi = Tabulasi::findOrFail($id);
-            if (empty($tabulasi)) {
+    	$dapil = Dapil::findOrFail($id);
+            if (empty($dapil)) {
 
-                    flash('Tabulasi not found');
+                    flash('Dapil not found');
 
-                return redirect(route('layouts.tabulasi.index'));
+                return redirect(route('layouts.data_master.dapil.index'));
             }
-        $tabulasi->delete();
+        $dapil->delete();
 
-        flash('Data Tabulasi deleted successfully')->success();
-        return redirect(route('tabulasi.index'));
+        flash('Data Dapil deleted successfully')->success();
+        return redirect(route('datamaster.dapil.index'));
 	}
 
     public function ajax(Request $request)

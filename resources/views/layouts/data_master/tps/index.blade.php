@@ -26,7 +26,7 @@
                                                 </h2>
 
                                                 <div class="body">
-                                                    <a href="{{ route('datamaster.tps.create') }}" class ="btn btn-primary waves-effect">Buat Data</a>
+                                                    <a href="{{ route('datamaster.TPS.create') }}" class ="btn btn-primary waves-effect">Buat Data</a>
                                                 </div>
 
                                             </div>
@@ -53,7 +53,7 @@
                                                     $('#table-Tabulasi').DataTable({
                                                         processing: true,
                                                         serverSide: true,
-                                                        ajax: '/tabulasi/getdatatable',
+                                                        ajax: 'datamaster/tps/getdatatable',
                                                         columns:
                                                             [
 

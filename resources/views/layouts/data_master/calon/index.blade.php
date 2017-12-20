@@ -31,14 +31,17 @@
 
                                             </div>
 
-                                            <table id="table-Tabulasi" class="table table-striped">
+                                            <table id="table-Calon" class="table table-striped">
                                                 <thead>
                                                     <tr style="background-color: lightblue">
                                                         <th>Nama Calon</th>
-                                                        <th>Alamat Calon</th>
-                                                        <th>Nomor Telepon</th>
-                                                        <th>Email</th>
-                                                        <th>Event </th>
+                                                        <th>Dapil</th>
+                                                        <th>Tipe</th>
+                                                        <th>Partai</th>
+                                                        <th>Nomor Urut </th>
+                                                        <th>Alamat </th>
+                                                        <th>Nomor Telepon </th>
+                                                        <th>Email </th>
                                                         <th>Foto</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -50,14 +53,18 @@
                                             <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
                                             <script type="text/javascript">
                                                 $(function() {
-                                                    $('#table-Tabulasi').DataTable({
+                                                    $('#table-Calon').DataTable({
                                                         processing: true,
                                                         serverSide: true,
-                                                        ajax: '/tabulasi/getdatatable',
+                                                        ajax: '/datamaster/calon/getdatatable',
                                                         columns:
                                                             [
 
                                                                 {data: 'nama'},
+                                                                {data: 'dapil_id'},
+                                                                {data: 'tipe'},
+                                                                {data: 'partai_id'},
+                                                                {data: 'nomor'},
                                                                 {data: 'alamat'},
                                                                 {data: 'no_telpon'},
                                                                 {data: 'email'},

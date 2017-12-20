@@ -2,7 +2,7 @@
 
 @section('title')
 
-    
+
 @endsection
 
 @section('extra-css')
@@ -12,10 +12,10 @@
 @section('content')
     <div class="container-fluid">
             <div class="block-header">
-                
+
             </div>
             <!-- Body Copy -->
-            
+
             <!-- #END# Body Copy -->
             <!-- Headings -->
             <div class="row clearfix">
@@ -38,7 +38,6 @@
                 </div>
             </div>
             <!-- #END# Headings -->
-            
+
         </div>
 @endsection
-
