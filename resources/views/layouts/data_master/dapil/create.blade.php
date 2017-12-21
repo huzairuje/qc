@@ -55,7 +55,7 @@
 								<!-- Modal -->
 								<div class="modal-footer">
 									{!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
-									<a href="{{ route('tabulasi.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Tabulasi</a>
+									<a href="{{ route('datamaster.dapil.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Dapil</a>
 								</div>
 								{!! Form::close() !!}
 							</div>

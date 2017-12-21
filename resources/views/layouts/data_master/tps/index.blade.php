@@ -31,16 +31,13 @@
 
                                             </div>
 
-                                            <table id="table-Tabulasi" class="table table-striped">
+                                            <table id="table-TPS" class="table table-striped">
                                                 <thead>
                                                     <tr style="background-color: lightblue">
-                                                        <th>Nama Dapil</th>
-                                                        <th>Jenis Dapil</th>
-                                                        <th>Provinsi</th>
-                                                        <th>Kota/Kabupaten</th>
-                                                        <th>Kecamatan</th>
-                                                        <th>Kelurahan</th>
-                                                        <th>Action</th>
+
+                                                      <th>Nomor TPS</th>
+                                                      <th>Kelurahan</th>
+                                                      <th>Action</th>
                                                     </tr>
                                                 </thead>
                                             </table><!-- Modal -->
@@ -50,20 +47,15 @@
                                             <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
                                             <script type="text/javascript">
                                                 $(function() {
-                                                    $('#table-Tabulasi').DataTable({
+                                                    $('#table-TPS').DataTable({
                                                         processing: true,
                                                         serverSide: true,
-                                                        ajax: 'datamaster/tps/getdatatable',
+                                                        ajax: '/datamaster/TPS/getdatatable',
+
                                                         columns:
                                                             [
-
-                                                                {data: 'dokumen_id'},
-                                                                {data: 'provinsi_id'},
-                                                                {data: 'kota_kabupaten_id'},
-                                                                {data: 'kecamatan_id'},
+                                                                {data: 'nomor'},
                                                                 {data: 'kelurahan_id'},
-                                                                {data: 'data_suara', render: function (data, type, row, meta) {
-                                                                return data == 1 ? 'Ada' : 'Tidak Ada'}},
                                                                 {data: 'action'}
                                                                 ]
                                                             } );

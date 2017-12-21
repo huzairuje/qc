@@ -17,6 +17,7 @@ use Yajra\Datatables\Facades\Datatables\Validate;
 use Charts;
 use Flash;
 use App\Models\Calon;
+use App\Models\Event;
 use App\Models\Dapil;
 use App\Models\Partai;
 use App\Models\UserEvent;

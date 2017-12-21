@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="col-md-6">
-                                {{ Form::select('kota_kabupaten_id', $kota_kabupaten,null, ['class' => 'form-control','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
+                                {{ Form::select('kota_id', $kota,null, ['class' => 'form-control','id' => 'kota_id','placeholder' => 'Select Kota/Kabupaten']) }}
                     </div>
 
                     <div class="col-md-6">
@@ -58,7 +58,7 @@
                     <!-- Modal -->
         <div class="modal-footer">
             {!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
-            <a href="{{ route('datamaster.TPS.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Tabulasi</a>
+            <a href="{{ route('datamaster.TPS.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index TPS</a>
         </div>
         {!! Form::close() !!}
 </div>
@@ -77,28 +77,31 @@
     $(document).ready( function() {
         // select2
 
-        var _url = '{{ route('tabulasi.ajax') }}';
+        var _url = '{{ route('datamaster.TPS.ajax') }}';
 
         $(document).on('change','#provinsi_id',function(){
             var _val = $(this).val();
             $.get(_url,{'type':'get-city','provinsi_id':_val})
             .done(function(result) {
                 var html = '';
-                $('#kota_kabupaten_id').selectpicker(html);
+                $('#kota_id').selectpicker(html);
 
                 $.each(result,function(key,value){
                     html += '<option value="'+key+'">'+value+'</option>';
                 });
 
-                $('#kota_kabupaten_id').html(html);
-                $('#kota_kabupaten_id').selectpicker('refresh');
+                $('#kota_id').html(html);
+                $('#kota_id').selectpicker('refresh');
             });
         });
 
-	        $(document).on('change','#kota_kabupaten_id',function(){
+
+
+	        $(document).on('change','#kota_id',function(){
+
 
 	            var coba = $(this).val();
-	            $.get(_url,{'type':'get-kecamatan','kota_kabupaten_id':coba})
+	            $.get(_url,{'type':'get-kecamatan','kota_id':coba})
 	            .done(function(result) {
 	                var html = '';
                     $('#kecamatan_id').selectpicker(html);
@@ -129,6 +132,8 @@
 	        });
 	    });
 </script>
+
+
 
 
 @endsection

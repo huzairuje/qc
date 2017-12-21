@@ -16,7 +16,7 @@ use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
 use App\Models\TPS;
 use App\Models\Provinsi;
-use App\Models\KotaKab;
+use App\Models\Kota;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use Charts;
@@ -56,15 +56,22 @@ class TPSController extends Controller
         return Datatables::eloquent($tps)
 
 
+            ->editColumn('nomor', function ($tps) {
+                if ($tps->nomor) {
+                    return $tps->nomor;
+                } else {
+                    return 'Nomor TPS tidak ada';
+                }
+            })
             ->editColumn('kelurahan_id', function ($tps) {
-                if ($tps->kecamatan) {
+                if ($tps->kelurahan) {
                     return $tps->kelurahan->nama;
                 } else {
                     return 'Data KELURAHAN tidak ada';
                 }
             })
             ->addColumn('action', function ($tps) {
-            return '<a href="'.route('datamaster.tps.show', $tps->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.tps.edit', $tps->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.tps.delete', $tps->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+            return '<a href="'.route('datamaster.TPS.show', $tps->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.TPS.edit', $tps->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.TPS.delete', $tps->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
 
             ->make(true);
@@ -108,27 +115,24 @@ class TPSController extends Controller
       $provinsi = Provinsi::pluck('nama','id')->all();
         // dd($provinsi);
 
-        $kota_kabupaten = array();
+        $kota = array();
         // dd($kota_kabupaten);
 
         $kecamatan = array();
 
         $kelurahan = array();
 
-        return view('layouts.data_master.tps.create', compact('provinsi','kota_kabupaten','kecamatan','kelurahan'));
+        return view('layouts.data_master.tps.create', compact('provinsi','kota','kecamatan','kelurahan'));
     }
 
     public function store(Request $request)
     {
-
-
-
         $input = $request->all();
 
         $tps = Tps::create($input);
 
         flash('Data TPS created successfully')->success();
-        return redirect(route('datamaster.tps.show',$tps));
+        return redirect(route('datamaster.TPS.show',$tps));
     }
 
 
@@ -191,29 +195,33 @@ class TPSController extends Controller
         return redirect(route('datamaster.tps.index'));
 	}
 
-    public function ajax(Request $request)
-    {
-        $type = $request->type;
-        switch ($type) {
-            case 'get-city':
-                 return Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+  public function ajax(Request $request)
+  {
+      $type = $request->type;
+      switch ($type) {
+          case 'get-provincy':
+          $result = Provinsi::get()->pluck( 'nama', 'id' )->all();
+          return $result;
+          break;
 
-                return $result;
-                break;
+          case 'get-city':
+          $result = Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+          return $result;
+          break;
 
-            case 'get-kecamatan':
-                return Kecamatan::where('kota_kabupaten_id', $request->kota_kabupaten_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
-                break;
+          case 'get-kecamatan':
+          $result = Kecamatan::where('kota_id', $request->kota_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+          return $result;
+          break;
 
-            case 'get-kelurahan':
-                return Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
-                break;
+          case 'get-kelurahan':
+          $result = Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+          return $result;
+          break;
 
-            default:
-                return $result['status'] = false;
-                break;
-        }
-
-
-    }
+          default:
+          return $result['status'] = false;
+          break;
+      }
+  }
 }
