@@ -11,6 +11,7 @@
 
     <!-- Bootstrap Core Css -->
     @section('css')
+    {{ Html::style('bsbmd/css/semantic.css') }}
     {{ Html::style('bsbmd/plugins/bootstrap/css/bootstrap.css') }}
     {{ Html::style('bsbmd/plugins/node-waves/waves.css') }}
     {{ Html::style('bsbmd/plugins/animate-css/animate.css') }}
@@ -48,7 +49,7 @@
     {{Html::script('bsbmd/plugins/node-waves/waves.js')}}
 
 
-    @show    
+    @show
     @yield('extra-script')
     @section('script-bottom')
     {{Html::script('bsbmd/js/admin.js')}}

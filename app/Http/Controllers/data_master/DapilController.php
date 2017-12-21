@@ -21,25 +21,28 @@ use App\Models\Kelurahan;
 use Charts;
 use Flash;
 use App\Models\Dapil;
+use App\Models\DapilLokasi;
 use App\Models\Event;
+use App\Models\UserEvent;
+use Sentinel;
 
 class DapilController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-     public function __construct()
-     {
+    * Create a new controller instance.
+    *
+    * @return void
+    */
+    public function __construct()
+    {
 
-     }
+    }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Show the application dashboard.
+    *
+    * @return \Illuminate\Http\Response
+    */
 
     public function index()
     {
@@ -49,32 +52,42 @@ class DapilController extends Controller
     }
     public function get_datatable()
     {
-         // $tabulasi = Tabulasi::query();
-        $dapil = Dapil::select(['id', 'nama', 'event_id']);
-        // $dataTable = Datatables::eloquent($tabulasi);
-        // return $dataTable->make(true);
+        $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
+        foreach ($userEvents as $key => $userEvent) {
+            $listEventId[$key] = $userEvent->event_id;
+        }
+
+        if(count($userEvents) != 0)
+        {
+            $dapil = Dapil::select(['id', 'nama', 'event_id'])->whereIn('event_id', $listEventId);
+        }
+        else
+        {
+            $dapil = Dapil::select(['id', 'nama', 'event_id'])->where('event_id', 0);
+        }
+
         return Datatables::eloquent($dapil)
 
-                ->editColumn('event_id', function ($dapil) {
-                    if ($dapil->event) {
-                        return $dapil->event->nama;
-                    } else {
-                        return 'Data Event tidak ada';
-                    }
-                })
+        ->editColumn('event_id', function ($dapil) {
+            if ($dapil->event) {
+                return $dapil->event->nama;
+            } else {
+                return 'Data Event tidak ada';
+            }
+        })
 
-                ->addColumn('action', function ($dapil) {
-                    return '<a href="'.route('datamaster.dapil.show', $dapil->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.dapil.edit', $dapil->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.dapil.delete', $dapil->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
-                })
+        ->addColumn('action', function ($dapil) {
+            return '<a href="'.route('datamaster.dapil.show', $dapil->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.dapil.edit', $dapil->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.dapil.delete', $dapil->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+        })
 
-            ->make(true);
+        ->make(true);
     }
 
 
 
     public function show($id)
     {
-      $dapil = Dapil::find($id);
+        $dapil = Dapil::find($id);
         // dd($tabulasi);
 
         if (empty($dapil)) {
@@ -91,25 +104,32 @@ class DapilController extends Controller
     public function create()
     {
 
-      $event = Event::pluck('nama','id')->all();
+        $event = Event::pluck('nama','id')->all();
 
-      $provinsi = Provinsi::pluck('nama','id')->all();
-      // dd($provinsi);
+        $provinsi = Provinsi::pluck('nama','id')->all();
+        // dd($provinsi);
 
-      $kota = array();
-      // dd($kota_kabupaten);
+        $kota = array();
+        // dd($kota_kabupaten);
 
-      $kecamatan = array();
+        $kecamatan = array();
 
-      $kelurahan = array();
+        $kelurahan = array();
         return view('layouts.data_master.dapil.create', compact('provinsi','kota','kecamatan','kelurahan','event'));
     }
 
     public function store(Request $request)
     {
         $input = $request->all();
-        // dd($request);
+
         $dapil = Dapil::create($input);
+
+        $insertedId = $dapil->id;
+        $data = $request->data;
+        foreach($data as $key => $lokasi){
+            $dapilLokasi[$key] = ['dapil_id' => $insertedId, 'lokasi_id' => $lokasi];
+        }
+        DapilLokasi::insert($dapilLokasi);
 
         flash('Data Calon created successfully')->success();
         return redirect(route('datamaster.dapil.show',$dapil));
@@ -139,17 +159,17 @@ class DapilController extends Controller
     public function update(Request $request,$id)
     {
         $dapil = Dapil::find($id);
-            if (empty($dapil)) {
+        if (empty($dapil)) {
 
-                flash('Dapil not found');
+            flash('Dapil not found');
 
             return redirect(route('layouts.data_master.dapil.index'));
         }
 
-            $dapil->nama            = $request->nama;
-            $dapil->event_id          = $request->event_id;
+        $dapil->nama            = $request->nama;
+        $dapil->event_id          = $request->event_id;
 
-            $dapil->update();
+        $dapil->update();
 
 
         flash('Data Dapil saved successfully')->success();
@@ -160,42 +180,49 @@ class DapilController extends Controller
     public function destroy($id)
     {
 
-    	$dapil = Dapil::findOrFail($id);
-            if (empty($dapil)) {
+        $dapil = Dapil::findOrFail($id);
+        if (empty($dapil)) {
 
-                    flash('Dapil not found');
+            flash('Dapil not found');
 
-                return redirect(route('layouts.data_master.dapil.index'));
-            }
+            return redirect(route('layouts.data_master.dapil.index'));
+        }
         $dapil->delete();
 
         flash('Data Dapil deleted successfully')->success();
         return redirect(route('datamaster.dapil.index'));
-	}
+    }
 
     public function ajax(Request $request)
     {
         $type = $request->type;
         switch ($type) {
-            case 'get-city':
-                 return KotaKab::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
-
-                return $result;
-                break;
-
-            case 'get-kecamatan':
-                return Kecamatan::where('kota_kabupaten_id', $request->kota_kabupaten_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
-                break;
-
-            case 'get-kelurahan':
-                return Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
-                break;
+            case 'get-data':
+            $event = Event::where('id', $request->event_id)->first();
+            if($event->jenis == 1)
+            {
+                if($event->tingkat == 1){
+                    $result = Provinsi::where('id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+                }
+                else if($event->tingkat == 2){
+                    $result = Kota::where('id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+                }
+            }
+            else if($event->jenis == 2)
+            {
+                if($event->tingkat == 1){
+                    $result = Kota::where('provinsi_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+                }
+                else if($event->tingkat == 2){
+                    $result = Kecamatan::where('kota_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+                }
+            }
+            return $result;
+            break;
 
             default:
-                return $result['status'] = false;
-                break;
+            return $result['status'] = false;
+            break;
         }
-
-
     }
 }

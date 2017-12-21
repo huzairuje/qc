@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use App\Models\User;
-=======
-use App\User;
-use App\UserEvent;
-use App\Event;
->>>>>>> 68070a30006cc1848115d977ad07afbc34baa7f6
+use App\Models\UserEvent;
+use App\Models\Event;
 use Sentinel;
 
 class UserManagementController extends Controller
@@ -91,8 +87,17 @@ class UserManagementController extends Controller
         $insertedId = $user->id;
 
         Sentinel::findRoleBySlug($request->role)->users()->attach( $user );
+        try
+        {
+            $user = new UserEvent;
+            $user->user_id = $user->id;
+            $user->event_id = $request->event;
+            $user->save();
+        }
+        catch(\Exception $e){
+            echo $e->getMessage();
+        }
 
-<<<<<<< HEAD
         return redirect('/user-management/show/' . $insertedId);
     }
 
@@ -103,48 +108,12 @@ class UserManagementController extends Controller
 
     public function edit($id){
         $data['user'] = User::where('id' , '=', $id)->first();
-=======
-        try
-        {
-           $user = new UserEvent;
-           $user->user_id = $user->id;
-           $user->event_id = $request->event;
-           $user->save();
-       }
-       catch(\Exception $e){
-           echo $e->getMessage();
-       }
 
-       return redirect('/user-management/show/' . $insertedId);
-   }
-
-   public function show($id){
-    $data['user'] = User::where('id' , '=', $id)->first();
-    return view('layouts.user-management.detail', $data);
-}
-
-public function edit($id){
-    $data['user'] = User::where('id' , '=', $id)->first();
-
-    if($data['user']->roles()->first()->id <= Sentinel::getUser()->id){
-        return 'You are not authorized.';
-    }
-    else
-    {
-        $role = Sentinel::getUser()->roles()->first()->slug;
->>>>>>> 68070a30006cc1848115d977ad07afbc34baa7f6
-
-        if ($role == 'admin-pusat')
-        {
-            $data['roleList']['admin-event'] = 'Admin Event';
-            $data['roleList']['admin-kota'] = 'Admin Kota';
-            $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
+        if($data['user']->roles()->first()->id <= Sentinel::getUser()->id){
+            return 'You are not authorized.';
         }
-        elseif  ($role == 'admin-event')
+        else
         {
-<<<<<<< HEAD
             $role = Sentinel::getUser()->roles()->first()->slug;
 
             if ($role == 'admin-pusat')
@@ -175,45 +144,14 @@ public function edit($id){
             }
 
             return view('layouts.user-management.edit', $data);
-=======
-            $data['roleList']['admin-kota'] = 'Admin Kota';
-            $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
->>>>>>> 68070a30006cc1848115d977ad07afbc34baa7f6
         }
-        elseif ($role == 'admin-kota')
-        {
-            $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
-        }
-        else 
-        {
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
-        }
-
-        return view('layouts.user-management.edit', $data);
     }
-<<<<<<< HEAD
 
     public function update(Request $request, $id){
-    	return redirect('/user-management/show/' . $id);
+        return redirect('/user-management/show/' . $id);
     }
 
     public function destroy($id){
         return redirect('/user-management/show/' . $id);
     }
-=======
-}
-
-public function update(Request $request, $id){
- return redirect('/user-management/show/' . $id);
-}
-
-public function destroy($id){
-    return redirect('/user-management/show/' . $id);
-}
->>>>>>> 68070a30006cc1848115d977ad07afbc34baa7f6
 }

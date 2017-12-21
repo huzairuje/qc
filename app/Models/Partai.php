@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Partai extends Model
 {
-  protected $table = 'partai';
+    protected $table = 'partai';
+
+    protected $fillable = ['nama'];
 
     public function calon()
     {

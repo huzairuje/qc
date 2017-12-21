@@ -75,7 +75,21 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-line">
-                                              {!! Form::select('event_id', $event,null, ['class' => 'form-control','id' => 'event_id','placeholder' => 'Select Event']) !!}
+                                                <select id="dapil_id" name="dapil_id" class="forrm-control" placeholder="Pilih Dapil">
+                                                    @foreach($listDapil as $dapil)
+                                                    <option value="{{ $dapil->id }}">{{ $dapil->event->nama . ' ' . $dapil->nama }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-line">
+                                                {!! Form::select('partai_id', $partai,null, ['class' => 'form-control','id' => 'partai_id','placeholder' => 'Pilih Partai']) !!}
                                             </div>
                                         </div>
                                     </div>

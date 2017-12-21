@@ -51,11 +51,7 @@ class EventController extends Controller
         }
         else
         {
-<<<<<<< HEAD
-            $data_event = Event::select(['id','nama','tahun','jenis','tingkat', 'lokasi', 'expired']);
-=======
-            $data_event = Event::select(['id','nama','tahun','jenis','tingkat', 'provinsi', 'kabupaten_kota', 'dapil'])->where('id', 0);
->>>>>>> 68070a30006cc1848115d977ad07afbc34baa7f6
+            $data_event = Event::select(['id','nama','tahun','jenis','tingkat', 'lokasi', 'expired'])->where('tahun', 1945);
         }
 
         return Datatables::eloquent($data_event)->addColumn('action', function ($data_event) {
@@ -67,115 +63,114 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-      if ($request->tingkat == 1){
-        $request->merge(['lokasi' => $request->provinsi]);
-      }
-      else if ($request->tingkat == 2) {
-        $request->merge(['lokasi' => $request->kabupaten_kota]);
-      }
-      else {
-        $request->merge(['lokasi' => 0]);
-      }
+        if ($request->tingkat == 1){
+            $request->merge(['lokasi' => $request->provinsi]);
+        }
+        else if ($request->tingkat == 2) {
+            $request->merge(['lokasi' => $request->kabupaten_kota]);
+        }
+        else {
+            $request->merge(['lokasi' => 0]);
+        }
 
-      $input = $request->all();
-      dd($input);
+        $input = $request->all();
 
-       $data_event = Event::create($input);
-
-
-       flash('Data Event created successfully')->success();
-       return redirect(route('event.show',$data_event));
-   }
+        $data_event = Event::create($input);
 
 
-   public function edit($id)
-   {
-    $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
-    foreach ($userEvents as $key => $userEvent) {
-        $listEventId[$key] = $userEvent->event_id;
+        flash('Data Event created successfully')->success();
+        return redirect(route('event.show',$data_event));
     }
 
-    $os = array("Mac", "NT", "Irix", "Linux");
-    if (in_array($id, $listEventId)) {
 
-        $data_event = Event::find($id);
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
-        $kota_kabupaten = KotaKab::where('provinsi_id', $data_event->provinsi_id)->pluck('nama','id')->all();
+    public function edit($id)
+    {
+        $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
+        foreach ($userEvents as $key => $userEvent) {
+            $listEventId[$key] = $userEvent->event_id;
+        }
 
-        if (empty($data_event)) {
+        $os = array("Mac", "NT", "Irix", "Linux");
+        if (in_array($id, $listEventId)) {
+
+            $data_event = Event::find($id);
+            $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
+            $kota_kabupaten = KotaKab::where('provinsi_id', $data_event->provinsi_id)->pluck('nama','id')->all();
+
+            if (empty($data_event)) {
+                flash('Event Tidak Ada');
+
+                return redirect(route('event.index'));
+            }
+            return view('layouts.event.edit', compact('data_event','provinsi','kota_kabupaten'));
+        } else {
             flash('Event Tidak Ada');
 
             return redirect(route('event.index'));
         }
-        return view('layouts.event.edit', compact('data_event','provinsi','kota_kabupaten'));
-    } else {
-        flash('Event Tidak Ada');
 
-        return redirect(route('event.index'));
     }
+    public function update(Request $request,$id)
+    {
+        $data_event = Event::find($id);
+        if (empty($data_event)) {
 
-}
-public function update(Request $request,$id)
-{
-    $data_event = Event::find($id);
-    if (empty($data_event)) {
+            flash('Event not found');
 
-        flash('Event not found');
-
-        return redirect(route('event.index'));
-    }
-
-    $data_event->nama       = $request->nama;
-    $data_event->tahun       = $request->tahun;
-    $data_event->jenis       = $request->jenis;
-    $data_event->tingkat       = $request->tingkat;
-    $data_event->provinsi       = $request->provinsi;
-    $data_event->kabupaten_kota    = $request->kabupaten_kota;
-    $data_event->dapil    = $request->dapil;
-    $data_event->update();
-
-
-    flash('Event saved successfully')->success();
-    return redirect(route('event.show', $data_event));
-
-}
-
-public function show($id)
-{
-    $chart = Charts::multi('bar', 'material')
-            // Setup the chart settings
-    ->title("Hasil Data Suara")
-            // A dimension of 0 means it will take 100% of the space
-            ->dimensions(700, 300) // Width x Height
-            // This defines a preset of colors already done:)
-            ->template("material")
-            // You could always set them manually
-            ->colors(['#2196F3', '#F44336', '#FFC107'])
-            // Setup the diferent datasets (this is a multi chart)
-            ->dataset('Data Suara', [5,20,100])
-            ->responsive(false)
-            // Setup what the values mean
-            ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
-
-            $data_event = Event::find($id);
-        // dd($tabulasi);
-
-            if (empty($data_event)) {
-                flash('Event not found')->error();
-
-                return redirect(route('event.index'));
-            }
-
-            return view('layouts.event.show',compact('data_event','chart'));
-
-
+            return redirect(route('event.index'));
         }
 
-        public function destroy($id)
-        {
+        $data_event->nama       = $request->nama;
+        $data_event->tahun       = $request->tahun;
+        $data_event->jenis       = $request->jenis;
+        $data_event->tingkat       = $request->tingkat;
+        $data_event->provinsi       = $request->provinsi;
+        $data_event->kabupaten_kota    = $request->kabupaten_kota;
+        $data_event->dapil    = $request->dapil;
+        $data_event->update();
 
-         $data_event = Event::findOrFail($id);
-         if (empty($data_event)) {
+
+        flash('Event saved successfully')->success();
+        return redirect(route('event.show', $data_event));
+
+    }
+
+    public function show($id)
+    {
+        $chart = Charts::multi('bar', 'material')
+        // Setup the chart settings
+        ->title("Hasil Data Suara")
+        // A dimension of 0 means it will take 100% of the space
+        ->dimensions(700, 300) // Width x Height
+        // This defines a preset of colors already done:)
+        ->template("material")
+        // You could always set them manually
+        ->colors(['#2196F3', '#F44336', '#FFC107'])
+        // Setup the diferent datasets (this is a multi chart)
+        ->dataset('Data Suara', [5,20,100])
+        ->responsive(false)
+        // Setup what the values mean
+        ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
+
+        $data_event = Event::find($id);
+        // dd($tabulasi);
+
+        if (empty($data_event)) {
+            flash('Event not found')->error();
+
+            return redirect(route('event.index'));
+        }
+
+        return view('layouts.event.show',compact('data_event','chart'));
+
+
+    }
+
+    public function destroy($id)
+    {
+
+        $data_event = Event::findOrFail($id);
+        if (empty($data_event)) {
 
             flash('Event not found');
 
@@ -209,7 +204,5 @@ public function show($id)
             return $result['status'] = false;
             break;
         }
-
-
     }
 }
