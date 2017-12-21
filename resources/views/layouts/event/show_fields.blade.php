@@ -4,8 +4,8 @@
         <div class="col-md-12">
             <div class="form-group">
                 <div class="form-line">
-                    {!! Form::label('nama_event', 'Nama Event :') !!}
-                    {!! $data_event->nama_event !!}
+                    {!! Form::label('nama', 'Nama Event :') !!}
+                    {!! $data_event->nama !!}
                 </div>
             </div>
         </div>
@@ -22,8 +22,15 @@
         <div class="col-md-6">
             <div class="form-group">
                 <div class="form-line">
-                    {!! Form::label('kota_kabupaten_id', 'Kota/Kabupaten:') !!}
-                    {!! $data_event->kota_kabupaten_id !!}
+                    {!! Form::label('jenis', 'Jenis Event :') !!}
+                    @if ($data_event->jenis == 1)
+                        PILKADA
+                    @elseif ($data_event->jenis == 2)
+                        PILEG
+                    @else
+                        PILPRES
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -31,8 +38,23 @@
         <div class="col-md-6">
             <div class="form-group">
                 <div class="form-line">
-                    {!! Form::label('dapil', 'Daerah Pemilihan/Dapil:') !!}
-                    {!! $data_event->dapil !!}
+                    {!! Form::label('tingkat', 'Tingkat Event :') !!}
+                    @if ($data_event->tingkat == 1)
+                        PILKADA
+                    @elseif ($data_event->tingkat == 2)
+                        PILEG
+                    @else
+                        PILPRES
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="form-line">
+                    {!! Form::label('lokasi', 'Lokasi:') !!}
+                    {!! $result !!}
                 </div>
             </div>
         </div>

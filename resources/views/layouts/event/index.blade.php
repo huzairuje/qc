@@ -44,7 +44,7 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                    </table><!-- Modal -->
+                                    </table>
                                     <script src="https://datatables.yajrabox.com/js/jquery.min.js"></script>
                                     <script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
                                     <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
@@ -67,21 +67,6 @@
                                                 {data: 'action'}
                                             ]
                                         } );
-
-                                        // var t = $('#table-Dataevent').DataTable( {
-                                        //     "columnDefs": [ {
-                                        //         "searchable": false,
-                                        //         "orderable": false,
-                                        //         "targets": 0
-                                        //     } ],
-                                        //     "order": [[ 1, 'asc' ]]
-                                        // } );
-
-                                        t.on( 'order.dt search.dt', function () {
-                                            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                                                cell.innerHTML = i+1;
-                                            } );
-                                        } ).draw();
 
                                     } );
 

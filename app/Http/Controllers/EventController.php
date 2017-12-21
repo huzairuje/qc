@@ -15,6 +15,10 @@ use Yajra\Datatables\Facades\Datatables\Options;
 use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
 use App\Models\Event;
+use App\Models\Dapil;
+use App\Models\Jenis;
+use App\Models\Tingkat;
+use App\Models\DapilLokasi;
 use App\Models\Provinsi;
 use App\Models\Kota;
 use App\Models\UserEvent;
@@ -33,10 +37,11 @@ class EventController extends Controller
     public function create()
     {
         $provinsi = Provinsi::pluck('nama','id')->all();
-
+        $jenis = Jenis::all();
+        $tingkat = Tingkat::all();
         $kota = array();
 
-        return view('layouts.event.create', compact('provinsi','kota'));
+        return view('layouts.event.create', compact('provinsi','kota', 'jenis', 'tingkat'));
     }
 
     public function get_datatable()
@@ -63,17 +68,22 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->tingkat == 1){
+      if($request->jenis == 4 || $request->jenis == 5){
+        if ($request->tingkat == 2){
             $request->merge(['lokasi' => $request->provinsi]);
         }
-        else if ($request->tingkat == 2) {
+        else if ($request->tingkat == 3) {
             $request->merge(['lokasi' => $request->kabupaten_kota]);
         }
         else {
             $request->merge(['lokasi' => 0]);
         }
+      } else {
+        $request->merge(['lokasi' => 0]);
+      }
 
         $input = $request->all();
+
 
         $data_event = Event::create($input);
 
@@ -153,15 +163,34 @@ class EventController extends Controller
         ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
 
         $data_event = Event::find($id);
-        // dd($tabulasi);
+
 
         if (empty($data_event)) {
             flash('Event not found')->error();
 
             return redirect(route('event.index'));
         }
+        if($data_event->jenis == 5)
+        {
+            if($data_event->tingkat == 2){
+                $result = Provinsi::where('id',$data_event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
+            }
+            else if($data_event->tingkat == 3){
+                $result = Kota::where('id',$data_event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
+            }
+        }
+        else if($data_event->jenis == 4)
+        {
+            if($data_event->tingkat == 2){
+                $result = Kota::where('provinsi_id',$data_event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
+            }
+            else if($data_event->tingkat == 3){
+                $result = Kecamatan::where('kota_id',$data_event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
+            }
+        }
 
-        return view('layouts.event.show',compact('data_event','chart'));
+
+        return view('layouts.event.show',compact('data_event','chart','result'));
 
 
     }
