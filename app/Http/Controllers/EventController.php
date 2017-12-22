@@ -37,8 +37,8 @@ class EventController extends Controller
     public function create()
     {
         $provinsi = Provinsi::pluck('nama','id')->all();
-        $jenis = Jenis::all();
-        $tingkat = Tingkat::all();
+        $jenis = Jenis::pluck('nama','id')->all();
+        $tingkat = Tingkat::pluck('nama','id')->all();
         $kota = array();
 
         return view('layouts.event.create', compact('provinsi','kota', 'jenis', 'tingkat'));
@@ -52,40 +52,59 @@ class EventController extends Controller
         }
         if(count($userEvents) != 0)
         {
-            $data_event = Event::select(['id','nama','tahun','jenis','tingkat', 'lokasi', 'expired'])->whereIn('id', $listEventId);
+            $data_event = Event::whereIn('id', $listEventId);
         }
         else
         {
-            $data_event = Event::select(['id','nama','tahun','jenis','tingkat', 'lokasi', 'expired'])->where('tahun', 1945);
+            $data_event = Event::where('tahun', 1945);
         }
 
-        return Datatables::eloquent($data_event)->addColumn('action', function ($data_event) {
+        return Datatables::eloquent($data_event)
+        ->editColumn('jenis', function (Event $event) {
+            return $event->jenis->nama ? $event->jenis->nama : 'Undefined';
+        })
+        ->editColumn('tingkat', function (Event $event) {
+            return $event->tingkat->nama ? $event->tingkat->nama : 'Undefined';
+        })
+        ->addColumn('action', function ($data_event) {
             return '<a href="'.route('event.show', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('event.edit', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('event.delete', $data_event->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
-
         ->make(true);
     }
 
     public function store(Request $request)
     {
-      if($request->jenis == 4 || $request->jenis == 5){
-        if ($request->tingkat == 2){
-            $request->merge(['lokasi' => $request->provinsi]);
-        }
-        else if ($request->tingkat == 3) {
-            $request->merge(['lokasi' => $request->kabupaten_kota]);
-        }
-        else {
+        if($request->jenis == 4 || $request->jenis == 5){
+            if ($request->tingkat == 2){
+                $request->merge(['lokasi' => $request->provinsi]);
+            }
+            else if ($request->tingkat == 3) {
+                $request->merge(['lokasi' => $request->kota]);
+            }
+            else {
+                $request->merge(['lokasi' => 0]);
+            }
+        } else {
             $request->merge(['lokasi' => 0]);
         }
-      } else {
-        $request->merge(['lokasi' => 0]);
-      }
 
         $input = $request->all();
 
 
         $data_event = Event::create($input);
+
+        $insertedId = $data_event->id;
+
+        try
+        {
+            $user = new UserEvent;
+            $user->user_id = Sentinel::getUser()->id;
+            $user->event_id = $insertedId;
+            $user->save();
+        }
+        catch(\Exception $e){
+            echo $e->getMessage();
+        }
 
 
         flash('Data Event created successfully')->success();
@@ -219,9 +238,9 @@ class EventController extends Controller
             $result = Provinsi::get()->pluck( 'nama', 'id' )->all();
             return $result;
             break;
-            case 'get-city':
-            return Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
 
+            case 'get-city':
+            $result = Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
             return $result;
             break;
 

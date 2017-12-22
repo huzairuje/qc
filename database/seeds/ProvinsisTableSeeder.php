@@ -13,7 +13,7 @@ class ProvinsisTableSeeder extends Seeder
     {
       // DB::table('provinsi')->truncate();
 
-      Excel::filter('chunk')->load(public_path('csv/provinces.csv'))->chunk(250, function($results) {
+      Excel::filter('chunk')->load(public_path('csv/provinsi.csv'))->chunk(250, function($results) {
           $header = [ 'id', 'nama' ];
           foreach ($results->toArray() as $row) {
               $data = array_combine($header, $row);

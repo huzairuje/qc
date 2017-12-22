@@ -14,8 +14,8 @@ class Event extends Model
 
     protected $fillable = [
         'nama',
-        'jenis',
-        'tingkat',
+        'jenis_id',
+        'tigkat_id',
         'lokasi',
         'tahun',
         'expired',
@@ -24,5 +24,20 @@ class Event extends Model
     public function dapil()
     {
         return $this->hasMany('App\Models\Dapil');
+    }
+
+    public function userEvent()
+    {
+        return $this->hasMany('App\Models\UserEvent');
+    }
+
+    public function tingkat()
+    {
+        return $this->belongsTo('App\Models\Tingkat');
+    }
+
+    public function jenis()
+    {
+        return $this->belongsTo('App\Models\Jenis');
     }
 }

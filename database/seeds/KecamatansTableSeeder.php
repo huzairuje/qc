@@ -13,7 +13,7 @@ class KecamatansTableSeeder extends Seeder
     {
       // DB::table('kecamatan')->truncate();
 
-      Excel::filter('chunk')->load(public_path('csv/districts.csv'))->chunk(250, function($results) {
+      Excel::filter('chunk')->load(public_path('csv/kecamatan.csv'))->chunk(250, function($results) {
           $header = [ 'id','kota_id' ,'nama' ];
           foreach ($results->toArray() as $row) {
               $data = array_combine($header, $row);

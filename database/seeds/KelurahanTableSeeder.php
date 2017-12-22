@@ -13,7 +13,7 @@ class KelurahanTableSeeder extends Seeder
     {
       // DB::table('kelurahan')->truncate();
 
-      Excel::filter('chunk')->load(public_path('csv/villages.csv'))->chunk(250, function($results) {
+      Excel::filter('chunk')->load(public_path('csv/kelurahan.csv'))->chunk(250, function($results) {
           $header = [ 'id', 'kecamatan_id','nama' ];
           foreach ($results->toArray() as $row) {
               $data = array_combine($header, $row);

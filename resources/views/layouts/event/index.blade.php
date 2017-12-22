@@ -58,13 +58,13 @@
                                             ajax: '/event/getdatatable',
                                             columns:
                                             [
-                                                {data: 'tahun'},
-                                                {data: 'expired'},
-                                                {data: 'nama'},
-                                                {data: 'jenis'},
-                                                {data: 'tingkat'},
-                                                {data: 'lokasi'},
-                                                {data: 'action'}
+                                                {data: 'tahun', name: 'tahun'},
+                                                {data: 'expired', name: 'expired'},
+                                                {data: 'nama', name: 'nama'},
+                                                {data: 'jenis', name: 'jenis'},
+                                                {data: 'tingkat', name: 'tingkat'},
+                                                {data: 'lokasi', name: 'lokasi'},
+                                                {data: 'action', name: 'action'}
                                             ]
                                         } );
 

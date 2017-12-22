@@ -72,31 +72,19 @@
 								</div>
 
 								<div class="col-md-8">
-									{!! Form::Label('jenis', 'Jenis Event:') !!}
-									  <select class="form-control show-tick" name="tingkat">
-												<option value="">Pilih Jenis Event</option>
-									    	@foreach($jenis as $listjenis)
-									      <option value="{{ $listjenis->id }}">{{ $listjenis->nama }}</option>
-									    	@endforeach
-									  </select>
+									{!! Form::select('jenis_id', $jenis,null, ['class' => 'form-control','id' => 'jenis','placeholder' => 'Pilih Jenis']) !!}
 								</div>
 
-								<div class="col-md-8">
-								  {!! Form::Label('tingkat', 'Tingkat Event:') !!}
-									  <select class="form-control show-tick" name="tingkat">
-												<option value="">Pilih Tingkat Event</option>
-									    	@foreach($tingkat as $listtingkat)
-									      <option value="{{ $listtingkat->id }}">{{ $listtingkat->nama }}</option>
-									    	@endforeach
-									  </select>
+								<div class="col-md-8 tingkat-form-container">
+									{!! Form::select('tingkat_id', $tingkat,null, ['class' => 'form-control','id' => 'tingkat','placeholder' => 'Pilih Tingkat']) !!}
 								</div>
 
-								<div class="provinsi col-md-8">
-									{!! Form::select('provinsi', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}
+								<div class="provinsi col-md-8 provinsi-form-container">
+									{!! Form::select('provinsi', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Pilih Provinsi']) !!}
 								</div>
 
-								<div class="kabupaten col-md-8">
-									{{ Form::select('kabupaten_kota', $kota,null, ['class' => 'form-control','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
+								<div class="kabupaten col-md-8 kota-form-container">
+									{{ Form::select('kota', $kota,null, ['class' => 'form-control','id' => 'kota_id','placeholder' => 'Pilih Kota/Kabupaten']) }}
 
 								</div>
 
@@ -123,139 +111,32 @@
 					<script type="text/javascript">
 					$(document).ready( function() {
 						var _url = '{{ route('event.ajax') }}';
-						select2
-						$(document).on('change','#jenis',function(){
-							var _val = $(this).val();
-							$(".select-tingkat").html('<select class="form-control show-tick" name="tingkat" id="tingkat" placeholder="Pilih Tingkat Event" ></select>');
 
-							var html = '';
-							$('#tingkat').selectpicker(html);
-
-							if (_val == '1'){
-								var html = '';
-								html += '<option value="">Pilih Tingkat</option>';
-								html += '<option value="1">Tingkat Provinsi</option>';
-								html += '<option value="2">Tingkat Kota/Kabupaten</option>';
-								$('#tingkat').html(html);
-								$('#tingkat').selectpicker('refresh');
-							}
-							else if (_val == '2'){
-								var html = '';
-								html += '<option value="">Pilih Tingkat PILEG</option>';
-								html += '<option value="0">PILEG DPR (Nasional)</option>';
-								html += '<option value="0">PILEG DPD (Nasional)</option>';
-								html += '<option value="1">PILEG DPRD Provinsi (Provinsi)</option>';
-								html += '<option value="2">PILEG DPRD Kota/Kabupaten (Kota/Kabupaten)</option>';
-								$('#tingkat').html(html);
-								$('#tingkat').selectpicker('refresh');
-							}
-
-							else if {
-								$('#provinsi_id').selectpicker('destroy');
-								$('#provinsi_id').remove();
-								$('#kota_kabupaten_id').selectpicker('destroy');
-								$('#kota_kabupaten_id').remove();
-								$('#tingkat').selectpicker('destroy');
-								$('#tingkat').remove();
-							}
-						});
-
-
-						$(document).on('change','#tingkat',function(){
-							var _val = $(this).val();
-							$("#provinsi_id").html();
-
-							var html = '';
-							$('#provinsi_id').selectpicker(html);
-
-							if (_val == '1' ){
-								$('#kota_kabupaten_id').selectpicker('destroy');
-								$('#kota_kabupaten_id').remove();
-								if (_val == '1' ){
-									$('.provinsi').html('<select class="form-control show-tick" name="provinsi" id="provinsi_id" placeholder="Pilih Jenis Event" ></select>');
-									getProvincy(_url);
-
-								}
-
-							}
-							else if (_val == '2' ){
-								var html = '';
-								var _val = $(this).val();
-								getProvincy(_url);
-								if (_val == '2' ){
-									$('.kabupaten').html('<select class="form-control show-tick" name="kabupaten_kota" id="kota_kabupaten_id" placeholder="Pilih Jenis Event" ></select>');
-								}
-							}
-							else {
-								$('#kota_kabupaten_id').selectpicker('destroy');
-								$('#kota_kabupaten_id').remove();
-								$('#provinsi_id').selectpicker('destroy');
-								$('#provinsi_id').remove();
-							}
-
-						});
+						$('.tingkat-form-container').hide();
+						$('.provinsi-form-container').hide();
+						$('.kota-form-container').hide();
 
 						$(document).on('change','#provinsi_id',function(){
 							var _val = $(this).val();
-							getCity(_val,_url);
-						});
-
-						$(document).on('change','#kota_kabupaten_id',function(){
-
-							var coba = $(this).val();
-							$.get(_url,{'type':'get-kecamatan','kota_kabupaten_id':coba})
+							$.get(_url,{'type':'get-city','provinsi_id':_val})
 							.done(function(result) {
 								var html = '';
-								$('#dapil').selectpicker(html);
+								$('#kota_id').selectpicker(html);
+
 								$.each(result,function(key,value){
 									html += '<option value="'+key+'">'+value+'</option>';
 								});
 
-								$('#dapil').html(html);
-								$('#dapil').selectpicker('refresh');
-
+								$('#kota_id').html(html);
+								$('#kota_id').selectpicker('refresh');
 							});
 						});
-
 
 					});
-
-					function getCity(val,url)
-					{
-						$.get(url,{'type':'get-city','provinsi_id':val})
-						.done(function(result) {
-							var html = '';
-							$('#kota_kabupaten_id').selectpicker(html);
-
-							$.each(result,function(key,value){
-								html += '<option value="'+key+'">'+value+'</option>';
-							});
-
-							$('#kota_kabupaten_id').html(html);
-							$('#kota_kabupaten_id').selectpicker('refresh');
-						});
-					}
-
-					function getProvincy(url)
-					{
-						$.get(url,{'type':'get-provincy'})
-						.done(function(result) {
-
-							var html = '';
-							$('#provinsi_id').selectpicker(html);
-
-							$.each(result,function(key,value){
-								html += '<option value="'+key+'">'+value+'</option>';
-							});
-
-							$('#provinsi_id').html(html);
-							$('#provinsi_id').selectpicker('refresh');
-						});
-					}
-				</script>
+					</script>
 
 
-				@endsection
+					@endsection
 
+				</div>
 			</div>
-		</div>
