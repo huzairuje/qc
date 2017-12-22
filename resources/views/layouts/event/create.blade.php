@@ -116,6 +116,33 @@
 						$('.provinsi-form-container').hide();
 						$('.kota-form-container').hide();
 
+						$(document).on('change','#jenis',function(){
+							var _val = $(this).val();
+							if(_val == 4 || _val == 4){
+								$('.tingkat-form-container').show();
+							}
+							else {
+								$('.tingkat-form-container').hide();
+								$('.provinsi-form-container').hide();
+								$('.kota-form-container').hide();
+							}
+						});
+
+						$(document).on('change','#tingkat',function(){
+							var _val = $(this).val();
+							if(_val == 2){
+								$('.provinsi-form-container').show();
+							}
+							else if(_val == 3){
+								$('.provinsi-form-container').show();
+								$('.kota-form-container').show();
+							}
+							else {
+								$('.provinsi-form-container').hide();
+								$('.kota-form-container').hide();
+							}
+						});
+
 						$(document).on('change','#provinsi_id',function(){
 							var _val = $(this).val();
 							$.get(_url,{'type':'get-city','provinsi_id':_val})
