@@ -132,6 +132,7 @@
 							var _val = $(this).val();
 							if(_val == 2){
 								$('.provinsi-form-container').show();
+								$('.kota-form-container').hide();
 							}
 							else if(_val == 3){
 								$('.provinsi-form-container').show();
