@@ -37,6 +37,7 @@ Dashboard
 												@foreach($kelurahan->tps as $tps)
 												<li>
 													{{ $tps->id }}
+													{{ $tps->kelurahan->nama }}
 													<ul>
 														@foreach($tps->suara as $suara)
 														<li>

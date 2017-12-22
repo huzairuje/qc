@@ -12,9 +12,9 @@ class Kecamatan extends Model
         'nama'
     ];
 
-    public function kotKab()
+    public function kota()
     {
-        return $this->belongsTo('App\KotaKab', 'kota_kabupaten_id');
+        return $this->belongsTo('App\Models\Kota');
     }
 
     public function kelurahan()

@@ -8,7 +8,7 @@ class Partai extends Model
 {
     protected $table = 'partai';
 
-    protected $fillable = ['nama'];
+    protected $fillable = ['nama','nomor','foto'];
 
     public function calon()
     {

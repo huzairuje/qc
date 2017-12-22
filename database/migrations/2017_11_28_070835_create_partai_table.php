@@ -15,7 +15,9 @@ class CreatePartaiTable extends Migration
     {
       Schema::create('partai', function (Blueprint $table) {
           $table->increments('id');
+          $table->integer('nomor');
           $table->string('nama');
+          $table->binary('foto');
           $table->timestamps();
       });
     }

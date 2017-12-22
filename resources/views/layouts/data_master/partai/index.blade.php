@@ -21,7 +21,7 @@
                                     @include('flash::message')
                                             <div class="header">
                                                 <h2>
-                                                    <span>TPS</span>
+                                                    <span>PARTAI</span>
                                                     <i class="material-icons">autorenew</i>
                                                 </h2>
 
@@ -34,8 +34,9 @@
                                             <table id="table-Partai" class="table table-striped">
                                                 <thead>
                                                     <tr style="background-color: lightblue">
-                                                        <th></th>
-                                                        <th>Nama Partai</th>
+                                                        <th>Nomor Urut</th>
+                                                        <th>Nama</th>
+                                                        <th>Foto</th>
 
                                                     </tr>
                                                 </thead>
@@ -50,27 +51,15 @@
                                                         processing: true,
                                                         serverSide: true,
                                                         ajax: '/datamaster/partai/getdatatable',
+
                                                         columns:
                                                             [
-
+                                                                {data: 'nomor'},
                                                                 {data: 'nama'},
+                                                                {data: 'foto'},
                                                                 {data: 'action'}
                                                                 ]
                                                             } );
-                                                            var t = $('#table-Dataevent').DataTable( {
-                                                                "columnDefs": [ {
-                                                                    "searchable": false,
-                                                                    "orderable": false,
-                                                                    "targets": 0
-                                                                } ],
-                                                                "order": [[ 1, 'asc' ]]
-                                                            } );
-
-                                                            t.on( 'order.dt search.dt', function () {
-                                                                t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                                                                    cell.innerHTML = i+1;
-                                                                } );
-                                                            } ).draw();
 
                                                     } );
 

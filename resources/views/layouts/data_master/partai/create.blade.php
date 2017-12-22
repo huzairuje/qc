@@ -38,6 +38,17 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-line">
+                                                {!! Form::label('nomor', 'Nomor Urut Partai:') !!}
+                                                {{ Form::text('nomor',null, ['class' => 'form-control','placeholder' => 'Nama']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
 
                                 <div class="form-group">

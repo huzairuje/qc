@@ -142,8 +142,8 @@ class TPSController extends Controller
         // $tabulasi = $this->findWithoutFail($id);
         $tps = Tps::find($id);
         $provinsi = Provinsi::pluck('nama','id')->all();
-        $kota_kabupaten = KotaKab::where('provinsi_id', $tps->provinsi_id)->pluck('nama','id')->all();
-        $kecamatan = Kecamatan::where('kota_kabupaten_id', $tps->kota_kabupaten_id)->pluck('nama','id')->all();
+        $kota = Kota::where('provinsi_id', $tps->provinsi_id)->pluck('nama','id')->all();
+        $kecamatan = Kecamatan::where('kota_id', $tps->kota_id)->pluck('nama','id')->all();
         $kelurahan = Kelurahan::where('kecamatan_id', $tps->kecamatan_id)->pluck('nama','id')->all();
         // dd($kota_kabupaten);
 
@@ -153,7 +153,7 @@ class TPSController extends Controller
             return redirect(route('datamaster.tps.index'));
         }
 
-        return view('layouts.data_master.tps.edit', compact('tps','provinsi','kota_kabupaten','kecamatan','kelurahan'));
+        return view('layouts.data_master.tps.edit', compact('tps','provinsi','kota','kecamatan','kelurahan'));
     }
 
 
@@ -175,7 +175,7 @@ class TPSController extends Controller
 
 
         flash('Data TPS saved successfully')->success();
-        return redirect(route('datamaster.tps.show', $tps));
+        return redirect(route('datamaster.TPS.show', $tps));
 
     }
 

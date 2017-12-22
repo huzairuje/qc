@@ -219,31 +219,37 @@ class TabulasiController extends Controller
         return redirect(route('tabulasi.index'));
 	}
 
-    public function ajax(Request $request)
-    {
-        $type = $request->type;
-        switch ($type) {
-            case 'get-city':
-                 return Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+  public function ajax(Request $request)
+  {
+      $type = $request->type;
+      switch ($type) {
+          case 'get-provincy':
+          $result = Provinsi::get()->pluck( 'nama', 'id' )->all();
+          return $result;
+          break;
 
-                return $result;
-                break;
+          case 'get-city':
+          $result = Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+          return $result;
+          break;
 
-            case 'get-kecamatan':
-                return Kecamatan::where('kota_id', $request->kota_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
-                break;
+          case 'get-kecamatan':
+          $result = Kecamatan::where('kota_id', $request->kota_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+          return $result;
+          break;
 
-            case 'get-kelurahan':
-                return Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
-                break;
+          case 'get-kelurahan':
+          $result = Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+          return $result;
+          break;
 
-            default:
-                return $result['status'] = false;
-                break;
-        }
+          default:
+          return $result['status'] = false;
+          break;
+      }
+  }
 
 
-    }
 
 
 }

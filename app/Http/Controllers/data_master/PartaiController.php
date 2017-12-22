@@ -15,6 +15,9 @@ use Yajra\Datatables\Facades\Datatables\Options;
 use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
 use App\Models\Partai;
+use App\Models\User;
+use Sentinel;
+use Auth;
 use Charts;
 use Flash;
 class PartaiController extends Controller
@@ -28,7 +31,7 @@ class PartaiController extends Controller
     public function get_datatable()
     {
         // $tabulasi = Tabulasi::query();
-        $partai = Partai::select(['id','nama']);
+        $partai = Partai::select(['id','nomor','nama','foto']);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
 
@@ -65,9 +68,9 @@ class PartaiController extends Controller
         // dd($tabulasi);
 
         if (empty($partai)) {
-            flash('Tabulasi not found')->error();
+            flash('Partai not found')->error();
 
-            return redirect(route('tabulasi.index'));
+            return redirect(route('datamaster.partai.index'));
         }
 
         return view('layouts.data_master.partai.show',compact('partai','chart'));
@@ -82,71 +85,81 @@ class PartaiController extends Controller
 
     public function store(Request $request)
     {
-        $input = $request->all();
+      $input = $request->all();
+      if ($request->hasFile('foto'))
+        {
+          $this->validate($request, [
+      // check validtion for image or file
+            'foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+    // rename image name or file name
+        $getimageName = time().'.'.$request->foto->getClientOriginalExtension();
+        $request->foto->move(public_path('images'), $getimageName);
+      }
 
         $partai = Partai::create($input);
+        $partai->save();
 
-        flash('Data Tabulasi created successfully')->success();
+
+        flash('Data Partai created successfully')->success();
         return redirect(route('datamaster.partai.show',$partai));
-    }
+
+      }
+
 
 
 
     public function edit ($id)
     {
         // $tabulasi = $this->findWithoutFail($id);
-        $partai = Tabulasi::find($id);
-        $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
-        $kota_kabupaten = KotaKab::where('provinsi_id', $partai->provinsi_id)->pluck('nama','id')->all();
-        $kecamatan = Kecamatan::where('kota_kabupaten_id', $partai->kota_kabupaten_id)->pluck('nama','id')->all();
-        $kelurahan = Kelurahan::where('kecamatan_id', $partai->kecamatan_id)->pluck('nama','id')->all();
-        // dd($kota_kabupaten);
+        $partai = Partai::find($id);
 
         if (empty($partai)) {
             flash('Data Tabulasi Tidak Ada');
 
-            return redirect(route('tabulasi.index'));
+            return redirect(route('datamaster.partai.index'));
         }
 
-        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota_kabupaten','kecamatan','kelurahan'));
+        return view('layouts.data_master.partai.edit', compact('partai'));
     }
 
 
 
     public function update(Request $request,$id)
     {
-        $partai = Tabulasi::find($id);
+        $partai = Partai::find($id);
         if (empty($partai)) {
 
-            flash('Tabulasi not found');
+            flash('Partai not found');
 
-            return redirect(route('layouts.tabulasi.index'));
+            return redirect(route('layouts.data_master.partai.index'));
         }
 
-        $partai->nama       = $request->nama;
+        $partai->nama    = $request->nama;
+        $partai->nomor    = $request->nomor;
 
 
         $partai->update();
 
 
-        flash('Data Tabulasi saved successfully')->success();
-        return redirect(route('tabulasi.show', $partai));
+        flash('Data Partai saved successfully')->success();
+        return redirect(route('datamaster.partai.show', $partai));
 
     }
 
     public function destroy($id)
     {
 
-        $partai = Tabulasi::findOrFail($id);
+        $partai = Partai::findOrFail($id);
         if (empty($partai)) {
 
-            flash('Tabulasi not found');
+            flash('Partai not found');
 
-            return redirect(route('layouts.tabulasi.index'));
+            return redirect(route('layouts.data_master.partai.index'));
         }
         $partai->delete();
 
-        flash('Data Tabulasi deleted successfully')->success();
+        flash('Data Partai deleted successfully')->success();
         return redirect(route('tabulasi.index'));
     }
 
