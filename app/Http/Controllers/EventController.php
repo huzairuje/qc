@@ -74,11 +74,11 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-        if($request->jenis == 4 || $request->jenis == 5){
-            if ($request->tingkat == 2){
+        if($request->jenis_id == 4 || $request->jenis_id == 5){
+            if ($request->tingkat_id == 2){
                 $request->merge(['lokasi' => $request->provinsi]);
             }
-            else if ($request->tingkat == 3) {
+            else if ($request->tingkat_id == 3) {
                 $request->merge(['lokasi' => $request->kota]);
             }
             else {
@@ -151,8 +151,8 @@ class EventController extends Controller
 
         $data_event->nama       = $request->nama;
         $data_event->tahun       = $request->tahun;
-        $data_event->jenis       = $request->jenis;
-        $data_event->tingkat       = $request->tingkat;
+        $data_event->jenis_id       = $request->jenis_id;
+        $data_event->tingkat_id       = $request->tingkat_id;
         $data_event->provinsi       = $request->provinsi;
         $data_event->kabupaten_kota    = $request->kabupaten_kota;
         $data_event->dapil    = $request->dapil;
@@ -189,25 +189,19 @@ class EventController extends Controller
 
             return redirect(route('event.index'));
         }
-        if($data_event->jenis == 5)
+        if($data_event->jenis_id == 5 || $data_event->jenis_id == 4)
         {
-            if($data_event->tingkat == 2){
+            if($data_event->tingkat_id == 2){
                 $result = Provinsi::where('id',$data_event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
             }
-            else if($data_event->tingkat == 3){
+            else if($data_event->tingkat_id == 3){
                 $result = Kota::where('id',$data_event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
             }
         }
-        else if($data_event->jenis == 4)
+        else
         {
-            if($data_event->tingkat == 2){
-                $result = Kota::where('provinsi_id',$data_event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
-            }
-            else if($data_event->tingkat == 3){
-                $result = Kecamatan::where('kota_id',$data_event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
-            }
+            $result = Kota::find('id',$data_event->lokasi);
         }
-
 
         return view('layouts.event.show',compact('data_event','chart','result'));
 

@@ -23,14 +23,7 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('jenis', 'Jenis Event :') !!}
-                    @if ($data_event->jenis == 1)
-                        PILKADA
-                    @elseif ($data_event->jenis == 2)
-                        PILEG
-                    @else
-                        PILPRES
-                    @endif
-
+                    {{ $data_event->jenis->nama }}
                 </div>
             </div>
         </div>
@@ -39,13 +32,7 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('tingkat', 'Tingkat Event :') !!}
-                    @if ($data_event->tingkat == 1)
-                        PILKADA
-                    @elseif ($data_event->tingkat == 2)
-                        PILEG
-                    @else
-                        PILPRES
-                    @endif
+                    {{ $data_event->tingkat->nama }}
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ class Event extends Model
     protected $fillable = [
         'nama',
         'jenis_id',
-        'tigkat_id',
+        'tingkat_id',
         'lokasi',
         'tahun',
         'expired',

@@ -30,14 +30,9 @@ class PartaiController extends Controller
     }
     public function get_datatable()
     {
-        // $tabulasi = Tabulasi::query();
         $partai = Partai::select(['id','nomor','nama','foto']);
-        // $dataTable = Datatables::eloquent($tabulasi);
-        // return $dataTable->make(true);
 
         return Datatables::eloquent($partai)
-
-
         ->addColumn('action', function ($partai) {
             return '<a href="'.route('datamaster.partai.show', $partai->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.partai.edit', $partai->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.partai.delete', $partai->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })

@@ -14,7 +14,7 @@ use Yajra\Datatables\Facades\Datatables\Mjoin;
 use Yajra\Datatables\Facades\Datatables\Options;
 use Yajra\Datatables\Facades\Datatables\Upload;
 use Yajra\Datatables\Facades\Datatables\Validate;
-use App\Models\TPS;
+use App\Models\Tps;
 use App\Models\Provinsi;
 use App\Models\Kota;
 use App\Models\Kecamatan;
@@ -48,14 +48,9 @@ class TPSController extends Controller
     }
     public function get_datatable()
     {
-         // $tabulasi = Tabulasi::query();
         $tps = Tps::select(['id','nomor', 'kelurahan_id']);
-        // $dataTable = Datatables::eloquent($tabulasi);
-        // return $dataTable->make(true);
 
         return Datatables::eloquent($tps)
-
-
             ->editColumn('nomor', function ($tps) {
                 if ($tps->nomor) {
                     return $tps->nomor;
@@ -63,12 +58,17 @@ class TPSController extends Controller
                     return 'Nomor TPS tidak ada';
                 }
             })
+            ->addColumn('provinsi', function ($tps) {
+                return $tps->kelurahan->kecamatan->kota->provinsi->nama ? $tps->kelurahan->kecamatan->kota->provinsi->nama : 'Undefined';
+            })
+            ->addColumn('kota', function ($tps) {
+                return $tps->kelurahan->kecamatan->kota->nama ? $tps->kelurahan->kecamatan->kota->nama : 'Undefined';
+            })
+            ->addColumn('kecamatan', function ($tps) {
+                return $tps->kelurahan->kecamatan->nama ? $tps->kelurahan->kecamatan->nama : 'Undefined';
+            })
             ->editColumn('kelurahan_id', function ($tps) {
-                if ($tps->kelurahan) {
-                    return $tps->kelurahan->nama;
-                } else {
-                    return 'Data KELURAHAN tidak ada';
-                }
+                return $tps->kelurahan->nama ? $tps->kelurahan->nama : 'Undefined';
             })
             ->addColumn('action', function ($tps) {
             return '<a href="'.route('datamaster.TPS.show', $tps->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.TPS.edit', $tps->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.TPS.delete', $tps->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';

@@ -17,7 +17,6 @@ class Calon extends Model
       'tipe',
       'partai_id',
       'nomor',
-      'event_id',
       'nama',
       'has_wakil',
       'alamat',

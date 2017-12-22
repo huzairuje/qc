@@ -45,25 +45,36 @@ class CalonController extends Controller
     {
 
         return view('layouts.data_master.calon.index');
-
     }
     public function get_datatable()
     {
-        // $tabulasi = Tabulasi::query();
-        $calon = Calon::select(['id','nama', 'dapil_id', 'no_telpon', 'email', 'tipe', 'partai_id','nomor','alamat', 'foto']);
-        // $dataTable = Datatables::eloquent($tabulasi);
-        // return $dataTable->make(true);
+        $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
+        foreach ($userEvents as $key => $userEvent) {
+            $listEventId[$key] = $userEvent->event_id;
+        }
+        if(count($userEvents) != 0)
+        {
+            $dataDapil = Dapil::all()->whereIn('event_id', $listEventId);
+
+            if(count($dataDapil) != 0){
+                foreach ($dataDapil as $key => $dapil) {
+                    $listDapiltId[$key] = $dapil->id;
+                }
+                $calon = Calon::whereIn('dapil_id', $listDapiltId);
+            }
+        }
+        else
+        {
+            $calon = Calon::where('id', 0);
+        }
 
         return Datatables::eloquent($calon)
-
-        ->editColumn('event_id', function ($calon) {
-            if ($calon->event) {
-                return $calon->event->nama;
-            } else {
-                return 'Data Event tidak ada';
-            }
+        ->editColumn('partai', function ($calon) {
+            return $calon->partai->nama ? $calon->partai->nama : 'Undefined';
         })
-
+        ->editColumn('dapil', function ($calon) {
+            return $calon->dapil->nama ? $calon->dapil->nama : 'Undefined';
+        })
         ->addColumn('action', function ($calon) {
             return '<a href="'.route('datamaster.calon.show', $calon->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.calon.edit', $calon->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.calon.delete', $calon->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
@@ -113,12 +124,14 @@ class CalonController extends Controller
         }
         if(count($userEvents) != 0)
         {
-            $data['listDapil'] = Dapil::all()->whereIn('event_id', $listEventId);
+            $data['listEvent'] = Event::all()->whereIn('id', $listEventId);
         }
         else
         {
-            $data['listDapil'] = Dapil::all()->where('event_id', 0);
+            $data['listEvent'] = Event::all()->where('tahun', 1945);
         }
+
+        $data['dapil'] = [];
 
 
         $data['partai'] = Partai::pluck('nama','id')->all();
@@ -128,6 +141,15 @@ class CalonController extends Controller
 
     public function store(Request $request)
     {
+        if($request->tipe == "0"){
+            $request->merge(['nama' => Partai::find($request->partai_id)->nama]);
+        }
+
+        $event = Event::where('id', $request->event)->first();
+        if($event->jenis->id == 1 || $event->jenis->id == 5){
+            $request->merge(['has_wakil' => 1]);
+        }
+
         $input = $request->all();
 
         $calon = Calon::create($input);
@@ -201,18 +223,13 @@ class CalonController extends Controller
     {
         $type = $request->type;
         switch ($type) {
-            case 'get-city':
-            return KotaKab::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
-
-            return $result;
-            break;
-
-            case 'get-kecamatan':
-            return Kecamatan::where('kota_kabupaten_id', $request->kota_kabupaten_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
-            break;
-
-            case 'get-kelurahan':
-            return Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+            case 'get-dapil':
+            $result = Dapil::where('event_id',$request->event_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+            if(count($result) > 0){
+                return $result;
+            } else {
+                return $result['message'] = 'Belum ada Dapil di event yang dipilih!';
+            }
             break;
 
             default:
