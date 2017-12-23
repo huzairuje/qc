@@ -10,11 +10,11 @@ class UserEvent extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function event()
     {
-        return $this->belongsTo('App\Event');
+        return $this->belongsTo('App\Models\Event');
     }
 }

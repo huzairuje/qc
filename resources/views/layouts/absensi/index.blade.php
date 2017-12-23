@@ -21,25 +21,19 @@
                                     @include('flash::message')
                                     <div class="header">
                                         <h2>
-                                            <span>APPROVAL</span>
+                                            <span>ABSENSI</span>
                                             <i class="material-icons">autorenew</i>
                                         </h2>
 
-                                        <div class="body">
-                                            <a href="{{ route('approval.create') }}" class ="btn btn-primary waves-effect">Buat Data</a>
-                                        </div>
-
                                     </div>
 
-                                    <table id="table-Approval" class="table table-striped">
+                                    <table id="table-Absensi" class="table table-striped">
                                         <thead>
                                             <tr style="background-color: lightblue">
 
                                                 <th>Nama Saksi</th>
-                                                <th>Event</th>
-                                                <th>Kelurahan</th>
-                                                <th>TPS</th>
-                                                <th>status Approval</th>
+                                                <th>Status</th>
+                                                <th>Alasan</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -50,18 +44,16 @@
                                     <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
                                     <script type="text/javascript">
                                     $(function() {
-                                        $('#table-Approval').DataTable({
+                                        $('#table-Absensi').DataTable({
                                             processing: true,
                                             serverSide: true,
-                                            ajax: '/approval/getdatatable',
+                                            ajax: '/absensi/getdatatable',
 
                                             columns:
                                             [
                                                 {data: 'user_id'},
-                                                {data: 'event_id'},
-                                                {data: 'kelurahan_id'},
-                                                {data: 'tps_id'},
-                                                {data: 'is_approved'},
+                                                {data: 'status'},
+                                                {data: 'alasan'},
                                                 {data: 'action'}
                                             ]
                                         } );

@@ -15,7 +15,7 @@
 		<div class="card">
 			<div class="header bg-blue">
 				<h2>
-					BUAT DATA APPROVAL
+					Edit DATA APPROVAL
 				</h2>
 			</div>
 
@@ -26,11 +26,16 @@
 						<div class="body">
 							<div class="row clearfix">
 								<!-- Content Create-->
-								{!! Form::open(['route' => 'approval.store']) !!}
-
-								<div class="col-md-6">
-									{!! Form::select('event_id', $event,null, ['class' => 'form-control','id' => 'event_id','placeholder' => 'Select Event']) !!}
-								</div>
+                {!! Form::model($approval, ['route' => ['approval.update', $approval->id], 'method' => 'patch']) !!}
+                <!-- Email Field -->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-line">
+                            {!! Form::label('event_id', 'Event:') !!}
+                            {!! Form::select('event_id', $event, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                </div>
 
 								<div class="col-md-6">
 									{!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}
@@ -54,7 +59,7 @@
 								</div>
 
 								<div class="col-md-6">
-									{!! Form::select('user_id', $saksi,null, ['class' => 'form-control','id' => 'user_id','placeholder' => 'Pilih Saksi']) !!}
+									{!! Form::select('user_id', $user,null, ['class' => 'form-control','id' => 'user_id','placeholder' => 'Pilih Saksi']) !!}
 								</div>
 
 								<!-- END Content Create-->
