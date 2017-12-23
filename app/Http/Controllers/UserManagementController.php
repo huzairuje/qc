@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserManagement;
 use App\Models\UserEvent;
 use App\Models\Event;
 use Sentinel;
@@ -11,8 +12,8 @@ use Sentinel;
 class UserManagementController extends Controller
 {
     public function index(){
-        $data['users'] = User::paginate(10);
-        return view('layouts.user-management.index', $data);
+        $users = User::paginate(10);
+        return view('layouts.user-management.index',compact('users'));
     }
 
     public function create(){

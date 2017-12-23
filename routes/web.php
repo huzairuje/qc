@@ -122,6 +122,30 @@ Route::group(['middleware' => 'admin'], function () {
 
 	//End Route For Menu MONITORING--------------------------------------------------------------------------------------------
 
+	//Route For Absensi
+	Route::get('/absensi',['as'=>'absensi.index','uses'=>'AbsensiController@index']);
+	// Route::get('/absensi/ajax',['as'=>'absensi.ajax','uses'=>'AbsensiController@ajax']);
+	Route::get('/absensi/getdatatable', ['as'=>'absensi.datatable', 'uses' => 'AbsensiController@get_datatable']);
+	// Route::get('/absensi/create',['as'=>'absensi.create','uses'=>'AbsensiController@create']);
+	Route::get('/absensi/show/{id}',['as'=>'absensi.show','uses'=>'AbsensiController@show']);
+	Route::get('/absensi/edit/{id}',['as'=>'absensi.edit','uses'=>'AbsensiController@edit']);
+	Route::patch('/absensi/update/{id}',['as'=>'absensi.update','uses'=>'AbsensiController@update']);
+	// Route::post('/absensi/store',['as'=>'absensi.store','uses'=>'AbsensiController@store']);
+	Route::get('/absensi/{id}',['as'=>'absensi.delete','uses'=>'AbsensiController@destroy']);
+	//End Route For Absensi
+
+	//Route For APPROVAL
+	Route::get('/approval',['as'=>'approval.index','uses'=>'ApprovalController@index']);
+	Route::get('/approval/ajax',['as'=>'approval.ajax','uses'=>'ApprovalController@ajax']);
+	Route::get('/approval/getdatatable', ['as'=>'approval.datatable', 'uses' => 'ApprovalController@get_datatable']);
+	Route::get('/approval/create',['as'=>'approval.create','uses'=>'ApprovalController@create']);
+	Route::get('/approval/show/{id}',['as'=>'approval.show','uses'=>'ApprovalController@show']);
+	Route::get('/approval/edit/{id}',['as'=>'approval.edit','uses'=>'ApprovalController@edit']);
+	Route::patch('/approval/update/{id}',['as'=>'approval.update','uses'=>'ApprovalController@update']);
+	Route::post('/approval/store',['as'=>'approval.store','uses'=>'ApprovalController@store']);
+	Route::get('/approval/{id}',['as'=>'approval.delete','uses'=>'ApprovalController@destroy']);
+	//End Route For Approval
+
 	//Route for Event
 	Route::get('/event',['as'=>'event.index','uses'=>'EventController@index']);
 	Route::get('/event/ajax',['as'=>'event.ajax','uses'=>'EventController@ajax']);

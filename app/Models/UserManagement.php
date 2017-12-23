@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserManagement extends Model
 {
-    public function Users()
+    public function users()
     {
     	return $this->belongsTo('App\Models\User');
     }
