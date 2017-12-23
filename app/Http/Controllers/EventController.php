@@ -63,6 +63,15 @@ class EventController extends Controller
         ->editColumn('jenis', function (Event $event) {
             return $event->jenis->nama ? $event->jenis->nama : 'Undefined';
         })
+        ->editColumn('lokasi', function (Event $event) {
+            if($event->tingkat_id == 2){
+                $result = Provinsi::where('id',$event->lokasi)->orderBy('nama', 'ASC')->first();
+            }
+            else if($event->tingkat_id == 3){
+                $result = Kota::where('id',$event->lokasi)->orderBy('nama', 'ASC')->first();
+            }
+            return $result->nama ? $result->nama : 'Undefined';
+        })
         ->editColumn('tingkat', function (Event $event) {
             return $event->tingkat->nama ? $event->tingkat->nama : 'Undefined';
         })
