@@ -59,7 +59,7 @@
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('monitoring*')? 'toggled':''}}" >
                             <i class="material-icons">remove_red_eye</i>
-                            <span>Monitoring</span>
+                            <span>Monitoring Management</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
                              <li {{Route::is('monitoring.datasaksi') || Route::is('monitoring.datasaksi.create') || Route::is('monitoring.datasaksi.show') || Route::is('monitoring.datasaksi.edit')? 'class=active':''}}>
@@ -88,7 +88,7 @@
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('datamaster*')? 'toggled':''}}" >
                             <i class="material-icons">input</i>
-                            <span>Data Master</span>
+                            <span>Data Master Management</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
                             <li {{Route::is('datamaster.calon*')? 'class=active':''}}>

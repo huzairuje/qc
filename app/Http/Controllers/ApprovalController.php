@@ -71,9 +71,9 @@ class ApprovalController extends Controller
           })
           ->editColumn('is_approved', function ($approval) {
               if ($approval->is_approved == 'true' ) {
-                  return 'HADIR';
+                  return 'diapprove';
               } else {
-                  return 'TIDAK HADIR';
+                  return 'belum diapprove';
               }
           })
 
@@ -90,7 +90,7 @@ class ApprovalController extends Controller
               return $approval->kelurahan->nama ? $approval->kelurahan->nama : 'Undefined';
           })
           ->addColumn('action', function ($approval) {
-          return '<a href="'.route('approval.show', $approval->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('absensi.edit', $approval->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('absensi.delete', $approval->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+          return '<a href="'.route('approval.show', $approval->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('approval.edit', $approval->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('approval.delete', $approval->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
       })
 
           ->make(true);
@@ -162,10 +162,14 @@ class ApprovalController extends Controller
   public function edit ($id)
   {
       $approval = Approval::find($id);
+      $event = Event::pluck('nama','id')->all();
       $provinsi = Provinsi::pluck('nama','id')->all();
-      $kota = Kota::where('provinsi_id', $tps->provinsi_id)->pluck('nama','id')->all();
-      $kecamatan = Kecamatan::where('kota_id', $tps->kota_id)->pluck('nama','id')->all();
-      $kelurahan = Kelurahan::where('kecamatan_id', $tps->kecamatan_id)->pluck('nama','id')->all();
+      $kota = Kota::where('provinsi_id', $approval->provinsi_id)->pluck('nama','id')->all();
+      $kecamatan = Kecamatan::where('kota_id', $approval->kota_id)->pluck('nama','id')->all();
+      $kelurahan = Kelurahan::where('kecamatan_id', $approval->kecamatan_id)->pluck('nama','id')->all();
+      $tps = Tps::pluck('nomor','id')->all();
+      $user = User::pluck('username','id')->all();
+
 
       if (empty($approval)) {
           flash('Data Approval Tidak Ada');
@@ -173,7 +177,7 @@ class ApprovalController extends Controller
           return redirect(route('approval.index'));
       }
 
-      return view('layouts.approval.edit', compact('approval', 'provinsi','kota','kecamatan','kelurahan'));
+      return view('layouts.approval.edit', compact('user','event','approval', 'provinsi','kota','kecamatan','kelurahan','tps'));
   }
 
 

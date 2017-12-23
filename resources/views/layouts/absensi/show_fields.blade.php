@@ -31,4 +31,8 @@
                 </div>
               </div>
             </div>
+
+            <div class="modal-footer">
+                <a href="{{ route('absensi.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Absensi</a>
+            </div>
   </body>

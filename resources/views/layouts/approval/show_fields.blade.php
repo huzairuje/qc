@@ -76,4 +76,7 @@
                 Sudah di Approve
               </label>
             </div>
+            <div class="modal-footer">
+                <a href="{{ route('approval.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Approval</a>
+            </div>
 </body>
