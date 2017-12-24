@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserEvent;
+use App\Models\RoleUser;
 use App\Models\Event;
 use Sentinel;
 
@@ -20,38 +21,38 @@ class UserManagementController extends Controller
 
         if ($role == 'admin-pusat')
         {
-            $data['roleList']['admin-event'] = 'Admin Event';
-            $data['roleList']['admin-provinsi'] = 'Admin Provinsi';
-            $data['roleList']['admin-kota'] = 'Admin Kota';
-            $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
+            $data['roleList']['2'] = 'Admin Event';
+            $data['roleList']['3'] = 'Admin Provinsi';
+            $data['roleList']['4'] = 'Admin Kota';
+            $data['roleList']['5'] = 'Admin Kecamatan';
+            $data['roleList']['6'] = 'Admin Korsak';
+            $data['roleList']['7'] = 'Saksi';
         }
         elseif  ($role == 'admin-event')
         {
-            $data['roleList']['admin-provinsi'] = 'Admin Provinsi';
-            $data['roleList']['admin-kota'] = 'Admin Kota';
-            $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
+            $data['roleList']['3'] = 'Admin Provinsi';
+            $data['roleList']['4'] = 'Admin Kota';
+            $data['roleList']['5'] = 'Admin Kecamatan';
+            $data['roleList']['6'] = 'Admin Korsak';
+            $data['roleList']['7'] = 'Saksi';
         }
         elseif ($role == 'admin-provinsi')
         {
-            $data['roleList']['admin-kota'] = 'Admin Kota';
-            $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
+            $data['roleList']['4'] = 'Admin Kota';
+            $data['roleList']['5'] = 'Admin Kecamatan';
+            $data['roleList']['6'] = 'Admin Korsak';
+            $data['roleList']['7'] = 'Saksi';
         }
         elseif ($role == 'admin-kota')
         {
-            $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
+            $data['roleList']['5'] = 'Admin Kecamatan';
+            $data['roleList']['6'] = 'Admin Korsak';
+            $data['roleList']['7'] = 'Saksi';
         }
         else
         {
-            $data['roleList']['korsak'] = 'Admin Korsak';
-            $data['roleList']['saksi'] = 'Saksi';
+            $data['roleList']['6'] = 'Admin Korsak';
+            $data['roleList']['7'] = 'Saksi';
         }
 
         $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
@@ -87,7 +88,7 @@ class UserManagementController extends Controller
 
         $insertedId = $user->id;
 
-        Sentinel::findRoleBySlug($request->role)->users()->attach( $user );
+        Sentinel::findRoleById($request->role)->users()->attach( $user );
         try
         {
             $user = new UserEvent;
@@ -119,29 +120,38 @@ class UserManagementController extends Controller
 
             if ($role == 'admin-pusat')
             {
-                $data['roleList']['admin-event'] = 'Admin Event';
-                $data['roleList']['admin-kota'] = 'Admin Kota';
-                $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-                $data['roleList']['korsak'] = 'Admin Korsak';
-                $data['roleList']['saksi'] = 'Saksi';
+                $data['roleList']['2'] = 'Admin Event';
+                $data['roleList']['3'] = 'Admin Provinsi';
+                $data['roleList']['4'] = 'Admin Kota';
+                $data['roleList']['5'] = 'Admin Kecamatan';
+                $data['roleList']['6'] = 'Admin Korsak';
+                $data['roleList']['7'] = 'Saksi';
             }
             elseif  ($role == 'admin-event')
             {
-                $data['roleList']['admin-kota'] = 'Admin Kota';
-                $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-                $data['roleList']['korsak'] = 'Admin Korsak';
-                $data['roleList']['saksi'] = 'Saksi';
+                $data['roleList']['3'] = 'Admin Provinsi';
+                $data['roleList']['4'] = 'Admin Kota';
+                $data['roleList']['5'] = 'Admin Kecamatan';
+                $data['roleList']['6'] = 'Admin Korsak';
+                $data['roleList']['7'] = 'Saksi';
+            }
+            elseif ($role == 'admin-provinsi')
+            {
+                $data['roleList']['4'] = 'Admin Kota';
+                $data['roleList']['5'] = 'Admin Kecamatan';
+                $data['roleList']['6'] = 'Admin Korsak';
+                $data['roleList']['7'] = 'Saksi';
             }
             elseif ($role == 'admin-kota')
             {
-                $data['roleList']['admin-kecamatan'] = 'Admin Kecamatan';
-                $data['roleList']['korsak'] = 'Admin Korsak';
-                $data['roleList']['saksi'] = 'Saksi';
+                $data['roleList']['5'] = 'Admin Kecamatan';
+                $data['roleList']['6'] = 'Admin Korsak';
+                $data['roleList']['7'] = 'Saksi';
             }
             else
             {
-                $data['roleList']['korsak'] = 'Admin Korsak';
-                $data['roleList']['saksi'] = 'Saksi';
+                $data['roleList']['6'] = 'Admin Korsak';
+                $data['roleList']['7'] = 'Saksi';
             }
 
             return view('layouts.user-management.edit', $data);
@@ -149,6 +159,25 @@ class UserManagementController extends Controller
     }
 
     public function update(Request $request, $id){
+        $data = User::find($id);
+        $currentRole = $data->roles()->first()->id;
+        if (empty($data)) {
+
+            flash('User not found');
+
+            return redirect(route('user-management.index'));
+        }
+
+        $data->update($request->all());
+
+        if($currentRole != $request->role){
+            $role = RoleUser::where('user_id', $id)->first();
+            $role->role_id = $request->role;
+            $role->update();
+        }
+
+
+        flash('User update successfully')->success();
         return redirect('/user-management/show/' . $id);
     }
 

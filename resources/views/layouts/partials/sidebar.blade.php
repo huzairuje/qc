@@ -7,7 +7,7 @@
                 <img src="bsbmd/images/user.png" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Sentinel::getUser()->first_name }}</div>
+                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Sentinel::getUser()->roles()->first()->id }}</div>
                 <div class="email">{{ Sentinel::getUser()->email }}</div>
 
 
