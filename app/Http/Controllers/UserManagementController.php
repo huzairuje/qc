@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\UserManagement;
 use App\Models\UserEvent;
 use App\Models\Event;
 use Sentinel;
@@ -74,6 +73,7 @@ class UserManagementController extends Controller
     public function store(Request $request){
         $request->merge([
             'password' => '12345678',
+            'parent_id' => Sentinel::getUser()->id,
         ]);
         // dd($request->all());
         if($request->role == 'korsak' || $request->role == 'saksi')
@@ -91,7 +91,7 @@ class UserManagementController extends Controller
         try
         {
             $user = new UserEvent;
-            $user->user_id = $user->id;
+            $user->user_id = $insertedId;
             $user->event_id = $request->event;
             $user->save();
         }

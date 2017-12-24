@@ -31,16 +31,16 @@ class User extends EloquentUser
 
     public function childs()
     {
-        return $this->hasMany('App\User', 'parent_id');
+        return $this->hasMany('App\Models\User', 'parent_id');
     }
 
     public function parent()
     {
-        return $this->belongsTo('App\User', 'parent_id');
+        return $this->belongsTo('App\Models\User', 'parent_id');
     }
 
     public function userEvent()
     {
-        return $this->hasMany('App\UserEvent');
+        return $this->hasMany('App\Models\UserEvent');
     }
 }

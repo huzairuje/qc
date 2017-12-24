@@ -49,7 +49,7 @@
                                                     {{ $user->email }}
                                                 </td>
                                                 <td>
-                                                    {{ $user->parent()->first()->email or 'Developer' }}
+                                                    {{ $user->parent->email or 'Developer' }}
                                                 </td>
                                                 <td>
                                                     {{ $user->roles()->first()->name }}
