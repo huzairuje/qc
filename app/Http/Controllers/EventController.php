@@ -150,25 +150,7 @@ class EventController extends Controller
     }
     public function update(Request $request,$id)
     {
-        $data_event = Event::find($id);
-        if (empty($data_event)) {
 
-            flash('Event not found');
-
-            return redirect(route('event.index'));
-        }
-
-        $data_event->nama       = $request->nama;
-        $data_event->tahun       = $request->tahun;
-        $data_event->jenis_id       = $request->jenis_id;
-        $data_event->tingkat_id       = $request->tingkat_id;
-        $data_event->provinsi       = $request->provinsi;
-        $data_event->kabupaten_kota    = $request->kabupaten_kota;
-        $data_event->dapil    = $request->dapil;
-        $data_event->update();
-
-
-        flash('Event saved successfully')->success();
         return redirect(route('event.show', $data_event));
 
     }
