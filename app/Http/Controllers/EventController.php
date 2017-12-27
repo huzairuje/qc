@@ -132,15 +132,17 @@ class EventController extends Controller
         if (in_array($id, $listEventId)) {
 
             $data_event = Event::find($id);
-            $provinsi = Provinsi::pluck('nama_provinsi','id')->all();
-            $kota_kabupaten = KotaKab::where('provinsi_id', $data_event->provinsi_id)->pluck('nama','id')->all();
+            $jenis = Jenis::pluck('nama','id')->all();
+            $tingkat = Tingkat::pluck('nama','id')->all();
+            $provinsi = Provinsi::pluck('nama','id')->all();
+            $kota = Kota::where('provinsi_id', $data_event->provinsi_id)->pluck('nama','id')->all();
 
             if (empty($data_event)) {
                 flash('Event Tidak Ada');
 
                 return redirect(route('event.index'));
             }
-            return view('layouts.event.edit', compact('data_event','provinsi','kota_kabupaten'));
+            return view('layouts.event.edit', compact('data_event','provinsi','kota','jenis','tingkat'));
         } else {
             flash('Event Tidak Ada');
 
@@ -150,6 +152,38 @@ class EventController extends Controller
     }
     public function update(Request $request,$id)
     {
+        $event = Event::find($id);
+        if (empty($event)) {
+
+            flash('Calon not found');
+
+            return redirect(route('event.index'));
+        }
+
+        if($request->jenis_id == 4 || $request->jenis_id == 5){
+            if ($request->tingkat_id == 2){
+                $request->merge(['lokasi' => $request->provinsi]);
+            }
+            else if ($request->tingkat_id == 3) {
+                $request->merge(['lokasi' => $request->kota]);
+            }
+            else {
+                $request->merge(['lokasi' => 0]);
+            }
+        } else {
+            $request->merge(['lokasi' => 0]);
+        }
+
+        $event->nama            = $request->nama;
+        $event->expired          = $request->expired;
+        $event->jenis_id       = $request->jenis_id;
+        $event->lokasi           = $request->lokasi;
+        $event->tahun        = $request->tahun;
+        $event->tingkat_id   = $request->tingkat_id;
+
+        $event->update();
+
+        flash('Data Event updated successfully')->success();
 
         return redirect(route('event.show', $data_event));
 

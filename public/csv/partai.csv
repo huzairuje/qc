@@ -1,4 +1,4 @@
-id,nama
-1,PAN
-2,PDIP
-3,Golkar
+id,nomor,nama,foto
+1,3,PAN,unset
+2,2,PDIP,unset
+3,1,Golkar,unset

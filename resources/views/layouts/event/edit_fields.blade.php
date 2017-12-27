@@ -1,33 +1,74 @@
 <div class="body">
-            <div class="row clearfix">
-                <!-- Content Edit-->
-                    <div class="col-md-12">
-                            {!! Form::label('nama_event', 'Nama:') !!}
-                            {!! Form::text('nama_event', $data_event->nama_event, ['class' => 'form-control']) !!}                          
-                    </div>
-                    <div class="col-md-6">
-                           {!! Form::select('tahun_event', ['2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019', '2020' => '2020', '2021' => '2021', '2022' => '2022', '2023' => '2023', '2024' => '2024', '2025' => '2025', '2026' => '2026', '2027' => '2027', '2028' => '2028', '2029' => '2029', '2030' => '2030', ], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}     
-                    </div>
-                    <div class="col-md-6">
-                        {!! Form::select('jenis_event', ['PILKADA' => 'PILKADA  (Pemilihan Kepala Daerah)', 'PILEG' => 'PILEG  (Pemilihan Legislatif)', 'PILPRES ' => 'PILPRES (Pemilihan Presiden dan Wakil Presiden)'], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Event']); !!} 
-                    </div>
+    <div class="row clearfix">
 
-                    <div class="col-md-6">
-                           {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}     
-                    </div>
-        
-                    <div class="col-md-6">
-                                {{ Form::select('kota_kabupaten_id', $kota_kabupaten,null, ['class' => 'form-control','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
-                    </div>
-                    
-                    
-                    <!-- END Content Create-->
+        <!-- Content Create-->
+        {!! Form::open(['route' => 'event.store']) !!}
 
-                    <!-- Modal -->
-        <div class="modal-footer">
-            {!! Form::submit('Update', ['class' => 'btn btn-primary waves-effect']) !!}
-            <a href="{{ route('tabulasi.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Kembali</a>
+        <div class="col-md-4">
+            {!! Form::label('tahun', 'Tahun Event:') !!}
+            <select class="form-control show-tick" name="tahun" id="tahun" placeholder="Pilih Jenis Event" >
+                <option value=''>Pilih Tahun Event</option>
+                <option value='2018'>2018</option>
+                <option value='2019'>2019</option>
+                <option value='2020'>2020</option>
+                <option value='2021'>2021</option>
+                <option value='2022'>2022</option>
+                <option value='2023'>2023</option>
+                <option value='2024'>2024</option>
+                <option value='2025'>2025</option>
+                <option value='2026'>2026</option>
+                <option value='2027'>2027</option>
+                <option value='2030'>2030</option>
+                <option value='2031'>2031</option>
+                <option value='2032'>2032</option>
+                <option value='2033'>2033</option>
+                <option value='2034'>2034</option>
+                <option value='2035'>2035</option>
+                <option value='2036'>2036</option>
+                <option value='2037'>2037</option>
+            </select>
         </div>
-        {!! Form::close() !!}
+        <div class="col-md-9">
+            <div class="form-group">
+                <div class="form-line">
+                    {!! Form::label('expired', 'Tanggal Kadaluarsa Event:') !!}
+                    {{ Form::date('expired',null, ['class' => 'form-control','placeholder' => 'Isi Nama Event Dengan Lengkap']) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <div class="form-group">
+                <div class="form-line">
+                    {!! Form::label('nama', 'Nama Event:') !!}
+                    {{ Form::text('nama',null, ['class' => 'form-control','placeholder' => 'Isi Nama Event Dengan Lengkap']) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            {!! Form::select('jenis_id', $jenis,null, ['class' => 'form-control','id' => 'jenis','placeholder' => 'Pilih Jenis']) !!}
+        </div>
+
+        <div class="col-md-8 tingkat-form-container">
+            {!! Form::select('tingkat_id', $tingkat,null, ['class' => 'form-control','id' => 'tingkat','placeholder' => 'Pilih Tingkat']) !!}
+        </div>
+
+        <div class="provinsi col-md-8 provinsi-form-container">
+            {!! Form::select('provinsi', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Pilih Provinsi']) !!}
+        </div>
+
+        <div class="kabupaten col-md-8 kota-form-container">
+            {{ Form::select('kota', $kota,null, ['class' => 'form-control','id' => 'kota_id','placeholder' => 'Pilih Kota/Kabupaten']) }}
+
+        </div>
+
+
+    </div>
+
+    <div class="modal-footer">
+        {!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
+        <a href="{{ route('event.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Event</a>
+    </div>
+    {!! Form::close() !!}
 </div>
-</div>        

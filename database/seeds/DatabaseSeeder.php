@@ -18,7 +18,10 @@ class DatabaseSeeder extends Seeder
             'kelurahan',
             'kecamatan',
             'kota',
-            'provinsi'
+            'provinsi',
+            'roles',
+            'users',
+            'role_users'
         ];
 
         $this->command->info('Truncating existing tables');
