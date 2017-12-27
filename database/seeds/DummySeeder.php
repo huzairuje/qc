@@ -93,6 +93,15 @@ class DummySeeder extends Seeder
             }
         });
 
+        Excel::filter('chunk')->load(public_path('csv/user_event.csv'))->chunk(250, function($results) {
+            $header = [ 'id','user_id', 'event_id' ];
+            foreach ($results->toArray() as $row) {
+                $data = array_combine($header, $row);
+
+                DB::table( 'user_event' )->insert($data);
+            }
+        });
+
         Excel::filter('chunk')->load(public_path('csv/wakil.csv'))->chunk(250, function($results) {
             $header = [ 'id','calon_id', 'nama' ];
             foreach ($results->toArray() as $row) {
