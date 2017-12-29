@@ -30,13 +30,12 @@ class PartaiController extends Controller
     }
     public function get_datatable()
     {
-        $partai = Partai::select(['id','nomor','nama','foto']);
+        $partai = Partai::select(['id','nomor','nama']);
 
         return Datatables::eloquent($partai)
         ->addColumn('action', function ($partai) {
             return '<a href="'.route('datamaster.partai.show', $partai->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.partai.edit', $partai->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.partai.delete', $partai->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
-
         ->make(true);
     }
 
@@ -80,17 +79,17 @@ class PartaiController extends Controller
 
     public function store(Request $request)
     {
-      $input = $request->all();
-      if ($request->hasFile('foto'))
+        $input = $request->all();
+        if ($request->hasFile('foto'))
         {
-          $this->validate($request, [
-      // check validtion for image or file
-            'foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-        ]);
-    // rename image name or file name
-        $getimageName = time().'.'.$request->foto->getClientOriginalExtension();
-        $request->foto->move(public_path('images'), $getimageName);
-      }
+            $this->validate($request, [
+                // check validtion for image or file
+                'foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            ]);
+            // rename image name or file name
+            $getimageName = time().'.'.$request->foto->getClientOriginalExtension();
+            $request->foto->move(public_path('images'), $getimageName);
+        }
 
         $partai = Partai::create($input);
         $partai->save();
@@ -99,7 +98,7 @@ class PartaiController extends Controller
         flash('Data Partai created successfully')->success();
         return redirect(route('datamaster.partai.show',$partai));
 
-      }
+    }
 
 
 

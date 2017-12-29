@@ -25,20 +25,20 @@ use Flash;
 class TPSController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    * Create a new controller instance.
+    *
+    * @return void
+    */
     public function __construct()
     {
 
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Show the application dashboard.
+    *
+    * @return \Illuminate\Http\Response
+    */
 
     public function index()
     {
@@ -51,50 +51,50 @@ class TPSController extends Controller
         $tps = Tps::select(['id','nomor', 'kelurahan_id']);
 
         return Datatables::eloquent($tps)
-            ->editColumn('nomor', function ($tps) {
-                if ($tps->nomor) {
-                    return $tps->nomor;
-                } else {
-                    return 'Nomor TPS tidak ada';
-                }
-            })
-            ->addColumn('provinsi', function ($tps) {
-                return $tps->kelurahan->kecamatan->kota->provinsi->nama ? $tps->kelurahan->kecamatan->kota->provinsi->nama : 'Undefined';
-            })
-            ->addColumn('kota', function ($tps) {
-                return $tps->kelurahan->kecamatan->kota->nama ? $tps->kelurahan->kecamatan->kota->nama : 'Undefined';
-            })
-            ->addColumn('kecamatan', function ($tps) {
-                return $tps->kelurahan->kecamatan->nama ? $tps->kelurahan->kecamatan->nama : 'Undefined';
-            })
-            ->editColumn('kelurahan_id', function ($tps) {
-                return $tps->kelurahan->nama ? $tps->kelurahan->nama : 'Undefined';
-            })
-            ->addColumn('action', function ($tps) {
+        ->editColumn('nomor', function ($tps) {
+            if ($tps->nomor) {
+                return $tps->nomor;
+            } else {
+                return 'Nomor TPS tidak ada';
+            }
+        })
+        ->addColumn('provinsi', function ($tps) {
+            return $tps->kelurahan->kecamatan->kota->provinsi->nama ? $tps->kelurahan->kecamatan->kota->provinsi->nama : 'Undefined';
+        })
+        ->addColumn('kota', function ($tps) {
+            return $tps->kelurahan->kecamatan->kota->nama ? $tps->kelurahan->kecamatan->kota->nama : 'Undefined';
+        })
+        ->addColumn('kecamatan', function ($tps) {
+            return $tps->kelurahan->kecamatan->nama ? $tps->kelurahan->kecamatan->nama : 'Undefined';
+        })
+        ->editColumn('kelurahan_id', function ($tps) {
+            return $tps->kelurahan->nama ? $tps->kelurahan->nama : 'Undefined';
+        })
+        ->addColumn('action', function ($tps) {
             return '<a href="'.route('datamaster.TPS.show', $tps->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.TPS.edit', $tps->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.TPS.delete', $tps->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
 
-            ->make(true);
+        ->make(true);
     }
 
 
 
     public function show($id)
     {
-    	$chart = Charts::multi('bar', 'material')
-            // Setup the chart settings
-            ->title("Hasil Data Suara")
-            // A dimension of 0 means it will take 100% of the space
-            ->dimensions(700, 300) // Width x Height
-            // This defines a preset of colors already done:)
-            ->template("material")
-            // You could always set them manually
-             ->colors(['#2196F3', '#F44336', '#FFC107'])
-            // Setup the diferent datasets (this is a multi chart)
-            ->dataset('Data Suara', [5,20,100])
-            ->responsive(false)
-            // Setup what the values mean
-            ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
+        $chart = Charts::multi('bar', 'material')
+        // Setup the chart settings
+        ->title("Hasil Data Suara")
+        // A dimension of 0 means it will take 100% of the space
+        ->dimensions(700, 300) // Width x Height
+        // This defines a preset of colors already done:)
+        ->template("material")
+        // You could always set them manually
+        ->colors(['#2196F3', '#F44336', '#FFC107'])
+        // Setup the diferent datasets (this is a multi chart)
+        ->dataset('Data Suara', [5,20,100])
+        ->responsive(false)
+        // Setup what the values mean
+        ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
 
         $tps = Tps::find($id);
         // dd($tabulasi);
@@ -112,7 +112,7 @@ class TPSController extends Controller
 
     public function create()
     {
-      $provinsi = Provinsi::pluck('nama','id')->all();
+        $provinsi = Provinsi::pluck('nama','id')->all();
         // dd($provinsi);
 
         $kota = array();
@@ -161,17 +161,17 @@ class TPSController extends Controller
     public function update(Request $request,$id)
     {
         $tps = Tps::find($id);
-            if (empty($tps)) {
+        if (empty($tps)) {
 
-                flash('TPS not found');
+            flash('TPS not found');
 
             return redirect(route('layouts.tabulasi.index'));
         }
 
-            $tps->nomor           = $request->nomor;
-            $tps->kelurahan_id    = $request->kelurahan_id;
+        $tps->nomor           = $request->nomor;
+        $tps->kelurahan_id    = $request->kelurahan_id;
 
-            $tps->update();
+        $tps->update();
 
 
         flash('Data TPS saved successfully')->success();
@@ -182,46 +182,46 @@ class TPSController extends Controller
     public function destroy($id)
     {
 
-    	$tps = Tps::findOrFail($id);
-            if (empty($tps)) {
+        $tps = Tps::findOrFail($id);
+        if (empty($tps)) {
 
-                    flash('TPS not found');
+            flash('TPS not found');
 
-                return redirect(route('layouts.data_master.tps.index'));
-            }
+            return redirect(route('layouts.data_master.tps.index'));
+        }
         $tps->delete();
 
         flash('Data TPS deleted successfully')->success();
         return redirect(route('datamaster.tps.index'));
-	}
+    }
 
-  public function ajax(Request $request)
-  {
-      $type = $request->type;
-      switch ($type) {
-          case 'get-provincy':
-          $result = Provinsi::get()->pluck( 'nama', 'id' )->all();
-          return $result;
-          break;
+    public function ajax(Request $request)
+    {
+        $type = $request->type;
+        switch ($type) {
+            case 'get-provincy':
+            $result = Provinsi::get()->pluck( 'nama', 'id' )->all();
+            return $result;
+            break;
 
-          case 'get-city':
-          $result = Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
-          return $result;
-          break;
+            case 'get-city':
+            $result = Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+            return $result;
+            break;
 
-          case 'get-kecamatan':
-          $result = Kecamatan::where('kota_id', $request->kota_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
-          return $result;
-          break;
+            case 'get-kecamatan':
+            $result = Kecamatan::where('kota_id', $request->kota_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+            return $result;
+            break;
 
-          case 'get-kelurahan':
-          $result = Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
-          return $result;
-          break;
+            case 'get-kelurahan':
+            $result = Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+            return $result;
+            break;
 
-          default:
-          return $result['status'] = false;
-          break;
-      }
-  }
+            default:
+            return $result['status'] = false;
+            break;
+        }
+    }
 }
