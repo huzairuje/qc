@@ -59,7 +59,7 @@
 
                                                                 {data: 'dokumen'},
                                                                 {data: 'provinsi_id'},
-                                                                {data: 'kota_kabupaten_id'},
+                                                                {data: 'kota_id'},
                                                                 {data: 'kecamatan_id'},
                                                                 {data: 'kelurahan_id'},
                                                                 {data: 'data_suara', render: function (data, type, row, meta) {

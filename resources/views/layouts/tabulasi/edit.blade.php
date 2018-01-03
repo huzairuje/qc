@@ -9,11 +9,11 @@
 @endsection
 
 @section('content')
-    
+
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
-            
+
                 <div class="header bg-blue">
                     <h2>
                         EDIT DATA TABULASI
@@ -23,25 +23,25 @@
                 <div class="box box-primary">
 
                     <div class="box-body">
-                        
+
                         <div class="row">
                                 {!! Form::model($tabulasi, ['route' => ['tabulasi.update', $tabulasi->id], 'method' => 'patch']) !!}
 
                                     @include('layouts.tabulasi.edit_fields')
 
                                 {!! Form::close() !!}
-                                    
+
 
 
                         </div>
                     </div>
-                </div>    
-                
-                
+                </div>
+
+
             </div>
         </div>
     </div>
-                
+
 @endsection
 
 @section('extra-script')
@@ -57,57 +57,60 @@
     $(document).ready( function() {
         // select2
 
-        var _url = '{{ route('tabulasi.ajax') }}';
+        var _url = '{{ route('datamaster.TPS.ajax') }}';
 
         $(document).on('change','#provinsi_id',function(){
             var _val = $(this).val();
             $.get(_url,{'type':'get-city','provinsi_id':_val})
             .done(function(result) {
                 var html = '';
-                $('#kota_kabupaten_id').selectpicker(html);
+                $('#kota_id').selectpicker(html);
 
                 $.each(result,function(key,value){
                     html += '<option value="'+key+'">'+value+'</option>';
                 });
 
-                $('#kota_kabupaten_id').html(html);
-                $('#kota_kabupaten_id').selectpicker('refresh');
+                $('#kota_id').html(html);
+                $('#kota_id').selectpicker('refresh');
             });
         });
 
-            $(document).on('change','#kota_kabupaten_id',function(){
 
-                var coba = $(this).val();
-                $.get(_url,{'type':'get-kecamatan','kota_kabupaten_id':coba})
-                .done(function(result) {
-                    var html = '';
+
+	        $(document).on('change','#kota_id',function(){
+
+
+	            var coba = $(this).val();
+	            $.get(_url,{'type':'get-kecamatan','kota_id':coba})
+	            .done(function(result) {
+	                var html = '';
                     $('#kecamatan_id').selectpicker(html);
-                    $.each(result,function(key,value){
-                        html += '<option value="'+key+'">'+value+'</option>';
-                    });
+	                $.each(result,function(key,value){
+	                    html += '<option value="'+key+'">'+value+'</option>';
+	                });
 
-                    $('#kecamatan_id').html(html);
+	                $('#kecamatan_id').html(html);
                     $('#kecamatan_id').selectpicker('refresh');
-                    
-                });
-            });
 
-            $(document).on('change','#kecamatan_id',function(){
+	            });
+	        });
 
-                var coba = $(this).val();
-                $.get(_url,{'type':'get-kelurahan','kecamatan_id':coba})
-                .done(function(result) {
-                    var html = '';
+	        $(document).on('change','#kecamatan_id',function(){
+
+	            var coba = $(this).val();
+	            $.get(_url,{'type':'get-kelurahan','kecamatan_id':coba})
+	            .done(function(result) {
+	                var html = '';
                     $('#kelurahan_id').selectpicker(html);
-                    $.each(result,function(key,value){
-                        html += '<option value="'+key+'">'+value+'</option>';
-                    });
+	                $.each(result,function(key,value){
+	                    html += '<option value="'+key+'">'+value+'</option>';
+	                });
 
-                    $('#kelurahan_id').html(html);
-                    $('#kelurahan_id').selectpicker('refresh');
-                });
-            });
-        });
+	                $('#kelurahan_id').html(html);
+	                $('#kelurahan_id').selectpicker('refresh');
+	            });
+	        });
+	    });
 </script>
 
 @endsection

@@ -17,7 +17,7 @@ class CreateTabulasiTable extends Migration
             $table->bigIncrements('id');
             $table->string('dokumen')->nullable();
             $table->string('provinsi_id')->nullable();
-            $table->string('kota_kabupaten_id')->nullable();
+            $table->string('kota_id')->nullable();
             $table->string('kecamatan_id')->nullable();
             $table->string('kelurahan_id')->nullable();
             $table->json('data_suara')->nullable();
