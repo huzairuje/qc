@@ -66,8 +66,8 @@ class TabulasiController extends Controller
                 }
             })
             ->editColumn('kota_kabupaten_id', function ($tabulasi) {
-                if ($tabulasi->kota_kabupaten) {
-                    return $tabulasi->kota_kabupaten->nama;
+                if ($tabulasi->kota) {
+                    return $tabulasi->kota->nama;
                 } else {
                     return 'Data KOTA/KABUPATEN tidak ada';
                 }
