@@ -55,6 +55,7 @@ class DapilController extends Controller
         $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
         foreach ($userEvents as $key => $userEvent) {
             $listEventId[$key] = $userEvent->event_id;
+            // dd($userEvent);
         }
 
         if(count($userEvents) != 0)
@@ -65,7 +66,7 @@ class DapilController extends Controller
         {
             $dapil = Dapil::select(['id', 'nama', 'event_id'])->where('event_id', 0);
         }
-
+        // dd($dapil);
         return Datatables::eloquent($dapil)
         ->addColumn('event', function ($dapil) {
             return $dapil->event->nama ? $dapil->event->nama : 'Undefined';

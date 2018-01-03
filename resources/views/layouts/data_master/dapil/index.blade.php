@@ -36,7 +36,6 @@
                                             <tr style="background-color: lightblue">
                                                 <th>Nama Event</th>
                                                 <th>Nama Dapil</th>
-                                                <th>Event</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -55,7 +54,6 @@
                                             [
                                                 {data: 'event'},
                                                 {data: 'nama'},
-                                                {data: 'event_id'},
                                                 {data: 'action'}
                                             ]
                                         } );

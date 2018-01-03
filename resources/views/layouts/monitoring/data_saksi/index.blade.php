@@ -30,16 +30,13 @@
                                                 </div>
 
                                             </div>
-                                        
+
                                             <table id="table-Datasaksi" class="table table-striped">
                                                 <thead>
                                                     <tr style="background-color: lightblue">
                                                         <th>Nama</th>
-                                                        <th>Alamat</th>
-                                                        <th>Nomor Telepon</th>
                                                         <th>Email</th>
-                                                        <th>ID TPS</th>
-                                                        <th>Foto</th>
+                                                        <th>Nomor Telepon</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -54,28 +51,24 @@
                                                         processing: true,
                                                         serverSide: true,
                                                         ajax: '/monitoring/datasaksi/getdatatable',
-                                                        columns: 
+                                                        columns:
                                                             [
-
-                                                                {data: 'nama'},
-                                                                {data: 'alamat'},
-                                                                {data: 'no_telpon'},
+                                                                {data: 'first_name'},
                                                                 {data: 'email'},
-                                                                {data: 'id_tps'},
-                                                                {data: 'foto'},
+                                                                {data: 'phone'},
                                                                 {data: 'action'}
                                                                 ]
                                                             } );
-                                                    
+
                                                     } );
-                                                                                                         
-                                            </script>                                      
+
+                                            </script>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </div>
