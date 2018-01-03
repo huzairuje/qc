@@ -35,20 +35,20 @@ class DataSaksiController extends Controller
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $data_saksi = User::where(['id','parent_id', 7]);
+        $data_saksi = User::where('parent_id', 7);
         // $restaurants = restaurants::where('res_id', 1);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
 
         return Datatables::eloquent($data_saksi)
 
-            // ->editColumn('username', function ($data_saksi) {
-            //     if (['username'] == 'saksi') {
-            //         return 'Saksi';
-            //     } else {
-            //         return 'Data SAKSI tidak ada';
-            //     }
-            // })
+            ->editColumn('username', function ($data_saksi) {
+                if (['username'] == 'saksi') {
+                    return 'Saksi';
+                } else {
+                    return 'Data SAKSI tidak ada';
+                }
+            })
 
             ->addColumn('action', function ($data_saksi) {
             return '<a href="'.route('monitoring.datasaksi.show', $data_saksi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('monitoring.datasaksi.edit', $data_saksi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('monitoring.datasaksi.delete', $data_saksi->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
