@@ -185,7 +185,7 @@ class EventController extends Controller
 
         flash('Data Event updated successfully')->success();
 
-        return redirect(route('event.show', $data_event));
+        return redirect(route('event.show', $event));
 
     }
 
