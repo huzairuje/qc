@@ -5,7 +5,7 @@
               <div class="form-line">
                 <div class="col-md-12">
                   {!! Form::label('event_id', 'Event:') !!}
-                  {!! $dapil->event_id !!}
+                  {!! $dapil->event->nama !!}
                 </div>
 
       <div class="col-md-10">

@@ -5,7 +5,7 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('dokumen_id', 'Dokumen:') !!}
-                    {!! $tabulasi->dokumen_id !!}
+                    {!! $tabulasi->dokumen !!}
                 </div>
             </div>
         </div>
@@ -14,7 +14,7 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('provinsi_id', 'Provinsi:') !!}
-                    {!! $tabulasi->provinsi_id !!}
+                    {!! $tabulasi->provinsi->nama !!}
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('kota_kabupaten_id', 'Kota/Kabupaten:') !!}
-                    {!! $tabulasi->kota_kabupaten_id !!}
+                    {!! $tabulasi->kota->nama !!}
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('kecamatan_id', 'Kecamatan:') !!}
-                    {!! $tabulasi->kecamatan_id !!}
+                    {!! $tabulasi->kecamatan->nama !!}
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('kelurahan_id', 'Kelurahan:') !!}
-                    {!! $tabulasi->kelurahan_id !!}
+                    {!! $tabulasi->kelurahan->nama !!}
                 </div>
             </div>
         </div>
@@ -62,12 +62,12 @@
                                           <tr>
                                             @for ($x = 1; $x <= 20; $x++)
                                                 <td class="tg-yw4l" tabindex="1">
-                                                    
+
                                                 </td>
                                             @endfor
                                           </tr>
                                         @endfor
-                                      
+
                                     </tbody>
 
                                 </table>
@@ -75,13 +75,13 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        {!! $chart->render() !!}                        
+                        {!! $chart->render() !!}
                     </div>
                     <div class="col-md-12">
-                        {!! $chart->render() !!}                        
+                        {!! $chart->render() !!}
                     </div>
                     <div class="col-md-12">
-                        {!! $chart->render() !!}                        
+                        {!! $chart->render() !!}
                     </div>
 
 
@@ -90,7 +90,6 @@
             <a href="{{ route('tabulasi.create')}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Create Data</a>
             <a href="{{ route('tabulasi.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Tabulasi</a>
             <a href="{{ route('tabulasi.delete', $tabulasi->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Delete Data</a>
-        </div>    
+        </div>
     </div>
 </div>
-

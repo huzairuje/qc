@@ -30,7 +30,7 @@
                                                 </div>
 
                                             </div>
-                                        
+
                                             <table id="table-Datapjtps" class="table table-striped">
                                                 <thead>
                                                     <tr style="background-color: lightblue">
@@ -54,28 +54,25 @@
                                                         processing: true,
                                                         serverSide: true,
                                                         ajax: '/monitoring/datapjtps/getdatatable',
-                                                        columns: 
+                                                        columns:
                                                             [
 
-                                                                {data: 'nama'},
-                                                                {data: 'alamat'},
-                                                                {data: 'no_telpon'},
-                                                                {data: 'email'},
-                                                                {data: 'list_id_tps'},
-                                                                {data: 'foto'},
-                                                                {data: 'action'}
+                                                              {data: 'first_name'},
+                                                              {data: 'email'},
+                                                              {data: 'phone'},
+                                                              {data: 'action'}
                                                                 ]
                                                             } );
-                                                    
+
                                                     } );
-                                                                                                         
-                                            </script>                                      
+
+                                            </script>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </div>

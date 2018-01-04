@@ -15,7 +15,7 @@ class Tabulasi extends Model
     protected $fillable = [
         'dokumen',
         'provinsi_id',
-        'kota_kabupaten_id',
+        'kota_id',
         'kecamatan_id',
         'kelurahan_id',
         'data_suara'
@@ -26,9 +26,9 @@ class Tabulasi extends Model
         return $this->belongsTo(Provinsi::class);
     }
 
-    public function kota_kabupaten()
+    public function kota()
     {
-        return $this->belongsTo(KotaKab::class);
+        return $this->belongsTo(Kota::class);
     }
 
     public function kecamatan()

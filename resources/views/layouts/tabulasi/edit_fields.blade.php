@@ -2,15 +2,15 @@
             <div class="row clearfix">
                 <!-- Content Edit-->
                     <div class="col-md-12">
-                            {!! Form::select('dokumen_id', ['C1' => 'C1', 'C2' => 'C2', 'C3' => 'C3', 'C3' => 'C3', 'C4' => 'C4'], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}    						
+                            {!! Form::select('dokumen_id', ['C1' => 'C1', 'C2' => 'C2', 'C3' => 'C3', 'C3' => 'C3', 'C4' => 'C4'], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}
                     </div>
 
                     <div class="col-md-6">
-                           {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}     
+                           {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}
                     </div>
-        
+
                     <div class="col-md-6">
-                                {{ Form::select('kota_kabupaten_id', $kota_kabupaten,null, ['class' => 'form-control','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
+                                {{ Form::select('kota_id', $kota,null, ['class' => 'form-control','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
                     </div>
 
                     <div class="col-md-6">
@@ -38,20 +38,20 @@
                                           <tr>
                                             @for ($x = 1; $x <= 20; $x++)
                                                 <td class="tg-yw4l" tabindex="1">
-                                                    
+
                                                 </td>
                                             @endfor
                                           </tr>
                                         @endfor
-                                      
+
                                     </tbody>
 
                                 </table>
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                     <!-- END Content Create-->
 
                     <!-- Modal -->

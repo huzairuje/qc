@@ -52,7 +52,7 @@ class TabulasiController extends Controller
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $tabulasi = Tabulasi::select(['id','dokumen', 'provinsi_id', 'kota_kabupaten_id', 'kecamatan_id', 'kelurahan_id']);
+        $tabulasi = Tabulasi::select(['id','dokumen', 'provinsi_id', 'kota_id', 'kecamatan_id', 'kelurahan_id']);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
 
@@ -60,14 +60,14 @@ class TabulasiController extends Controller
 
             ->editColumn('provinsi_id', function ($tabulasi) {
                 if ($tabulasi->provinsi) {
-                    return $tabulasi->provinsi->nama_provinsi;
+                    return $tabulasi->provinsi->nama;
                 } else {
                     return 'Data PROVINSI tidak ada';
                 }
             })
-            ->editColumn('kota_kabupaten_id', function ($tabulasi) {
-                if ($tabulasi->kota_kabupaten) {
-                    return $tabulasi->kota_kabupaten->nama;
+            ->editColumn('kota_id', function ($tabulasi) {
+                if ($tabulasi->kota) {
+                    return $tabulasi->kota->nama;
                 } else {
                     return 'Data KOTA/KABUPATEN tidak ada';
                 }
@@ -149,6 +149,7 @@ class TabulasiController extends Controller
 
 
         $input = $request->all();
+        // dd($request);
 
         $tabulasi = Tabulasi::create($input);
         // dd($tabulasi);
@@ -165,7 +166,7 @@ class TabulasiController extends Controller
         $tabulasi = Tabulasi::find($id);
         $provinsi = Provinsi::pluck('nama','id')->all();
         $kota = Kota::where('provinsi_id', $tabulasi->provinsi_id)->pluck('nama','id')->all();
-        $kecamatan = Kecamatan::where('kota_id', $tabulasi->kota_kabupaten_id)->pluck('nama','id')->all();
+        $kecamatan = Kecamatan::where('kota_id', $tabulasi->kota_id)->pluck('nama','id')->all();
         $kelurahan = Kelurahan::where('kecamatan_id', $tabulasi->kecamatan_id)->pluck('nama','id')->all();
         // dd($kota_kabupaten);
 
@@ -175,7 +176,7 @@ class TabulasiController extends Controller
             return redirect(route('tabulasi.index'));
         }
 
-        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota_kabupaten','kecamatan','kelurahan'));
+        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota','kecamatan','kelurahan'));
     }
 
 
@@ -192,7 +193,7 @@ class TabulasiController extends Controller
 
             $tabulasi->dokumen       = $request->dokumen;
             $tabulasi->provinsi_id       = $request->provinsi_id;
-            $tabulasi->kota_kabupaten_id    = $request->kota_kabupaten_id;
+            $tabulasi->kota_id    = $request->kota_id;
             $tabulasi->kelurahan_id    = $request->kelurahan_id;
 
             $tabulasi->update();

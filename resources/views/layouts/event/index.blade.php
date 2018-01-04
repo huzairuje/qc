@@ -31,7 +31,7 @@
 
                                     </div>
 
-                                    <table id="table-Dataevent" class="table table-striped">
+                                    <table id="table-Event" class="table table-striped">
                                         <thead>
                                             <tr style="background-color: lightblue">
                                                 <!-- <th>No</th> -->
@@ -52,7 +52,7 @@
 
                                     <script type="text/javascript">
                                     $(function() {
-                                        $('#table-Dataevent').DataTable({
+                                        $('#table-Event').DataTable({
                                             processing: true,
                                             serverSide: true,
                                             ajax: '/event/getdatatable',
