@@ -69,7 +69,7 @@ class DapilController extends Controller
         // dd($dapil);
         return Datatables::eloquent($dapil)
         ->addColumn('event', function ($dapil) {
-            return $dapil->event->nama ? $dapil->event->nama : 'Undefined';
+            return $dapil->event && $dapil->event->nama ? $dapil->event->nama : 'Undefined';
         })
         ->addColumn('action', function ($dapil) {
             return '<a href="'.route('datamaster.dapil.show', $dapil->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.dapil.edit', $dapil->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.dapil.delete', $dapil->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
