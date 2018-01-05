@@ -1,5 +1,5 @@
 <div class="body">
-{!! Charts::assets() !!}
+    {!! Charts::assets() !!}
     <div class="row clearfix">
         <div class="col-md-12">
             <div class="form-group">
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-<div class="modal-footer">
+        <div class="modal-footer">
             <a href="{{ route('event.edit', $data_event->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Edit Data</a>
             <a href="{{ route('event.create')}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Create Data</a>
             <a href="{{ route('event.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Event</a>

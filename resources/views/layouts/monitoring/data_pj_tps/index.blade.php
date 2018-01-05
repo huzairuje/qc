@@ -35,11 +35,8 @@
                                                 <thead>
                                                     <tr style="background-color: lightblue">
                                                         <th>Nama</th>
-                                                        <th>Alamat</th>
-                                                        <th>Nomor Telepon</th>
                                                         <th>Email</th>
-                                                        <th>List ID TPS</th>
-                                                        <th>Foto</th>
+                                                        <th>Nomor Telepon</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>

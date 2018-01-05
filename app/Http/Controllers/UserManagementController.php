@@ -12,7 +12,12 @@ use Sentinel;
 class UserManagementController extends Controller
 {
     public function index(){
-        $users = User::paginate(10);
+        $thisUserId = Sentinel::getUser()->id;
+        if($thisUserId != 1){
+            $users = User::where('parent_id', $thisUserId)->paginate(10);
+        } else {
+            $users = User::paginate(10);
+        }
         return view('layouts.user-management.index',compact('users'));
     }
 
@@ -61,7 +66,7 @@ class UserManagementController extends Controller
         }
         if(count($userEvents) != 0)
         {
-            $data['eventList'] = Event::all()->whereIn('id', $listEventId);
+            $data['eventList'] = Event::all()->whereIn('id', $listEventId)->where('expired', '>', date('Y-m-d'));
         }
         else
         {
@@ -76,7 +81,7 @@ class UserManagementController extends Controller
             'password' => '12345678',
             'parent_id' => Sentinel::getUser()->id,
         ]);
-        // dd($request->all());
+
         if($request->role == 'korsak' || $request->role == 'saksi')
         {
             $user = Sentinel::register($request->all());
@@ -89,16 +94,22 @@ class UserManagementController extends Controller
         $insertedId = $user->id;
 
         Sentinel::findRoleById($request->role)->users()->attach( $user );
-        try
-        {
-            $user = new UserEvent;
-            $user->user_id = $insertedId;
-            $user->event_id = $request->event;
-            $user->save();
+        // try
+        // {
+        //     $user = new UserEvent;
+        //     $user->user_id = $insertedId;
+        //     $user->event_id = $request->event;
+        //     $user->save();
+        // }
+        // catch(\Exception $e){
+        //     echo $e->getMessage();
+        // }
+
+        $data = $request->data;
+        foreach($data as $key => $event){
+            $userEvent[$key] = ['user_id' => $insertedId, 'event_id' => $event];
         }
-        catch(\Exception $e){
-            echo $e->getMessage();
-        }
+        UserEvent::insert($userEvent);
 
         return redirect('/user-management/show/' . $insertedId);
     }
@@ -152,6 +163,15 @@ class UserManagementController extends Controller
             {
                 $data['roleList']['6'] = 'Admin Korsak';
                 $data['roleList']['7'] = 'Saksi';
+            }
+
+            $currentDataList = UserEvent::all()->where('user_id', $id);
+            if (count($currentDataList) != 0) {
+                foreach ($currentDataList as $key => $currentData) {
+                    $data['currentDataList'][$key] = $currentData->lokasi_id;
+                }
+            } else {
+                $data['currentDataList'] = [];
             }
 
             return view('layouts.user-management.edit', $data);

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserEvent;
+use App\Models\Event;
 use Sentinel;
 use DB;
 use Yajra\Datatables\Facades\Datatables;
@@ -29,13 +30,28 @@ class DataSaksiController extends Controller
 
     public function create()
     {
-    	return view('layouts.monitoring.data_saksi.create');
+        $role = Sentinel::getUser()->roles()->first()->slug;
+
+        $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
+        foreach ($userEvents as $key => $userEvent) {
+            $listEventId[$key] = $userEvent->event_id;
+        }
+        if(count($userEvents) != 0)
+        {
+            $data['eventList'] = Event::all()->whereIn('id', $listEventId);
+        }
+        else
+        {
+            $data['eventList'] = Event::all()->where('id', 0);
+        }
+
+    	return view('layouts.monitoring.data_saksi.create', $data);
     }
 
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $data_saksi = User::where('parent_id', 7);
+        $data_saksi = Sentinel::findRoleById(7)->users()->with('roles');
         // $restaurants = restaurants::where('res_id', 1);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
@@ -59,11 +75,35 @@ class DataSaksiController extends Controller
 
     public function store(Request $request)
     {
- 		$input = $request->all();
-        $data_saksi = User::create($input);
+        $request->merge([
+            'password' => '12345678',
+            'parent_id' => Sentinel::getUser()->id,
+        ]);
+        // dd($request->all());
+        if($request->role == 'korsak' || $request->role == 'saksi')
+        {
+            $user = Sentinel::register($request->all());
+        }
+        else
+        {
+            $user = Sentinel::registerAndActivate($request->all());
+        }
 
-        flash('Data Saksi created successfully')->success();
-        return redirect(route('monitoring.datasaksi.show',$data_saksi));
+        $insertedId = $user->id;
+
+        Sentinel::findRoleById(7)->users()->attach( $user );
+        try
+        {
+            $user = new UserEvent;
+            $user->user_id = $insertedId;
+            $user->event_id = $request->event;
+            $user->save();
+        }
+        catch(\Exception $e){
+            echo $e->getMessage();
+        }
+
+        return redirect(route('monitoring.datasaksi.show', $insertedId));
     }
 
     public function edit($id)

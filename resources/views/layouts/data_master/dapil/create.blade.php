@@ -60,9 +60,9 @@
 											{!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
 											<a href="{{ route('datamaster.dapil.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Dapil</a>
 										</div>
-										{!! Form::close() !!}
 									</div>
 								</div>
+								{!! Form::close() !!}
 								@endsection
 								@section('extra-script')
 								<script src="{{ asset('bsbmd/js/pages/tables/mindmup-editabletable.js') }}"></script>
@@ -108,3 +108,9 @@
 
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

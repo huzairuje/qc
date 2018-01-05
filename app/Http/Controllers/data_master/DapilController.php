@@ -138,6 +138,15 @@ class DapilController extends Controller
         // $event = Event::where('id', $dapil->event_id)->pluck('nama','id')->all();
         $event = Event::pluck('nama','id')->all();
 
+        $currentDataList = DapilLokasi::all()->where('dapil_id', $id);
+        if (count($currentDataList) != 0) {
+            foreach ($currentDataList as $key => $currentData) {
+                $currentDataList[$key] = $currentData->lokasi_id;
+            }
+        } else {
+            $currentDataList = [];
+        }
+
 
         if (empty($dapil)) {
             flash('Data Dapil Tidak Ada');
@@ -145,7 +154,7 @@ class DapilController extends Controller
             return redirect(route('datamaster.dapil.index'));
         }
 
-        return view('layouts.data_master.dapil.edit', compact('dapil','event'));
+        return view('layouts.data_master.dapil.edit', compact('dapil','event', 'data', 'currentDataList'));
     }
 
 
@@ -153,6 +162,15 @@ class DapilController extends Controller
     public function update(Request $request,$id)
     {
         $dapil = Dapil::find($id);
+        $currentDapilList = DapilLokasi::all()->where('dapil_id', $id);
+        if (count($currentDapilList) != 0) {
+            foreach ($currentDapilList as $key => $currentData) {
+                $currentDataList[$key] = $currentData->lokasi_id;
+            }
+        } else {
+            $currentDataList = [];
+        }
+
         if (empty($dapil)) {
 
             flash('Dapil not found');
@@ -164,6 +182,22 @@ class DapilController extends Controller
         $dapil->event_id          = $request->event_id;
 
         $dapil->update();
+
+        $data = $request->data;
+
+        $deletes = array_diff($currentDataList, $data);
+        $adds = array_diff($data, $currentDataList);
+        if (count($deletes) != 0) {
+            foreach ($deletes as $key => $delete) {
+                DapilLokasi::find($delete)->delete();
+            }
+        }
+        if (count($adds) != 0) {
+            foreach($adds as $key => $lokasi){
+                $dapilLokasi[$key] = ['dapil_id' => $id, 'lokasi_id' => $lokasi];
+            }
+            DapilLokasi::insert($dapilLokasi);
+        }
 
 
         flash('Data Dapil saved successfully')->success();

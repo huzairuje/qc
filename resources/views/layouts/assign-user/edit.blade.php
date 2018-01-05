@@ -15,7 +15,7 @@
         <div class="card">
             <div class="header bg-blue">
                 <h2>
-                    Create Saksi
+                    Edit User
                 </h2>
             </div>
 
@@ -25,14 +25,14 @@
                     <div class="container">
                         <div class="body">
                             <div class="row clearfix">
-                                {!! Form::open(['route' => 'monitoring.datasaksi.store']) !!}
+                                {!! Form::model($user, ['route' => ['assignuser.update', $user->id], 'method' => 'patch']) !!}
 
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-line">
                                                 {!! Form::label('nama', 'Nama:') !!}
-                                                {{ Form::text('first_name',null, ['class' => 'form-control','placeholder' => 'Nama']) }}
+                                                {!! $user->nama !!}
                                             </div>
                                         </div>
                                     </div>
@@ -41,40 +41,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <div class="form-line">
-                                                {!! Form::label('email', 'Email:') !!}
-                                                {{ Form::text('email',null, ['class' => 'form-control','placeholder' => 'Email']) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-line">
-                                                {!! Form::label('email', 'Username:') !!}
-                                                {{ Form::text('username',null, ['class' => 'form-control','placeholder' => 'Username']) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-line">
-                                                {!! Form::label('phone', 'Nomor Handphone:') !!}
-                                                {{ Form::text('phone',null, ['class' => 'form-control','placeholder' => '+62']) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <select class="form-control show-tick" name="event" id="tahun" placeholder="Role" >
+                                            <select class="form-control show-tick" name="data[]" id="data" placeholder="Role" multiple>
                                                 <option value=''>User Event</option>
                                                 @foreach( $eventList as $key => $val )
                                                 <option value="{{ $val->id }}">{{ $val->nama }}</option>
@@ -101,5 +68,23 @@
 </div>
 @endsection
 @section('extra-script')
+<script src="{{ asset('bsbmd/js/pages/tables/mindmup-editabletable.js') }}"></script>
+<script src="{{ asset('bsbmd/js/pages/tables/editable-table.js') }}"></script>
+<script src="{{ asset('bsbmd/js/pages/tables/numeric-input-example.js') }}"></script>
+<script src="{{ asset('js/taginput/jquery.dropdown.js') }}"></script>
+<script src="{{ asset('js/taginput/jquery.dropdown.min.js') }}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
+<script type="text/javascript" src="https://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
+<script type="text/javascript" src="https://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script type="text/javascript">
+$(document).ready( function() {
+    $('#data').dropdown();
 
+    @if(count($currentDataList) != 0)
+    $('#data').val({{ $currentDataList }});
+    @endif
+});
+</script>
 @endsection

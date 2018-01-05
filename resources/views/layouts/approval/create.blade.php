@@ -62,7 +62,7 @@
 								<!-- Modal -->
 								<div class="modal-footer">
 									{!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
-									<a href="{{ route('datamaster.TPS.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index TPS</a>
+									<a href="{{ route('approval.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index</a>
 								</div>
 								{!! Form::close() !!}
 							</div>

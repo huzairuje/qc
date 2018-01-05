@@ -86,33 +86,14 @@ class CalonController extends Controller
 
     public function show($id)
     {
-        $chart = Charts::multi('bar', 'material')
-        // Setup the chart settings
-        ->title("Hasil Data Suara")
-        // A dimension of 0 means it will take 100% of the space
-        ->dimensions(700, 300) // Width x Height
-        // This defines a preset of colors already done:)
-        ->template("material")
-        // You could always set them manually
-        ->colors(['#2196F3', '#F44336', '#FFC107'])
-        // Setup the diferent datasets (this is a multi chart)
-        ->dataset('Data Suara', [5,20,100])
-        ->responsive(false)
-        // Setup what the values mean
-        ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
-
-        $calon = Calon::find($id);
-        // dd($tabulasi);
-
-        if (empty($calon)) {
+        $data['calon'] = Calon::findOrFail($id);
+        if (empty($data['calon'])) {
             flash('Calon not found')->error();
 
             return redirect(route('datamaster.calon.index'));
         }
 
-        return view('layouts.data_master.calon.show',compact('calon','chart'));
-
-
+        return view('layouts.data_master.calon.show', $data);
     }
 
     public function create()
@@ -162,17 +143,33 @@ class CalonController extends Controller
 
     public function edit ($id)
     {
-        // $tabulasi = $this->findWithoutFail($id);
-        $calon = Calon::find($id);
-        $event = Event::where('id', $calon->event_id)->pluck('nama','id')->all();
-
-        if (empty($calon)) {
-            flash('Data Calon Tidak Ada');
-
-            return redirect(route('calon.index'));
+        $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
+        foreach ($userEvents as $key => $userEvent) {
+            $listEventId[$key] = $userEvent->event_id;
+        }
+        if(count($userEvents) != 0)
+        {
+            $data['listEvent'] = Event::all()->whereIn('id', $listEventId);
+        }
+        else
+        {
+            $data['listEvent'] = Event::all()->where('tahun', 1945);
         }
 
-        return view('layouts.data_master.calon.edit', compact('calon','event'));
+        $data['dapil'] = [];
+
+
+        $data['partai'] = Partai::pluck('nama','id')->all();
+
+        $data['calon'] = Calon::find($id);
+
+        if (empty($data['calon'])) {
+            flash('Data Calon Tidak Ada');
+
+            return redirect(route('datamaster.calon.index'));
+        }
+
+        return view('layouts.data_master.calon.edit', $data);
     }
 
 

@@ -101,5 +101,21 @@
 </div>
 @endsection
 @section('extra-script')
+<script src="{{ asset('bsbmd/js/pages/tables/mindmup-editabletable.js') }}"></script>
+<script src="{{ asset('bsbmd/js/pages/tables/editable-table.js') }}"></script>
+<script src="{{ asset('bsbmd/js/pages/tables/numeric-input-example.js') }}"></script>
+<script src="{{ asset('js/taginput/jquery.dropdown.js') }}"></script>
+<script src="{{ asset('js/taginput/jquery.dropdown.min.js') }}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
+<script type="text/javascript" src="https://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
+<script type="text/javascript" src="https://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script type="text/javascript">
+$(document).ready( function() {
+    $('#data').dropdown();
 
+    $('#data').val({{ Sentinel::getUser()->roles()->first()->id }});
+});
+</script>
 @endsection

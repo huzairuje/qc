@@ -162,8 +162,6 @@
 
 					});
 					</script>
-
-
 					@endsection
 
 				</div>

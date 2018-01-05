@@ -40,4 +40,15 @@ class Event extends Model
     {
         return $this->belongsTo('App\Models\Jenis');
     }
+
+    public function provinsi()
+    {
+        return $this->belongsTo('App\Models\Provinsi', 'lokasi');
+    }
+
+    public function kota()
+    {
+        return $this->belongsTo('App\Models\Kota', 'lokasi', 'id');
+    }
+
 }

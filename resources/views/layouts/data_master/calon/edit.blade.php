@@ -42,69 +42,51 @@
 @endsection
 
 @section('extra-script')
-<script src="{{ asset('bsbmd/js/pages/tables/mindmup-editabletable.js') }}"></script>
-<script src="{{ asset('bsbmd/js/pages/tables/editable-table.js') }}"></script>
-<script src="{{ asset('bsbmd/js/pages/tables/numeric-input-example.js') }}"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
-<script type="text/javascript" src="https://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
-<script type="text/javascript" src="https://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-<script type="text/javascript">
-    $(document).ready( function() {
-        // select2
+<script>$(document).ready( function() {
+    var _url = '{{ route('datamaster.calon.ajax') }}';
 
-        var _url = '{{ route('tabulasi.ajax') }}';
+    $('.nama-form-container').hide();
 
-        $(document).on('change','#provinsi_id',function(){
-            var _val = $(this).val();
-            $.get(_url,{'type':'get-city','provinsi_id':_val})
-            .done(function(result) {
-                var html = '';
-                $('#kota_kabupaten_id').selectpicker(html);
+    $('#event_id').val({{ $calon->dapil->event_id }});
 
-                $.each(result,function(key,value){
-                    html += '<option value="'+key+'">'+value+'</option>';
-                });
+    $.get(_url,{'type':'get-dapil','event_id':{{ $calon->dapil->event_id }}}).done(function(result) {
+        var html = '';
+        $('#dapil_id').selectpicker(html);
 
-                $('#kota_kabupaten_id').html(html);
-                $('#kota_kabupaten_id').selectpicker('refresh');
-            });
+        $.each(result,function(key,value){
+            html += '<option value="'+key+'">'+value+'</option>';
         });
 
-            $(document).on('change','#kota_kabupaten_id',function(){
+        $('#dapil_id').html(html);
+        $('#dapil_id').val({{ $calon->dapil_id }});
+        $('#dapil_id').selectpicker('refresh');
+    });
 
-                var coba = $(this).val();
-                $.get(_url,{'type':'get-kecamatan','kota_kabupaten_id':coba})
-                .done(function(result) {
-                    var html = '';
-                    $('#kecamatan_id').selectpicker(html);
-                    $.each(result,function(key,value){
-                        html += '<option value="'+key+'">'+value+'</option>';
-                    });
+    $(document).on('change','#tipe',function(){
+        var _val = $(this).val();
+        if(_val == 0){
+            $('.nama-form-container').hide();
+        }
+        else {
+            $('.nama-form-container').show();
+        }
+    });
 
-                    $('#kecamatan_id').html(html);
-                    $('#kecamatan_id').selectpicker('refresh');
+    $(document).on('change','#event_id',function(){
+        var _val = $(this).val();
+        $.get(_url,{'type':'get-dapil','event_id':_val}).done(function(result) {
+            var html = '';
+            $('#dapil_id').selectpicker(html);
 
-                });
+            $.each(result,function(key,value){
+                html += '<option value="'+key+'">'+value+'</option>';
             });
 
-            $(document).on('change','#kecamatan_id',function(){
-
-                var coba = $(this).val();
-                $.get(_url,{'type':'get-kelurahan','kecamatan_id':coba})
-                .done(function(result) {
-                    var html = '';
-                    $('#kelurahan_id').selectpicker(html);
-                    $.each(result,function(key,value){
-                        html += '<option value="'+key+'">'+value+'</option>';
-                    });
-
-                    $('#kelurahan_id').html(html);
-                    $('#kelurahan_id').selectpicker('refresh');
-                });
-            });
+            $('#dapil_id').html(html);
+            $('#dapil_id').selectpicker('refresh');
         });
+    });
+});
 </script>
 
 @endsection

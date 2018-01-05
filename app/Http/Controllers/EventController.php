@@ -34,16 +34,6 @@ class EventController extends Controller
         return view('layouts.event.index');
     }
 
-    public function create()
-    {
-        $provinsi = Provinsi::pluck('nama','id')->all();
-        $jenis = Jenis::pluck('nama','id')->all();
-        $tingkat = Tingkat::pluck('nama','id')->all();
-        $kota = array();
-
-        return view('layouts.event.create', compact('provinsi','kota', 'jenis', 'tingkat'));
-    }
-
     public function get_datatable()
     {
         $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
@@ -65,12 +55,14 @@ class EventController extends Controller
         })
         ->editColumn('lokasi', function (Event $event) {
             if($event->tingkat_id == 2){
-                $result = Provinsi::where('id',$event->lokasi)->orderBy('nama', 'ASC')->first();
+                $result = Provinsi::where('id',$event->lokasi)->first()->nama;
             }
             else if($event->tingkat_id == 3){
-                $result = Kota::where('id',$event->lokasi)->orderBy('nama', 'ASC')->first();
+                $result = Kota::where('id',$event->lokasi)->first()->nama;
+            } else {
+                $result = 'Indonesia';
             }
-            return $result->nama ? $result->nama : 'Undefined';
+            return $result;
         })
         ->editColumn('tingkat', function (Event $event) {
             return $event->tingkat->nama ? $event->tingkat->nama : 'Undefined';
@@ -79,6 +71,16 @@ class EventController extends Controller
             return '<a href="'.route('event.show', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('event.edit', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('event.delete', $data_event->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
         ->make(true);
+    }
+
+    public function create()
+    {
+        $provinsi = Provinsi::pluck('nama','id')->all();
+        $jenis = Jenis::pluck('nama','id')->all();
+        $tingkat = Tingkat::pluck('nama','id')->all();
+        $kota = array();
+
+        return view('layouts.event.create', compact('provinsi','kota', 'jenis', 'tingkat'));
     }
 
     public function store(Request $request)
@@ -183,6 +185,10 @@ class EventController extends Controller
 
         $event->update();
 
+        $role = RoleUser::where('user_id', $id)->first();
+        $role->role_id = $request->role;
+        $role->update();
+
         flash('Data Event updated successfully')->success();
 
         return redirect(route('event.show', $event));
@@ -244,6 +250,9 @@ class EventController extends Controller
             return redirect(route('event.index'));
         }
         $data_event->delete();
+
+        $role = RoleUser::where('user_id', $id)->first();
+        $role->delete();
 
         flash('Data Saksi deleted successfully')->success();
         return redirect(route('event.index'));

@@ -216,6 +216,16 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::get('/user-management/show/{id}',['as'=>'usermanagement.show','uses'=>'UserManagementController@show']);
 	Route::delete('/user-management/{id}',['as'=>'usermanagement.destroy','uses'=>'UserManagementController@destroy']);
 
+	Route::get('/assign-user',['as'=>'assignuser.index','uses'=>'AssignUserController@index']);
+	Route::get('/assign-user/ajax',['as'=>'assignuser.ajax','uses'=>'AssignUserController@ajax']);
+	Route::get('/assign-user/getdatatable', ['as'=>'assignuser.datatable', 'uses' => 'AssignUserController@get_datatable']);
+	Route::get('/assign-user/create',['as'=>'assignuser.create','uses'=>'AssignUserController@create']);
+	Route::post('/assign-user',['as'=>'assignuser.store','uses'=>'AssignUserController@store']);
+	Route::get('/assign-user/edit/{id}',['as'=>'assignuser.edit','uses'=>'AssignUserController@edit']);
+	Route::patch('/assign-user/update/{id}',['as'=>'assignuser.update','uses'=>'AssignUserController@update']);
+	Route::get('/assign-user/show/{id}',['as'=>'assignuser.show','uses'=>'AssignUserController@show']);
+	Route::delete('/assign-user/{id}',['as'=>'assignuser.destroy','uses'=>'AssignUserController@destroy']);
+
 	Route::post('/logout', [
 		'as' => 'logout',
 		'uses' => 'SentinelAuth\LoginController@postLogout'

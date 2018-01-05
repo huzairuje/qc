@@ -56,11 +56,32 @@
 <script type="text/javascript">
 $(document).ready( function() {
     var _url = '{{ route('event.ajax') }}';
+    $('#tahun').val({{ $data_event->tahun }});
+    $('#expired').val('<?php echo $data_event->expired; ?>');
+    @if( $data_event->tingkat_id == 1 )
+    $('.provinsi-form-container').hide();
+    $('.kota-form-container').hide();
+    @elseif( $data_event->tingkat_id == 2 )
+    $('#provinsi_id').val({{ $data_event->loasi_id }});
+    $('.kota-form-container').hide();
+    @else
+    $.get(_url,{'type':'get-city','provinsi_id':{{ $data_event->kota->provinsi_id }}}).done(function(result) {
+        var html = '';
+        $('#kota_id').selectpicker(html);
+
+        $.each(result,function(key,value){
+            html += '<option value="'+key+'">'+value+'</option>';
+        });
+
+        $('#kota_id').html(html);
+        $('#kota_id').val({{ $data_event->lokasi }});
+        $('#kota_id').selectpicker('refresh');
+    });
+    $('#provinsi_id').val({{ $data_event->kota->provinsi_id }});
+    @endif
 
     @if($data_event->tingkat_id == 1)
     $('.tingkat-form-container').hide();
-    $('.provinsi-form-container').hide();
-    $('.kota-form-container').hide();
     @endif
 
     $(document).on('change','#jenis',function(){
@@ -93,8 +114,8 @@ $(document).ready( function() {
 
     $(document).on('change','#provinsi_id',function(){
         var _val = $(this).val();
-        $.get(_url,{'type':'get-city','provinsi_id':_val})
-        .done(function(result) {
+
+        $.get(_url,{'type':'get-city','provinsi_id':_val}).done(function(result) {
             var html = '';
             $('#kota_id').selectpicker(html);
 
