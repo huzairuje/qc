@@ -53,7 +53,7 @@
                                         $('#table-TPS').DataTable({
                                             processing: true,
                                             serverSide: true,
-                                            ajax: '/datamaster/TPS/getdatatable',
+                                            ajax: '{!! route("datamaster.TPS.datatable") !!}',
 
                                             columns:
                                             [

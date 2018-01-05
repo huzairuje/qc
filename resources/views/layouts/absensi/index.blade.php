@@ -47,7 +47,7 @@
                                         $('#table-Absensi').DataTable({
                                             processing: true,
                                             serverSide: true,
-                                            ajax: '/absensi/getdatatable',
+                                            ajax: '{!! route("absensi.datatable") !!}',
 
                                             columns:
                                             [

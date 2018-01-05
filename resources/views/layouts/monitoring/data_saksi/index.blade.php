@@ -50,7 +50,7 @@
                                                     $('#table-Datasaksi').DataTable({
                                                         processing: true,
                                                         serverSide: true,
-                                                        ajax: '/monitoring/datasaksi/getdatatable',
+                                                        ajax: '{!! route("monitoring.datasaksi.datatable") !!}',
                                                         columns:
                                                             [
                                                                 {data: 'first_name'},

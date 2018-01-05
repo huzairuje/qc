@@ -49,7 +49,7 @@
                                         $('#table-Tabulasi').DataTable({
                                             processing: true,
                                             serverSide: true,
-                                            ajax: '/datamaster/dapil/getdatatable',
+                                            ajax: '{!! route("datamaster.dapil.datatable") !!}',
                                             columns:
                                             [
                                                 {data: 'event'},

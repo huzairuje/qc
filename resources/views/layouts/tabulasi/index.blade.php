@@ -53,7 +53,7 @@
                                                     $('#table-Tabulasi').DataTable({
                                                         processing: true,
                                                         serverSide: true,
-                                                        ajax: '/tabulasi/getdatatable',
+                                                        ajax: '{!! route("tabulasi.datatable") !!}',
                                                         columns:
                                                             [
 

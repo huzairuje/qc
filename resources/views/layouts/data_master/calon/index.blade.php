@@ -54,7 +54,7 @@
                                         $('#table-Calon').DataTable({
                                             processing: true,
                                             serverSide: true,
-                                            ajax: '/datamaster/calon/getdatatable',
+                                            ajax: '{!! route("datamaster.calon.datatable") !!}',
                                             columns:
                                             [
                                                 {data: 'foto'},

@@ -53,7 +53,7 @@
                                         $('#table-Approval').DataTable({
                                             processing: true,
                                             serverSide: true,
-                                            ajax: '/approval/getdatatable',
+                                            ajax: '{!! route("approval.datatable") !!}',
 
                                             columns:
                                             [

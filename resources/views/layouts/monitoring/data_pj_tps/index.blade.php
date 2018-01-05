@@ -50,7 +50,7 @@
                                                     $('#table-Datapjtps').DataTable({
                                                         processing: true,
                                                         serverSide: true,
-                                                        ajax: '/monitoring/datapjtps/getdatatable',
+                                                        ajax: '{!! route("monitoring.datapjtps.datatable") !!}',
                                                         columns:
                                                             [
 

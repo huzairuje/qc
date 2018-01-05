@@ -49,7 +49,7 @@
                                         $('#table-Partai').DataTable({
                                             processing: true,
                                             serverSide: true,
-                                            ajax: '/datamaster/partai/getdatatable',
+                                            ajax: '{!! route("datamaster.partai.datatable") !!}',
 
                                             columns:
                                             [
