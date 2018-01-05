@@ -22,6 +22,7 @@ use App\Models\DapilLokasi;
 use App\Models\Provinsi;
 use App\Models\Kota;
 use App\Models\UserEvent;
+use App\Models\RoleUser;
 use Sentinel;
 use Charts;
 use Flash;
