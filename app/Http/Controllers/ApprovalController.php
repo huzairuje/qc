@@ -78,16 +78,16 @@ class ApprovalController extends Controller
           })
 
           ->addColumn('provinsi', function ($approval) {
-              return $approval->kelurahan->kecamatan->kota->provinsi->nama ? $approval->kelurahan->kecamatan->kota->provinsi->nama : 'Undefined';
+              return $approval->kelurahan->kecamatan->kota->provinsi && $approval->kelurahan->kecamatan->kota->provinsi->nama ? $approval->kelurahan->kecamatan->kota->provinsi->nama : 'Undefined';
           })
           ->addColumn('kota', function ($approval) {
-              return $approval->kelurahan->kecamatan->kota->nama ? $approval->kelurahan->kecamatan->kota->nama : 'Undefined';
+              return $approval->kelurahan->kecamatan->kota && $approval->kelurahan->kecamatan->kota->nama ? $approval->kelurahan->kecamatan->kota->nama : 'Undefined';
           })
           ->addColumn('kecamatan', function ($approval) {
-              return $approval->kelurahan->kecamatan->nama ? $approval->kelurahan->kecamatan->nama : 'Undefined';
+              return $approval->kelurahan->kecamatan && $approval->kelurahan->kecamatan->nama ? $approval->kelurahan->kecamatan->nama : 'Undefined';
           })
           ->editColumn('kelurahan_id', function ($approval) {
-              return $approval->kelurahan->nama ? $approval->kelurahan->nama : 'Undefined';
+              return $approval->kelurahan && $approval->kelurahan->nama ? $approval->kelurahan->nama : 'Undefined';
           })
           ->addColumn('action', function ($approval) {
           return '<a href="'.route('approval.show', $approval->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('approval.edit', $approval->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('approval.delete', $approval->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
