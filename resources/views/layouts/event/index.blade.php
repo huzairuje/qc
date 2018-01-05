@@ -55,7 +55,7 @@
                                         $('#table-Event').DataTable({
                                             processing: true,
                                             serverSide: true,
-                                            ajax: '/event/getdatatable',
+                                            ajax: '{!! route("event.datatable") !!}',
                                             columns:
                                             [
                                                 {data: 'tahun', name: 'tahun'},
