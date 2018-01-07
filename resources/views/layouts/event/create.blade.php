@@ -20,11 +20,12 @@
 			</div>
 
 			<div class="box box-primary">
-
+@include('flash::message')
 				<div class="box-body">
 					<div class="row">
 						<div class="body">
 							<div class="row clearfix">
+
 
 								<!-- Content Create-->
 								{!! Form::open(['route' => 'event.store']) !!}

@@ -76,6 +76,7 @@ class EventController extends Controller
 
     public function create()
     {
+
         $provinsi = Provinsi::pluck('nama','id')->all();
         $jenis = Jenis::pluck('nama','id')->all();
         $tingkat = Tingkat::pluck('nama','id')->all();
@@ -86,6 +87,26 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+      // $this->validate($request,[
+      //   'jenis_id' => 'required',
+      //    // 'tingkat_id' => 'required',
+      //    'expired' => 'required',
+      //    'nama' => 'required',
+      //    'lokasi' => 'required',
+      //    'tahun' => 'required',
+      //     ]);
+
+
+    $v = $this->validate($request,[
+      'jenis_id' => 'required',
+       // 'tingkat_id' => 'required',
+       'expired' => 'required',
+       'nama' => 'required',
+       'lokasi' => 'required',
+       'tahun' => 'required',
+        ]);
+
+
         if($request->jenis_id == 4 || $request->jenis_id == 5){
             if ($request->tingkat_id == 2){
                 $request->merge(['lokasi' => $request->provinsi]);
