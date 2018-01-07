@@ -109,6 +109,8 @@ Route::group(['middleware' => 'admin'], function () {
 
 	//Route for Monitoring SubMenu Login Terakhir
 	Route::get('/monitoring/loginterakhir',['as'=>'monitoring.loginterakhir','uses'=>'monitoring\LoginTerakhirController@index']);
+	Route::get('/monitoring/loginterakhir/getdatatable',['as'=>'monitoring.loginterakhir.datatable','uses'=>'monitoring\LoginTerakhirController@get_datatable']);
+	Route::get('/monitoring/loginterakhir/show/{id}',['as'=>'monitoring.loginterakhir.show','uses'=>'monitoring\LoginTerakhirController@show']);
 
 
 

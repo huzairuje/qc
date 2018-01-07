@@ -75,7 +75,7 @@
                 <li {{Route::is('monitoring.foto')? 'class=active':''}}>
                     <a href="{{route('monitoring.foto')}}">Foto</a>
                 </li>
-                <li {{Route::is('monitoring.loginterakhir')? 'class=active':''}}>
+                <li {{Route::is('monitoring.loginterakhir*')? 'class=active':''}}>
                     <a href="{{route('monitoring.loginterakhir')}}">Login Terakhir</a>
                 </li>
                 <li {{Route::is('monitoring.quickrealcount')? 'class=active':''}}>
