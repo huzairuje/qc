@@ -15,7 +15,7 @@
 		<div class="card">
 			<div class="header bg-blue">
 				<h2>
-					BUAT DATA TABULASI
+					BUAT DATA TPS
 				</h2>
 			</div>
 
