@@ -122,6 +122,16 @@ class CalonController extends Controller
 
     public function store(Request $request)
     {
+
+      $v = $this->validate($request,[
+        'dapil_id' => 'required',
+         // 'tingkat_id' => 'required',
+         'partai_id' => 'required',
+         'nomor' => 'required',
+         'nama' => 'required',
+          ]);
+
+
         if($request->tipe == "0"){
             $request->merge(['nama' => Partai::find($request->partai_id)->nama]);
         }

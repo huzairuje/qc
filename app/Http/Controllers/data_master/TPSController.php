@@ -127,6 +127,12 @@ class TPSController extends Controller
 
     public function store(Request $request)
     {
+      $v = $this->validate($request,[
+        'kelurahan_id' => 'required',
+         // 'tingkat_id' => 'required',
+         'nomor' => 'required',
+          ]);
+
         $input = $request->all();
 
         $tps = Tps::create($input);

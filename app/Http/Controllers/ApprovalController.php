@@ -149,6 +149,14 @@ class ApprovalController extends Controller
 
   public function store(Request $request)
   {
+    $v = $this->validate($request,[
+      'user_id' => 'required',
+       // 'tingkat_id' => 'required',
+       'event_id' => 'required',
+       'kelurahan_id' => 'required',
+       'tps_id' => 'required',
+        ]);
+
       $input = $request->all();
 
       $approval = Approval::create($input);

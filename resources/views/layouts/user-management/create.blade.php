@@ -53,7 +53,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-line">
-                                                {!! Form::label('email', 'Username:') !!}
+                                                {!! Form::label('username', 'Username:') !!}
                                                 {{ Form::text('username',null, ['class' => 'form-control','placeholder' => 'Username']) }}
                                             </div>
                                         </div>

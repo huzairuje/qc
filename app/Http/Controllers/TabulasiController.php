@@ -145,7 +145,14 @@ class TabulasiController extends Controller
 
     public function store(Request $request)
     {
-
+      $v = $this->validate($request,[
+        'dokumen' => 'required',
+         // 'tingkat_id' => 'required',
+         'provinsi_id' => 'required',
+         'kota_id' => 'required',
+         'kecamatan_id' => 'required',
+         'kelurahan_id' => 'required',
+          ]);
 
 
         $input = $request->all();

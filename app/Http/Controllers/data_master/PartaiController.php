@@ -79,6 +79,12 @@ class PartaiController extends Controller
 
     public function store(Request $request)
     {
+      $v = $this->validate($request,[
+        'nomor' => 'required',
+         // 'tingkat_id' => 'required',
+         'nama' => 'required',
+         'foto' => 'required',
+          ]);
         $input = $request->all();
         if ($request->hasFile('foto'))
         {

@@ -77,6 +77,16 @@ class UserManagementController extends Controller
     }
 
     public function store(Request $request){
+
+      $v = $this->validate($request,[
+        'first_name' => 'required',
+         // 'tingkat_id' => 'required',
+         'email' => 'required',
+         'username' => 'required',
+         'phone' => 'required',
+         
+          ]);
+
         $request->merge([
             'password' => '12345678',
             'parent_id' => Sentinel::getUser()->id,

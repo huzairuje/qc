@@ -114,6 +114,12 @@ class DapilController extends Controller
 
     public function store(Request $request)
     {
+      $v = $this->validate($request,[
+        'event_id' => 'required',
+         // 'tingkat_id' => 'required',
+         'nama' => 'required',
+          ]);
+
         $input = $request->all();
 
         $dapil = Dapil::create($input);
