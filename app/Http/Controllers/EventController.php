@@ -102,7 +102,7 @@ class EventController extends Controller
        // 'tingkat_id' => 'required',
        'expired' => 'required',
        'nama' => 'required',
-       'lokasi' => 'required',
+       // 'lokasi' => 'required',
        'tahun' => 'required',
         ]);
 

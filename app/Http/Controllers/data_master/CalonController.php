@@ -124,11 +124,12 @@ class CalonController extends Controller
     {
 
       $v = $this->validate($request,[
-        'dapil_id' => 'required',
+        // 'dapil_id' => 'required',
          // 'tingkat_id' => 'required',
          'partai_id' => 'required',
          'nomor' => 'required',
          'nama' => 'required',
+         'email' => 'required',
           ]);
 
 
