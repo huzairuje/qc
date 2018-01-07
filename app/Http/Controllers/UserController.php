@@ -5,20 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
+use Sentinel;
 use Flash;
 
 class UserController extends Controller
 {
     public function profile(Request $id)
     {
-        $user = Auth::user();
+        $user = Sentinel::findOrFail();
 		    return view('layouts.users.profile', compact('user'));
 
     }
 
     public function update($id, Request $request)
     {
-            $user = User::findOrFail($id);
+            $user = Sentinel::findOrFail($id);
                 if (empty($user)) {
                     flash('User not found')->error();
 
