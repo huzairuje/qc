@@ -57,14 +57,14 @@ class ApprovalController extends Controller
       return Datatables::eloquent($approval)
           ->editColumn('user_id', function ($approval) {
               if ($approval->user_id) {
-                  return $approval->user->username ? $approval->user->username : 'Undefined';
+                  return $approval->user && $approval->user->username ? $approval->user->username : 'Undefined';
               } else {
                   return 'Nama Saksi tidak ada';
               }
           })
           ->editColumn('event_id', function ($approval) {
               if ($approval->event_id) {
-                  return $approval->event->nama;
+                  return $approval->event && $approval->event->nama;
               } else {
                   return 'Nama Event Tidak Ada';
               }
