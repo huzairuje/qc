@@ -86,7 +86,7 @@ class ApprovalController extends Controller
           ->addColumn('kecamatan', function ($approval) {
               return $approval->kelurahan->kecamatan && $approval->kelurahan->kecamatan->nama ? $approval->kelurahan->kecamatan->nama : 'Undefined';
           })
-          ->editColumn('kelurahan_id', function ($approval) {
+          ->editColumn('kelurahan', function ($approval) {
               return $approval->kelurahan && $approval->kelurahan->nama ? $approval->kelurahan->nama : 'Undefined';
           })
           ->addColumn('action', function ($approval) {

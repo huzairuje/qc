@@ -24,7 +24,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
+    
       $data['events'] = Event::all()->where('id', 1);
       $data['dapilLokasi'] = DapilLokasi::all();
       return view('layouts.dashboard.index', $data);

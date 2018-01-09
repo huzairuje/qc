@@ -5,7 +5,7 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('nama', 'Nama:') !!}
-                    {!! $datapjtps->nama !!}
+                    {!! $datapjtps->first_name !!}
                 </div>
             </div>
         </div>
@@ -13,8 +13,8 @@
         <div class="col-md-6">
             <div class="form-group">
                 <div class="form-line">
-                    {!! Form::label('alamat', 'Alamat:') !!}
-                    {!! $datapjtps->alamat !!}
+                    {!! Form::label('last_login', 'Terakhir Login:') !!}
+                    {!! $datapjtps->last_login !!}
                 </div>
             </div>
         </div>
@@ -22,8 +22,8 @@
         <div class="col-md-6">
             <div class="form-group">
                 <div class="form-line">
-                    {!! Form::label('no_telpon', 'Nomor Telepon:') !!}
-                    {!! $datapjtps->no_telpon !!}
+                    {!! Form::label('phone', 'Nomor Telepon:') !!}
+                    {!! $datapjtps->phone !!}
                 </div>
             </div>
         </div>
@@ -60,7 +60,6 @@
             <a href="{{ route('monitoring.datapjtps.create')}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Create Data</a>
             <a href="{{ route('monitoring.datapjtps')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Data Saksi</a>
             <a href="{{ route('monitoring.datapjtps.delete', $datapjtps->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Delete Data</a>
-        </div>    
+        </div>
     </div>
 </div>
-

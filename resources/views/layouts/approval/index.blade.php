@@ -37,6 +37,9 @@
 
                                                 <th>Nama Saksi</th>
                                                 <th>Event</th>
+                                                <th>Provinsi</th>
+                                                <th>Kota/Kabupaten</th>
+                                                <th>Kecamatan</th>
                                                 <th>Kelurahan</th>
                                                 <th>TPS</th>
                                                 <th>status Approval</th>
@@ -59,7 +62,10 @@
                                             [
                                                 {data: 'user_id'},
                                                 {data: 'event_id'},
-                                                {data: 'kelurahan_id'},
+                                                {data: 'provinsi'},
+                                                {data: 'kota'},
+                                                {data: 'kecamatan'},
+                                                {data: 'kelurahan'},
                                                 {data: 'tps_id'},
                                                 {data: 'is_approved'},
                                                 {data: 'action'}

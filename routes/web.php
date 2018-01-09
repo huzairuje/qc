@@ -65,9 +65,6 @@ Route::group(['middleware' => 'admin'], function () {
 	//Route for download
 	Route::get('/download',['as'=>'download','uses'=>'DownloadController@index']);
 
-	//Route for Approval
-	Route::get('/approval',['as'=>'approval.index','uses'=>'ApprovalController@index']);
-	Route::get('/approval/create',['as'=>'approval.create','uses'=>'ApprovalController@create']);
 
 
 	//Route For Menu MONITORING--------------------------------------------------------------------------------------------
