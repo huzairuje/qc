@@ -52,7 +52,7 @@ class EventController extends Controller
 
         return Datatables::eloquent($data_event)
         ->editColumn('jenis', function (Event $event) {
-            return $event->jenis->nama ? $event->jenis->nama : 'Undefined';
+            return $event->jenis && $event->jenis->nama ? $event->jenis->nama : 'Undefined';
         })
         ->editColumn('lokasi', function (Event $event) {
             if($event->tingkat_id == 2){
@@ -66,7 +66,7 @@ class EventController extends Controller
             return $result;
         })
         ->editColumn('tingkat', function (Event $event) {
-            return $event->tingkat->nama ? $event->tingkat->nama : 'Undefined';
+            return $event->tingkat && $event->tingkat->nama ? $event->tingkat->nama : 'Undefined';
         })
         ->addColumn('action', function ($data_event) {
             return '<a href="'.route('event.show', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('event.edit', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('event.delete', $data_event->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
@@ -87,15 +87,6 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-      // $this->validate($request,[
-      //   'jenis_id' => 'required',
-      //    // 'tingkat_id' => 'required',
-      //    'expired' => 'required',
-      //    'nama' => 'required',
-      //    'lokasi' => 'required',
-      //    'tahun' => 'required',
-      //     ]);
-
 
     $v = $this->validate($request,[
       'jenis_id' => 'required',
