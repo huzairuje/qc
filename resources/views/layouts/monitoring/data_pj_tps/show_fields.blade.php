@@ -40,15 +40,6 @@
         <div class="col-md-6">
             <div class="form-group">
                 <div class="form-line">
-                    {!! Form::label('list_id_tps', 'List Id TPS:') !!}
-                    {!! $datapjtps->list_id_tps !!}
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <div class="form-line">
                     {!! Form::label('foto', 'Foto:') !!}
                     {!! $datapjtps->foto !!}
                 </div>
@@ -58,7 +49,7 @@
 <div class="modal-footer">
             <a href="{{ route('monitoring.datapjtps.edit', $datapjtps->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Edit Data</a>
             <a href="{{ route('monitoring.datapjtps.create')}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Create Data</a>
-            <a href="{{ route('monitoring.datapjtps')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Data Saksi</a>
+            <a href="{{ route('monitoring.datapjtps')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Data Korsak</a>
             <a href="{{ route('monitoring.datapjtps.delete', $datapjtps->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Delete Data</a>
         </div>
     </div>
