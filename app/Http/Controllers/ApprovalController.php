@@ -78,10 +78,10 @@ class ApprovalController extends Controller
           })
 
           ->addColumn('provinsi', function ($approval) {
-              return  $approval->kelurahan && $approval->kelurahan->kecamatan->kota->provinsi && $approval->kelurahan->kecamatan->kota->provinsi->nama ? $approval->kelurahan->kecamatan->kota->provinsi->nama : 'Undefined';
+              return  $approval->kelurahan && $approval->kelurahan->kecamatan && $approval->kelurahan->kecamatan->kota && $approval->kelurahan->kecamatan->kota->provinsi && $approval->kelurahan->kecamatan->kota->provinsi->nama ? $approval->kelurahan->kecamatan->kota->provinsi->nama : 'Undefined';
           })
           ->addColumn('kota', function ($approval) {
-              return  $approval->kelurahan && $approval->kelurahan->kecamatan->kota && $approval->kelurahan->kecamatan->kota->nama ? $approval->kelurahan->kecamatan->kota->nama : 'Undefined';
+              return  $approval->kelurahan && $approval->kelurahan->kecamatan && $approval->kelurahan->kecamatan->kota && $approval->kelurahan->kecamatan->kota->nama ? $approval->kelurahan->kecamatan->kota->nama : 'Undefined';
           })
           ->addColumn('kecamatan', function ($approval) {
               return  $approval->kelurahan && $approval->kelurahan->kecamatan && $approval->kelurahan->kecamatan->nama ? $approval->kelurahan->kecamatan->nama : 'Undefined';
