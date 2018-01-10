@@ -71,18 +71,18 @@ class CalonController extends Controller
 
         return Datatables::eloquent($calon)
         ->addColumn('nama_wakil', function ($calon){
-            return $calon->wakil && $calon->wakil->nama ? $calon->wakil->nama : 'Undefined';
+            return $calon->wakil && $calon->wakil->nama ? $calon->wakil->nama : 'Tidak Ada';
         })
         ->addColumn('event', function ($calon){
             return $calon->dapil && $calon->dapil->event && $calon->dapil->event->nama ? $calon->dapil->event->nama : 'Undefined';
         })
 
-        ->editColumn('partai', function ($calon) {
-            return $calon->partai && $calon->partai->nama ? $calon->partai->nama : 'Undefined';
-        })
-        ->editColumn('dapil', function ($calon) {
-            return $calon->dapil && $calon->dapil->nama ? $calon->dapil->nama : 'Undefined';
-        })
+        // ->editColumn('partai', function ($calon) {
+        //     return $calon->partai && $calon->partai->nama ? $calon->partai->nama : 'Undefined';
+        // })
+        // ->editColumn('dapil', function ($calon) {
+        //     return $calon->dapil && $calon->dapil->nama ? $calon->dapil->nama : 'Undefined';
+        // })
         ->addColumn('action', function ($calon) {
             return '<a href="'.route('datamaster.calon.show', $calon->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.calon.edit', $calon->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.calon.delete', $calon->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
         })
