@@ -17,6 +17,7 @@ use Yajra\Datatables\Facades\Datatables\Validate;
 use Charts;
 use Flash;
 use App\Models\Calon;
+use App\Models\Wakil;
 use App\Models\Event;
 use App\Models\Dapil;
 use App\Models\Partai;
@@ -69,11 +70,15 @@ class CalonController extends Controller
         }
 
         return Datatables::eloquent($calon)
+        ->addColumn('nama_wakil', function ($calon){
+            return $calon->wakil && $calon->wakil->nama ? $calon->wakil->nama : 'Undefined';
+        })
+
         ->editColumn('partai', function ($calon) {
-            return $calon->partai->nama ? $calon->partai->nama : 'Undefined';
+            return $calon->partai && $calon->partai->nama ? $calon->partai->nama : 'Undefined';
         })
         ->editColumn('dapil', function ($calon) {
-            return $calon->dapil->nama ? $calon->dapil->nama : 'Undefined';
+            return $calon->dapil && $calon->dapil->nama ? $calon->dapil->nama : 'Undefined';
         })
         ->addColumn('action', function ($calon) {
             return '<a href="'.route('datamaster.calon.show', $calon->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('datamaster.calon.edit', $calon->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('datamaster.calon.delete', $calon->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
@@ -86,14 +91,21 @@ class CalonController extends Controller
 
     public function show($id)
     {
-        $data['calon'] = Calon::findOrFail($id);
-        if (empty($data['calon'])) {
+        $calon = Calon::findOrFail($id);
+        $wakil = [];
+          if ($calon){
+            $wakil = Wakil::where('calon_id', $id)->first();
+          }
+
+        // dd($calon);
+        // dd($wakil);
+        if (empty($calon)) {
             flash('Calon not found')->error();
 
             return redirect(route('datamaster.calon.index'));
         }
 
-        return view('layouts.data_master.calon.show', $data);
+        return view('layouts.data_master.calon.show', compact('calon','wakil'));
     }
 
     public function create()
@@ -143,8 +155,13 @@ class CalonController extends Controller
         }
 
         $input = $request->all();
-
-        $calon = Calon::create($input);
+        // dd($input);
+        $calon = Calon::create($request->except('wakil'));
+          if ($request->has_wakil) {
+            $temp = $request->wakil;
+            $temp['calon_id'] = $calon->id;
+            Wakil::create($temp);
+          }
 
         flash('Data Calon created successfully')->success();
         return redirect(route('datamaster.calon.show',$calon));

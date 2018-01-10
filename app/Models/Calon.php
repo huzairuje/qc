@@ -37,7 +37,7 @@ class Calon extends Model
 
   public function wakil()
   {
-      return $this->hasMany('App\Models\Wakil');
+      return $this->hasOne('App\Models\Wakil');
   }
 
   public function suara()

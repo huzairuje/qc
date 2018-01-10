@@ -194,31 +194,19 @@
                                         <div class="col-md-8">
                                             <div class="form-line">
                                                 {!! Form::label('nama', 'Nama:') !!}
-                                                {{ Form::text('nama',null, ['class' => 'form-control','placeholder' => 'Nama']) }}
+                                                {{ Form::text('wakil[nama]',null, ['class' => 'form-control','placeholder' => 'Nama']) }}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-
-
-                                <div class="form-group wakil-form-container">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <div class="form-line">
-                                                {!! Form::label('nomor', 'Nomor Urut:') !!}
-                                                {{ Form::text('nomor',null, ['class' => 'form-control','placeholder' => 'Nomor Urut']) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div class="form-group wakil-form-container">
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
                                                 {!! Form::label('alamat', 'Alamat:') !!}
-                                                {{ Form::text('alamat',null, ['class' => 'form-control','placeholder' => 'Alamat Lengkap']) }}
+                                                {{ Form::text('wakil[alamat]',null, ['class' => 'form-control','placeholder' => 'Alamat Lengkap']) }}
                                             </div>
                                         </div>
                                     </div>
@@ -229,7 +217,7 @@
                                         <div class="col-md-8">
                                             <div class="form-line">
                                                 {!! Form::label('no_telpon', 'Nomor Telepon:') !!}
-                                                {{ Form::number('no_telpon',null, ['class' => 'form-control','placeholder' => 'Nomor Telepon']) }}
+                                                {{ Form::number('wakil[no_telpon]',null, ['class' => 'form-control','placeholder' => 'Nomor Telepon']) }}
                                             </div>
                                         </div>
                                     </div>
@@ -240,7 +228,7 @@
                                         <div class="col-md-8">
                                             <div class="form-line">
                                                 {!! Form::label('email', 'Email :') !!}
-                                                {{ Form::email('email',null, ['class' => 'form-control','placeholder' => 'example@example.com']) }}
+                                                {{ Form::email('wakil[email]',null, ['class' => 'form-control','placeholder' => 'example@example.com']) }}
                                             </div>
                                         </div>
                                     </div>
@@ -257,15 +245,13 @@
                                                     <div id="image-holder">
                                                     </div>
                                                     <br>
-                                                    {!! Form::file('foto', null, ['class' => 'form-control']) !!}
+                                                    {!! Form::file('wakil[foto]', null, ['class' => 'form-control']) !!}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                               </div>
-
-
 
                                 <div class="form-group">
                                     <div class="form-line">

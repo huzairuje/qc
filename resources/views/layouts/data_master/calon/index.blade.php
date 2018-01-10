@@ -36,6 +36,7 @@
                                             <tr style="background-color: lightblue">
                                                 <th>Foto</th>
                                                 <th>Nama Calon</th>
+                                                <th>Nama Wakil Calon</th>
                                                 <th>Partai</th>
                                                 <th>Dapil</th>
                                                 <th>Nomor Urut </th>
@@ -59,6 +60,7 @@
                                             [
                                                 {data: 'foto'},
                                                 {data: 'nama'},
+                                                {data: 'nama_wakil'},
                                                 {data: 'partai'},
                                                 {data: 'dapil'},
                                                 {data: 'nomor'},
