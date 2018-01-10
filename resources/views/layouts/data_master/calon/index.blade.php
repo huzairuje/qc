@@ -34,14 +34,13 @@
                                     <table id="table-Calon" class="table table-striped">
                                         <thead>
                                             <tr style="background-color: lightblue">
-                                                <th>Foto</th>
+
+                                                <th>Event</th>
+                                                <th>Nomor Urut</th>
                                                 <th>Nama Calon</th>
                                                 <th>Nama Wakil Calon</th>
                                                 <th>Partai</th>
-                                                <th>Dapil</th>
-                                                <th>Nomor Urut </th>
-                                                <th>Nomor Telepon </th>
-                                                <th>Email </th>
+                                                <th>Foto</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -58,14 +57,12 @@
                                             ajax: '{!! route("datamaster.calon.datatable") !!}',
                                             columns:
                                             [
-                                                {data: 'foto'},
+                                                {data: 'event'},
+                                                {data: 'nomor'},
                                                 {data: 'nama'},
                                                 {data: 'nama_wakil'},
                                                 {data: 'partai'},
-                                                {data: 'dapil'},
-                                                {data: 'nomor'},
-                                                {data: 'no_telpon'},
-                                                {data: 'email'},
+                                                {data: 'foto'},
                                                 {data: 'action'}
                                             ]
                                         } );
