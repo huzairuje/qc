@@ -39,7 +39,8 @@
                                                 <th>Nomor Urut</th>
                                                 <th>Nama Calon</th>
                                                 <th>Nama Wakil Calon</th>
-                                                <th>Foto</th>
+                                                <th>Foto Calon</th>
+                                                <th>Foto Wakil Calon</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -61,6 +62,7 @@
                                                 {data: 'nama'},
                                                 {data: 'nama_wakil'},
                                                 {data: 'foto'},
+                                                {data: 'foto_wakil'},
                                                 {data: 'action'}
                                             ]
                                         } );

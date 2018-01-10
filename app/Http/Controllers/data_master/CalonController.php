@@ -73,6 +73,9 @@ class CalonController extends Controller
         ->addColumn('nama_wakil', function ($calon){
             return $calon->wakil && $calon->wakil->nama ? $calon->wakil->nama : 'Tidak Ada';
         })
+        ->addColumn('foto_wakil', function ($calon){
+            return $calon->wakil && $calon->wakil->foto ? $calon->wakil->foto : 'Tidak Ada';
+        })
         ->addColumn('event', function ($calon){
             return $calon->dapil && $calon->dapil->event && $calon->dapil->event->nama ? $calon->dapil->event->nama : 'Undefined';
         })
