@@ -57,6 +57,7 @@
 
                                             columns:
                                             [
+                                                {data: 'id'},
                                                 {data: 'nomor'},
                                                 {data: 'provinsi'},
                                                 {data: 'kota'},
