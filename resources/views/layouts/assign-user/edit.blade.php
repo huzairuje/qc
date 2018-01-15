@@ -32,7 +32,7 @@
                                         <div class="col-md-4">
                                             <div class="form-line">
                                                 {!! Form::label('nama', 'Nama:') !!}
-                                                {!! $user->nama !!}
+                                                {!! $user->first_name !!}
                                             </div>
                                         </div>
                                     </div>
