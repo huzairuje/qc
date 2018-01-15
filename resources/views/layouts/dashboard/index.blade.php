@@ -24,12 +24,7 @@ Dashboard
 					<div class="col-md-12">
 							{!! $chart->render() !!}
 					</div>
-					<div class="col-md-12">
-							{!! $chart->render() !!}
-					</div>
-					<div class="col-md-12">
-							{!! $chart->render() !!}
-					</div>
+					
 
 
 				</div>
