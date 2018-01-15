@@ -51,4 +51,9 @@ class Event extends Model
         return $this->belongsTo('App\Models\Kota', 'lokasi', 'id');
     }
 
+    //scope for query faster 
+    public function scopeDropdown()
+    {
+      return Event::pluck('nama','id')->all();
+    }
 }

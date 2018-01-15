@@ -167,6 +167,15 @@ class EventController extends Controller
     }
     public function update(Request $request,$id)
     {
+      $v = $this->validate($request,[
+        'jenis_id' => 'required',
+         // 'tingkat_id' => 'required',
+         'expired' => 'required',
+         'nama' => 'required',
+         // 'lokasi' => 'required',
+         'tahun' => 'required',
+          ]);
+          
         $event = Event::find($id);
         if (empty($event)) {
 

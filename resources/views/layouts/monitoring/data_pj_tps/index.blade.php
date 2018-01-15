@@ -21,7 +21,7 @@
                                     @include('flash::message')
                                             <div class="header">
                                                 <h2>
-                                                    <span>DATA PJ TPS</span>
+                                                    <span>DATA KORSAK</span>
                                                     <i class="material-icons">autorenew</i>
                                                 </h2>
 
