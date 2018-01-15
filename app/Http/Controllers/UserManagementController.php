@@ -84,7 +84,7 @@ class UserManagementController extends Controller
          'email' => 'required',
          'username' => 'required',
          'phone' => 'required',
-         
+
           ]);
 
         $request->merge([
@@ -182,6 +182,19 @@ class UserManagementController extends Controller
                 }
             } else {
                 $data['currentDataList'] = [];
+            }
+
+            $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
+            foreach ($userEvents as $key => $userEvent) {
+                $listEventId[$key] = $userEvent->event_id;
+            }
+            if(count($userEvents) != 0)
+            {
+                $data['eventList'] = Event::all()->whereIn('id', $listEventId)->where('expired', '>', date('Y-m-d'));
+            }
+            else
+            {
+                $data['eventList'] = Event::all()->where('id', 0);
             }
 
             return view('layouts.user-management.edit', $data);
