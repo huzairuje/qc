@@ -38,14 +38,7 @@
               <span>Quick Real Count Management</span>
           </a>
         </li>
-        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
-        <li {{Route::is('download')? 'class=active':''}}>
-            <a href="{{route('download')}}">
-                <i class="material-icons">file_download</i>
-                <span>Download</span>
-            </a>
-        </li>
-        @endif
+
         @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'korsak' )
         <li {{Route::is('approval.*')? 'class=active':''}}>
             <a href="{{route('approval.index')}}">
@@ -125,6 +118,14 @@
                 </li> -->
             </ul>
         </li>
+        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
+        <li {{Route::is('download')? 'class=active':''}}>
+            <a href="{{route('download')}}">
+                <i class="material-icons">file_download</i>
+                <span>Download</span>
+            </a>
+        </li>
+        @endif
 
     </ul>
 </div>
