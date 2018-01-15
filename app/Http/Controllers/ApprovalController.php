@@ -64,7 +64,7 @@ class ApprovalController extends Controller
           })
           ->editColumn('event_id', function ($approval) {
               if ($approval->event_id) {
-                  return $approval->event && $approval->event->nama;
+                  return $approval->event && $approval->event->nama ? $approval->event->nama : 'Undefined';
               } else {
                   return 'Nama Event Tidak Ada';
               }
