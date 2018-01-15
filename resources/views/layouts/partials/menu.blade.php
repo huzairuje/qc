@@ -14,6 +14,7 @@
                 <span>Event Management</span>
             </a>
         </li>
+
         <li>
             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is( 'tabulasi*')? 'toggled':''}}">
                 <i class="material-icons">tab</i>
@@ -21,15 +22,21 @@
             </a>
             <ul class="ml-menu" style="display: none;">
                 <li {{Route::is('tabulasi.create')? 'class=active':''}}>
-                    <a href="{{route('tabulasi.create')}}">Create Data Tabulasi</a>
+                    <a href="{{route('tabulasi.create')}}">Tambah Data Tabulasi</a>
                 </li>
                 <li {{Route::is('tabulasi.index') || Route::is('tabulasi.show') || Route::is('tabulasi.edit')? 'class=active':''}}>
-                    <a href="{{route('tabulasi.index')}}">Tabulasi Index</a>
+                    <a href="{{route('tabulasi.index')}}">Data Tabulasi</a>
                 </li>
                 <li {{Route::is('tabulasi.quickcount')? 'class=active':''}}>
                     <a href="{{route('tabulasi.quickcount')}}">Hasil Quick Count</a>
                 </li>
             </ul>
+        </li>
+        <li {{Route::is('quickrealcount.*')? 'class=active':''}}>
+          <a href="{{route('quickrealcount.index')}}">
+              <i class="material-icons">insert_chart</i>
+              <span>Quick Real Count Management</span>
+          </a>
         </li>
         @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
         <li {{Route::is('download')? 'class=active':''}}>
@@ -69,18 +76,16 @@
                 <li {{Route::is('monitoring.datapjtps') || Route::is('monitoring.datapjtps.create') || Route::is('monitoring.datapjtps.show') || Route::is('monitoring.datapjtps.edit')? 'class=active':''}}>
                     <a href="{{route('monitoring.datapjtps')}}">Data Korsak</a>
                 </li>
-                <li {{Route::is('monitoring.tabulasi')? 'class=active':''}}>
+                <!-- <li {{Route::is('monitoring.tabulasi')? 'class=active':''}}>
                     <a href="{{route('monitoring.tabulasi')}}">Tabulasi</a>
                 </li>
                 <li {{Route::is('monitoring.foto')? 'class=active':''}}>
-                    <a href="{{route('monitoring.foto')}}">Foto</a>
+                    <a href="{{route('monitoring.foto')}}">Foto</a> -->
                 </li>
                 <li {{Route::is('monitoring.loginterakhir*')? 'class=active':''}}>
                     <a href="{{route('monitoring.loginterakhir')}}">Login Terakhir</a>
                 </li>
-                <li {{Route::is('monitoring.quickrealcount')? 'class=active':''}}>
-                    <a href="{{route('monitoring.quickrealcount')}}">Quick Real Count</a>
-                </li>
+
             </ul>
         </li>
         @endif
@@ -92,16 +97,16 @@
             </a>
             <ul class="ml-menu" style="display: none;">
                 <li {{Route::is('datamaster.calon*')? 'class=active':''}}>
-                    <a href="{{route('datamaster.calon.index')}}">Calon</a>
+                    <a href="{{route('datamaster.calon.index')}}">Calon Management</a>
                 </li>
                 <li {{Route::is('datamaster.dapil*')? 'class=active':''}}>
-                    <a href="{{route('datamaster.dapil.index')}}">Dapil</a>
+                    <a href="{{route('datamaster.dapil.index')}}">Dapil Management</a>
                 </li>
                 <li {{Route::is('datamaster.TPS*')? 'class=active':''}}>
-                    <a href="{{route('datamaster.TPS.index')}}">TPS</a>
+                    <a href="{{route('datamaster.TPS.index')}}">TPS Management</a>
                 </li>
                 <li {{Route::is('datamaster.partai*')? 'class=active':''}}>
-                    <a href="{{route('datamaster.partai.index')}}">Partai</a>
+                    <a href="{{route('datamaster.partai.index')}}">Partai Management</a>
                 </li>
             </ul>
         </li>
@@ -113,7 +118,7 @@
             </a>
             <ul class="ml-menu" style="display: none;">
                 <li {{Route::is('usermanagement*')? 'class=active':''}}>
-                    <a href="{{route('usermanagement.index')}}">Index</a>
+                    <a href="{{route('usermanagement.index')}}">Data User</a>
                 </li>
                 <!-- <li {{Route::is('assignuser*')? 'class=active':''}}>
                     <a href="{{route('assignuser.index')}}">Assign User</a>

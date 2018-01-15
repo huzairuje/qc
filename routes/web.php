@@ -65,7 +65,8 @@ Route::group(['middleware' => 'admin'], function () {
 	//Route for download
 	Route::get('/download',['as'=>'download','uses'=>'DownloadController@index']);
 
-
+	//Route for Monitoring Menu quick Real Count
+	Route::get('/quickrealcount',['as'=>'quickrealcount.index','uses'=>'monitoring\QuickRealCountController@index']);
 
 	//Route For Menu MONITORING--------------------------------------------------------------------------------------------
 
@@ -111,8 +112,7 @@ Route::group(['middleware' => 'admin'], function () {
 
 
 
-	//Route for Monitoring SubMenu quick Real Count
-	Route::get('/monitoring/quickrealcount',['as'=>'monitoring.quickrealcount','uses'=>'monitoring\QuickRealCountController@index']);
+
 
 
 
