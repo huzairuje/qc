@@ -54,9 +54,9 @@
                                                     <a href="{{ route('assignuser.show', $user->id ) }}" class="btn btn-xs btn-primary">
                                                         <i class="material-icons">search</i>Lihat
                                                     </a>
-                                                    <a href="{{ route('assignuser.edit', $user->id ) }}" class="btn btn-xs btn-primary">
+                                                    <!-- <a href="{{ route('assignuser.edit', $user->id ) }}" class="btn btn-xs btn-primary">
                                                         <i class="material-icons">search</i>Edit
-                                                    </a>
+                                                    </a> -->
                                                 </td>
                                             </tr>
                                             @endforeach

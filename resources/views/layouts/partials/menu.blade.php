@@ -115,9 +115,9 @@
                 <li {{Route::is('usermanagement*')? 'class=active':''}}>
                     <a href="{{route('usermanagement.index')}}">Index</a>
                 </li>
-                <li {{Route::is('assignuser*')? 'class=active':''}}>
+                <!-- <li {{Route::is('assignuser*')? 'class=active':''}}>
                     <a href="{{route('assignuser.index')}}">Assign User</a>
-                </li>
+                </li> -->
             </ul>
         </li>
 
