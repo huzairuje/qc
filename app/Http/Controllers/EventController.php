@@ -174,8 +174,9 @@ class EventController extends Controller
          'nama' => 'required',
          // 'lokasi' => 'required',
          'tahun' => 'required',
+         'lokasi' => 'required',
           ]);
-          
+
         $event = Event::find($id);
         if (empty($event)) {
 
