@@ -59,6 +59,20 @@
                                                 {{ $user->roles()->first()->name }}
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th>
+                                                List Event
+                                            </th>
+                                            <td>
+                                                <ul>
+                                                    @foreach($user->userEvent as $event)
+                                                    <li>
+                                                        {{ $event->event->nama }}
+                                                    </li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                        </tr>
                                     </table>
                                     @if($user->roles()->first()->id >= Sentinel::getUser()->id)
                                     <a href="{{ route('usermanagement.edit', $user->id) }}" class="btn btn-success">Edit</a>
