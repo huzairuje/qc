@@ -38,9 +38,9 @@ Route::group(['middleware' => 'guest'], function () {
 	]);
 });
 
-Route::group(['middleware' => 'jwt.auth'], function () {
-	Route::get('user', 'UserController@getAuthUser');
-});
+// Route::group(['middleware' => 'jwt.auth'], function () {
+// 	Route::get('user', 'UserController@getAuthUser');
+// });
 
 Route::group(['middleware' => 'admin'], function () {
 	Route::get('/',['as'=>'dashboard','uses'=>'DashboardController@index']);
