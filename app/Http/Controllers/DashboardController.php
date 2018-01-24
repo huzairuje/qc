@@ -8,7 +8,6 @@ use App\Models\Provinsi;
 use App\Models\Event;
 use App\Models\Dapil;
 use App\Models\DapilLokasi;
-use App\Models\Suara;
 use Charts;
 
 class DashboardController extends Controller
@@ -33,7 +32,7 @@ class DashboardController extends Controller
 
       $chart = Charts::multi('bar', 'material')
             // Setup the chart settings
-            ->title("Chart Suara")
+            ->title("Hasil Suara")
             // A dimension of 0 means it will take 100% of the space
             ->dimensions(700, 300) // Width x Height
             // This defines a preset of colors already done:)
@@ -41,7 +40,7 @@ class DashboardController extends Controller
             // You could always set them manually
              ->colors(['#2196F3', '#F44336', '#FFC107'])
             // Setup the diferent datasets (this is a multi chart)
-            ->dataset(Suara::select(['calon_id','jumlah']))
+            ->dataset('Data Suara', [5,20,100])
             ->responsive(false)
             // Setup what the values mean
             ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
