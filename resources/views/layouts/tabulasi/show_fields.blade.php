@@ -1,5 +1,5 @@
 <div class="body">
-{!! Charts::assets() !!}
+
     <div class="row clearfix">
         <div class="col-md-12">
             <div class="form-group">

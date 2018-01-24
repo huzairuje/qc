@@ -5,7 +5,7 @@ Dashboard
 @endsection
 
 @section('extra-css')
-
+{!! Charts::assets() !!}
 @endsection
 
 @section('content')
@@ -24,7 +24,7 @@ Dashboard
 					<div class="col-md-12">
 							{!! $chart->render() !!}
 					</div>
-					
+
 
 
 				</div>
