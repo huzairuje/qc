@@ -17,4 +17,9 @@ class Suara extends Model
 		{
 				return $this->belongsTo('App\Models\Calon');
 		}
+
+		public function dapil()
+		{
+				return $this->belongsTo('App\Models\Dapil');
+		}
 }

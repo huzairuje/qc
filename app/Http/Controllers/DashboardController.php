@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Models\Provinsi;
 use App\Models\Event;
+use App\Models\Calon;
 use App\Models\Dapil;
 use App\Models\DapilLokasi;
+// use App\Models\DapilLokasi;
 use Charts;
 
 class DashboardController extends Controller
@@ -27,9 +29,13 @@ class DashboardController extends Controller
     public function index()
     {
 
+      // $event = Event::dropdown();
+      // $dapillokasi = DapilLokasi::all();
+      // $event = Event::pluck('nama','id')->all();
+      
       $event = Event::dropdown();
-      $dapillokasi = DapilLokasi::all();
-
+      
+      // dd($eventchart);
       $chart = Charts::multi('bar', 'material')
             // Setup the chart settings
             ->title("Hasil Suara")
@@ -60,25 +66,15 @@ class DashboardController extends Controller
       //   return view('layouts.dashboard.index', compact('event','dapillokasi','chart'));
             }
 
-    public function ajax()
+
+    public function ajax(Request $request)
     {
-      // $event = Event::dropdown();
-      //
-      // $chart = Charts::multi('bar', 'material')
-      //       // Setup the chart settings
-      //       ->title('event')
-      //       // A dimension of 0 means it will take 100% of the space
-      //       ->dimensions(700, 300) // Width x Height
-      //       // This defines a preset of colors already done:)
-      //       ->template("material")
-      //       // You could always set them manually
-      //        ->colors(['#2196F3', '#F44336', '#FFC107'])
-      //       // Setup the diferent datasets (this is a multi chart)
-      //       ->dataset('Data Suara', [5,20,100])
-      //       ->responsive(false)
-      //       // Setup what the values mean
-      //       ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
+      $eventchart = Event::chart();
+      return response()->json($eventchart);
+      // dd($eventchart);
+        
+
+            
     }
-
-
 }
+            

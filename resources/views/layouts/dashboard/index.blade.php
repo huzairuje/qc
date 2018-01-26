@@ -21,9 +21,10 @@ Dashboard
 			</div>
 			<div class="body">
 				<div class="row clearfix">
-					<div class="col-md-12">
-							{!! $chart->render() !!}
-					</div>
+					<div class="col-md-12 panel-body">
+	                   <canvas id="canvas" height="280" width="600">
+	                   	
+	                   </canvas>
 
 
 
@@ -91,6 +92,52 @@ Dashboard
 	@endsection
 
 	@section('extra-script')
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js" charset="utf-8"></script>
+    
+        <script type="text/javascript">
+    $(document).ready(function(){
+	$.ajax({
+		url: "{{ route('dashboard.ajax') }}",
+		method: "GET",
+		success: function(data) {
+			console.log(data);
+			var calon_nama = [];
+			var jumlah_suara = [];
+			var event_nama = [];
 
+			for(var i in data) {
+				calon_nama.push(data[i].calon_nama);
+				jumlah_suara.push(data[i].jumlah_suara);
+				event_nama.push(data[i].event_nama);
+			}
+			console.log(calon_nama);
+
+			var chartdata = {
+				labels: calon_nama,
+				datasets : [
+					{
+						label: 'Calon Suara',
+						backgroundColor: 'rgba(200, 200, 200, 0.75)',
+						borderColor: 'rgba(200, 200, 200, 0.75)',
+						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+						hoverBorderColor: 'rgba(200, 200, 200, 1)',
+						data: jumlah_suara
+					}
+				]
+			};
+
+			var ctx = $("#canvas");
+
+			var barGraph = new Chart(ctx, {
+				type: 'bar',
+				data: chartdata
+			});
+		},
+		error: function(data) {
+			console.log(data);
+		}
+	});
+});
+</script>
 
 	@endsection

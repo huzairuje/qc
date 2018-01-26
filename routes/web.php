@@ -43,7 +43,11 @@ Route::group(['middleware' => 'guest'], function () {
 // });
 
 Route::group(['middleware' => 'admin'], function () {
+
+	//Route for Dashboard
 	Route::get('/',['as'=>'dashboard','uses'=>'DashboardController@index']);
+	Route::get('/ajax',['as'=>'dashboard.ajax','uses'=>'DashboardController@ajax']);
+	//End Route for Dashboard
 
 	//Route For user
 	Route::get('/users', 'UserController@profile')->name('users.profile');
@@ -60,66 +64,58 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::patch('/tabulasi/update/{id}',['as'=>'tabulasi.update','uses'=>'TabulasiController@update']);
 	Route::post('/tabulasi/store',['as'=>'tabulasi.store','uses'=>'TabulasiController@store']);
 	Route::get('/tabulasi/{id}', ['as' => 'tabulasi.delete', 'uses' => 'TabulasiController@destroy']);
-
+	//End Route for Tabulasi
 
 	//Route for download
 	Route::get('/download',['as'=>'download','uses'=>'DownloadController@index']);
 
 	//Route for Monitoring Menu quick Real Count
 	Route::get('/quickrealcount',['as'=>'quickrealcount.index','uses'=>'monitoring\QuickRealCountController@index']);
-
-	//Route For Menu MONITORING--------------------------------------------------------------------------------------------
-
-	//Route for Monitoring SubMenu DataSaksi
-	Route::get('/monitoring/datasaksi',['as'=>'monitoring.datasaksi','uses'=>'monitoring\DataSaksiController@index']);
-	Route::get('/monitoring/datasaksi/getdatatable', ['as'=>'monitoring.datasaksi.datatable', 'uses' => 'monitoring\DataSaksiController@get_datatable']);
-	Route::get('/monitoring/datasaksi/create',['as'=>'monitoring.datasaksi.create','uses'=>'monitoring\DataSaksiController@create']);
-	Route::get('/monitoring/datasaksi/show/{id}',['as'=>'monitoring.datasaksi.show','uses'=>'monitoring\DataSaksiController@show']);
-	Route::get('/monitoring/datasaksi/edit/{id}',['as'=>'monitoring.datasaksi.edit','uses'=>'monitoring\DataSaksiController@edit']);
-	Route::patch('/monitoring/datasaksi/update/{id}',['as'=>'monitoring.datasaksi.update','uses'=>'monitoring\DataSaksiController@update']);
-	Route::post('/monitoring/datasaksi/store',['as'=>'monitoring.datasaksi.store','uses'=>'monitoring\DataSaksiController@store']);
-	Route::get('/monitoring/datasaksi/{id}',['as'=>'monitoring.datasaksi.delete','uses'=>'monitoring\DataSaksiController@destroy']);
+	//End Route for Monitoring Menu Quick Real Count
 
 
+	//Route For Menu MONITORING
+		//Route for Monitoring SubMenu DataSaksi
+		Route::get('/monitoring/datasaksi',['as'=>'monitoring.datasaksi','uses'=>'monitoring\DataSaksiController@index']);
+		Route::get('/monitoring/datasaksi/getdatatable', ['as'=>'monitoring.datasaksi.datatable', 'uses' => 'monitoring\DataSaksiController@get_datatable']);
+		Route::get('/monitoring/datasaksi/create',['as'=>'monitoring.datasaksi.create','uses'=>'monitoring\DataSaksiController@create']);
+		Route::get('/monitoring/datasaksi/show/{id}',['as'=>'monitoring.datasaksi.show','uses'=>'monitoring\DataSaksiController@show']);
+		Route::get('/monitoring/datasaksi/edit/{id}',['as'=>'monitoring.datasaksi.edit','uses'=>'monitoring\DataSaksiController@edit']);
+		Route::patch('/monitoring/datasaksi/update/{id}',['as'=>'monitoring.datasaksi.update','uses'=>'monitoring\DataSaksiController@update']);
+		Route::post('/monitoring/datasaksi/store',['as'=>'monitoring.datasaksi.store','uses'=>'monitoring\DataSaksiController@store']);
+		Route::get('/monitoring/datasaksi/{id}',['as'=>'monitoring.datasaksi.delete','uses'=>'monitoring\DataSaksiController@destroy']);
 
-	//Route for Monitoring SubMenu Data PJ TPS
-	Route::get('/monitoring/datapjtps',['as'=>'monitoring.datapjtps','uses'=>'monitoring\DataPJTPSController@index']);
-	Route::get('/monitoring/datapjtps/getdatatable', ['as'=>'monitoring.datapjtps.datatable', 'uses' => 'monitoring\DataPJTPSController@get_datatable']);
-	Route::get('/monitoring/datapjtps/create',['as'=>'monitoring.datapjtps.create','uses'=>'monitoring\DataPJTPSController@create']);
-	Route::get('/monitoring/datapjtps/show/{id}',['as'=>'monitoring.datapjtps.show','uses'=>'monitoring\DataPJTPSController@show']);
-	Route::get('/monitoring/datapjtps/edit/{id}',['as'=>'monitoring.datapjtps.edit','uses'=>'monitoring\DataPJTPSController@edit']);
-	Route::patch('/monitoring/datapjtps/update/{id}',['as'=>'monitoring.datapjtps.update','uses'=>'monitoring\DataPJTPSController@update']);
-	Route::post('/monitoring/datapjtps/store',['as'=>'monitoring.datapjtps.store','uses'=>'monitoring\DataPJTPSController@store']);
-	Route::get('/monitoring/datapjtps/{id}',['as'=>'monitoring.datapjtps.delete','uses'=>'monitoring\DataPJTPSController@destroy']);
+		//Route for Monitoring SubMenu Data PJ TPS
+		Route::get('/monitoring/datapjtps',['as'=>'monitoring.datapjtps','uses'=>'monitoring\DataPJTPSController@index']);
+		Route::get('/monitoring/datapjtps/getdatatable', ['as'=>'monitoring.datapjtps.datatable', 'uses' => 'monitoring\DataPJTPSController@get_datatable']);
+		Route::get('/monitoring/datapjtps/create',['as'=>'monitoring.datapjtps.create','uses'=>'monitoring\DataPJTPSController@create']);
+		Route::get('/monitoring/datapjtps/show/{id}',['as'=>'monitoring.datapjtps.show','uses'=>'monitoring\DataPJTPSController@show']);
+		Route::get('/monitoring/datapjtps/edit/{id}',['as'=>'monitoring.datapjtps.edit','uses'=>'monitoring\DataPJTPSController@edit']);
+		Route::patch('/monitoring/datapjtps/update/{id}',['as'=>'monitoring.datapjtps.update','uses'=>'monitoring\DataPJTPSController@update']);
+		Route::post('/monitoring/datapjtps/store',['as'=>'monitoring.datapjtps.store','uses'=>'monitoring\DataPJTPSController@store']);
+		Route::get('/monitoring/datapjtps/{id}',['as'=>'monitoring.datapjtps.delete','uses'=>'monitoring\DataPJTPSController@destroy']);
 
 
-
-
-	//Route for Monitoring SubMenu Tabulasi
-	Route::get('/monitoring/tabulasi',['as'=>'monitoring.tabulasi','uses'=>'monitoring\TabulasiController@index']);
+		//Route for Monitoring SubMenu Tabulasi
+		Route::get('/monitoring/tabulasi',['as'=>'monitoring.tabulasi','uses'=>'monitoring\TabulasiController@index']);
 
 
 
-	//Route for Monitoring SubMenu Foto
-	Route::get('/monitoring/foto',['as'=>'monitoring.foto','uses'=>'monitoring\FotoController@index']);
+		//Route for Monitoring SubMenu Foto
+		Route::get('/monitoring/foto',['as'=>'monitoring.foto','uses'=>'monitoring\FotoController@index']);
 
 
 
-	//Route for Monitoring SubMenu Login Terakhir
-	Route::get('/monitoring/loginterakhir',['as'=>'monitoring.loginterakhir','uses'=>'monitoring\LoginTerakhirController@index']);
-	Route::get('/monitoring/loginterakhir/getdatatable',['as'=>'monitoring.loginterakhir.datatable','uses'=>'monitoring\LoginTerakhirController@get_datatable']);
-	Route::get('/monitoring/loginterakhir/show/{id}',['as'=>'monitoring.loginterakhir.show','uses'=>'monitoring\LoginTerakhirController@show']);
+		//Route for Monitoring SubMenu Login Terakhir
+		Route::get('/monitoring/loginterakhir',['as'=>'monitoring.loginterakhir','uses'=>'monitoring\LoginTerakhirController@index']);
+		Route::get('/monitoring/loginterakhir/getdatatable',['as'=>'monitoring.loginterakhir.datatable','uses'=>'monitoring\LoginTerakhirController@get_datatable']);
+		Route::get('/monitoring/loginterakhir/show/{id}',['as'=>'monitoring.loginterakhir.show','uses'=>'monitoring\LoginTerakhirController@show']);
 
 
+		//Route for Monitoring SubMenu Foto
+		Route::get('/monitoring/presensipetugas',['as'=>'monitoring.presensipetugas','uses'=>'monitoring\PresensiPetugasController@index']);
 
-
-
-
-
-	//Route for Monitoring SubMenu Foto
-	Route::get('/monitoring/presensipetugas',['as'=>'monitoring.presensipetugas','uses'=>'monitoring\PresensiPetugasController@index']);
-
-	//End Route For Menu MONITORING--------------------------------------------------------------------------------------------
+	//End Route For Menu MONITORING
 
 	//Route For Absensi
 	Route::get('/absensi',['as'=>'absensi.index','uses'=>'AbsensiController@index']);
@@ -133,6 +129,7 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::get('/absensi/{id}',['as'=>'absensi.delete','uses'=>'AbsensiController@destroy']);
 	//End Route For Absensi
 
+
 	//Route For APPROVAL
 	Route::get('/approval',['as'=>'approval.index','uses'=>'ApprovalController@index']);
 	Route::get('/approval/ajax',['as'=>'approval.ajax','uses'=>'ApprovalController@ajax']);
@@ -144,6 +141,7 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::post('/approval/store',['as'=>'approval.store','uses'=>'ApprovalController@store']);
 	Route::get('/approval/{id}',['as'=>'approval.delete','uses'=>'ApprovalController@destroy']);
 	//End Route For Approval
+
 
 	//Route for Event
 	Route::get('/event',['as'=>'event.index','uses'=>'EventController@index']);
@@ -157,53 +155,61 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::get('/event/{id}',['as'=>'event.delete','uses'=>'EventController@destroy']);
 	//End Route for Event
 
+
 	//Route for data master
-	// Route::get('/datamaster',['as'=>'datamaster.index','uses'=>'DataMasterController@index']);
-	// Route::get('/datamaster/create',['as'=>'datamaster.create','uses'=>'DataMasterController@create']);
-	//TPS
-	Route::get('/datamaster/TPS',['as'=>'datamaster.TPS.index', 'uses'=>'data_master\TPSController@index']);
-	Route::get('/datamaster/TPS/ajax',['as'=>'datamaster.TPS.ajax', 'uses'=>'data_master\TPSController@ajax']);
-	Route::get('/datamaster/TPS/getdatatable',['as'=>'datamaster.TPS.datatable', 'uses'=>'data_master\TPSController@get_datatable']);
-	Route::get('/datamaster/TPS/create',['as'=>'datamaster.TPS.create', 'uses'=>'data_master\TPSController@create']);
-	Route::get('/datamaster/TPS/edit/{id}',['as'=>'datamaster.TPS.edit', 'uses'=>'data_master\TPSController@edit']);
-	Route::patch('/datamaster/TPS/update/{id}',['as'=>'datamaster.TPS.update', 'uses'=>'data_master\TPSController@update']);
-	Route::post('/datamaster/TPS/store',['as'=>'datamaster.TPS.store', 'uses'=>'data_master\TPSController@store']);
-	Route::get('/datamaster/TPS/show/{id}',['as'=>'datamaster.TPS.show', 'uses'=>'data_master\TPSController@show']);
-	Route::get('/datamaster/TPS/{id}',['as'=>'datamaster.TPS.delete', 'uses'=>'data_master\TPSController@destroy']);
-	//EndTPS
-	//Dapil
-	Route::get('/datamaster/dapil',['as'=>'datamaster.dapil.index', 'uses'=>'data_master\DapilController@index']);
-	Route::get('/datamaster/dapil/ajax',['as'=>'datamaster.dapil.ajax', 'uses'=>'data_master\DapilController@ajax']);
-	Route::get('/datamaster/dapil/getdatatable',['as'=>'datamaster.dapil.datatable', 'uses'=>'data_master\DapilController@get_datatable']);
-	Route::get('/datamaster/dapil/create',['as'=>'datamaster.dapil.create', 'uses'=>'data_master\DapilController@create']);
-	Route::get('/datamaster/dapil/edit/{id}',['as'=>'datamaster.dapil.edit', 'uses'=>'data_master\DapilController@edit']);
-	Route::patch('/datamaster/dapil/update/{id}',['as'=>'datamaster.dapil.update', 'uses'=>'data_master\DapilController@update']);
-	Route::post('/datamaster/dapil/store',['as'=>'datamaster.dapil.store', 'uses'=>'data_master\DapilController@store']);
-	Route::get('/datamaster/dapil/show/{id}',['as'=>'datamaster.dapil.show', 'uses'=>'data_master\DapilController@show']);
-	Route::get('/datamaster/dapil/{id}',['as'=>'datamaster.dapil.delete', 'uses'=>'data_master\DapilController@destroy']);
-	//EndDapil
-	//Calon
-	Route::get('/datamaster/calon', ['as'=>'datamaster.calon.index', 'uses'=>'data_master\CalonController@index']);
-	Route::get('/datamaster/calon/ajax', ['as'=>'datamaster.calon.ajax', 'uses'=>'data_master\CalonController@ajax']);
-	Route::get('/datamaster/calon/getdatatable', ['as'=>'datamaster.calon.datatable', 'uses'=>'data_master\CalonController@get_datatable']);
-	Route::get('/datamaster/calon/create',['as'=>'datamaster.calon.create', 'uses'=>'data_master\CalonController@create']);
-	Route::get('/datamaster/calon/edit/{id}',['as'=>'datamaster.calon.edit', 'uses'=>'data_master\CalonController@edit']);
-	Route::patch('/datamaster/calon/update/{id}',['as'=>'datamaster.calon.update', 'uses'=>'data_master\CalonController@update']);
-	Route::post('/datamaster/calon/store',['as'=>'datamaster.calon.store', 'uses'=>'data_master\CalonController@store']);
-	Route::get('/datamaster/calon/show/{id}',['as'=>'datamaster.calon.show','uses'=>'data_master\CalonController@show']);
-	Route::get('/datamaster/calon/{id}',['as'=>'datamaster.calon.delete', 'uses'=>'data_master\CalonController@destroy']);
-	//EndCalon
-	//Partai
-	Route::get('/datamaster/partai',['as'=>'datamaster.partai.index', 'uses'=>'data_master\PartaiController@index']);
-	Route::get('/datamaster/partai/ajax',['as'=>'datamaster.partai.ajax', 'uses'=>'data_master\PartaiController@ajax']);
-	Route::get('/datamaster/partai/getdatatable',['as'=>'datamaster.partai.datatable', 'uses'=>'data_master\PartaiController@get_datatable']);
-	Route::get('/datamaster/partai/create',['as'=>'datamaster.partai.create', 'uses'=>'data_master\PartaiController@create']);
-	Route::get('/datamaster/partai/edit/{id}',['as'=>'datamaster.partai.edit', 'uses'=>'data_master\PartaiController@edit']);
-	Route::patch('/datamaster/partai/update/{id}',['as'=>'datamaster.partai.update', 'uses'=>'data_master\PartaiController@edit']);
-	Route::post('/datamaster/partai/store',['as'=>'datamaster.partai.store', 'uses'=>'data_master\PartaiController@store']);
-	Route::get('/datamaster/partai/show/{id}',['as'=>'datamaster.partai.show','uses'=>'data_master\PartaiController@show']);
-	Route::get('/datamaster/partai/{id}',['as'=>'datamaster.partai.delete', 'uses'=>'data_master\PartaiController@destroy']);
-	//EndPartai
+
+		// Route::get('/datamaster',['as'=>'datamaster.index','uses'=>'DataMasterController@index']);
+		// Route::get('/datamaster/create',['as'=>'datamaster.create','uses'=>'DataMasterController@create']);
+	
+		//Route for TPS
+		Route::get('/datamaster/TPS',['as'=>'datamaster.TPS.index', 'uses'=>'data_master\TPSController@index']);
+		Route::get('/datamaster/TPS/ajax',['as'=>'datamaster.TPS.ajax', 'uses'=>'data_master\TPSController@ajax']);
+		Route::get('/datamaster/TPS/getdatatable',['as'=>'datamaster.TPS.datatable', 'uses'=>'data_master\TPSController@get_datatable']);
+		Route::get('/datamaster/TPS/create',['as'=>'datamaster.TPS.create', 'uses'=>'data_master\TPSController@create']);
+		Route::get('/datamaster/TPS/edit/{id}',['as'=>'datamaster.TPS.edit', 'uses'=>'data_master\TPSController@edit']);
+		Route::patch('/datamaster/TPS/update/{id}',['as'=>'datamaster.TPS.update', 'uses'=>'data_master\TPSController@update']);
+		Route::post('/datamaster/TPS/store',['as'=>'datamaster.TPS.store', 'uses'=>'data_master\TPSController@store']);
+		Route::get('/datamaster/TPS/show/{id}',['as'=>'datamaster.TPS.show', 'uses'=>'data_master\TPSController@show']);
+		Route::get('/datamaster/TPS/{id}',['as'=>'datamaster.TPS.delete', 'uses'=>'data_master\TPSController@destroy']);
+		//EndRoute for TPS
+
+		//Route for Dapil
+		Route::get('/datamaster/dapil',['as'=>'datamaster.dapil.index', 'uses'=>'data_master\DapilController@index']);
+		Route::get('/datamaster/dapil/ajax',['as'=>'datamaster.dapil.ajax', 'uses'=>'data_master\DapilController@ajax']);
+		Route::get('/datamaster/dapil/getdatatable',['as'=>'datamaster.dapil.datatable', 'uses'=>'data_master\DapilController@get_datatable']);
+		Route::get('/datamaster/dapil/create',['as'=>'datamaster.dapil.create', 'uses'=>'data_master\DapilController@create']);
+		Route::get('/datamaster/dapil/edit/{id}',['as'=>'datamaster.dapil.edit', 'uses'=>'data_master\DapilController@edit']);
+		Route::patch('/datamaster/dapil/update/{id}',['as'=>'datamaster.dapil.update', 'uses'=>'data_master\DapilController@update']);
+		Route::post('/datamaster/dapil/store',['as'=>'datamaster.dapil.store', 'uses'=>'data_master\DapilController@store']);
+		Route::get('/datamaster/dapil/show/{id}',['as'=>'datamaster.dapil.show', 'uses'=>'data_master\DapilController@show']);
+		Route::get('/datamaster/dapil/{id}',['as'=>'datamaster.dapil.delete', 'uses'=>'data_master\DapilController@destroy']);
+		//EndRoute for Dapil
+
+		//Route for Calon
+		Route::get('/datamaster/calon', ['as'=>'datamaster.calon.index', 'uses'=>'data_master\CalonController@index']);
+		Route::get('/datamaster/calon/ajax', ['as'=>'datamaster.calon.ajax', 'uses'=>'data_master\CalonController@ajax']);
+		Route::get('/datamaster/calon/getdatatable', ['as'=>'datamaster.calon.datatable', 'uses'=>'data_master\CalonController@get_datatable']);
+		Route::get('/datamaster/calon/create',['as'=>'datamaster.calon.create', 'uses'=>'data_master\CalonController@create']);
+		Route::get('/datamaster/calon/edit/{id}',['as'=>'datamaster.calon.edit', 'uses'=>'data_master\CalonController@edit']);
+		Route::patch('/datamaster/calon/update/{id}',['as'=>'datamaster.calon.update', 'uses'=>'data_master\CalonController@update']);
+		Route::post('/datamaster/calon/store',['as'=>'datamaster.calon.store', 'uses'=>'data_master\CalonController@store']);
+		Route::get('/datamaster/calon/show/{id}',['as'=>'datamaster.calon.show','uses'=>'data_master\CalonController@show']);
+		Route::get('/datamaster/calon/{id}',['as'=>'datamaster.calon.delete', 'uses'=>'data_master\CalonController@destroy']);
+		//EndRoute for Calon
+
+		//Route for Partai
+		Route::get('/datamaster/partai',['as'=>'datamaster.partai.index', 'uses'=>'data_master\PartaiController@index']);
+		Route::get('/datamaster/partai/ajax',['as'=>'datamaster.partai.ajax', 'uses'=>'data_master\PartaiController@ajax']);
+		Route::get('/datamaster/partai/getdatatable',['as'=>'datamaster.partai.datatable', 'uses'=>'data_master\PartaiController@get_datatable']);
+		Route::get('/datamaster/partai/create',['as'=>'datamaster.partai.create', 'uses'=>'data_master\PartaiController@create']);
+		Route::get('/datamaster/partai/edit/{id}',['as'=>'datamaster.partai.edit', 'uses'=>'data_master\PartaiController@edit']);
+		Route::patch('/datamaster/partai/update/{id}',['as'=>'datamaster.partai.update', 'uses'=>'data_master\PartaiController@edit']);
+		Route::post('/datamaster/partai/store',['as'=>'datamaster.partai.store', 'uses'=>'data_master\PartaiController@store']);
+		Route::get('/datamaster/partai/show/{id}',['as'=>'datamaster.partai.show','uses'=>'data_master\PartaiController@show']);
+		Route::get('/datamaster/partai/{id}',['as'=>'datamaster.partai.delete', 'uses'=>'data_master\PartaiController@destroy']);
+		//EndRoute for Partai
+
+
 	//Route for User Management
 	Route::get('/user-management',['as'=>'usermanagement.index','uses'=>'UserManagementController@index']);
 	Route::get('/user-management/ajax',['as'=>'user-management.ajax','uses'=>'UserManagementController@ajax']);
@@ -231,3 +237,9 @@ Route::group(['middleware' => 'admin'], function () {
 	]);
 
 });
+
+
+
+
+
+

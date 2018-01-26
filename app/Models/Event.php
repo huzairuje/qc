@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Event extends Model
 {
@@ -55,5 +56,16 @@ class Event extends Model
     public function scopeDropdown()
     {
       return Event::pluck('nama','id')->all();
+    }
+
+    public function scopeChart($event_id)
+    {
+        return DB::select('select "event"."nama" as event_nama, "calon"."nama" as calon_nama, "suara"."jumlah" as jumlah_suara
+            from "event"
+            left join dapil on dapil.event_id = event.id
+            left join calon on calon.dapil_id = dapil.id
+            left join suara on suara.calon_id = calon.id
+            where event.id = 3');
+        
     }
 }
