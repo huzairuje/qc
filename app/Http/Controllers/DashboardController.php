@@ -34,7 +34,7 @@ class DashboardController extends Controller
       // $event = Event::pluck('nama','id')->all();
       
       $event = Event::dropdown();
-      
+      $eventchart = Event::chart();
       // dd($eventchart);
       $chart = Charts::multi('bar', 'material')
             // Setup the chart settings
@@ -69,12 +69,17 @@ class DashboardController extends Controller
 
     public function ajax(Request $request)
     {
-      $eventchart = Event::chart();
-      return response()->json($eventchart);
-      // dd($eventchart);
-        
+
+        // $event = $request->event_id;
+        // switch ($event) {
+        //     case 'get-chart':
+            $eventchart = Event::chart();
+            return response()->json($eventchart);
+            // dd($eventchart);
+            // break;
 
             
-    }
-}
+        }
+
             
+}

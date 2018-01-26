@@ -94,7 +94,7 @@ Dashboard
 	@section('extra-script')
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js" charset="utf-8"></script>
     
-        <script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(function(){
 	$.ajax({
 		url: "{{ route('dashboard.ajax') }}",
@@ -108,15 +108,15 @@ Dashboard
 			for(var i in data) {
 				calon_nama.push(data[i].calon_nama);
 				jumlah_suara.push(data[i].jumlah_suara);
-				event_nama.push(data[i].event_nama);
 			}
+				event_nama.push(data[i].event_nama);
 			console.log(calon_nama);
 
 			var chartdata = {
 				labels: calon_nama,
 				datasets : [
 					{
-						label: 'Calon Suara',
+						label: event_nama,
 						backgroundColor: 'rgba(200, 200, 200, 0.75)',
 						borderColor: 'rgba(200, 200, 200, 0.75)',
 						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
