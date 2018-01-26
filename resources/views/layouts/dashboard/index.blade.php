@@ -110,7 +110,7 @@ Dashboard
 				jumlah_suara.push(data[i].jumlah_suara);
 			}
 				event_nama.push(data[i].event_nama);
-			console.log(calon_nama);
+			console.log(event_nama);
 
 			var chartdata = {
 				labels: calon_nama,
