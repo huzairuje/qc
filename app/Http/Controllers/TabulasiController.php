@@ -19,6 +19,10 @@ use App\Models\Provinsi;
 use App\Models\Kota;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
+use App\Models\Event;
+use App\Models\Tps;
+use App\Models\Dapil;
+use App\Models\Calon;
 use Charts;
 use Flash;
 
@@ -140,7 +144,9 @@ class TabulasiController extends Controller
 
         $kelurahan = array();
 
-        return view('layouts.tabulasi.create', compact('provinsi','kota','kecamatan','kelurahan'));
+        $event = Event::dropdown();
+
+        return view('layouts.tabulasi.create', compact('provinsi','kota','kecamatan','kelurahan','event'));
     }
 
     public function store(Request $request)
@@ -152,12 +158,16 @@ class TabulasiController extends Controller
          'kota_id' => 'required',
          'kecamatan_id' => 'required',
          'kelurahan_id' => 'required',
+         'event_id' => 'required',
           ]);
 
 
         $input = $request->all();
         // dd($request);
 
+        if ($request->tabulasi) {
+          $input['data_suara'] = json_encode($request->tabulasi);
+        }
         $tabulasi = Tabulasi::create($input);
         // dd($tabulasi);
 
@@ -176,6 +186,7 @@ class TabulasiController extends Controller
         $kecamatan = Kecamatan::where('kota_id', $tabulasi->kota_id)->pluck('nama','id')->all();
         $kelurahan = Kelurahan::where('kecamatan_id', $tabulasi->kecamatan_id)->pluck('nama','id')->all();
         // dd($kota_kabupaten);
+        $event = Event::dropdown();
 
         if (empty($tabulasi)) {
             flash('Data Tabulasi Tidak Ada');
@@ -183,7 +194,7 @@ class TabulasiController extends Controller
             return redirect(route('tabulasi.index'));
         }
 
-        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota','kecamatan','kelurahan'));
+        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota','kecamatan','kelurahan','event'));
     }
 
 
@@ -248,6 +259,26 @@ class TabulasiController extends Controller
 
           case 'get-kelurahan':
           $result = Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+          return $result;
+          break;
+
+          case 'get-tps-calon':
+
+          $result['status'] = false;
+          $tps = Tps::where('kelurahan_id', $request->kelurahan_id)->orderBy('nomor', 'ASC')->pluck('nomor', 'id')->all();
+
+          $calon = array();
+          if ($request->event_id) {
+            $dapil = Dapil::where('event_id',$request->event_id)->pluck('id')->all();
+
+            if ($dapil) {
+              $calon = Calon::whereIn('dapil_id',$dapil)->get();
+            }
+
+            $result['status'] = true;
+          }
+
+          $result['html'] = view('layouts.tabulasi.data',compact('calon','tps'))->render();
           return $result;
           break;
 

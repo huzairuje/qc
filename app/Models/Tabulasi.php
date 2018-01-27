@@ -18,7 +18,8 @@ class Tabulasi extends Model
         'kota_id',
         'kecamatan_id',
         'kelurahan_id',
-        'data_suara'
+        'data_suara',
+				'event_id'
     ];
 
     public function provinsi()

@@ -33,6 +33,10 @@
 
                     </div>
 
+										<div class="col-md-12">
+											{!! Form::select('event_id', $event,null, ['class' => 'form-control','id' => 'event_id','placeholder' => '']) !!}
+										</div>
+
                     <div class="col-md-6">
                            {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}
                     </div>
@@ -50,33 +54,8 @@
                                 {{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
                     </div>
 
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-line">
-                                <table id="data_suara" class="table table-bordered" style="cursor: pointer;">
-                                    <thead>
-                                      <tr class="bg-blue" style="color: white;">
-                                        @for ($x = 1; $x <= 20; $x++)
-                                            <th class="tg-yw4l">X{{ $x }}</th>
-                                        @endfor
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                        @for ($y = 1; $y <= 20; $y++)
-                                          <tr>
-                                            @for ($x = 1; $x <= 20; $x++)
-                                                <td class="tg-yw4l" tabindex="1">
+                    <div class="col-md-12 result" style="display:none;">
 
-                                                </td>
-                                            @endfor
-                                          </tr>
-                                        @endfor
-
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
                     </div>
 
 
@@ -96,15 +75,16 @@
 <script src="{{ asset('bsbmd/js/pages/tables/editable-table.js') }}"></script>
 <script src="{{ asset('bsbmd/js/pages/tables/numeric-input-example.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
-<script type="text/javascript" src="https://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js"></script>
+<!-- <script type="text/javascript" src="https://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js"></script> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
-<script type="text/javascript" src="https://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js"></script>
+<!-- <script type="text/javascript" src="https://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script type="text/javascript">
     $(document).ready( function() {
         // select2
 
         var _url = '{{ route('datamaster.TPS.ajax') }}';
+				var _url_new = '{{ route('tabulasi.ajax') }}';
 
         $(document).on('change','#provinsi_id',function(){
             var _val = $(this).val();
@@ -155,8 +135,36 @@
 
 	                $('#kelurahan_id').html(html);
 	                $('#kelurahan_id').selectpicker('refresh');
+
+									var kelurahan = $('#kelurahan_id').val();
+									var event_id = $('#event_id').val();
+                  // get tps
+									$.get(_url_new,{'type':'get-tps-calon','kelurahan_id':kelurahan,'event_id':event_id})
+			            .done(function(result_tps) {
+										if (result_tps.status) {
+											$('.result').html(result_tps.html);
+											$('.result').show();
+										}else {
+											$('.result').hide();
+										}
+									});
 	            });
 	        });
+
+					$(document).on('change','#kelurahan_id',function(){
+						var kelurahan = $(this).val();
+						var event_id = $('#event_id').val();
+						// get tps
+						$.get(_url_new,{'type':'get-tps-calon','kelurahan_id':kelurahan,'event_id':event_id})
+						.done(function(result_tps) {
+							if (result_tps.status) {
+								$('.result').html(result_tps.html);
+								$('.result').show();
+							}else {
+								$('.result').hide();
+							}
+						});
+					});
 	    });
 </script>
 
