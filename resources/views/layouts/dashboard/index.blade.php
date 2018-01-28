@@ -16,7 +16,14 @@ Dashboard
 
 	<div class="card">
 		<div class="header">
-			<h2>{!! Form::select('event_id', $event,null, ['class' => 'form-control','id' => 'event_id','placeholder' => '']) !!}</h2>
+			<h2>
+				<select id="event_id" class="form-control">
+					<option></option>
+					@foreach ($event as $key => $ev)
+					<option value="{!! $key !!}" data>{!! $ev !!}</option>
+					@endforeach
+				</select>
+			</h2>
 
 			</div>
 			<div class="body">
@@ -96,48 +103,62 @@ Dashboard
     
     <script type="text/javascript">
     $(document).ready(function(){
-	$.ajax({
-		url: "{{ route('dashboard.ajax') }}",
-		method: "GET",
-		success: function(data) {
-			console.log(data);
-			var calon_nama = [];
-			var jumlah_suara = [];
-			var event_nama = [];
+    	ajaxChart();
+    });
 
-			for(var i in data) {
-				calon_nama.push(data[i].calon_nama);
-				jumlah_suara.push(data[i].jumlah_suara);
-			}
-				event_nama.push(data[i].event_nama);
-			console.log(event_nama);
-
-			var chartdata = {
-				labels: calon_nama,
-				datasets : [
-					{
-						label: event_nama,
-						backgroundColor: 'rgba(200, 200, 200, 0.75)',
-						borderColor: 'rgba(200, 200, 200, 0.75)',
-						hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
-						hoverBorderColor: 'rgba(200, 200, 200, 1)',
-						data: jumlah_suara
-					}
-				]
-			};
-
-			var ctx = $("#canvas");
-
-			var barGraph = new Chart(ctx, {
-				type: 'bar',
-				data: chartdata
-			});
-		},
-		error: function(data) {
-			console.log(data);
-		}
+    $(document).on("change", "#event_id", function(){
+    	var event_id = $("#event_id").val();
+    	ajaxChart(event_id);
 	});
-});
+
+	function ajaxChart(event_id = null){
+		$.ajax({
+			url: "{{ route('dashboard.ajax') }}",
+			type: "POST",
+			data:{
+				"_token": "{{ csrf_token() }}",
+				'first': false,
+				'event_id': event_id
+			},
+			success: function(data) {
+				console.log(data);
+				var calon_nama = [];
+				var jumlah_suara = [];
+				var event_nama = [];
+
+				for(var i in data) {
+					calon_nama.push(data[i].calon_nama);
+					jumlah_suara.push(data[i].jumlah_suara);
+				}
+					event_nama.push(data[i].event_nama);
+				console.log(event_nama);
+
+				var chartdata = {
+					labels: calon_nama,
+					datasets : [
+						{
+							label: event_nama,
+							backgroundColor: 'rgba(200, 200, 200, 0.75)',
+							borderColor: 'rgba(200, 200, 200, 0.75)',
+							hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+							hoverBorderColor: 'rgba(200, 200, 200, 1)',
+							data: jumlah_suara
+						}
+					]
+				};
+
+				var ctx = $("#canvas");
+
+				var barGraph = new Chart(ctx, {
+					type: 'bar',
+					data: chartdata
+				});
+			},
+			error: function(data) {
+				console.log(data);
+			}
+		});
+	}
 </script>
 
 	@endsection

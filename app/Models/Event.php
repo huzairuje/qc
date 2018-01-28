@@ -7,7 +7,7 @@ use DB;
 
 class Event extends Model
 {
-    protected $table = 'event';
+    public $table = 'event';
     public $primaryKey ='id';
 
     const CREATED_AT = 'created_at';
@@ -58,14 +58,23 @@ class Event extends Model
       return Event::pluck('nama','id')->all();
     }
 
-    public function scopeChart($event_id)
+    public static function chart()
     {
-        return DB::select('select "event"."nama" as event_nama, "calon"."nama" as calon_nama, "suara"."jumlah" as jumlah_suara
-            from "event"
-            left join dapil on dapil.event_id = event.id
-            left join calon on calon.dapil_id = dapil.id
-            left join suara on suara.calon_id = calon.id
-            where event.id = 3');
-        
+
+        // return DB::select('select "event"."nama" as event_nama, "calon"."nama" as calon_nama, "suara"."jumlah" as jumlah_suara
+        //     from "event"
+        //     left join dapil on dapil.event_id = event.id
+        //     left join calon on calon.dapil_id = dapil.id
+        //     left join suara on suara.calon_id = calon.id
+        //     where event.id = '.$event_id);
+        $dapil = new Dapil;
+        $query = self::leftJoin("dapil", "dapil.event_id", "=", "event.id")
+                 ->leftJoin("calon", "calon.dapil_id", "=", "dapil.id")
+                 ->leftJoin("suara", "suara.calon_id", "=", "calon.id")
+                 ->select("event.nama as event_nama",
+                            "calon.nama as calon_nama",
+                            "suara.jumlah as jumlah_suara"
+                 );
+        return $query;
     }
 }

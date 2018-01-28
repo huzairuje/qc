@@ -33,9 +33,9 @@
 
                     </div>
 
-										<div class="col-md-12">
-											{!! Form::select('event_id', $event,null, ['class' => 'form-control','id' => 'event_id','placeholder' => '']) !!}
-										</div>
+					<div class="col-md-12">
+						{!! Form::select('event_id', $event,null, ['class' => 'form-control','id' => 'event_id','placeholder' => '']) !!}
+					</div>
 
                     <div class="col-md-6">
                            {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}

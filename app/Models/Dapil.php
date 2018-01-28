@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dapil extends Model
 {
-  protected $table = 'dapil';
+  public $table = 'dapil';
   protected $fillable = ['event_id', 'nama'];
   protected $listLokasiId;
 

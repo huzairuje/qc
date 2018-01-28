@@ -46,7 +46,7 @@ Route::group(['middleware' => 'admin'], function () {
 
 	//Route for Dashboard
 	Route::get('/',['as'=>'dashboard','uses'=>'DashboardController@index']);
-	Route::get('/ajax',['as'=>'dashboard.ajax','uses'=>'DashboardController@ajax']);
+	Route::post('/ajax',['as'=>'dashboard.ajax','uses'=>'DashboardController@ajax']);
 	//End Route for Dashboard
 
 	//Route For user

@@ -28,58 +28,22 @@ class DashboardController extends Controller
 
     public function index()
     {
-
-      // $event = Event::dropdown();
-      // $dapillokasi = DapilLokasi::all();
-      // $event = Event::pluck('nama','id')->all();
-      
       $event = Event::dropdown();
-      $eventchart = Event::chart();
-      // dd($eventchart);
-      $chart = Charts::multi('bar', 'material')
-            // Setup the chart settings
-            ->title("Hasil Suara")
-            // A dimension of 0 means it will take 100% of the space
-            ->dimensions(700, 300) // Width x Height
-            // This defines a preset of colors already done:)
-            ->template("material")
-            // You could always set them manually
-             ->colors(['#2196F3', '#F44336', '#FFC107'])
-            // Setup the diferent datasets (this is a multi chart)
-            ->dataset('Data Suara', [5,20,100])
-            ->responsive(false)
-            // Setup what the values mean
-            ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
-
-      return view('layouts.dashboard.index', compact('event','dapillokasi','chart'));
-      // $chart = Charts::multi('line', 'material')->labels(Event::dropdown()->unique('nama'));
-      //   foreach (Table::all()->unique('segment') as $segment) {
-      //       $data = Table::where('segment', $segment)->get()->pluck('claim');
-      //       $f_data = [];
-      //       for ($i = 0; $i < count($data); $i++) {
-      //           $value = $i != 0 ? $ $data[$i] + $data[$i - 1] : $data[$i];
-      //           array_push($f_data, $value);
-      //       }
-      //       $chart->dataset($segment, $f_data);
-      //   }
-      //
-      //   return view('layouts.dashboard.index', compact('event','dapillokasi','chart'));
-            }
+      return view('layouts.dashboard.index', compact('event'));
+      
+    }
 
 
     public function ajax(Request $request)
     {
+      if($request->first){
+            $event = Event::chart()->orderBy("event.created_at", "desc")->get();        
+      }else{
+        $event = Event::chart()->where("event.id", $event_id)->get();
+      }
+      return response()->json($event);
 
-        // $event = $request->event_id;
-        // switch ($event) {
-        //     case 'get-chart':
-            $eventchart = Event::chart();
-            return response()->json($eventchart);
-            // dd($eventchart);
-            // break;
-
-            
-        }
+    }
 
             
 }
