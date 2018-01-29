@@ -34,5 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(KelurahanTableSeeder::class);
         $this->call(UserRolesSeeder::class);
         $this->call(UsersSeeder::class);
+        $this->call(JenisSeeder::class);
+        $this->call(TingkatsSeeder::class);
     }
 }

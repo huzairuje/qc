@@ -80,7 +80,7 @@
                             @foreach($calon as $data_calon)
                               <tr>
                                 <td class="tg-yw4l" tabindex="1">
-                                  {{ $data_calon->nama }}
+                                  {{ $data_calon->nama . ' - ' . $data_calon->wakil->nama }}
                                 </td>
                                 @foreach($tps as $data)
                                     <td class="tg-yw4l" tabindex="1">
