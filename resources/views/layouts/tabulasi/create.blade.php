@@ -135,19 +135,6 @@
 
 	                $('#kelurahan_id').html(html);
 	                $('#kelurahan_id').selectpicker('refresh');
-
-									var kelurahan = $('#kelurahan_id').val();
-									var event_id = $('#event_id').val();
-                  // get tps
-									$.get(_url_new,{'type':'get-tps-calon','kelurahan_id':kelurahan,'event_id':event_id})
-			            .done(function(result_tps) {
-										if (result_tps.status) {
-											$('.result').html(result_tps.html);
-											$('.result').show();
-										}else {
-											$('.result').hide();
-										}
-									});
 	            });
 	        });
 

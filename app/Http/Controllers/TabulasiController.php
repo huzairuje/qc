@@ -49,7 +49,6 @@ class TabulasiController extends Controller
 
     public function index()
     {
-
         return view('layouts.tabulasi.index');
 
     }
