@@ -57,7 +57,8 @@
     $(document).ready( function() {
         // select2
 
-        var _url = '{{ route('datamaster.TPS.ajax') }}';
+        var _url = '{{ route('tabulasi.ajax') }}';
+        var _url_new = '{{ route('tabulasi.ajax') }}';
 
         $(document).on('change','#provinsi_id',function(){
             var _val = $(this).val();
@@ -77,40 +78,68 @@
 
 
 
-	        $(document).on('change','#kota_id',function(){
+            $(document).on('change','#kota_id',function(){
 
 
-	            var coba = $(this).val();
-	            $.get(_url,{'type':'get-kecamatan','kota_id':coba})
-	            .done(function(result) {
-	                var html = '';
+                var coba = $(this).val();
+                $.get(_url,{'type':'get-kecamatan','kota_id':coba})
+                .done(function(result) {
+                    var html = '';
                     $('#kecamatan_id').selectpicker(html);
-	                $.each(result,function(key,value){
-	                    html += '<option value="'+key+'">'+value+'</option>';
-	                });
+                    $.each(result,function(key,value){
+                        html += '<option value="'+key+'">'+value+'</option>';
+                    });
 
-	                $('#kecamatan_id').html(html);
+                    $('#kecamatan_id').html(html);
                     $('#kecamatan_id').selectpicker('refresh');
 
-	            });
-	        });
+                });
+            });
 
-	        $(document).on('change','#kecamatan_id',function(){
+            $(document).on('change','#kecamatan_id',function(){
 
-	            var coba = $(this).val();
-	            $.get(_url,{'type':'get-kelurahan','kecamatan_id':coba})
-	            .done(function(result) {
-	                var html = '';
+                var coba = $(this).val();
+                $.get(_url,{'type':'get-kelurahan','kecamatan_id':coba})
+                .done(function(result) {
+                    var html = '';
                     $('#kelurahan_id').selectpicker(html);
-	                $.each(result,function(key,value){
-	                    html += '<option value="'+key+'">'+value+'</option>';
-	                });
+                    $.each(result,function(key,value){
+                        html += '<option value="'+key+'">'+value+'</option>';
+                    });
 
-	                $('#kelurahan_id').html(html);
-	                $('#kelurahan_id').selectpicker('refresh');
-	            });
-	        });
-	    });
+                    $('#kelurahan_id').html(html);
+                    $('#kelurahan_id').selectpicker('refresh');
+
+                                    var kelurahan = $('#kelurahan_id').val();
+                                    var event_id = $('#event_id').val();
+                  // get tps
+                                    $.get(_url_new,{'type':'get-tps-calon','kelurahan_id':kelurahan,'event_id':event_id})
+                        .done(function(result_tps) {
+                                        if (result_tps.status) {
+                                            $('.result').html(result_tps.html);
+                                            $('.result').show();
+                                        }else {
+                                            $('.result').hide();
+                                        }
+                                    });
+                });
+            });
+
+                    $(document).on('change','#kelurahan_id',function(){
+                        var kelurahan = $(this).val();
+                        var event_id = $('#event_id').val();
+                        // get tps
+                        $.get(_url_new,{'type':'get-tps-calon','kelurahan_id':kelurahan,'event_id':event_id})
+                        .done(function(result_tps) {
+                            if (result_tps.status) {
+                                $('.result').html(result_tps.html);
+                                $('.result').show();
+                            }else {
+                                $('.result').hide();
+                            }
+                        });
+                    });
+        });
 </script>
 
 @endsection

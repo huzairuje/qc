@@ -81,7 +81,7 @@ class AbsensiController extends Controller
           //     return $tps->kelurahan->nama ? $tps->kelurahan->nama : 'Undefined';
           // })
           ->addColumn('action', function ($absensi) {
-          return '<a href="'.route('absensi.show', $absensi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('absensi.edit', $absensi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('absensi.delete', $absensi->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+          return '<a href="'.route('absensi.show', $absensi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-search"></i>Lihat</a><a href="'.route('absensi.edit', $absensi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('absensi.delete', $absensi->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i>Delete</a>';
       })
 
           ->make(true);

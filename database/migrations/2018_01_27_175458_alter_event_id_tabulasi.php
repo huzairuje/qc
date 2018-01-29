@@ -14,7 +14,7 @@ class AlterEventIdTabulasi extends Migration
     public function up()
     {
         Schema::table('tabulasi', function (Blueprint $table) {
-          $table->integer('event_id')->unsigned();
+          $table->bigInteger('event_id')->unsigned()->default(0);
         });
     }
 

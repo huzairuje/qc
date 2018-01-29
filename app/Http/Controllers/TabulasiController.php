@@ -56,7 +56,7 @@ class TabulasiController extends Controller
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $tabulasi = Tabulasi::select(['id','dokumen', 'provinsi_id', 'kota_id', 'kecamatan_id', 'kelurahan_id']);
+        $tabulasi = Tabulasi::select(['id','dokumen', 'provinsi_id', 'kota_id', 'kecamatan_id', 'kelurahan_id','data_suara']);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
 
@@ -90,8 +90,15 @@ class TabulasiController extends Controller
                     return 'Data KELURAHAN tidak ada';
                 }
             })
+            ->editColumn('data_suara', function ($tabulasi) {
+                if ($tabulasi->data_suara) {
+                    return 'Data SUARA ada';
+                } else {
+                    return 'Data SUARA tidak ada';
+                }
+            })
             ->addColumn('action', function ($tabulasi) {
-            return '<a href="'.route('tabulasi.show', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('tabulasi.edit', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('tabulasi.delete', $tabulasi->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+            return '<a href="'.route('tabulasi.show', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-search"></i>Lihat</a><a href="'.route('tabulasi.edit', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('tabulasi.delete', $tabulasi->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i>Delete</a>';
         })
 
             ->make(true);
@@ -101,23 +108,33 @@ class TabulasiController extends Controller
 
     public function show($id)
     {
-    	$chart = Charts::multi('bar', 'material')
-            // Setup the chart settings
-            ->title("Hasil Data Suara")
-            // A dimension of 0 means it will take 100% of the space
-            ->dimensions(700, 300) // Width x Height
-            // This defines a preset of colors already done:)
-            ->template("material")
-            // You could always set them manually
-             ->colors(['#2196F3', '#F44336', '#FFC107'])
-            // Setup the diferent datasets (this is a multi chart)
-            ->dataset('Data Suara', [5,20,100])
-            ->responsive(false)
-            // Setup what the values mean
-            ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
-
-        $tabulasi = Tabulasi::find($id);
+       
+       
+       $tabulasi = Tabulasi::find($id);
+       // $eventchart = Event::chart()->where("event.id", $event_id)->get()->toJson();
         // dd($tabulasi);
+       // case 'get-tps-calon':
+
+       //    $result['status'] = false;
+        $tps = Tps::where('kelurahan_id', $tabulasi->kelurahan_id)->orderBy('nomor', 'ASC')->pluck('nomor', 'id')->all();
+        // dd($tps);
+
+        // if ($request->event_id) {
+        $dapil = Dapil::where('event_id',$tabulasi->event_id)->pluck('id')->all();
+
+          // if ($dapil) {
+        // $calon = array();
+        $calon = Calon::whereIn('dapil_id',$dapil)->get();
+          // }
+        $eventchart = Event::chart()->where("event.id", $tabulasi->event_id)->get()->toJson();
+        // dd($eventchart);
+
+          // $result['status'] = true;
+        // }
+
+        // $result['html'] = view('layouts.tabulasi.data',compact('calon','tps'))->render();
+        // return $result;
+        // break;
 
         if (empty($tabulasi)) {
             flash('Tabulasi not found')->error();
@@ -125,7 +142,7 @@ class TabulasiController extends Controller
             return redirect(route('tabulasi.index'));
         }
 
-        return view('layouts.tabulasi.show',compact('tabulasi','chart'));
+        return view('layouts.tabulasi.show',compact('tabulasi','tps','dapil','calon','eventchart'));
 
 
     }
@@ -238,8 +255,17 @@ class TabulasiController extends Controller
         return redirect(route('tabulasi.index'));
 	}
 
+  // public function ajaxChart($id)
+  // {
+  //   $tabulasi = Tabulasi::find($id);
+  //     $event = Event::chart()->where("event.id", $tabulasi->event_id)->get();
+  //       {
+  //       return response()->json($event);
+  //       }
+  // }
+
   public function ajax(Request $request)
-  {
+  {      
       $type = $request->type;
       switch ($type) {
           case 'get-provincy':
@@ -285,6 +311,8 @@ class TabulasiController extends Controller
           default:
           return $result['status'] = false;
           break;
+
+
       }
   }
 

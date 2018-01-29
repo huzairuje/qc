@@ -56,6 +56,7 @@ Route::group(['middleware' => 'admin'], function () {
 	//Route for Tabulasi
 	Route::get('/tabulasi/quickcount',['as'=>'tabulasi.quickcount','uses'=>'TabulasiController@quickCount']);
 	Route::get('/tabulasi/ajax',['as'=>'tabulasi.ajax','uses'=>'TabulasiController@ajax']);
+	// Route::get('/tabulasi/ajaxchart',['as'=>'tabulasi.ajaxchart','uses'=>'TabulasiController@ajaxChart']);
 	Route::get('/tabulasi', ['as'=>'tabulasi.index','uses'=>'TabulasiController@index']);
 	Route::get('/tabulasi/getdatatable', ['as' => 'tabulasi.datatable',   'uses' => 'TabulasiController@get_datatable']);
 	Route::get('/tabulasi/create',['as'=>'tabulasi.create','uses'=>'TabulasiController@create']);

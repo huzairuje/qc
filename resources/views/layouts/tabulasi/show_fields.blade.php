@@ -14,6 +14,15 @@
             <div class="form-group">
                 <div class="form-line">
                     {!! Form::label('provinsi_id', 'Provinsi:') !!}
+                    {!! $tabulasi->event->nama !!}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="form-line">
+                    {!! Form::label('provinsi_id', 'Provinsi:') !!}
                     {!! $tabulasi->provinsi->nama !!}
                 </div>
             </div>
@@ -46,50 +55,60 @@
             </div>
         </div>
 
-        <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-line">
-                                <table id="data_suara" class="table table-bordered" style="cursor: pointer;">
-                                    <thead>
-                                      <tr class="bg-blue" style="color: white;">
-                                        @for ($x = 1; $x <= 20; $x++)
-                                            <th class="tg-yw4l">X{{ $x }}</th>
-                                        @endfor
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                        @for ($y = 1; $y <= 20; $y++)
-                                          <tr>
-                                            @for ($x = 1; $x <= 20; $x++)
-                                                <td class="tg-yw4l" tabindex="1">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="form-line">
 
-                                                </td>
-                                            @endfor
-                                          </tr>
-                                        @endfor
-
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        {!! $chart->render() !!}
-                    </div>
-                    <div class="col-md-12">
-                        {!! $chart->render() !!}
-                    </div>
-                    <div class="col-md-12">
-                        {!! $chart->render() !!}
-                    </div>
-
-
-<div class="modal-footer">
-            <a href="{{ route('tabulasi.edit', $tabulasi->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Edit Data</a>
-            <a href="{{ route('tabulasi.create')}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Create Data</a>
-            <a href="{{ route('tabulasi.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Tabulasi</a>
-            <a href="{{ route('tabulasi.delete', $tabulasi->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Delete Data</a>
+                </div>
+            </div>        
         </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="form-line" style="overflow-x: scroll;">
+                    <table id="data_suara" class="table table-bordered" style="cursor: pointer;">
+                        <thead>
+                          <tr class="bg-blue" style="color: white;">
+                            <th class="tg-yw4l">Calon</th>
+                            @foreach($tps as $data)
+                                <th class="tg-yw4l">X{{ $data }}</th>
+                            @endforeach
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @if($calon)
+                            @foreach($calon as $data_calon)
+                              <tr>
+                                <td class="tg-yw4l" tabindex="1">
+                                  {{ $data_calon->nama }}
+                                </td>
+                                @foreach($tps as $data)
+                                    <td class="tg-yw4l" tabindex="1">
+                                      <input name="tabulasi[{{ $data_calon->id }}][{{ $data }}]" type="number" style="border:none" value="0">
+                                    </td>
+                                @endforeach
+                              </tr>
+                            @endforeach
+                          @endif
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+                    
+
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="form-line">
+                    <a href="{{ route('tabulasi.edit', $tabulasi->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Edit Data</a>
+                    <a href="{{ route('tabulasi.create')}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Create Data</a>
+                    <a href="{{ route('tabulasi.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index Tabulasi</a>
+                    <a href="{{ route('tabulasi.delete', $tabulasi->id)}}" type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Delete Data</a>
+                </div>
+            </div>        
+        </div>
+        
     </div>
 </div>

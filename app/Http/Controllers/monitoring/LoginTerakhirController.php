@@ -34,7 +34,7 @@ class LoginTerakhirController extends Controller
         return Datatables::eloquent($loginterakhir)
 
             ->addColumn('action', function ($loginterakhir) {
-            return '<a href="'.route('monitoring.loginterakhir.show', $loginterakhir->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a>';
+            return '<a href="'.route('monitoring.loginterakhir.show', $loginterakhir->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-search"></i>Lihat</a>';
         })
 
             ->make(true);

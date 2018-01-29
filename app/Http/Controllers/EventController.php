@@ -69,7 +69,7 @@ class EventController extends Controller
             return $event->tingkat && $event->tingkat->nama ? $event->tingkat->nama : 'Undefined';
         })
         ->addColumn('action', function ($data_event) {
-            return '<a href="'.route('event.show', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('event.edit', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('event.delete', $data_event->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+            return '<a href="'.route('event.show', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-search"></i>Lihat</a><a href="'.route('event.edit', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('event.delete', $data_event->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i>Delete</a>';
         })
         ->make(true);
     }
@@ -146,18 +146,18 @@ class EventController extends Controller
         $os = array("Mac", "NT", "Irix", "Linux");
         if (in_array($id, $listEventId)) {
 
-            $data_event = Event::find($id);
+            $event = Event::find($id);
             $jenis = Jenis::pluck('nama','id')->all();
             $tingkat = Tingkat::pluck('nama','id')->all();
             $provinsi = Provinsi::pluck('nama','id')->all();
-            $kota = Kota::where('provinsi_id', $data_event->provinsi_id)->pluck('nama','id')->all();
+            $kota = Kota::where('provinsi_id', $event->provinsi_id)->pluck('nama','id')->all();
 
-            if (empty($data_event)) {
+            if (empty($event)) {
                 flash('Event Tidak Ada');
 
                 return redirect(route('event.index'));
             }
-            return view('layouts.event.edit', compact('data_event','provinsi','kota','jenis','tingkat'));
+            return view('layouts.event.edit', compact('event','provinsi','kota','jenis','tingkat'));
         } else {
             flash('Event Tidak Ada');
 
@@ -167,15 +167,15 @@ class EventController extends Controller
     }
     public function update(Request $request,$id)
     {
-      $v = $this->validate($request,[
-        'jenis_id' => 'required',
-         // 'tingkat_id' => 'required',
-         'expired' => 'required',
-         'nama' => 'required',
-         // 'lokasi' => 'required',
-         'tahun' => 'required',
-         'lokasi' => 'required',
-          ]);
+      // $v = $this->validate($request,[
+      //   'jenis_id' => 'required',
+      //    // 'tingkat_id' => 'required',
+      //    'expired' => 'required',
+      //    'nama' => 'required',
+      //    // 'lokasi' => 'required',
+      //    'tahun' => 'required',
+      //    'lokasi' => 'required',
+      //     ]);
 
         $event = Event::find($id);
         if (empty($event)) {
@@ -210,6 +210,7 @@ class EventController extends Controller
 
         $role = RoleUser::where('user_id', $id)->first();
         $role->role_id = $request->role;
+        dd($role);
         $role->update();
 
         flash('Data Event updated successfully')->success();
@@ -220,44 +221,32 @@ class EventController extends Controller
 
     public function show($id)
     {
-        $chart = Charts::multi('bar', 'material')
-        // Setup the chart settings
-        ->title("Hasil Data Suara")
-        // A dimension of 0 means it will take 100% of the space
-        ->dimensions(700, 300) // Width x Height
-        // This defines a preset of colors already done:)
-        ->template("material")
-        // You could always set them manually
-        ->colors(['#2196F3', '#F44336', '#FFC107'])
-        // Setup the diferent datasets (this is a multi chart)
-        ->dataset('Data Suara', [5,20,100])
-        ->responsive(false)
-        // Setup what the values mean
-        ->labels(['Pasangan 1', 'Pasangan 2', 'Pasangan 3']);
 
-        $data_event = Event::find($id);
+        $event = Event::find($id);
+        $eventchart = Event::chart()->where("event.id", $event->event_id)->get()->toJson();
 
 
-        if (empty($data_event)) {
+        if (empty($event)) {
             flash('Event not found')->error();
 
             return redirect(route('event.index'));
         }
-        if($data_event->jenis_id == 5 || $data_event->jenis_id == 4)
+        if($event->jenis_id == 5 || $event->jenis_id == 4)
         {
-            if($data_event->tingkat_id == 2){
-                $result = Provinsi::where('id',$data_event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
+            if($event->tingkat_id == 2){
+                $result = Provinsi::where('id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
             }
-            else if($data_event->tingkat_id == 3){
-                $result = Kota::where('id',$data_event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
+            else if($event->tingkat_id == 3){
+                $result = Kota::where('id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
             }
         }
         else
         {
-            $result = Kota::find('id',$data_event->lokasi);
+            $result = Kota::find('id',$event->lokasi);
         }
 
-        return view('layouts.event.show',compact('data_event','chart','result'));
+        // return response()->json($event);
+        return view('layouts.event.show',compact('event','chart','result','eventchart'));
 
 
     }
@@ -265,14 +254,14 @@ class EventController extends Controller
     public function destroy($id)
     {
 
-        $data_event = Event::findOrFail($id);
-        if (empty($data_event)) {
+        $event = Event::findOrFail($id);
+        if (empty($event)) {
 
             flash('Event not found');
 
             return redirect(route('event.index'));
         }
-        $data_event->delete();
+        $event->delete();
 
         $role = RoleUser::where('user_id', $id)->first();
         $role->delete();

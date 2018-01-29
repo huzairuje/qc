@@ -90,7 +90,7 @@ class ApprovalController extends Controller
               return $approval->kelurahan && $approval->kelurahan->nama ? $approval->kelurahan->nama : 'Undefined';
           })
           ->addColumn('action', function ($approval) {
-          return '<a href="'.route('approval.show', $approval->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Lihat</a><a href="'.route('approval.edit', $approval->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('approval.delete', $approval->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-edit"></i>Delete</a>';
+          return '<a href="'.route('approval.show', $approval->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-search"></i>Lihat</a><a href="'.route('approval.edit', $approval->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('approval.delete', $approval->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i>Delete</a>';
       })
 
           ->make(true);

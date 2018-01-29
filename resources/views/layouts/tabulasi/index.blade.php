@@ -62,8 +62,7 @@
                                                                 {data: 'kota_id'},
                                                                 {data: 'kecamatan_id'},
                                                                 {data: 'kelurahan_id'},
-                                                                {data: 'data_suara', render: function (data, type, row, meta) {
-                                                                return data == 1 ? 'Ada' : 'Tidak Ada'}},
+                                                                {data: 'data_suara'},
                                                                 {data: 'action'}
                                                                 ]
                                                             } );

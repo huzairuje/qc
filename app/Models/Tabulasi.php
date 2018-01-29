@@ -40,4 +40,8 @@ class Tabulasi extends Model
     {
         return $this->belongsTo(Kelurahan::class);
     }
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }

@@ -25,7 +25,7 @@
                 <div class="box-body">
 
                     <div class="row">
-                        {!! Form::model($data_event, ['route' => ['event.update', $data_event->id], 'method' => 'patch']) !!}
+                        {!! Form::model($event, ['route' => ['event.update', $event->id], 'method' => 'patch']) !!}
 
                         @include('layouts.event.edit_fields')
 
@@ -56,16 +56,16 @@
 <script type="text/javascript">
 $(document).ready( function() {
     var _url = '{{ route('event.ajax') }}';
-    $('#tahun').val({{ $data_event->tahun }});
-    $('#expired').val('<?php echo $data_event->expired; ?>');
-    @if( $data_event->tingkat_id == 1 )
+    $('#tahun').val({{ $event->tahun }});
+    $('#expired').val('<?php echo $event->expired; ?>');
+    @if( $event->tingkat_id == 1 )
     $('.provinsi-form-container').hide();
     $('.kota-form-container').hide();
-    @elseif( $data_event->tingkat_id == 2 )
-    $('#provinsi_id').val({{ $data_event->loasi_id }});
+    @elseif( $event->tingkat_id == 2 )
+    $('#provinsi_id').val({{ $event->loasi_id }});
     $('.kota-form-container').hide();
     @else
-    $.get(_url,{'type':'get-city','provinsi_id':{{ $data_event->kota->provinsi_id }}}).done(function(result) {
+    $.get(_url,{'type':'get-city','provinsi_id':{{ $event->kota->provinsi_id }}}).done(function(result) {
         var html = '';
         $('#kota_id').selectpicker(html);
 
@@ -74,13 +74,13 @@ $(document).ready( function() {
         });
 
         $('#kota_id').html(html);
-        $('#kota_id').val({{ $data_event->lokasi }});
+        $('#kota_id').val({{ $event->lokasi }});
         $('#kota_id').selectpicker('refresh');
     });
-    $('#provinsi_id').val({{ $data_event->kota->provinsi_id }});
+    $('#provinsi_id').val({{ $event->kota->provinsi_id }});
     @endif
 
-    @if($data_event->tingkat_id == 1)
+    @if($event->tingkat_id == 1)
     $('.tingkat-form-container').hide();
     @endif
 
