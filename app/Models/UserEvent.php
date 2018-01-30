@@ -8,6 +8,10 @@ class UserEvent extends Model
 {
 	protected $table = 'user_event';
 
+	protected $fillable = [
+        'user_id', 'event_id'
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');

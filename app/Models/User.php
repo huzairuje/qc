@@ -43,4 +43,9 @@ class User extends EloquentUser
     {
         return $this->hasMany('App\Models\UserEvent');
     }
+
+    public function saksiTps()
+    {
+        return $this->hasOne('App\Models\SaksiTps');
+    }
 }

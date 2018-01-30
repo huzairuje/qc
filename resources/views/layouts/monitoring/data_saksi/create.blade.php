@@ -29,51 +29,7 @@
 
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-line">
-                                                {!! Form::label('nama', 'Nama:') !!}
-                                                {{ Form::text('first_name',null, ['class' => 'form-control','placeholder' => 'Nama']) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-line">
-                                                {!! Form::label('email', 'Email:') !!}
-                                                {{ Form::text('email',null, ['class' => 'form-control','placeholder' => 'Email']) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-line">
-                                                {!! Form::label('email', 'Username:') !!}
-                                                {{ Form::text('username',null, ['class' => 'form-control','placeholder' => 'Username']) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-line">
-                                                {!! Form::label('phone', 'Nomor Handphone:') !!}
-                                                {{ Form::text('phone',null, ['class' => 'form-control','placeholder' => '+62']) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-10">
                                             <select class="form-control show-tick" name="event" id="tahun" placeholder="Role" >
                                                 <option value=''>User Event</option>
                                                 @foreach( $eventList as $key => $val )
@@ -85,7 +41,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <div class="form-line">
                                                 {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}
                                             </div>
@@ -94,7 +50,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <div class="form-line">
                                                 {{ Form::select('kota_id', $kota,null, ['class' => 'form-control','id' => 'kota_id','placeholder' => 'Select Kota/Kabupaten']) }}
                                             </div>
@@ -103,7 +59,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <div class="form-line">
                                                 {{ Form::select('kecamatan_id', $kecamatan,null, ['class' => 'form-control','id' => 'kecamatan_id','placeholder' => 'Select Kecamatan']) }}
                                             </div>
@@ -112,7 +68,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <div class="form-line">
                                                 {{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
                                             </div>
@@ -121,7 +77,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <div class="form-line">
                                                 {{ Form::select('tps_id', $tps,null, ['class' => 'form-control','id' => 'tps_id','placeholder' => 'Select TPS']) }}
                                             </div>
@@ -129,8 +85,69 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+                                                {!! Form::label('nama', 'Nama:') !!}
+                                                {{ Form::text('first_name',null, ['class' => 'form-control','placeholder' => 'Nama']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+                                                {!! Form::label('email', 'Email:') !!}
+                                                {{ Form::text('email',null, ['class' => 'form-control','placeholder' => 'Email']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+                                                {!! Form::label('username', 'Username:') !!}
+                                                {{ Form::text('username',null, ['class' => 'form-control','placeholder' => 'Username']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+                                                {!! Form::label('phone', 'Nomor Handphone:') !!}
+                                                {{ Form::text('phone',null, ['class' => 'form-control','placeholder' => '+62']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+                                                {!! Form::label('alamat', 'Alamat:') !!}
+                                                {{ Form::text('alamat',null, ['class' => 'form-control','placeholder' => 'isi Alamat Lengkap']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+                                                {!! Form::label('foto', 'Foto:') !!}
+                                                {{ Form::text('foto',null, ['class' => 'form-control','placeholder' => 'Pilih Foto']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="form-line">
                                         {!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}

@@ -12,6 +12,7 @@ use App\Models\Kota;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use App\Models\Tps;
+use App\Models\SaksiTps;
 use Sentinel;
 use DB;
 use Yajra\Datatables\Facades\Datatables;
@@ -99,28 +100,44 @@ class DataSaksiController extends Controller
         // dd($request->all());
         if($request->role == 'korsak' || $request->role == 'saksi')
         {
-            $user = Sentinel::register($request->all());
+            $data_saksi = Sentinel::register($request->all());
         }
         else
         {
-            $user = Sentinel::registerAndActivate($request->all());
+            $data_saksi = Sentinel::registerAndActivate($request->all());
         }
 
-        $insertedId = $user->id;
+        $insertedId = $data_saksi->id;
 
-        Sentinel::findRoleById(7)->users()->attach( $user );
+        Sentinel::findRoleById(7)->users()->attach( $data_saksi );
         try
         {
-            $user = new UserEvent;
-            $user->user_id = $insertedId;
-            $user->event_id = $request->event;
-            $user->save();
+            // insert to table user_event
+            $data_saksi = new UserEvent;
+            $data_saksi->user_id = $insertedId;
+            $data_saksi->event_id = $request->event;
+
+            $data_saksi->save();
+
+
+            //insert to table saksi_tps
+            $data_saksi = new SaksiTps();
+            
+            $data_saksi->user_id = $insertedId;
+            $data_saksi->tps_id = $request->tps_id;
+            $data_saksi->kelurahan_id = $request->kelurahan_id;
+            $data_saksi->alamat = $request->alamat;
+            $data_saksi->foto = $request->foto;
+
+            // dd($data_saksi);
+            $data_saksi->save();
         }
         catch(\Exception $e){
             echo $e->getMessage();
         }
+        
 
-        return redirect(route('monitoring.datasaksi.show', $insertedId));
+        return redirect(route('monitoring.datasaksi.show', compact('insertedId')));
     }
 
     public function edit($id)
