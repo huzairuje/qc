@@ -78,6 +78,7 @@ Route::group(['middleware' => 'admin'], function () {
 	//Route For Menu MONITORING
 		//Route for Monitoring SubMenu DataSaksi
 		Route::get('/monitoring/datasaksi',['as'=>'monitoring.datasaksi','uses'=>'monitoring\DataSaksiController@index']);
+		Route::get('/monitoring/datasaksi/ajax',['as'=>'monitoring.datasaksi.ajax','uses'=>'monitoring\DataSaksiController@ajax']);
 		Route::get('/monitoring/datasaksi/getdatatable', ['as'=>'monitoring.datasaksi.datatable', 'uses' => 'monitoring\DataSaksiController@get_datatable']);
 		Route::get('/monitoring/datasaksi/create',['as'=>'monitoring.datasaksi.create','uses'=>'monitoring\DataSaksiController@create']);
 		Route::get('/monitoring/datasaksi/show/{id}',['as'=>'monitoring.datasaksi.show','uses'=>'monitoring\DataSaksiController@show']);

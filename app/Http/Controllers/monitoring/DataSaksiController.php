@@ -7,6 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserEvent;
 use App\Models\Event;
+use App\Models\Provinsi;
+use App\Models\Kota;
+use App\Models\Kecamatan;
+use App\Models\Kelurahan;
+use App\Models\Tps;
 use Sentinel;
 use DB;
 use Yajra\Datatables\Facades\Datatables;
@@ -30,6 +35,18 @@ class DataSaksiController extends Controller
 
     public function create()
     {
+        $provinsi = Provinsi::pluck('nama','id')->all();
+        // dd($provinsi);
+
+        $kota = array();
+        // dd($kota_kabupaten);
+
+        $kecamatan = array();
+
+        $kelurahan = array();
+
+        $tps = array();
+
         $role = Sentinel::getUser()->roles()->first()->slug;
 
         $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
@@ -38,14 +55,14 @@ class DataSaksiController extends Controller
         }
         if(count($userEvents) != 0)
         {
-            $data['eventList'] = Event::all()->whereIn('id', $listEventId);
+            $eventList = Event::all()->whereIn('id', $listEventId);
         }
         else
         {
-            $data['eventList'] = Event::all()->where('id', 0);
+            $eventList = Event::all()->where('id', 0);
         }
 
-    	return view('layouts.monitoring.data_saksi.create', $data);
+    	return view('layouts.monitoring.data_saksi.create', compact('eventList','provinsi','kota','kecamatan','kelurahan','tps'));
     }
 
     public function get_datatable()
@@ -175,4 +192,38 @@ class DataSaksiController extends Controller
         return redirect(route('monitoring.datasaksi'));
 	}
 
+    public function ajax(Request $request)
+    {      
+      $type = $request->type;
+      switch ($type) {
+          case 'get-provincy':
+          $result = Provinsi::get()->pluck( 'nama', 'id' )->all();
+          return $result;
+          break;
+
+          case 'get-city':
+          $result = Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+          return $result;
+          break;
+
+          case 'get-kecamatan':
+          $result = Kecamatan::where('kota_id', $request->kota_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+          return $result;
+          break;
+
+          case 'get-kelurahan':
+          $result = Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+          return $result;
+          break;
+
+          case 'get-tps':
+          $result = Tps::where('kelurahan_id', $request->kelurahan_id)->orderBy('nomor', 'ASC')->get()->pluck('nomor', 'id')->all();
+          return $result;
+          break;
+
+          default:
+          return $result['status'] = false;
+          break;
+        }
+    }
 }

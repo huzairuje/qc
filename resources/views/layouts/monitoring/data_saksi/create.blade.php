@@ -83,6 +83,53 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-line">
+                                                {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-line">
+                                                {{ Form::select('kota_id', $kota,null, ['class' => 'form-control','id' => 'kota_id','placeholder' => 'Select Kota/Kabupaten']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-line">
+                                                {{ Form::select('kecamatan_id', $kecamatan,null, ['class' => 'form-control','id' => 'kecamatan_id','placeholder' => 'Select Kecamatan']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-line">
+                                                {{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-line">
+                                                {{ Form::select('tps_id', $tps,null, ['class' => 'form-control','id' => 'tps_id','placeholder' => 'Select TPS']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
 
                                 <div class="form-group">
                                     <div class="form-line">
@@ -101,5 +148,84 @@
 </div>
 @endsection
 @section('extra-script')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready( function() {
+        // select2
+
+        var _url = '{{ route('monitoring.datasaksi.ajax') }}';
+                // var _url_new = '{{ route('tabulasi.ajax') }}';
+
+        $(document).on('change','#provinsi_id',function(){
+            var _val = $(this).val();
+            $.get(_url,{'type':'get-city','provinsi_id':_val})
+            .done(function(result) {
+                var html = '';
+                $('#kota_id').selectpicker(html);
+
+                $.each(result,function(key,value){
+                    html += '<option value="'+key+'">'+value+'</option>';
+                });
+
+                $('#kota_id').html(html);
+                $('#kota_id').selectpicker('refresh');
+            });
+        });
+
+
+
+            $(document).on('change','#kota_id',function(){
+
+
+                var coba = $(this).val();
+                $.get(_url,{'type':'get-kecamatan','kota_id':coba})
+                .done(function(result) {
+                    var html = '';
+                    $('#kecamatan_id').selectpicker(html);
+                    $.each(result,function(key,value){
+                        html += '<option value="'+key+'">'+value+'</option>';
+                    });
+
+                    $('#kecamatan_id').html(html);
+                    $('#kecamatan_id').selectpicker('refresh');
+
+                });
+            });
+
+            $(document).on('change','#kecamatan_id',function(){
+
+                var coba = $(this).val();
+                $.get(_url,{'type':'get-kelurahan','kecamatan_id':coba})
+                .done(function(result) {
+                    var html = '';
+                    $('#kelurahan_id').selectpicker(html);
+                    $.each(result,function(key,value){
+                        html += '<option value="'+key+'">'+value+'</option>';
+                    });
+
+                    $('#kelurahan_id').html(html);
+                    $('#kelurahan_id').selectpicker('refresh');
+                });
+            });
+
+            $(document).on('change','#kelurahan_id',function(){
+
+                var coba = $(this).val();
+                $.get(_url,{'type':'get-tps','kelurahan_id':coba})
+                .done(function(result) {
+                    var html = '';
+                    $('#tps_id').selectpicker(html);
+                    $.each(result,function(key,value){
+                        html += '<option value="'+key+'">'+value+'</option>';
+                    });
+
+                    $('#tps_id').html(html);
+                    $('#tps_id').selectpicker('refresh');
+                });
+            });
+            
+        });
+</script>
 
 @endsection
