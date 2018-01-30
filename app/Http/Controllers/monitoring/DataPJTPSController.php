@@ -7,6 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserEvent;
 use App\Models\Event;
+use App\Models\Provinsi;
+use App\Models\Kota;
+use App\Models\Kecamatan;
+use App\Models\Kelurahan;
+use App\Models\Tps;
+use App\Models\SaksiTps;
 use Sentinel;
 use DB;
 use Yajra\Datatables\Facades\Datatables;
@@ -29,6 +35,18 @@ class DataPJTPSController extends Controller
 
     public function create()
     {
+        $provinsi = Provinsi::pluck('nama','id')->all();
+        // dd($provinsi);
+
+        $kota = array();
+        // dd($kota_kabupaten);
+
+        $kecamatan = array();
+
+        $kelurahan = array();
+
+        $tps = array();
+
         $role = Sentinel::getUser()->roles()->first()->slug;
 
         $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
@@ -37,14 +55,15 @@ class DataPJTPSController extends Controller
         }
         if(count($userEvents) != 0)
         {
-            $data['eventList'] = Event::all()->whereIn('id', $listEventId);
+            $eventList = Event::all()->whereIn('id', $listEventId);
         }
         else
         {
-            $data['eventList'] = Event::all()->where('id', 0);
+            $eventList = Event::all()->where('id', 0);
         }
+        // dd($data['eventList']);
 
-        return view('layouts.monitoring.data_pj_tps.create', $data);
+        return view('layouts.monitoring.data_pj_tps.create', compact('eventList','provinsi','kota','kecamatan','kelurahan','tps'));
     }
 
     public function get_datatable()
@@ -70,22 +89,37 @@ class DataPJTPSController extends Controller
         // dd($request->all());
         if($request->role == 'korsak' || $request->role == 'saksi')
         {
-            $user = Sentinel::register($request->all());
+            $datapjtps = Sentinel::register($request->all());
         }
         else
         {
-            $user = Sentinel::registerAndActivate($request->all());
+            $datapjtps = Sentinel::registerAndActivate($request->all());
         }
 
-        $insertedId = $user->id;
+        $insertedId = $datapjtps->id;
 
-        Sentinel::findRoleById(6)->users()->attach( $user );
+        Sentinel::findRoleById(6)->users()->attach( $datapjtps );
         try
         {
-            $user = new UserEvent;
-            $user->user_id = $insertedId;
-            $user->event_id = $request->event;
-            $user->save();
+            // insert to table user_event
+            $datapjtps = new UserEvent;
+            $datapjtps->user_id = $insertedId;
+            $datapjtps->event_id = $request->event;
+
+            $datapjtps->save();
+
+
+            //insert to table saksi_tps
+            $datapjtps = new SaksiTps();
+            
+            $datapjtps->user_id = $insertedId;
+            $datapjtps->tps_id = $request->tps_id;
+            $datapjtps->kelurahan_id = $request->kelurahan_id;
+            $datapjtps->alamat = $request->alamat;
+            $datapjtps->foto = $request->foto;
+
+            // dd($datapjtps);
+            $datapjtps->save();
         }
         catch(\Exception $e){
             echo $e->getMessage();
@@ -93,6 +127,7 @@ class DataPJTPSController extends Controller
 
         return redirect(route('monitoring.datapjtps.show', $insertedId));
     }
+
 
     public function edit($id)
     {
@@ -163,5 +198,40 @@ class DataPJTPSController extends Controller
 
         flash('Data Saksi deleted successfully')->success();
         return redirect(route('monitoring.datapjtps'));
+    }
+
+    public function ajax(Request $request)
+    {      
+      $type = $request->type;
+      switch ($type) {
+          case 'get-provincy':
+          $result = Provinsi::get()->pluck( 'nama', 'id' )->all();
+          return $result;
+          break;
+
+          case 'get-city':
+          $result = Kota::where('provinsi_id',$request->provinsi_id)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+          return $result;
+          break;
+
+          case 'get-kecamatan':
+          $result = Kecamatan::where('kota_id', $request->kota_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+          return $result;
+          break;
+
+          case 'get-kelurahan':
+          $result = Kelurahan::where('kecamatan_id', $request->kecamatan_id)->orderBy('nama', 'ASC')->get()->pluck('nama', 'id')->all();
+          return $result;
+          break;
+
+          case 'get-tps':
+          $result = Tps::where('kelurahan_id', $request->kelurahan_id)->orderBy('nomor', 'ASC')->get()->pluck('nomor', 'id')->all();
+          return $result;
+          break;
+
+          default:
+          return $result['status'] = false;
+          break;
+        }
     }
 }

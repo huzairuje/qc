@@ -89,6 +89,8 @@ Route::group(['middleware' => 'admin'], function () {
 
 		//Route for Monitoring SubMenu Data PJ TPS
 		Route::get('/monitoring/datapjtps',['as'=>'monitoring.datapjtps','uses'=>'monitoring\DataPJTPSController@index']);
+		Route::get('/monitoring/datapjtps/ajax',['as'=>'monitoring.datapjtps.ajax','uses'=>'monitoring\DataPJTPSController@ajax']);
+
 		Route::get('/monitoring/datapjtps/getdatatable', ['as'=>'monitoring.datapjtps.datatable', 'uses' => 'monitoring\DataPJTPSController@get_datatable']);
 		Route::get('/monitoring/datapjtps/create',['as'=>'monitoring.datapjtps.create','uses'=>'monitoring\DataPJTPSController@create']);
 		Route::get('/monitoring/datapjtps/show/{id}',['as'=>'monitoring.datapjtps.show','uses'=>'monitoring\DataPJTPSController@show']);
