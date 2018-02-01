@@ -15,7 +15,7 @@
         <div class="card">
             <div class="header bg-blue">
                 <h2>
-                    Create Korsak
+                    BUAT DATA KORSAK (KOORDINATOR SAKSI)
                 </h2>
             </div>
 
@@ -30,6 +30,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-10">
+                                            {!! Form::label('user_event', 'Pilih Event Korsak:') !!}
                                             <select class="form-control show-tick" name="event" id="tahun" placeholder="Role" >
                                                 <option value=''>User Event</option>
                                                 @foreach( $eventList as $key => $val )
@@ -43,6 +44,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
+                                                {!! Form::label('provinsi_id', 'Pilih Provinsi Korsak:') !!}
                                                 {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}
                                             </div>
                                         </div>
@@ -52,6 +54,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
+                                                {!! Form::label('kota_id', 'Pilih Kota/Kab Korsak:') !!}
                                                 {{ Form::select('kota_id', $kota,null, ['class' => 'form-control','id' => 'kota_id','placeholder' => 'Select Kota/Kabupaten']) }}
                                             </div>
                                         </div>
@@ -61,6 +64,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
+                                                {!! Form::label('kecamatan_id', 'Pilih Kecamatan Korsak:') !!}
                                                 {{ Form::select('kecamatan_id', $kecamatan,null, ['class' => 'form-control','id' => 'kecamatan_id','placeholder' => 'Select Kecamatan']) }}
                                             </div>
                                         </div>
@@ -70,6 +74,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
+                                                {!! Form::label('kelurahan_id', 'Pilih Kelurahan Korsak:') !!}
                                                 {{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
                                             </div>
                                         </div>
@@ -79,6 +84,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
+                                                {!! Form::label('tps_id', 'Pilih Nomor TPS:') !!}
                                                 {{ Form::select('tps_id', $tps,null, ['class' => 'form-control','id' => 'tps_id','placeholder' => 'Select TPS']) }}
                                             </div>
                                         </div>
@@ -89,7 +95,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
-                                                {!! Form::label('nama', 'Nama:') !!}
+                                                {!! Form::label('nama', 'Nama Korsak:') !!}
                                                 {{ Form::text('first_name',null, ['class' => 'form-control','placeholder' => 'Nama']) }}
                                             </div>
                                         </div>
@@ -100,7 +106,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
-                                                {!! Form::label('email', 'Email:') !!}
+                                                {!! Form::label('email', 'Email Korsak:') !!}
                                                 {{ Form::text('email',null, ['class' => 'form-control','placeholder' => 'Email']) }}
                                             </div>
                                         </div>
@@ -111,7 +117,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
-                                                {!! Form::label('username', 'Username:') !!}
+                                                {!! Form::label('username', 'Username Korsak:') !!}
                                                 {{ Form::text('username',null, ['class' => 'form-control','placeholder' => 'Username']) }}
                                             </div>
                                         </div>
@@ -122,7 +128,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
-                                                {!! Form::label('phone', 'Nomor Handphone:') !!}
+                                                {!! Form::label('phone', 'Nomor Handphone Korsak:') !!}
                                                 {{ Form::text('phone',null, ['class' => 'form-control','placeholder' => '+62']) }}
                                             </div>
                                         </div>
@@ -132,7 +138,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
-                                                {!! Form::label('alamat', 'Alamat:') !!}
+                                                {!! Form::label('alamat', 'Alamat Korsak:') !!}
                                                 {{ Form::text('alamat',null, ['class' => 'form-control','placeholder' => 'isi Alamat Lengkap']) }}
                                             </div>
                                         </div>
@@ -142,7 +148,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
-                                                {!! Form::label('foto', 'Foto:') !!}
+                                                {!! Form::label('foto', 'Foto Korsak:') !!}
                                                 {{ Form::text('foto',null, ['class' => 'form-control','placeholder' => 'Pilih Foto']) }}
                                             </div>
                                         </div>
