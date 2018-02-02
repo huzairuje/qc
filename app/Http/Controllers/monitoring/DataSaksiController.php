@@ -93,10 +93,15 @@ class DataSaksiController extends Controller
 
     public function store(Request $request)
     {
+        $phone_pass = $request->phone;
+
+        // $request['password'] = substr($phone_pass, 6);
+
         $request->merge([
-            'password' => '12345678',
             'parent_id' => Sentinel::getUser()->id,
+            'password' => substr($phone_pass, 6),
         ]);
+        
         // dd($request->all());
         if($request->role == 'korsak' || $request->role == 'saksi')
         {
@@ -163,11 +168,11 @@ class DataSaksiController extends Controller
         }
 
             $data_saksi->nama       = $request->nama;
-            $data_saksi->alamat       = $request->alamat;
-            $data_saksi->no_telpon    = $request->no_telpon;
-            $data_saksi->email    = $request->email;
-            $data_saksi->id_tps    = $request->id_tps;
-            $data_saksi->foto    = $request->foto;
+            $data_saksi->alamat     = $request->alamat;
+            $data_saksi->no_telpon  = $request->no_telpon;
+            $data_saksi->email      = $request->email;
+            $data_saksi->id_tps     = $request->id_tps;
+            $data_saksi->foto       = $request->foto;
 
             $data_saksi->update();
 

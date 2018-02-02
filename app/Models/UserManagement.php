@@ -10,4 +10,9 @@ class UserManagement extends Model
     {
     	return $this->belongsTo('App\Models\User');
     }
+
+    public function event()
+    {
+    	return $this->belongsTo('App\Models\Event');
+    }
 }

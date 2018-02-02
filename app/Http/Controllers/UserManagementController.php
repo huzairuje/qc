@@ -87,33 +87,42 @@ class UserManagementController extends Controller
 
           ]);
 
-        $request->merge([
-            'password' => '12345678',
-            'parent_id' => Sentinel::getUser()->id,
-        ]);
-
         if($request->role == 'korsak' || $request->role == 'saksi')
         {
+            $phone_pass = $request->phone;
+            // $request['password'] = substr($phone_pass, 6);
+            $request->merge([
+                'parent_id' => Sentinel::getUser()->id,
+                'password' => substr($phone_pass, 6),
+            ]);
+            // dd($request->all());
+
             $user = Sentinel::register($request->all());
         }
         else
         {
+            $request->merge([
+            'password' => '12345678',
+            'parent_id' => Sentinel::getUser()->id,
+            ]);
+
             $user = Sentinel::registerAndActivate($request->all());
         }
 
         $insertedId = $user->id;
 
         Sentinel::findRoleById($request->role)->users()->attach( $user );
-        // try
-        // {
-        //     $user = new UserEvent;
-        //     $user->user_id = $insertedId;
-        //     $user->event_id = $request->event;
-        //     $user->save();
-        // }
-        // catch(\Exception $e){
-        //     echo $e->getMessage();
-        // }
+
+        try
+        {
+            $user = new UserEvent;
+            $user->user_id = $insertedId;
+            $user->event_id = $request->event;
+            $user->save();
+        }
+        catch(\Exception $e){
+            echo $e->getMessage();
+        }
 
         $data = $request->data;
         foreach($data as $key => $event){
@@ -121,7 +130,9 @@ class UserManagementController extends Controller
         }
         UserEvent::insert($userEvent);
 
-        return redirect('/user-management/show/' . $insertedId);
+        // return redirect('/user-management/show/' . $insertedId);
+        return redirect(route('usermanagement.show', $insertedId));
+
     }
 
     public function show($id){
@@ -133,7 +144,11 @@ class UserManagementController extends Controller
         $data['user'] = User::where('id' , '=', $id)->first();
 
         if($data['user']->roles()->first()->id <= Sentinel::getUser()->id){
-            return 'You are not authorized.';
+
+            flash('You are not Authorized and you cannot Edit Yourself')->error();
+            return redirect(route('usermanagement.index'));
+            // return 'You are not authorized.';
+
         }
         else
         {
@@ -204,6 +219,9 @@ class UserManagementController extends Controller
     public function update(Request $request, $id){
         $data = User::find($id);
         $currentRole = $data->roles()->first()->id;
+        // $currentEvent = $data->UserEvent()->first()->id;
+        dd($currentRole);
+
         if (empty($data)) {
 
             flash('User not found');
@@ -212,19 +230,38 @@ class UserManagementController extends Controller
         }
 
         $data->update($request->all());
-
-        if($currentRole != $request->role){
+        try {
+            $currentRole != $request->role;
             $role = RoleUser::where('user_id', $id)->first();
             $role->role_id = $request->role;
             $role->update();
+
+            $currentEvent != $request->event;
+            foreach($data as $key => $event){
+                $userEvent[$key] = ['user_id' => $insertedId, 'event_id' => $event];
+            }
+            UserEvent::update($userEvent);
+            
+            $event = UserEvent::where('event_id', $id)->first();
+            $event->event_id = $request->event;
+            $event->update();
+           
+            // dd($event);
+
+        }catch(\Exception $e){
+            echo $e->getMessage(); 
         }
 
 
+
         flash('User update successfully')->success();
-        return redirect('/user-management/show/' . $id);
+        // return redirect('/user-management/show/' . $id);
+        return redirect(route('usermanagement.index', $id));
+
     }
 
     public function destroy($id){
-        return redirect('/user-management/show/' . $id);
+        return redirect(route('usermanagement.index', $id));
+        // return redirect('/user-management/show/' . $id);
     }
 }

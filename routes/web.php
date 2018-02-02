@@ -87,7 +87,7 @@ Route::group(['middleware' => 'admin'], function () {
 		Route::post('/monitoring/datasaksi/store',['as'=>'monitoring.datasaksi.store','uses'=>'monitoring\DataSaksiController@store']);
 		Route::get('/monitoring/datasaksi/{id}',['as'=>'monitoring.datasaksi.delete','uses'=>'monitoring\DataSaksiController@destroy']);
 
-		//Route for Monitoring SubMenu Data PJ TPS
+		//Route for Monitoring SubMenu Data PJ TPS / Korsak
 		Route::get('/monitoring/datapjtps',['as'=>'monitoring.datapjtps','uses'=>'monitoring\DataPJTPSController@index']);
 		Route::get('/monitoring/datapjtps/ajax',['as'=>'monitoring.datapjtps.ajax','uses'=>'monitoring\DataPJTPSController@ajax']);
 
@@ -98,6 +98,53 @@ Route::group(['middleware' => 'admin'], function () {
 		Route::patch('/monitoring/datapjtps/update/{id}',['as'=>'monitoring.datapjtps.update','uses'=>'monitoring\DataPJTPSController@update']);
 		Route::post('/monitoring/datapjtps/store',['as'=>'monitoring.datapjtps.store','uses'=>'monitoring\DataPJTPSController@store']);
 		Route::get('/monitoring/datapjtps/{id}',['as'=>'monitoring.datapjtps.delete','uses'=>'monitoring\DataPJTPSController@destroy']);
+
+
+
+		//Route for Monitoring Submenu Data Admin Kecamatan
+		Route::get('/monitoring/dataadminkecamatan',['as'=>'monitoring.dataadminkecamatan','uses'=>'monitoring\DataAdminKecamatanController@index']);
+		Route::get('/monitoring/dataadminkecamatan/ajax',['as'=>'monitoring.dataadminkecamatan.ajax','uses'=>'monitoring\DataAdminKecamatanController@ajax']);
+		Route::get('/monitoring/dataadminkecamatan/getdatatable', ['as'=>'monitoring.dataadminkecamatan.datatable', 'uses' => 'monitoring\DataAdminKecamatanController@get_datatable']);
+		Route::get('/monitoring/dataadminkecamatan/create',['as'=>'monitoring.dataadminkecamatan.create','uses'=>'monitoring\DataAdminKecamatanController@create']);
+		Route::get('/monitoring/dataadminkecamatan/show/{id}',['as'=>'monitoring.dataadminkecamatan.show','uses'=>'monitoring\DataAdminKecamatanController@show']);
+		Route::get('/monitoring/dataadminkecamatan/edit/{id}',['as'=>'monitoring.dataadminkecamatan.edit','uses'=>'monitoring\DataAdminKecamatanController@edit']);
+		Route::patch('/monitoring/dataadminkecamatan/update/{id}',['as'=>'monitoring.dataadminkecamatan.update','uses'=>'monitoring\DataAdminKecamatanController@update']);
+		Route::post('/monitoring/dataadminkecamatan/store',['as'=>'monitoring.dataadminkecamatan.store','uses'=>'monitoring\DataAdminKecamatanController@store']);
+		Route::get('/monitoring/dataadminkecamatan/{id}',['as'=>'monitoring.dataadminkecamatan.delete','uses'=>'monitoring\DataAdminKecamatanController@destroy']);
+
+
+		//Route for Monitoring Submenu Data Admin Kota/Kabupaten 
+		Route::get('/monitoring/dataadminkota',['as'=>'monitoring.dataadminkota','uses'=>'monitoring\DataAdminKotaController@index']);
+		Route::get('/monitoring/dataadminkota/ajax',['as'=>'monitoring.dataadminkota.ajax','uses'=>'monitoring\DataAdminKotaController@ajax']);
+		Route::get('/monitoring/dataadminkota/getdatatable', ['as'=>'monitoring.dataadminkota.datatable', 'uses' => 'monitoring\DataAdminKotaController@get_datatable']);
+		Route::get('/monitoring/dataadminkota/create',['as'=>'monitoring.dataadminkota.create','uses'=>'monitoring\DataAdminKotaController@create']);
+		Route::get('/monitoring/dataadminkota/show/{id}',['as'=>'monitoring.dataadminkota.show','uses'=>'monitoring\DataAdminKotaController@show']);
+		Route::get('/monitoring/dataadminkota/edit/{id}',['as'=>'monitoring.dataadminkota.edit','uses'=>'monitoring\DataAdminKotaController@edit']);
+		Route::patch('/monitoring/dataadminkota/update/{id}',['as'=>'monitoring.dataadminkota.update','uses'=>'monitoring\DataAdminKotaController@update']);
+		Route::post('/monitoring/dataadminkota/store',['as'=>'monitoring.dataadminkota.store','uses'=>'monitoring\DataAdminKotaController@store']);
+		Route::get('/monitoring/dataadminkota/{id}',['as'=>'monitoring.dataadminkota.delete','uses'=>'monitoring\DataAdminKotaController@destroy']);
+
+		//Route for Monitoring Submenu Data Admin Provinsi
+		Route::get('/monitoring/dataadminprovinsi',['as'=>'monitoring.dataadminprovinsi','uses'=>'monitoring\DataAdminProvinsiController@index']);
+		Route::get('/monitoring/dataadminprovinsi/ajax',['as'=>'monitoring.dataadminprovinsi.ajax','uses'=>'monitoring\DataAdminProvinsiController@ajax']);
+		Route::get('/monitoring/dataadminprovinsi/getdatatable', ['as'=>'monitoring.dataadminprovinsi.datatable', 'uses' => 'monitoring\DataAdminProvinsiController@get_datatable']);
+		Route::get('/monitoring/dataadminprovinsi/create',['as'=>'monitoring.dataadminprovinsi.create','uses'=>'monitoring\DataAdminProvinsiController@create']);
+		Route::get('/monitoring/dataadminprovinsi/show/{id}',['as'=>'monitoring.dataadminprovinsi.show','uses'=>'monitoring\DataAdminProvinsiController@show']);
+		Route::get('/monitoring/dataadminprovinsi/edit/{id}',['as'=>'monitoring.dataadminprovinsi.edit','uses'=>'monitoring\DataAdminProvinsiController@edit']);
+		Route::patch('/monitoring/dataadminprovinsi/update/{id}',['as'=>'monitoring.dataadminprovinsi.update','uses'=>'monitoring\DataAdminProvinsiController@update']);
+		Route::post('/monitoring/dataadminprovinsi/store',['as'=>'monitoring.dataadminprovinsi.store','uses'=>'monitoring\DataAdminProvinsiController@store']);
+		Route::get('/monitoring/dataadminprovinsi/{id}',['as'=>'monitoring.dataadminprovinsi.delete','uses'=>'monitoring\DataAdminProvinsiController@destroy']); 
+
+		//Route for Monitoring Submenu Data Admin Event
+		Route::get('/monitoring/dataadminevent',['as'=>'monitoring.dataadminevent','uses'=>'monitoring\DataAdminEventController@index']);
+		Route::get('/monitoring/dataadminevent/ajax',['as'=>'monitoring.dataadminevent.ajax','uses'=>'monitoring\DataAdminEventController@ajax']);
+		Route::get('/monitoring/dataadminevent/getdatatable', ['as'=>'monitoring.dataadminevent.datatable', 'uses' => 'monitoring\DataAdminKotaController@get_datatable']);
+		Route::get('/monitoring/dataadminevent/create',['as'=>'monitoring.dataadminevent.create','uses'=>'monitoring\DataAdminEventController@create']);
+		Route::get('/monitoring/dataadminevent/show/{id}',['as'=>'monitoring.dataadminevent.show','uses'=>'monitoring\DataAdminEventController@show']);
+		Route::get('/monitoring/dataadminevent/edit/{id}',['as'=>'monitoring.dataadminevent.edit','uses'=>'monitoring\DataAdminEventController@edit']);
+		Route::patch('/monitoring/dataadminevent/update/{id}',['as'=>'monitoring.dataadminevent.update','uses'=>'monitoring\DataAdminEventController@update']);
+		Route::post('/monitoring/dataadminevent/store',['as'=>'monitoring.dataadminevent.store','uses'=>'monitoring\DataAdminEventController@store']);
+		Route::get('/monitoring/dataadminevent/{id}',['as'=>'monitoring.dataadminevent.delete','uses'=>'monitoring\DataAdminEventController@destroy']); 
 
 
 		//Route for Monitoring SubMenu Tabulasi

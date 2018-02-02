@@ -82,9 +82,13 @@ class DataPJTPSController extends Controller
 
     public function store(Request $request)
     {
+        $phone_pass = $request->phone;
+
+        // $request['password'] = substr($phone_pass, 6);
+
         $request->merge([
-            'password' => '12345678',
             'parent_id' => Sentinel::getUser()->id,
+            'password' => substr($phone_pass, 6),
         ]);
         // dd($request->all());
         if($request->role == 'korsak' || $request->role == 'saksi')

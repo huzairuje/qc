@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSaksiTpsTable extends Migration
+class CreateUserAdminKotaDescriptionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateSaksiTpsTable extends Migration
      */
     public function up()
     {
-      Schema::create('saksi_tps', function (Blueprint $table) {
+        Schema::create('admin_kota', function (Blueprint $table) {
           $table->bigIncrements('id');
           $table->bigInteger('user_id')->nullable();
-          $table->bigInteger('tps_id')->nullable();
-          $table->bigInteger('kelurahan_id')->nullable();
+          $table->bigInteger('kota_id')->nullable();
           $table->string('alamat')->nullable();
           $table->string('foto')->nullable();
           $table->timestamps();
@@ -31,6 +30,7 @@ class CreateSaksiTpsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('saksi_tps');
+        Schema::dropIfExists('admin_kota');
+        
     }
 }
