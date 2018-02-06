@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\monitoring;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -82,7 +81,7 @@ class DataAdminEventController extends Controller
             })
 
             ->addColumn('action', function ($data_event) {
-            return '<a href="'.route('monitoring.dataadminevent.show', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-search"></i>Lihat</a><a href="'.route('monitoring.dataadminevent.edit', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('monitoring.dataadminevent.delete', $data_event->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i>Delete</a>';
+            return '<a href="'.route('monitoring.dataadminprovinsi.show', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-search"></i>Lihat</a><a href="'.route('monitoring.dataadminprovinsi.edit', $data_event->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('monitoring.dataadminprovinsi.delete', $data_event->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i>Delete</a>';
         })
 
             ->make(true);
@@ -206,18 +205,18 @@ class DataAdminEventController extends Controller
         return redirect(route('monitoring.dataadminevent'));
 	}
 
-    // public function ajax(Request $request)
-    // {      
-    //   $type = $request->type;
-    //   switch ($type) {
-    //       case 'get-event':
-    //       $result = Event::get()->pluck( 'nama', 'id' )->all();
-    //       return $result;
-    //       break;
+    public function ajax(Request $request)
+    {      
+      $type = $request->type;
+      switch ($type) {
+          case 'get-event':
+          $result = Event::get()->pluck( 'nama', 'id' )->all();
+          return $result;
+          break;
 
-    //       default:
-    //       return $result['status'] = false;
-    //       break;
-    //     }
-    // }
+          default:
+          return $result['status'] = false;
+          break;
+        }
+    }
 }
