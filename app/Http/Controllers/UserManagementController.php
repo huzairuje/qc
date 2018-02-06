@@ -234,7 +234,7 @@ class UserManagementController extends Controller
             $currentRole != $request->role;
             $role = RoleUser::where('user_id', $id)->first();
             $role->role_id = $request->role;
-            $role->update
+            $role->update();
 
             $currentEvent != $request->event;
             foreach($data as $key => $event){
