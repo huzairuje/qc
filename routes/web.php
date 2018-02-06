@@ -137,7 +137,7 @@ Route::group(['middleware' => 'admin'], function () {
 
 		//Route for Monitoring Submenu Data Admin Event
 		Route::get('/monitoring/dataadminevent',['as'=>'monitoring.dataadminevent','uses'=>'monitoring\DataAdminEventController@index']);
-		Route::get('/monitoring/dataadminevent/ajax',['as'=>'monitoring.dataadminevent.ajax','uses'=>'monitoring\DataAdminEventController@ajax']);
+		// Route::get('/monitoring/dataadminevent/ajax',['as'=>'monitoring.dataadminevent.ajax','uses'=>'monitoring\DataAdminEventController@ajax']);
 		Route::get('/monitoring/dataadminevent/getdatatable', ['as'=>'monitoring.dataadminevent.datatable', 'uses' => 'monitoring\DataAdminKotaController@get_datatable']);
 		Route::get('/monitoring/dataadminevent/create',['as'=>'monitoring.dataadminevent.create','uses'=>'monitoring\DataAdminEventController@create']);
 		Route::get('/monitoring/dataadminevent/show/{id}',['as'=>'monitoring.dataadminevent.show','uses'=>'monitoring\DataAdminEventController@show']);

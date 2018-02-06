@@ -94,7 +94,7 @@ class DataAdminProvinsiController extends Controller
             'parent_id' => Sentinel::getUser()->id,
         ]);
         // dd($request->all());
-        if($request->role == 'admin-kota')
+        if($request->role == 'admin-provinsi')
         {
             $data_provinsi = Sentinel::register($request->all());
         }

@@ -81,11 +81,9 @@
                 <li {{Route::is('monitoring.dataadminprovinsi') || Route::is('monitoring.dataadminprovinsi.create') || Route::is('monitoring.dataadminprovinsi.show') || Route::is('monitoring.dataadminprovinsi.edit')? 'class=active':''}}>
                     <a href="{{route('monitoring.dataadminprovinsi')}}">Data Admin Provinsi</a>
                 </li>
-
-                <!-- <li {{Route::is('monitoring.datapjtps') || Route::is('monitoring.datapjtps.create') || Route::is('monitoring.datapjtps.show') || Route::is('monitoring.datapjtps.edit')? 'class=active':''}}>
-                    <a href="{{route('monitoring.datapjtps')}}">Data Admin Event</a>
-                </li> -->
-
+                <li {{Route::is('monitoring.dataadminevent') || Route::is('monitoring.dataadminevent.create') || Route::is('monitoring.dataadminevent.show') || Route::is('monitoring.dataadminevent.edit')? 'class=active':''}}>
+                    <a href="{{route('monitoring.dataadminevent')}}">Data Admin Event</a>
+                </li>
                 <!-- <li {{Route::is('monitoring.tabulasi')? 'class=active':''}}>
                     <a href="{{route('monitoring.tabulasi')}}">Tabulasi</a>
                 </li>
