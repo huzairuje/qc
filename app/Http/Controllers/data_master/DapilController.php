@@ -150,8 +150,9 @@ class DapilController extends Controller
                 $currentDataList[$key] = $currentData->lokasi_id;
             }
         } else {
-            $currentDataList = [];
+            $currentDataList = [];    
         }
+        $currentDataList = json_encode($currentDataList);
 
 
         if (empty($dapil)) {
@@ -236,26 +237,48 @@ class DapilController extends Controller
             if($event->jenis_id == 5)
             {
                 if($event->tingkat_id == 2){
-                    $result = Kota::where('provinsi_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+                    $result['data'] = Kota::where('provinsi_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
                 }
                 else if($event->tingkat_id == 3){
-                    $result = Kecamatan::where('kota_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+                    $result['data'] = Kecamatan::where('kota_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
                 }
             }
             else if($event->jenis_id == 4)
             {
                 if($event->tingkat_id == 2){
-                    $result = Kota::where('provinsi_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+                    $result['data'] = Kota::where('provinsi_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
                 }
                 else if($event->tingkat_id == 3){
-                    $result = Kecamatan::where('kota_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+                    $result['data'] = Kecamatan::where('kota_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
                 }
             }
             else {
-                $result = Provinsi::pluck('nama','id')->all();
+                $result['data'] = Provinsi::pluck('nama','id')->all();
                 // $provinsi = 
 
             }
+
+            $jenis = $event->jenis_id;
+
+            switch ($jenis) {
+                case 1:
+                    $pilihan = 'select_all';
+                    break;
+                case 2:
+                    $pilihan = 'unselect_all';
+                    break;
+                case 3:
+                    $pilihan = 'unselect_all';
+                    break;
+                case 4:
+                    $pilihan = 'unselect_all';
+                    break;
+                default:
+                    $pilihan = 'select_all';
+                    break;
+            }
+
+            $result['jenis'] = $pilihan;
             return $result;
             break;
 

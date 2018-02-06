@@ -62,27 +62,64 @@
 
 			$(document).on('change','#event_id',function(){
 				var _val = $(this).val();
-				getData(_val,_url);
+				getData(_val,_url,null);
 			});
 
-			function getData(val,url)
+			getData({{ $dapil->event_id }},_url,'{!! $currentDataList !!}');
+
+			function getData(val,url,dataList=null)
 			{
 				$.get(url,{'type':'get-data','event_id':val})
 				.done(function(result) {
+					console.log(result)
 					var html = '';
-					$('#data').selectpicker(html);
+					var checked = '';
 
-					$.each(result,function(key,value){
-						html += '<option value="'+key+'">'+value+'</option>';
-					});
+					if(dataList == null){
+						if (result.jenis === 'select_all') {
+							checked = 'checked';
+						}
 
-					$('#data').html(html);
-					$('#data').val({{ $currentDataList }});
-					$('#data').selectpicker('refresh');
+						$.each(result.data,function(key,value){
+							html += '<div class="col-md-4 dapil-checkboxes">'+
+									'<p><input type="checkbox"  name="data[]" value="'+key+'" class="filled-in"'+checked+'/>'+
+									'<label for="filled-in-box">'+value+'</label></p>'+
+									'</div>';
+											
+						});
+					}else{
+						selected = JSON.parse(dataList);	
+						console.log(selected)
+						console.log(result.data)
+						$.each(result.data,function(key,value){
+							var checked = '';
+							$.each(selected,function(objk,prop){
+								if (prop == key) {
+									checked = 'checked';
+								}
+							});
+							html += '<div class="col-md-4 dapil-checkboxes">'+
+									'<p><input type="checkbox"  name="data[]" value="'+key+'" class="filled-in"'+checked+'/>'+
+									'<label for="filled-in-box">'+value+'</label></p>'+
+									'</div>';
+						});
+					}
+
+
+					$("#dapil").html(html);
 				});
 			}
-
-			getData({{ $dapil->event_id }},_url);
 		});
+
+		$(document).on("click", ".dapil-checkboxes", function() {
+			var checkbox = $(this).find("input");
+			var checked = checkbox.attr('checked');
+			if (checkbox.is(":checked")) {
+				checkbox.removeAttr("checked");
+			} else {
+				checkbox.prop("checked", true);
+			}
+		});
+
 	</script>
 	@endsection

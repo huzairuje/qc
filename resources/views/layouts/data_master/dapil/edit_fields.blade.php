@@ -17,10 +17,8 @@
             </div>
         </div>
 
-        <div class="col-md-10">
-            <select id="data" name="data[]" class="ui fluid search dropdown form-control show-tick" multiple>
-
-            </select>
+        <div class="col-md-10" id="dapil">
+            
         </div>
 
 

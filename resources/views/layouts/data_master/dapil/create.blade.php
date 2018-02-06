@@ -45,22 +45,7 @@
 											</div>
 										</div>
 
-										<div class="col-md-10">
-											<div class="form-group">
-												<div class="form-line">
-													{!! Form::label('event_id', 'Pilih Daerah:') !!}
-													<input type="checkbox" name="vehicle">
-      												
-												</div>
-											</div>
-										</div>
-
-
-										<div class="col-md-10">
-											<select id="data" name="data[]" class="ui fluid search dropdown form-control show-tick" multiple>
-
-
-											</select>
+										<div class="col-md-10" id="dapil">
 										</div>
 
 
@@ -103,17 +88,36 @@
 										$.get(url,{'type':'get-data','event_id':val})
 										.done(function(result) {
 											var html = '';
-											$('#data').selectpicker(html);
+											var checked = '';
+											if (result.jenis === 'select_all') {
+												checked = 'checked';
+											}
 
-											$.each(result,function(key,value){
-												html += '<option value="'+key+'">'+value+'</option>';
+											$.each(result.data,function(key,value){
+
+												html += '<div class="col-md-4 dapil-checkboxes">'+
+														'<p><input type="checkbox"  name="data[]" value="'+key+'" class="filled-in"'+checked+'/>'+
+														'<label for="filled-in-box">'+value+'</label></p>'+
+														'</div>';
+  															
 											});
 
-											$('#data').html(html);
-											$('#data').selectpicker('refresh');
+											$("#dapil").html(html);
+
 										});
 									}
 								});
+
+								$(document).on("click", ".dapil-checkboxes", function() {
+									var checkbox = $(this).find("input");
+									var checked = checkbox.attr('checked');
+									if (checkbox.is(":checked")) {
+										checkbox.removeAttr("checked");
+									} else {
+										checkbox.prop("checked", true);
+									}
+								});
+
 								</script>
 
 								@endsection
