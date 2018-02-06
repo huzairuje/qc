@@ -236,10 +236,10 @@ class DapilController extends Controller
             if($event->jenis_id == 5)
             {
                 if($event->tingkat_id == 2){
-                    $result = Provinsi::where('id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+                    $result = Kota::where('provinsi_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
                 }
                 else if($event->tingkat_id == 3){
-                    $result = Kota::where('id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
+                    $result = Kecamatan::where('kota_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
                 }
             }
             else if($event->jenis_id == 4)
@@ -250,6 +250,11 @@ class DapilController extends Controller
                 else if($event->tingkat_id == 3){
                     $result = Kecamatan::where('kota_id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->all();
                 }
+            }
+            else {
+                $result = Provinsi::pluck('nama','id')->all();
+                // $provinsi = 
+
             }
             return $result;
             break;

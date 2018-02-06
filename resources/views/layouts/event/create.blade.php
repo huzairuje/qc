@@ -119,7 +119,7 @@
 
 						$(document).on('change','#jenis',function(){
 							var _val = $(this).val();
-							if(_val == 4 || _val == 5){
+							if(_val == 1||_val == 2 || _val == 3 || _val == 4 || _val == 5){
 								$('.tingkat-form-container').show();
 							}
 							else {

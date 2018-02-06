@@ -46,7 +46,19 @@
 										</div>
 
 										<div class="col-md-10">
+											<div class="form-group">
+												<div class="form-line">
+													{!! Form::label('event_id', 'Pilih Kota/Kabupaten:') !!}
+													<input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>
+      												
+												</div>
+											</div>
+										</div>
+
+
+										<div class="col-md-10">
 											<select id="data" name="data[]" class="ui fluid search dropdown form-control show-tick" multiple>
+
 
 											</select>
 										</div>

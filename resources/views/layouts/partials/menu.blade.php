@@ -106,17 +106,17 @@
                 <span>Data Master Management</span>
             </a>
             <ul class="ml-menu" style="display: none;">
-                <li {{Route::is('datamaster.calon*')? 'class=active':''}}>
-                    <a href="{{route('datamaster.calon.index')}}">Calon Management</a>
-                </li>
                 <li {{Route::is('datamaster.dapil*')? 'class=active':''}}>
                     <a href="{{route('datamaster.dapil.index')}}">Dapil Management</a>
+                </li>
+                <li {{Route::is('datamaster.partai*')? 'class=active':''}}>
+                    <a href="{{route('datamaster.partai.index')}}">Partai Management</a>
                 </li>
                 <li {{Route::is('datamaster.TPS*')? 'class=active':''}}>
                     <a href="{{route('datamaster.TPS.index')}}">TPS Management</a>
                 </li>
-                <li {{Route::is('datamaster.partai*')? 'class=active':''}}>
-                    <a href="{{route('datamaster.partai.index')}}">Partai Management</a>
+                <li {{Route::is('datamaster.calon*')? 'class=active':''}}>
+                    <a href="{{route('datamaster.calon.index')}}">Calon Management</a>
                 </li>
             </ul>
         </li>

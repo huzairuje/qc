@@ -49,6 +49,7 @@ class CalonController extends Controller
     }
     public function get_datatable()
     {
+        
         $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
         foreach ($userEvents as $key => $userEvent) {
             $listEventId[$key] = $userEvent->event_id;
