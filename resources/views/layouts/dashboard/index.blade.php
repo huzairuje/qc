@@ -18,7 +18,6 @@ Dashboard
 		<div class="header">
 			<h2>
 				<select id="event_id" class="form-control">
-					<option></option>
 					@foreach ($event as $key => $ev)
 					<option value="{!! $key !!}" data>{!! $ev !!}</option>
 					@endforeach
@@ -103,7 +102,8 @@ Dashboard
     
     <script type="text/javascript">
     $(document).ready(function(){
-    	ajaxChart();
+    	var event_id = $("#event_id").val();
+    	ajaxChart(event_id);
     });
 
     $(document).on("change", "#event_id", function(){
@@ -117,11 +117,9 @@ Dashboard
 			type: "POST",
 			data:{
 				"_token": "{{ csrf_token() }}",
-				'first': false,
 				'event_id': event_id
 			},
 			success: function(data) {
-				console.log(data);
 				var calon_nama = [];
 				var jumlah_suara = [];
 				var event_nama = [];
@@ -131,7 +129,6 @@ Dashboard
 					jumlah_suara.push(data[i].jumlah_suara);
 				}
 					event_nama.push(data[i].event_nama);
-				console.log(event_nama);
 
 				var chartdata = {
 					labels: calon_nama,

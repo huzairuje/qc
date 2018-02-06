@@ -75,6 +75,7 @@ class Event extends Model
                             "calon.nama as calon_nama",
                             "suara.jumlah as jumlah_suara"
                  );
+                 // dd($query);
         return $query;
     }
 }

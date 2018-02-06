@@ -36,11 +36,7 @@ class DashboardController extends Controller
 
     public function ajax(Request $request)
     {
-      if($request->first){
-            $event = Event::chart()->orderBy("event.created_at", "desc")->get();        
-      }else{
-        $event = Event::chart()->where("event.id", $event_id)->get();
-      }
+      $event = Event::chart()->where("event.id", $request->event_id)->get();
       return response()->json($event);
 
     }

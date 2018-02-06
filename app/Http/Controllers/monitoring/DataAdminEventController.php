@@ -65,7 +65,7 @@ class DataAdminEventController extends Controller
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $data_event = Sentinel::findRoleById(2)->users()->with('roles');
+        $data_event = Sentinel::findRoleById(3)->users()->with('roles');
         // $restaurants = restaurants::where('res_id', 1);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
