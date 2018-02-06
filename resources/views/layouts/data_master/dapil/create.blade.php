@@ -48,8 +48,8 @@
 										<div class="col-md-10">
 											<div class="form-group">
 												<div class="form-line">
-													{!! Form::label('event_id', 'Pilih Kota/Kabupaten:') !!}
-													<input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>
+													{!! Form::label('event_id', 'Pilih Daerah:') !!}
+													<input type="checkbox" name="vehicle">
       												
 												</div>
 											</div>

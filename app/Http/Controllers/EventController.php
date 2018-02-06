@@ -240,9 +240,14 @@ class EventController extends Controller
                 $result = Kota::where('id',$event->lokasi)->orderBy('nama', 'ASC')->get()->pluck( 'nama', 'id' )->first();
             }
         }
+        else if($event->jenis_id == 1 || $event->jenis_id == 2 || $event->jenis_id == 3)
+        {
+            $result = 'INDONESIA';
+        }
         else
         {
             $result = Kota::find('id',$event->lokasi);
+
         }
 
         // return response()->json($event);
