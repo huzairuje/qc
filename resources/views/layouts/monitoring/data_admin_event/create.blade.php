@@ -56,11 +56,13 @@
                                         <div class="col-md-8">
                                             <div class="form-line">
                                                 {!! Form::label('email', 'Email:') !!}
-                                                {{ Form::text('email',null, ['class' => 'form-control','placeholder' => 'Email']) }}
+                                                {{ Form::text('email',null, ['class' => 'form-control validate','placeholder' => 'Email', 'data-error' => 'salah', 'data-sucess' => 'benar']) }}
+                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                
 
                                 <div class="form-group">
                                     <div class="row">

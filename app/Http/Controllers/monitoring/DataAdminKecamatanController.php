@@ -89,6 +89,16 @@ class DataAdminKecamatanController extends Controller
 
     public function store(Request $request)
     {
+        $v = $this->validate($request,[
+      'no_telpon' => 'required',
+       // 'tingkat_id' => 'required',
+       'email' => 'required',
+       'username' => 'required',
+       'kecamatan_id' => 'required'
+       // 'lokasi' => 'required',
+       // 'tahun' => 'required',
+        ]);
+
         $request->merge([
             'password' => '12345678',
             'parent_id' => Sentinel::getUser()->id,

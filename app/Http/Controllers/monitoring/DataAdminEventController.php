@@ -89,6 +89,15 @@ class DataAdminEventController extends Controller
 
     public function store(Request $request)
     {
+        $v = $this->validate($request,[
+      'no_telpon' => 'required',
+       // 'tingkat_id' => 'required',
+       'email' => 'required',
+       'username' => 'required',
+       // 'lokasi' => 'required',
+       // 'tahun' => 'required',
+        ]);
+
         $request->merge([
             'password' => '12345678',
             'parent_id' => Sentinel::getUser()->id,

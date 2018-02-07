@@ -93,6 +93,17 @@ class DataSaksiController extends Controller
 
     public function store(Request $request)
     {
+        $v = $this->validate($request,[
+          'no_telpon' => 'required',
+           // 'tingkat_id' => 'required',
+           'email' => 'required',
+           'username' => 'required',
+           'kelurahan_id' => 'required',
+           'tps_id' => 'required'
+           // 'lokasi' => 'required',
+           // 'tahun' => 'required',
+        ]);
+
         $phone_pass = $request->phone;
 
         // $request['password'] = substr($phone_pass, 6);
