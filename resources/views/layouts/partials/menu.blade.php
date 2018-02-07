@@ -89,12 +89,14 @@
                 <li {{Route::is('tabulasi.create')? 'class=active':''}}>
                     <a href="{{route('tabulasi.create')}}">Tambah Data Tabulasi</a>
                 </li>
+                @if( Sentinel::getUser()->roles->first()->slug == 'admin-event' || Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-provinsi' || Sentinel::getUser()->roles->first()->slug == 'admin-kota' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'admin-kelurahan')
                 <li {{Route::is('tabulasi.index') || Route::is('tabulasi.show') || Route::is('tabulasi.edit')? 'class=active':''}}>
                     <a href="{{route('tabulasi.index')}}">Data Tabulasi</a>
                 </li>
                 <li {{Route::is('tabulasi.quickcount')? 'class=active':''}}>
                     <a href="{{route('tabulasi.quickcount')}}">Hasil Quick Count</a>
                 </li>
+                @endif
             </ul>
         </li>
         @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'korsak' )
@@ -105,7 +107,7 @@
             </a>
         </li>
         @endif
-        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'korsak' )
+        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'korsak' || Sentinel::getUser()->roles->first()->slug == 'saksi' )
         <li {{Route::is('absensi.*')? 'class=active':''}}>
             <a href="{{route('absensi.index')}}">
                 <i class="material-icons">people_outline</i>
@@ -121,6 +123,7 @@
           </a>
         </li>
         @endif
+        @if( Sentinel::getUser()->roles->first()->slug == 'admin-event' || Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-provinsi' || Sentinel::getUser()->roles->first()->slug == 'admin-kota' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'admin-kelurahan')
         <li>
             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('usermanagement*')? 'toggled':''}}" >
                 <i class="material-icons">people</i>
@@ -135,6 +138,10 @@
                 </li> -->
             </ul>
         </li>
+        @endif
+        @if( Sentinel::getUser()->roles->first()->slug == 'saksi' )
+
+        @endif
         @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
         <li {{Route::is('download')? 'class=active':''}}>
             <a href="{{route('download')}}">
