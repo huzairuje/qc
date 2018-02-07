@@ -22,45 +22,74 @@
 			<div class="box box-primary">
 
 				<div class="box-body">
-					<div class="row">
-						<div class="body">
-							<div class="row clearfix">
-								<!-- Content Create-->
+                    <div class="container">
+                        <div class="body">
+                            <div class="row clearfix">
 								{!! Form::open(['route' => 'datamaster.TPS.store']) !!}
-								<div class="col-md-6">
-									{!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}
-								</div>
 
-								<div class="col-md-6">
-									{{ Form::select('kota_id', $kota,null, ['class' => 'form-control','id' => 'kota_id','placeholder' => 'Select Kota/Kabupaten']) }}
-								</div>
-
-								<div class="col-md-6">
-									{{ Form::select('kecamatan_id', $kecamatan,null, ['class' => 'form-control','id' => 'kecamatan_id','placeholder' => 'Select Kecamatan']) }}
-								</div>
-
-
-								<div class="col-md-6">
-									{{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
-								</div>
-
-								<div class="col-md-4">
-									<div class="form-line">
-										{!! Form::label('nomor', 'Nomor TPS :') !!}
-										{{ Form::number('nomor',null, ['class' => 'form-control','placeholder' => 'Isi Nomor TPS']) }}
+								<div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+												{!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}
+											</div>
+										</div>
 									</div>
-
 								</div>
 
+								<div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+											{{ Form::select('kota_id', $kota,null, ['class' => 'form-control','id' => 'kota_id','placeholder' => 'Select Kota/Kabupaten']) }}
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+												{{ Form::select('kecamatan_id', $kecamatan,null, ['class' => 'form-control','id' => 'kecamatan_id','placeholder' => 'Select Kecamatan']) }}
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+												{{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+												{!! Form::label('nomor', 'Nomor TPS :') !!}
+												{{ Form::number('nomor',null, ['class' => 'form-control','placeholder' => 'Isi Nomor TPS']) }}
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+                                    <div class="form-line">
+                                        {!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
+										<a href="{{ route('datamaster.TPS.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index TPS</a>
+                                    </div>
+                                </div>
+
+								{!! Form::close() !!}
 
 								<!-- END Content Create-->
 
 								<!-- Modal -->
-								<div class="modal-footer">
-									{!! Form::submit('Simpan', ['class' => 'btn btn-primary waves-effect']) !!}
-									<a href="{{ route('datamaster.TPS.index')}}" type="button" class="btn btn-default" data-dismiss="modal">Index TPS</a>
-								</div>
-								{!! Form::close() !!}
 							</div>
 						</div>
 						@endsection
