@@ -8,12 +8,14 @@
                 <span>Dashboard</span>
             </a>
         </li>
+        @if( Sentinel::getUser()->roles->first()->slug == 'admin-event' || Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
         <li {{Route::is('event.*')? 'class=active':''}}>
             <a href="{{route('event.index')}}">
                 <i class="material-icons">event</i>
                 <span>Event Management</span>
             </a>
         </li>
+        @endif
         @if( Sentinel::getUser()->roles->first()->slug == 'admin-event' || Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
         <li>
             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('datamaster*')? 'toggled':''}}" >
@@ -111,13 +113,14 @@
             </a>
         </li>
         @endif
+        @if( Sentinel::getUser()->roles->first()->slug == 'admin-event' || Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
         <li {{Route::is('quickrealcount.*')? 'class=active':''}}>
           <a href="{{route('quickrealcount.index')}}">
               <i class="material-icons">insert_chart</i>
               <span>Quick Real Count Management</span>
           </a>
         </li>
-
+        @endif
         <li>
             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('usermanagement*')? 'toggled':''}}" >
                 <i class="material-icons">people</i>
