@@ -14,45 +14,26 @@
                 <span>Event Management</span>
             </a>
         </li>
-
+        @if( Sentinel::getUser()->roles->first()->slug == 'admin-event' || Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
         <li>
-            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is( 'tabulasi*')? 'toggled':''}}">
-                <i class="material-icons">tab</i>
-                <span>Tabulasi</span>
+            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('datamaster*')? 'toggled':''}}" >
+                <i class="material-icons">input</i>
+                <span>Data Master Management</span>
             </a>
             <ul class="ml-menu" style="display: none;">
-                <li {{Route::is('tabulasi.create')? 'class=active':''}}>
-                    <a href="{{route('tabulasi.create')}}">Tambah Data Tabulasi</a>
+                <li {{Route::is('datamaster.dapil*')? 'class=active':''}}>
+                    <a href="{{route('datamaster.dapil.index')}}">Dapil Management</a>
                 </li>
-                <li {{Route::is('tabulasi.index') || Route::is('tabulasi.show') || Route::is('tabulasi.edit')? 'class=active':''}}>
-                    <a href="{{route('tabulasi.index')}}">Data Tabulasi</a>
+                <li {{Route::is('datamaster.partai*')? 'class=active':''}}>
+                    <a href="{{route('datamaster.partai.index')}}">Partai Management</a>
                 </li>
-                <li {{Route::is('tabulasi.quickcount')? 'class=active':''}}>
-                    <a href="{{route('tabulasi.quickcount')}}">Hasil Quick Count</a>
+                <li {{Route::is('datamaster.TPS*')? 'class=active':''}}>
+                    <a href="{{route('datamaster.TPS.index')}}">TPS Management</a>
+                </li>
+                <li {{Route::is('datamaster.calon*')? 'class=active':''}}>
+                    <a href="{{route('datamaster.calon.index')}}">Calon Management</a>
                 </li>
             </ul>
-        </li>
-        <li {{Route::is('quickrealcount.*')? 'class=active':''}}>
-          <a href="{{route('quickrealcount.index')}}">
-              <i class="material-icons">insert_chart</i>
-              <span>Quick Real Count Management</span>
-          </a>
-        </li>
-
-        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'korsak' )
-        <li {{Route::is('approval.*')? 'class=active':''}}>
-            <a href="{{route('approval.index')}}">
-                <i class="material-icons">notifications_none</i>
-                <span>Approval Management</span>
-            </a>
-        </li>
-        @endif
-        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'korsak' )
-        <li {{Route::is('absensi.*')? 'class=active':''}}>
-            <a href="{{route('absensi.index')}}">
-                <i class="material-icons">people_outline</i>
-                <span>Absensi Management</span>
-            </a>
         </li>
         @endif
         @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
@@ -97,28 +78,46 @@
             </ul>
         </li>
         @endif
-        @if( Sentinel::getUser()->roles->first()->slug == 'admin-event' || Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
         <li>
-            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('datamaster*')? 'toggled':''}}" >
-                <i class="material-icons">input</i>
-                <span>Data Master Management</span>
+            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is( 'tabulasi*')? 'toggled':''}}">
+                <i class="material-icons">tab</i>
+                <span>Tabulasi</span>
             </a>
             <ul class="ml-menu" style="display: none;">
-                <li {{Route::is('datamaster.dapil*')? 'class=active':''}}>
-                    <a href="{{route('datamaster.dapil.index')}}">Dapil Management</a>
+                <li {{Route::is('tabulasi.create')? 'class=active':''}}>
+                    <a href="{{route('tabulasi.create')}}">Tambah Data Tabulasi</a>
                 </li>
-                <li {{Route::is('datamaster.partai*')? 'class=active':''}}>
-                    <a href="{{route('datamaster.partai.index')}}">Partai Management</a>
+                <li {{Route::is('tabulasi.index') || Route::is('tabulasi.show') || Route::is('tabulasi.edit')? 'class=active':''}}>
+                    <a href="{{route('tabulasi.index')}}">Data Tabulasi</a>
                 </li>
-                <li {{Route::is('datamaster.TPS*')? 'class=active':''}}>
-                    <a href="{{route('datamaster.TPS.index')}}">TPS Management</a>
-                </li>
-                <li {{Route::is('datamaster.calon*')? 'class=active':''}}>
-                    <a href="{{route('datamaster.calon.index')}}">Calon Management</a>
+                <li {{Route::is('tabulasi.quickcount')? 'class=active':''}}>
+                    <a href="{{route('tabulasi.quickcount')}}">Hasil Quick Count</a>
                 </li>
             </ul>
         </li>
+        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'korsak' )
+        <li {{Route::is('approval.*')? 'class=active':''}}>
+            <a href="{{route('approval.index')}}">
+                <i class="material-icons">notifications_none</i>
+                <span>Approval Management</span>
+            </a>
+        </li>
         @endif
+        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'korsak' )
+        <li {{Route::is('absensi.*')? 'class=active':''}}>
+            <a href="{{route('absensi.index')}}">
+                <i class="material-icons">people_outline</i>
+                <span>Absensi Management</span>
+            </a>
+        </li>
+        @endif
+        <li {{Route::is('quickrealcount.*')? 'class=active':''}}>
+          <a href="{{route('quickrealcount.index')}}">
+              <i class="material-icons">insert_chart</i>
+              <span>Quick Real Count Management</span>
+          </a>
+        </li>
+
         <li>
             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('usermanagement*')? 'toggled':''}}" >
                 <i class="material-icons">people</i>
