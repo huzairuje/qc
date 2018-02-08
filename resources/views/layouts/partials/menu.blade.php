@@ -38,6 +38,26 @@
             </ul>
         </li>
         @endif
+        
+        <li>
+            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is( 'tabulasi*')? 'toggled':''}}">
+                <i class="material-icons">tab</i>
+                <span>Tabulasi</span>
+            </a>
+            <ul class="ml-menu" style="display: none;">
+                <li {{Route::is('tabulasi.create')? 'class=active':''}}>
+                    <a href="{{route('tabulasi.create')}}">Tambah Data Tabulasi</a>
+                </li>
+                @if( Sentinel::getUser()->roles->first()->slug == 'admin-event' || Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-provinsi' || Sentinel::getUser()->roles->first()->slug == 'admin-kota' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'admin-kelurahan')
+                <li {{Route::is('tabulasi.index') || Route::is('tabulasi.show') || Route::is('tabulasi.edit')? 'class=active':''}}>
+                    <a href="{{route('tabulasi.index')}}">Data Tabulasi</a>
+                </li>
+                <li {{Route::is('tabulasi.quickcount')? 'class=active':''}}>
+                    <a href="{{route('tabulasi.quickcount')}}">Hasil Quick Count</a>
+                </li>
+                @endif
+            </ul>
+        </li>
         @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
         <li>
             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('monitoring*')? 'toggled':''}}" >
@@ -64,9 +84,9 @@
                 <li {{Route::is('monitoring.dataadminprovinsi') || Route::is('monitoring.dataadminprovinsi.create') || Route::is('monitoring.dataadminprovinsi.show') || Route::is('monitoring.dataadminprovinsi.edit')? 'class=active':''}}>
                     <a href="{{route('monitoring.dataadminprovinsi')}}">Data Admin Provinsi</a>
                 </li>
-                <li {{Route::is('monitoring.dataadminevent') || Route::is('monitoring.dataadminevent.create') || Route::is('monitoring.dataadminevent.show') || Route::is('monitoring.dataadminevent.edit')? 'class=active':''}}>
+                <!-- <li {{Route::is('monitoring.dataadminevent') || Route::is('monitoring.dataadminevent.create') || Route::is('monitoring.dataadminevent.show') || Route::is('monitoring.dataadminevent.edit')? 'class=active':''}}>
                     <a href="{{route('monitoring.dataadminevent')}}">Data Admin Event</a>
-                </li>
+                </li> -->
                 <!-- <li {{Route::is('monitoring.tabulasi')? 'class=active':''}}>
                     <a href="{{route('monitoring.tabulasi')}}">Tabulasi</a>
                 </li>
@@ -80,25 +100,6 @@
             </ul>
         </li>
         @endif
-        <li>
-            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is( 'tabulasi*')? 'toggled':''}}">
-                <i class="material-icons">tab</i>
-                <span>Tabulasi</span>
-            </a>
-            <ul class="ml-menu" style="display: none;">
-                <li {{Route::is('tabulasi.create')? 'class=active':''}}>
-                    <a href="{{route('tabulasi.create')}}">Tambah Data Tabulasi</a>
-                </li>
-                @if( Sentinel::getUser()->roles->first()->slug == 'admin-event' || Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-provinsi' || Sentinel::getUser()->roles->first()->slug == 'admin-kota' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'admin-kelurahan')
-                <li {{Route::is('tabulasi.index') || Route::is('tabulasi.show') || Route::is('tabulasi.edit')? 'class=active':''}}>
-                    <a href="{{route('tabulasi.index')}}">Data Tabulasi</a>
-                </li>
-                <li {{Route::is('tabulasi.quickcount')? 'class=active':''}}>
-                    <a href="{{route('tabulasi.quickcount')}}">Hasil Quick Count</a>
-                </li>
-                @endif
-            </ul>
-        </li>
         @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'korsak' )
         <li {{Route::is('approval.*')? 'class=active':''}}>
             <a href="{{route('approval.index')}}">
@@ -123,7 +124,7 @@
           </a>
         </li>
         @endif
-        @if( Sentinel::getUser()->roles->first()->slug == 'admin-event' || Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-provinsi' || Sentinel::getUser()->roles->first()->slug == 'admin-kota' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'admin-kelurahan')
+        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-event' || Sentinel::getUser()->roles->first()->slug == 'admin-provinsi' || Sentinel::getUser()->roles->first()->slug == 'admin-kota' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'admin-kelurahan')
         <li>
             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('usermanagement*')? 'toggled':''}}" >
                 <i class="material-icons">people</i>
@@ -139,9 +140,7 @@
             </ul>
         </li>
         @endif
-        @if( Sentinel::getUser()->roles->first()->slug == 'saksi' )
-
-        @endif
+        
         @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
         <li {{Route::is('download')? 'class=active':''}}>
             <a href="{{route('download')}}">
