@@ -110,7 +110,7 @@ class TabulasiController extends Controller
        
        
        $tabulasi = Tabulasi::find($id);
-       dd($tabulasi);
+     //  dd($tabulasi);
        // $eventchart = Event::chart()->where("event.id", $event_id)->get()->toJson();
         // dd($tabulasi);
        // case 'get-tps-calon':
