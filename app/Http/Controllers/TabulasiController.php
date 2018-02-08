@@ -110,6 +110,7 @@ class TabulasiController extends Controller
        
        
        $tabulasi = Tabulasi::find($id);
+       dd($tabulasi);
        // $eventchart = Event::chart()->where("event.id", $event_id)->get()->toJson();
         // dd($tabulasi);
        // case 'get-tps-calon':
@@ -203,8 +204,9 @@ class TabulasiController extends Controller
         $kelurahan = Kelurahan::where('kecamatan_id', $tabulasi->kecamatan_id)->pluck('nama','id')->all();
         $event = Event::dropdown();
         // dd($event);
+        $data_suara = (array) json_decode($tabulasi->data_suara, true);
 
-        $result['status'] = false;
+        // dd($data_suara);
           $tps = Tps::where('kelurahan_id', $tabulasi->kelurahan_id)->orderBy('nomor', 'ASC')->pluck('nomor', 'id')->all();
 
           $calon = array();
@@ -214,8 +216,6 @@ class TabulasiController extends Controller
             if ($dapil) {
               $calon = Calon::whereIn('dapil_id',$dapil)->get();
             }
-
-            $result['status'] = true;
           }
 
         if (empty($tabulasi)) {
@@ -224,15 +224,17 @@ class TabulasiController extends Controller
             return redirect(route('tabulasi.index'));
         }
 
-        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota','kecamatan','kelurahan','event', 'calon','tps'));
+        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota','kecamatan','kelurahan','event', 'calon','tps', 'data_suara'));
     }
 
 
 
     public function update(Request $request,$id)
     {
-        // dd($request->all());
         $tabulasi = Tabulasi::find($id);
+        if ($request->tabulasi) {
+            $data_suara = json_encode($request->tabulasi);
+          }
             if (empty($tabulasi)) {
 
                 flash('Tabulasi not found');
@@ -244,8 +246,10 @@ class TabulasiController extends Controller
             $tabulasi->provinsi_id       = $request->provinsi_id;
             $tabulasi->kota_id    = $request->kota_id;
             $tabulasi->kelurahan_id    = $request->kelurahan_id;
+            $tabulasi->data_suara    = $data_suara;
 
-            $tabulasi->update();
+            $tabulasi->save();
+       
 
 
         flash('Data Tabulasi saved successfully')->success();

@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="col-md-12 temp">
-                        @include('layouts.tabulasi.data', ['calon' => $calon, 'tps' => $tps])
+                        @include('layouts.tabulasi.data', ['calon' => $calon, 'tps' => $tps, 'data_suara' => $data_suara])
                     </div>
 
                 <!--    <div class="col-md-12">

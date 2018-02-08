@@ -21,9 +21,15 @@
                       @endif
                     </td>
                     @foreach($tps as $data)
+                        @if(!empty($data_suara))
+                        <td class="tg-yw4l" tabindex="1">
+                          <input name="tabulasi[{{ $data_calon->id }}][{{ $data }}]" type="number" style="border:none" value="{{ $data_suara[''.$data_calon->id.''][$data] }}">
+                        </td>
+                        @else
                         <td class="tg-yw4l" tabindex="1">
                           <input name="tabulasi[{{ $data_calon->id }}][{{ $data }}]" type="number" style="border:none" value="0">
                         </td>
+                        @endif
                     @endforeach
                   </tr>
                 @endforeach
