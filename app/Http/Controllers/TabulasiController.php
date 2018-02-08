@@ -128,7 +128,19 @@ class TabulasiController extends Controller
           // }
         $eventchart = Event::chart()->where("event.id", $tabulasi->event_id)->get()->toJson();
         // dd($eventchart);
+        $data_suara = (array) json_decode($tabulasi->data_suara, true);
 
+        // dd($data_suara);
+        $tps = Tps::where('kelurahan_id', $tabulasi->kelurahan_id)->orderBy('nomor', 'ASC')->pluck('nomor', 'id')->all();
+
+        $calon = array();
+        if ($tabulasi->event_id) {
+        $dapil = Dapil::where('event_id',$tabulasi->event_id)->pluck('id')->all();
+
+        if ($dapil) {
+            $calon = Calon::whereIn('dapil_id',$dapil)->get();
+        }
+        }
           // $result['status'] = true;
         // }
 
@@ -142,7 +154,7 @@ class TabulasiController extends Controller
             return redirect(route('tabulasi.index'));
         }
 
-        return view('layouts.tabulasi.show',compact('tabulasi','tps','dapil','calon','eventchart'));
+        return view('layouts.tabulasi.show',compact('tabulasi','tps','dapil','calon','eventchart', 'data_suara' ));
 
 
     }
@@ -207,16 +219,16 @@ class TabulasiController extends Controller
         $data_suara = (array) json_decode($tabulasi->data_suara, true);
 
         // dd($data_suara);
-          $tps = Tps::where('kelurahan_id', $tabulasi->kelurahan_id)->orderBy('nomor', 'ASC')->pluck('nomor', 'id')->all();
+        $tps = Tps::where('kelurahan_id', $tabulasi->kelurahan_id)->orderBy('nomor', 'ASC')->pluck('nomor', 'id')->all();
 
-          $calon = array();
-          if ($tabulasi->event_id) {
-            $dapil = Dapil::where('event_id',$tabulasi->event_id)->pluck('id')->all();
+        $calon = array();
+        if ($tabulasi->event_id) {
+        $dapil = Dapil::where('event_id',$tabulasi->event_id)->pluck('id')->all();
 
-            if ($dapil) {
-              $calon = Calon::whereIn('dapil_id',$dapil)->get();
-            }
-          }
+        if ($dapil) {
+            $calon = Calon::whereIn('dapil_id',$dapil)->get();
+        }
+        }
 
         if (empty($tabulasi)) {
             flash('Data Tabulasi Tidak Ada');
@@ -231,6 +243,7 @@ class TabulasiController extends Controller
 
     public function update(Request $request,$id)
     {
+        // dd($request->all());
         $tabulasi = Tabulasi::find($id);
         if ($request->tabulasi) {
             $data_suara = json_encode($request->tabulasi);
@@ -245,6 +258,7 @@ class TabulasiController extends Controller
             $tabulasi->dokumen       = $request->dokumen_id;
             $tabulasi->provinsi_id       = $request->provinsi_id;
             $tabulasi->kota_id    = $request->kota_id;
+            $tabulasi->kecamatan_id    = $request->kecamatan_id;
             $tabulasi->kelurahan_id    = $request->kelurahan_id;
             $tabulasi->data_suara    = $data_suara;
 
