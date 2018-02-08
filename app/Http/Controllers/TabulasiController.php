@@ -201,8 +201,22 @@ class TabulasiController extends Controller
         $kota = Kota::where('provinsi_id', $tabulasi->provinsi_id)->pluck('nama','id')->all();
         $kecamatan = Kecamatan::where('kota_id', $tabulasi->kota_id)->pluck('nama','id')->all();
         $kelurahan = Kelurahan::where('kecamatan_id', $tabulasi->kecamatan_id)->pluck('nama','id')->all();
-        // dd($kota_kabupaten);
         $event = Event::dropdown();
+        // dd($event);
+
+        $result['status'] = false;
+          $tps = Tps::where('kelurahan_id', $tabulasi->kelurahan_id)->orderBy('nomor', 'ASC')->pluck('nomor', 'id')->all();
+
+          $calon = array();
+          if ($tabulasi->event_id) {
+            $dapil = Dapil::where('event_id',$tabulasi->event_id)->pluck('id')->all();
+
+            if ($dapil) {
+              $calon = Calon::whereIn('dapil_id',$dapil)->get();
+            }
+
+            $result['status'] = true;
+          }
 
         if (empty($tabulasi)) {
             flash('Data Tabulasi Tidak Ada');
@@ -210,7 +224,7 @@ class TabulasiController extends Controller
             return redirect(route('tabulasi.index'));
         }
 
-        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota','kecamatan','kelurahan','event'));
+        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota','kecamatan','kelurahan','event', 'calon','tps'));
     }
 
 

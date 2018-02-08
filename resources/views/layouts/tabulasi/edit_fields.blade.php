@@ -14,7 +14,7 @@
                     </div>
 
                     <div class="col-md-6">
-                                {{ Form::select('kota_id', $kota,null, ['class' => 'form-control','id' => 'kota_kabupaten_id','placeholder' => 'Select Kota/Kabupaten']) }}
+                                {{ Form::select('kota_id', $kota,null, ['class' => 'form-control','id' => 'kota_id','placeholder' => 'Select Kota/Kabupaten']) }}
                     </div>
 
                     <div class="col-md-6">
@@ -26,7 +26,15 @@
                                 {{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12 result" style="display:none;">
+
+                    </div>
+
+                    <div class="col-md-12 temp">
+                        @include('layouts.tabulasi.data', ['calon' => $calon, 'tps' => $tps])
+                    </div>
+
+                <!--    <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-line">
                                 <table id="data_suara" class="table table-bordered" style="cursor: pointer;">
@@ -53,7 +61,7 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
 
                     <!-- END Content Create-->
@@ -66,3 +74,81 @@
         {!! Form::close() !!}
 </div>
 </div>
+@section('extra-script')
+<script type="text/javascript">
+    $(document).ready( function() {
+        // select2
+
+        var _url = '{{ route('datamaster.TPS.ajax') }}';
+				var _url_new = '{{ route('tabulasi.ajax') }}';
+
+        $(document).on('change','#provinsi_id',function(){
+            var _val = $(this).val();
+            $.get(_url,{'type':'get-city','provinsi_id':_val})
+            .done(function(result) {
+                var html = '';
+                $('#kota_id').selectpicker(html);
+
+                $.each(result,function(key,value){
+                    html += '<option value="'+key+'">'+value+'</option>';
+                });
+
+                $('#kota_id').html(html);
+                $('#kota_id').selectpicker('refresh');
+            });
+        });
+
+
+
+	        $(document).on('change','#kota_id',function(){
+
+
+	            var coba = $(this).val();
+	            $.get(_url,{'type':'get-kecamatan','kota_id':coba})
+	            .done(function(result) {
+	                var html = '';
+                    $('#kecamatan_id').selectpicker(html);
+	                $.each(result,function(key,value){
+	                    html += '<option value="'+key+'">'+value+'</option>';
+	                });
+
+	                $('#kecamatan_id').html(html);
+                    $('#kecamatan_id').selectpicker('refresh');
+
+	            });
+	        });
+
+	        $(document).on('change','#kecamatan_id',function(){
+
+	            var coba = $(this).val();
+	            $.get(_url,{'type':'get-kelurahan','kecamatan_id':coba})
+	            .done(function(result) {
+	                var html = '';
+                    $('#kelurahan_id').selectpicker(html);
+	                $.each(result,function(key,value){
+	                    html += '<option value="'+key+'">'+value+'</option>';
+	                });
+
+	                $('#kelurahan_id').html(html);
+	                $('#kelurahan_id').selectpicker('refresh');
+	            });
+	        });
+
+					$(document).on('change','#kelurahan_id',function(){
+						var kelurahan = $(this).val();
+						var event_id = $('#event_id').val();
+						// get tps
+						$.get(_url_new,{'type':'get-tps-calon','kelurahan_id':kelurahan,'event_id':event_id})
+						.done(function(result_tps) {
+							if (result_tps.status) {
+								$('.result').html(result_tps.html);
+								$('.result').show();
+                                $('.temp').hide();
+							}else {
+								$('.result').hide();
+							}
+						});
+					});
+	    });
+</script>
+@endsection
