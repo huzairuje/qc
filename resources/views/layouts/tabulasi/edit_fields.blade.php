@@ -7,6 +7,7 @@
                     
                     <div class="col-md-12">
                         {!! Form::select('event_id', $event,null, ['class' => 'form-control','id' => 'event_id','placeholder' => '', 'disabled' => true]) !!}
+                        {{ Form::hidden('event_id',$tabulasi->event->id, ['class' => 'form-control','placeholder' => 'Nama']) }}
                     </div>
 
                     <div class="col-md-6">
@@ -35,34 +36,43 @@
                         @include('layouts.tabulasi.data', ['calon' => $calon, 'tps' => $tps, 'data_suara' => $data_suara])
                     </div>
 
-                <!--    <div class="col-md-12">
+                    <div class="col-md-12 images-table">
                         <div class="form-group">
-                            <div class="form-line">
+                            <div class="form-line" style="overflow-x: scroll;">
                                 <table id="data_suara" class="table table-bordered" style="cursor: pointer;">
                                     <thead>
                                       <tr class="bg-blue" style="color: white;">
-                                        @for ($x = 1; $x <= 20; $x++)
-                                            <th class="tg-yw4l">X{{ $x }}</th>
+                                        <th class="tg-yw4l">TPS</th>
+                                        @for($i = 1;$i <= 22; $i++)
+                                          <th class="tg-yw4l">{{$i}}</th>
                                         @endfor
                                       </tr>
                                     </thead>
                                     <tbody>
-                                        @for ($y = 1; $y <= 20; $y++)
-                                          <tr>
-                                            @for ($x = 1; $x <= 20; $x++)
-                                                <td class="tg-yw4l" tabindex="1">
-
+                                        @foreach($tps_all as $data)
+                                            <tr class="tg-yw4l">
+                                              <td>{{ $data->nomor }}</td>
+                                              @for($i = 1;$i <= 22; $i++)
+                                                <td>
+                                                    @php
+                                                        $saved = $data->images()->where('event_id', '=', $tabulasi->event_id)->get();
+                                                    @endphp
+                                                  <i class="material-icons md-icon placeholder" style="color: {{ $saved->count() >= $i ? '#000000' : '#BDBDBD' }};">photo</i>
+                                                  <input class="hidden upload" type="file" name="images[{{ $data->id }}][]">
+                                                  @if (array_key_exists($i-1, $saved->toArray()))
+                                                    <input type="hidden" name="old_images[{{$data->id}}][]" value="{{ $data->images()->get()[$i-1]['foto'] }}">
+                                                  @endif
                                                 </td>
-                                            @endfor
-                                          </tr>
-                                        @endfor
-
+                                              @endfor
+                                            </tr>
+                                        @endforeach
                                     </tbody>
 
                                 </table>
                             </div>
                         </div>
-                    </div> -->
+
+                    </div>
 
 
                     <!-- END Content Create-->
@@ -150,6 +160,16 @@
 							}
 						});
 					});
+
+                    $('.hidden').hide();
+                    $(document).on("click", ".placeholder", function() {
+                        $(this).next().click();
+                    });
+
+                    $(document).on("change", ".upload", function(){
+                        $(this).prev().css("color", "black");
+                        $(this).next().remove();
+                    });
 	    });
 </script>
 @endsection

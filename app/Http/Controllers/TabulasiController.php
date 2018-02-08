@@ -23,6 +23,7 @@ use App\Models\Event;
 use App\Models\Tps;
 use App\Models\Dapil;
 use App\Models\Calon;
+use App\Models\TpsFoto;
 use Charts;
 use Flash;
 
@@ -108,6 +109,7 @@ class TabulasiController extends Controller
     public function show($id)
     {
        
+       $tps_all = Tps::all();
        
        $tabulasi = Tabulasi::find($id);
      //  dd($tabulasi);
@@ -154,7 +156,7 @@ class TabulasiController extends Controller
             return redirect(route('tabulasi.index'));
         }
 
-        return view('layouts.tabulasi.show',compact('tabulasi','tps','dapil','calon','eventchart', 'data_suara' ));
+        return view('layouts.tabulasi.show',compact('tabulasi','tps','dapil','calon','eventchart', 'data_suara', 'tps_all' ));
 
 
     }
@@ -186,8 +188,12 @@ class TabulasiController extends Controller
          'provinsi_id' => 'required',
          'kota_id' => 'required',
          'kecamatan_id' => 'required',
-         'kelurahan_id' => 'required',
+         'kelurahan_id' => 'required|unique:tabulasi,kelurahan_id,NULL,id,event_id,'.$request->event_id,
          'event_id' => 'required',
+
+          ],
+          [
+            'kelurahan_id' => 'Tabulasi untuk kelurahan ini sudah terdaftar.'
           ]);
 
 
@@ -199,6 +205,27 @@ class TabulasiController extends Controller
         }
         $tabulasi = Tabulasi::create($input);
         // dd($tabulasi);
+
+        if ($request->images) {
+          foreach ($request->images as $tps => $images) {
+            if ($images) {
+              foreach ($images as $key => $image) {
+                if ($request->file('images')[$tps][$key]->isValid()) {
+                  $pathname = check_dir('images');
+                  $filename = time() . number_random(10) . '.' . $request->file('images')[$tps][$key]->getClientOriginalExtension();
+                  $uploaded = $request->file('images')[$tps][$key]->move($pathname, $filename);
+                  $url = $uploaded->getPathName();
+
+                  TpsFoto::create([
+                    'tps_id' => $tps,
+                    'foto' => $url,
+                    'event_id' => $request->event_id
+                  ]);
+                }
+              }
+            }
+          } 
+        }
 
         flash('Data Tabulasi created successfully')->success();
         return redirect(route('tabulasi.show',$tabulasi));
@@ -220,6 +247,7 @@ class TabulasiController extends Controller
 
         // dd($data_suara);
         $tps = Tps::where('kelurahan_id', $tabulasi->kelurahan_id)->orderBy('nomor', 'ASC')->pluck('nomor', 'id')->all();
+        $tps_all = Tps::all();
 
         $calon = array();
         if ($tabulasi->event_id) {
@@ -236,7 +264,7 @@ class TabulasiController extends Controller
             return redirect(route('tabulasi.index'));
         }
 
-        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota','kecamatan','kelurahan','event', 'calon','tps', 'data_suara'));
+        return view('layouts.tabulasi.edit', compact('tabulasi','provinsi','kota','kecamatan','kelurahan','event', 'calon','tps', 'data_suara', 'tps_all'));
     }
 
 
@@ -244,6 +272,7 @@ class TabulasiController extends Controller
     public function update(Request $request,$id)
     {
         // dd($request->all());
+
         $tabulasi = Tabulasi::find($id);
         if ($request->tabulasi) {
             $data_suara = json_encode($request->tabulasi);
@@ -255,17 +284,53 @@ class TabulasiController extends Controller
             return redirect(route('layouts.tabulasi.index'));
         }
 
-            $tabulasi->dokumen       = $request->dokumen_id;
-            $tabulasi->provinsi_id       = $request->provinsi_id;
-            $tabulasi->kota_id    = $request->kota_id;
-            $tabulasi->kecamatan_id    = $request->kecamatan_id;
-            $tabulasi->kelurahan_id    = $request->kelurahan_id;
-            $tabulasi->data_suara    = $data_suara;
+            // $tabulasi->dokumen       = $request->dokumen_id;
+            // $tabulasi->provinsi_id       = $request->provinsi_id;
+            // $tabulasi->kota_id    = $request->kota_id;
+            // $tabulasi->kecamatan_id    = $request->kecamatan_id;
+            // $tabulasi->kelurahan_id    = $request->kelurahan_id;
+            // $tabulasi->data_suara    = $data_suara;
 
-            $tabulasi->save();
-       
+            // $tabulasi->save();
 
+            if ($request->old_images) {
+              foreach ($request->old_images as $tps => $images) {
+                if ($images) {
+                  TpsFoto::where("tps_id", "=", $tps)->delete();
+                  foreach ($images as $key => $image) {
+                    TpsFoto::create([
+                      'tps_id' => $tps,
+                      'foto' => $image,
+                      'event_id' => $request->event_id
 
+                    ]);
+                  }
+                }
+              }
+            }
+
+            // reinsert photo
+            if ($request->images) {
+              foreach ($request->images as $tps => $images) {
+                if ($images) {
+                  foreach ($images as $key => $image) {
+                    if ($request->file('images')[$tps][$key]->isValid()) {
+                      $pathname = check_dir('images');
+                      $filename = time() . number_random(10) . '.' . $request->file('images')[$tps][$key]->getClientOriginalExtension();
+                      $uploaded = $request->file('images')[$tps][$key]->move($pathname, $filename);
+                      $url = $uploaded->getPathName();
+
+                      TpsFoto::create([
+                        'tps_id' => $tps,
+                        'foto' => $url,
+                        'event_id' => $request->event_id
+
+                      ]);
+                    }
+                  }
+                }
+              } 
+            }
         flash('Data Tabulasi saved successfully')->success();
         return redirect(route('tabulasi.show', $tabulasi));
 
@@ -273,7 +338,6 @@ class TabulasiController extends Controller
 
     public function destroy($id)
     {
-
     	$tabulasi = Tabulasi::findOrFail($id);
             if (empty($tabulasi)) {
 
@@ -324,6 +388,7 @@ class TabulasiController extends Controller
 
           $result['status'] = false;
           $tps = Tps::where('kelurahan_id', $request->kelurahan_id)->orderBy('nomor', 'ASC')->pluck('nomor', 'id')->all();
+          $tps_ids = Tps::where('kelurahan_id', $request->kelurahan_id)->get();
 
           $calon = array();
           if ($request->event_id) {
@@ -337,6 +402,7 @@ class TabulasiController extends Controller
           }
 
           $result['html'] = view('layouts.tabulasi.data',compact('calon','tps'))->render();
+          $result['table'] = view('layouts.tabulasi.images', compact('tps', 'tps_ids'))->render();
           return $result;
           break;
 

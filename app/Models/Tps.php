@@ -28,4 +28,9 @@ class Tps extends Model
 	{
 			return $this->hasMany('App\Models\Suara');
 	}
+
+	public function images()
+	{
+			return $this->hasMany('App\Models\TpsFoto');
+	}
 }

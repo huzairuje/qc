@@ -26,7 +26,7 @@
         <div class="body">
             <div class="row clearfix">
                 <!-- Content Create-->
-                {!! Form::open(['route' => 'tabulasi.store']) !!}
+                {!! Form::open(['route' => 'tabulasi.store', 'files' => true]) !!}
 
                     <div class="col-md-12">
                             {!! Form::select('dokumen', ['C1' => 'C1', 'C2' => 'C2', 'C3' => 'C3', 'C3' => 'C3', 'C4' => 'C4'], null, ['class' => 'form-control show-tick'], ['placeholder' => 'Pilih Jenis Dokumen']); !!}
@@ -50,14 +50,21 @@
                     </div>
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 {{ $errors->has('kelurahan_id') ? ' has-error' : '' }}">
                                 {{ Form::select('kelurahan_id', $kelurahan,null, ['class' => 'form-control','id' => 'kelurahan_id','placeholder' => 'Select Kelurahan']) }}
+                                @if ($errors->has('kelurahan_id'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('kelurahan_id') }}</strong>
+                                </span>
+                                @endif
                     </div>
 
                     <div class="col-md-12 result" style="display:none;">
 
                     </div>
+                    <div class="col-md-12 images-table" style="display:none;">
 
+                    </div>
 
                     <!-- END Content Create-->
 
@@ -146,12 +153,29 @@
 						.done(function(result_tps) {
 							if (result_tps.status) {
 								$('.result').html(result_tps.html);
+                                $('.images-table').html(result_tps.table);
+                                $('.images-table').show();
 								$('.result').show();
 							}else {
+                                $('.images-table').hide();
 								$('.result').hide();
 							}
 						});
 					});
+
+                    $('.hidden').hide();
+                    $(document).on("click", ".placeholder", function() {
+                        $(this).next().click();
+                    });
+
+                    $(document).on("change", ".upload", function(){
+                        $(this).prev().css("color", "black")
+                    })
+
+
+                    
+
+
 	    });
 </script>
 

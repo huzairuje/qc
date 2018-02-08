@@ -106,6 +106,40 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-12 images-table">
+            <div class="form-group">
+                <div class="form-line" style="overflow-x: scroll;">
+                    <table id="data_suara" class="table table-bordered" style="cursor: pointer;">
+                        <thead>
+                          <tr class="bg-blue" style="color: white;">
+                            <th class="tg-yw4l">TPS</th>
+                            @for($i = 1;$i <= 22; $i++)
+                              <th class="tg-yw4l">{{$i}}</th>
+                            @endfor
+                          </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($tps_all as $data)
+                                <tr class="tg-yw4l">
+                                  <td>{{ $data->nomor }}</td>
+                                  @for($i = 1;$i <= 22; $i++)
+                                    <td>
+                                        @php
+                                            $saved = $data->images()->where('event_id', '=', $tabulasi->event->id)->get();
+                                        @endphp
+                                      <a href="{{ array_key_exists($i-1, $saved->toArray()) ? asset($data->images()->get()[$i-1]['foto']) : 'javascript:void(0)' }}"><i class="material-icons md-icon placeholder" style="color: {{ $data->images()->get()->count() >= $i ? '#000000' : '#BDBDBD' }};">photo</i></a>
+                                    </td>
+                                  @endfor
+                                </tr>
+                            @endforeach
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
                     
 
 

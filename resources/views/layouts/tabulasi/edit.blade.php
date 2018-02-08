@@ -25,7 +25,7 @@
                     <div class="box-body">
 
                         <div class="row">
-                                {!! Form::model($tabulasi, ['route' => ['tabulasi.update', $tabulasi->id], 'method' => 'patch']) !!}
+                                {!! Form::model($tabulasi, ['route' => ['tabulasi.update', $tabulasi->id], 'method' => 'patch', 'files' => true]) !!}
 
                                     @include('layouts.tabulasi.edit_fields')
 
