@@ -6,7 +6,7 @@
                     </div>
                     
                     <div class="col-md-12">
-                        {!! Form::select('event_id', $event,null, ['class' => 'form-control','id' => 'event_id','placeholder' => '']) !!}
+                        {!! Form::select('event_id', $event,null, ['class' => 'form-control','id' => 'event_id','placeholder' => '', 'disabled' => true]) !!}
                     </div>
 
                     <div class="col-md-6">

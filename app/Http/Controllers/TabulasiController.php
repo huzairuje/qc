@@ -231,6 +231,7 @@ class TabulasiController extends Controller
 
     public function update(Request $request,$id)
     {
+        // dd($request->all());
         $tabulasi = Tabulasi::find($id);
             if (empty($tabulasi)) {
 
@@ -239,7 +240,7 @@ class TabulasiController extends Controller
             return redirect(route('layouts.tabulasi.index'));
         }
 
-            $tabulasi->dokumen       = $request->dokumen;
+            $tabulasi->dokumen       = $request->dokumen_id;
             $tabulasi->provinsi_id       = $request->provinsi_id;
             $tabulasi->kota_id    = $request->kota_id;
             $tabulasi->kelurahan_id    = $request->kelurahan_id;
