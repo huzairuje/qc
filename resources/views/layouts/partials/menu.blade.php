@@ -108,11 +108,19 @@
             </a>
         </li>
         @endif
-        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'korsak' || Sentinel::getUser()->roles->first()->slug == 'saksi' )
+        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-kecamatan' || Sentinel::getUser()->roles->first()->slug == 'korsak' )
         <li {{Route::is('absensi.*')? 'class=active':''}}>
             <a href="{{route('absensi.index')}}">
                 <i class="material-icons">people_outline</i>
                 <span>Absensi Management</span>
+            </a>
+        </li>
+        @endif
+        @if( Sentinel::getUser()->roles->first()->slug == 'saksi' )
+        <li {{Route::is('absensi.*')? 'class=active':''}}>
+            <a href="{{route('absensi.saksi.show', [ Sentinel::getUser()->id ])}}">
+                <i class="material-icons">people_outline</i>
+                <span>Absensi Saksi</span>
             </a>
         </li>
         @endif
