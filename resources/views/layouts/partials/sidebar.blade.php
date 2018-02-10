@@ -15,9 +15,9 @@
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
                         <li>
-                            <!-- <a href="{{route('users.profile')}}">
-                                <i class="material-icons">account_circle</i>Profile</a>
-                            </a> -->
+                            <a href="{{route('users.profile')}}">
+                                <i class="material-icons">perm_identity</i>Profile
+                            </a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"
