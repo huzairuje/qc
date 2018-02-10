@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function profile(Request $id)
     {
-                $user = Sentinel::getUser();
+            $user = Sentinel::getUser();
         
 		    return view('layouts.users.profile', compact('user'));
 

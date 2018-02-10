@@ -2,7 +2,7 @@
 <div class="col-md-12">
     <div class="form-group">
         <div class="form-line">
-        {!! Form::label('nama', 'Nama:') !!}
+        {!! Form::label('nama', 'Username:') !!}
          
         {!! Form::text('name', $user->username, ['class' => 'form-control']) !!}
         </div>
