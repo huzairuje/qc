@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Sentinel;
 use Auth;
 use Flash;
 
@@ -11,7 +12,8 @@ class UserController extends Controller
 {
     public function profile(Request $id)
     {
-        $user = Auth::user();
+            $user = Sentinel::getUser();
+        
 		    return view('layouts.users.profile', compact('user'));
 
     }
@@ -25,7 +27,7 @@ class UserController extends Controller
                     return redirect(route('users.profile'));
                 }
 
-            $user->name       = $request->name;
+            $user->username       = $request->username;
             $user->email       = $request->email;
             $user->password    = bcrypt($request->password);
 

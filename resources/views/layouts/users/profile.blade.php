@@ -23,15 +23,15 @@
                     <div class="card">
                         <div class="header bg-blue">
                             <h2>
-                                {{ $user->name }}'s Profile
+                                {{ $user->username }}'s Profile
                             </h2>
                         </div>
                         <div class="body">
                             <div class="row clearfix">
                                 @include('flash::message')
-                            {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'patch', 'files' => true]) !!}
+                                {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'patch', 'files' => true]) !!}
                                 @include('layouts.users.edit_fields')
-                            {!! Form::close() !!}
+                                {!! Form::close() !!}
                             </div>
                         </div>
                     </div>

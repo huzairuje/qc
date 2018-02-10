@@ -15,9 +15,9 @@
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
                         <li>
-                            <!-- <a href="{{route('users.profile')}}">
-                                <i class="material-icons">account_circle</i>Profile</a>
-                            </a> -->
+                            <a href="{{route('users.profile')}}">
+                                <i class="material-icons">perm_identity</i>Profile
+                            </a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"
@@ -34,7 +34,16 @@
         </div>
         <!-- #User Info -->
         @include('layouts.partials.menu')
-
+        <!-- Footer -->
+        <div class="legal">
+            <div class="copyright">
+                &copy; 2018 <a href="javascript:void(0);">QuickCount</a>.
+            </div>
+            <div class="version">
+                <b>Version: </b> 1.0.4
+            </div>
+        </div>
+            <!-- #Footer -->
     </aside>
     <!-- #END# Left Sidebar -->
 </section>
