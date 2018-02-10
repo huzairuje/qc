@@ -178,6 +178,10 @@ Route::group(['middleware' => 'admin'], function () {
 	Route::patch('/absensi/update/{id}',['as'=>'absensi.update','uses'=>'AbsensiController@update']);
 	// Route::post('/absensi/store',['as'=>'absensi.store','uses'=>'AbsensiController@store']);
 	Route::get('/absensi/{id}',['as'=>'absensi.delete','uses'=>'AbsensiController@destroy']);
+
+	// Absensi For Saksi
+	Route::get('/absensi/saksi/{id}', ['as' => 'absensi.saksi.show', 'uses' => 'AbsensiController@showSaksi']);
+	Route::post('/absensi/saksi', ['as' => 'absensi.saksi.create', 'uses' => 'AbsensiController@createAbsen']);
 	//End Route For Absensi
 
 

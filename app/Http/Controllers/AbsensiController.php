@@ -24,6 +24,7 @@ use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use Charts;
 use Flash;
+use Sentinel;
 
 class AbsensiController extends Controller
 {
@@ -208,6 +209,48 @@ class AbsensiController extends Controller
       flash('Data Absensi deleted successfully')->success();
       return redirect(route('absensi.index'));
 }
+
+/**
+ * Menampilkan Data saksi
+ *
+ * @param int $id
+ * @return void
+ */
+public function showSaksi( $id )
+{
+    $user = Sentinel::getUser();
+    $data_saksi = Sentinel::findRoleById(7)->users()->with('roles')->pluck('first_name', 'id');
+    $absensi = true;
+    $getAbsen = Absensi::where('user_id', $id)->orderBy('created_at', 'DESC')->first();
+    if ($getAbsen) {
+        $absensi = date('Y-m-d', strtotime($getAbsen->created_at)) == date('Y-m-d') ? false : true;
+    }
+    
+    return view('layouts.absensi.absen_saksi', compact('user', 'data_saksi', 'absensi'));
+}
+
+/**
+ * Menambahkan data absen
+ *
+ * @param Request $request
+ * @return void
+ */
+public function createAbsen( Request $request )
+{
+    DB::beginTransaction();
+    try{
+        $user_id = \Sentinel::getUser()->id;
+        $request->merge( ['user_id' => $user_id] );
+        // dd($request->all());
+        Absensi::create( $request->all() );
+        DB::commit();
+        flash('Data Absensi successfully')->success();
+        return redirect()->route('absensi.saksi.show', $user_id);
+    } catch (\Exception $e) {
+        flash('Data Absensi Failed')->warning();
+        return redirect()->back();
+    }
+} 
 
 public function ajax(Request $request)
 {
