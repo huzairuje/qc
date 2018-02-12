@@ -56,7 +56,7 @@ class TabulasiController extends Controller
     public function get_datatable()
     {
          // $tabulasi = Tabulasi::query();
-        $tabulasi = Tabulasi::select(['id','dokumen', 'provinsi_id', 'kota_id', 'kecamatan_id', 'kelurahan_id','data_suara']);
+        $tabulasi = Tabulasi::select(['id','dokumen', 'provinsi_id', 'kota_id', 'kecamatan_id', 'kelurahan_id','data_suara','event_id']);
         // $dataTable = Datatables::eloquent($tabulasi);
         // return $dataTable->make(true);
 
@@ -97,6 +97,10 @@ class TabulasiController extends Controller
                     return 'Data SUARA tidak ada';
                 }
             })
+            ->addColumn('event_id', function($tabulasi) {
+              return $tabulasi->event && $tabulasi->event->nama ? $tabulasi->event->nama : 'Tidak Ada';
+            })
+
             ->addColumn('action', function ($tabulasi) {
             return '<a href="'.route('tabulasi.show', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-search"></i>Lihat</a><a href="'.route('tabulasi.edit', $tabulasi->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>Edit</a><a href="'.route('tabulasi.delete', $tabulasi->id).'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i>Delete</a>';
         })

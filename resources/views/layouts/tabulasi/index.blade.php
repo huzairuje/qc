@@ -34,6 +34,7 @@
                                             <table id="table-Tabulasi" class="table table-striped">
                                                 <thead>
                                                     <tr style="background-color: lightblue">
+                                                        <th>Event</th>
                                                         <th>Dokumen</th>
                                                         <th>Provinsi</th>
                                                         <th>Kota/Kabupaten</th>
@@ -56,7 +57,7 @@
                                                         ajax: '{!! route("tabulasi.datatable") !!}',
                                                         columns:
                                                             [
-
+                                                                {data: 'event_id'},
                                                                 {data: 'dokumen'},
                                                                 {data: 'provinsi_id'},
                                                                 {data: 'kota_id'},
