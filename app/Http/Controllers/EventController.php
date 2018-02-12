@@ -90,11 +90,14 @@ class EventController extends Controller
 
     $v = $this->validate($request,[
       'jenis_id' => 'required',
-       // 'tingkat_id' => 'required',
+       'tingkat_id' => 'required',
        'expired' => 'required',
        'nama' => 'required',
        // 'lokasi' => 'required',
        'tahun' => 'required',
+        ],
+        [
+            'nama' => 'Nama untuk Event untuk kelurahan ini sudah terdaftar.'
         ]);
 
 
