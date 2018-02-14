@@ -21,10 +21,11 @@
                 </div>
                 @include('flash::message')
                 <div class="box box-primary">
-
                     <div class="box-body">
-                        
-                        <div class="row">
+                        <div class="container">
+                            <div class="body">
+                                <div class="row clearfix">
+
                                 {!! Form::model($data_saksi, ['route' => ['monitoring.datasaksi.update', $data_saksi->id], 'method' => 'patch']) !!}
 
                                     @include('layouts.monitoring.data_saksi.edit_fields')
@@ -33,14 +34,14 @@
                                     
 
 
-                        </div>
+                                </div>
+                            </div>
+                        </div>    
                     </div>
-                </div>    
-                
-                
-            </div>
+                </div>
         </div>
     </div>
+</div>
                 
 @endsection
 

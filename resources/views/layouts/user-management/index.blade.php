@@ -43,16 +43,16 @@
                                             @foreach($users as $user)
                                             <tr>
                                                 <td>
-                                                    {{ $user->first_name }}
+                                                    {!! $user->first_name !!}
                                                 </td>
                                                 <td>
-                                                    {{ $user->email }}
+                                                    {!! $user->email !!}
                                                 </td>
                                                 <td>
-                                                    {{ $user->parent->email or 'Developer' }}
+                                                    {!! $user->parent->email or 'Developer' !!}
                                                 </td>
                                                 <td>
-                                                    {{ $user->roles()->first()->name }}
+                                                    {!! $user->roles()->first()->name !!}
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('usermanagement.show', $user->id ) }}" class="btn btn-xs btn-primary">

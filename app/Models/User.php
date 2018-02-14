@@ -41,11 +41,11 @@ class User extends EloquentUser
 
     public function userEvent()
     {
-        return $this->hasMany('App\Models\UserEvent');
+        return $this->hasMany('App\Models\UserEvent','user_id');
     }
 
-    public function saksiTps()
+    public function saksitps()
     {
-        return $this->hasOne('App\Models\SaksiTps');
+        return $this->hasOne('App\Models\SaksiTps', 'user_id');
     }
 }
