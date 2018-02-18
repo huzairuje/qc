@@ -46,6 +46,26 @@ class User extends EloquentUser
 
     public function saksitps()
     {
-        return $this->hasOne('App\Models\SaksiTps', 'user_id');
+        return $this->hasOne('App\Models\SaksiTps');
+    }
+
+    public function korsaktps()
+    {
+        return $this->hasOne('App\Models\KorsakTps');
+    }
+
+    public function userkecamatan()
+    {
+        return $this->hasOne('App\Models\AdminKecamatan');
+    }
+
+    public function userkota()
+    {
+        return $this->hasOne('App\Models\AdminKota');
+    }
+
+    public function userprovinsi()
+    {
+        return $this->hasOne('App\Models\AdminProvinsi');
     }
 }

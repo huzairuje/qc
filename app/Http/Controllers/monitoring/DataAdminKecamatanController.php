@@ -127,16 +127,16 @@ class DataAdminKecamatanController extends Controller
 
 
             //insert to table admin_kecamatan
-            $data_kecamatan = new AdminKecamatan();
+            $detail_kecamatan = new AdminKecamatan();
             
-            $data_kecamatan->user_id = $insertedId;
-            $data_kecamatan->kecamatan_id = $request->kecamatan_id;
-            $data_kecamatan->alamat = $request->alamat;
-            $data_kecamatan->foto = $request->foto;
-            // $data_kecamatan->tps_id = $request->tps_id;
+            $detail_kecamatan->user_id = $insertedId;
+            $detail_kecamatan->kecamatan_id = $request->kecamatan_id;
+            $detail_kecamatan->alamat = $request->alamat;
+            $detail_kecamatan->foto = $request->foto;
+            // $detail_kecamatan->tps_id = $request->tps_id;
 
             // dd($data_saksi);
-            $data_kecamatan->save();
+            $detail_kecamatan->save();
         }
         catch(\Exception $e){
             echo $e->getMessage();
@@ -148,39 +148,69 @@ class DataAdminKecamatanController extends Controller
 
     public function edit($id)
     {
-        $data_kecamatan = User::find($id);
 
-        if (empty($data_kecamatan)) {
-            flash('Data Tidak Ada');
+        $user = User::findOrFail($id);
 
-            return redirect(route('monitoring.dataadminkecamatan'));
+        if (empty($user)) {
+            flash('Data Saksi not found')->error();
+
+            return redirect(route('monitoring.datasaksi'));
         }
-        return view('layouts.monitoring.data_admin_kecamatan.edit', compact('data_saksi'));
+
+        $provinsi  = Provinsi::pluck('nama','id')->all();
+        // dd($provinsi);
+
+        $kota = array();
+        // dd($kota_kabupaten);
+
+        $kecamatan = array();
+
+        // $user = User::where('id' , '=', $id)->first();
+
+        $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
+        foreach ($userEvents as $key => $userEvent) {
+            $listEventId[$key] = $userEvent->event_id;
+        }
+        if(count($userEvents) != 0)
+            {
+                $eventList = Event::all()->whereIn('id', $listEventId);
+            }
+        else
+            {
+                $eventList = Event::all()->where('id', 0);  
+            }
+
+        $data_kecamatan = AdminKecamatan::where('user_id', $id)->first();
+
+        return view('layouts.monitoring.data_admin_kecamatan.edit', compact('provinsi', 'kota', 'kecamatan', 'user', 'eventList', 'data_kecamatan'));
 
     }
     public function update(Request $request,$id)
     {
-        $data_kecamatan = User::find($id);
+        $data_kecamatan = User::findOrFail($id);
             if (empty($data_kecamatan)) {
 
-                flash('Data not found');
+                flash('Data Saksi not found');
 
             return redirect(route('monitoring.dataadminkecamatan'));
         }
+            $data_kecamatan->update($request->all());
+            // dd($request);
+            try{
+                $detail_kecamatan = AdminKecamatan::where('user_id', $id)->first();
+                $detail_kecamatan->alamat = $request->alamat;
+                $detail_kecamatan->foto = $request->foto;
+                $detail_kecamatan->kecamatan_id = $request->kecamatan_id;
+                
+                $detail_kecamatan->update();
 
-            $data_kecamatan->nama       = $request->nama;
-            $data_kecamatan->alamat       = $request->alamat;
-            $data_kecamatan->no_telpon    = $request->no_telpon;
-            $data_kecamatan->email    = $request->email;
-            // $data_kecamatan->id_tps    = $request->id_tps;
-            $data_kecamatan->foto    = $request->foto;
-
-            $data_kecamatan->update();
-
-
-        flash('Data saved successfully')->success();
-        return redirect(route('monitoring.dataadminkecamatan.show', $data_kecamatan));
-
+                    
+                }catch(\Exception $e){
+                echo $e->getMessage(); 
+            }
+        
+        flash('Data Saksi saved successfully')->success();
+        return redirect(route('monitoring.dataadminkecamatan.show', compact('data_kecamatan')));
     }
 
     public function show($id)

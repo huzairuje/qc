@@ -90,7 +90,7 @@ class DataAdminProvinsiController extends Controller
     public function store(Request $request)
     {
         $v = $this->validate($request,[
-          'no_telpon' => 'required',
+          'phone' => 'required',
            // 'tingkat_id' => 'required',
            'email' => 'required',
            'username' => 'required',
@@ -128,16 +128,16 @@ class DataAdminProvinsiController extends Controller
 
 
             //insert to table admin_kecamatan
-            $data_provinsi = new AdminProvinsi();
+            $detail_provinsi = new AdminProvinsi();
             
-            $data_provinsi->user_id = $insertedId;
-            $data_provinsi->provinsi_id = $request->provinsi_id;
-            $data_provinsi->alamat = $request->alamat;
-            $data_provinsi->foto = $request->foto;
+            $detail_provinsi->user_id = $insertedId;
+            $detail_provinsi->provinsi_id = $request->provinsi_id;
+            $detail_provinsi->alamat = $request->alamat;
+            $detail_provinsi->foto = $request->foto;
             // $data_provinsi->tps_id = $request->tps_id;
 
             // dd($data_saksi);
-            $data_provinsi->save();
+            $detail_provinsi->save();
         }
         catch(\Exception $e){
             echo $e->getMessage();
@@ -149,38 +149,63 @@ class DataAdminProvinsiController extends Controller
 
     public function edit($id)
     {
-        $data_provinsi = User::find($id);
+        $user = User::findOrFail($id);
 
-        if (empty($data_provinsi)) {
+        if (empty($user)) {
             flash('Data Tidak Ada');
 
             return redirect(route('monitoring.dataadminprovinsi'));
         }
-        return view('layouts.monitoring.data_admin_provinsi.edit', compact('data_provinsi'));
 
+        $data_provinsi = AdminProvinsi::where('user_id', $id)->first();
+
+        $provinsi  = Provinsi::pluck('nama','id')->all();
+        // dd($provinsi);
+
+        $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
+        foreach ($userEvents as $key => $userEvent) {
+            $listEventId[$key] = $userEvent->event_id;
+        }
+        if(count($userEvents) != 0)
+        {
+            $eventList = Event::all()->whereIn('id', $listEventId);
+        }
+        else
+        {
+            $eventList = Event::all()->where('id', 0);  
+        }
+
+        return view('layouts.monitoring.data_admin_provinsi.edit', compact('user','eventList', 'data_provinsi', 'provinsi'));
     }
+
     public function update(Request $request,$id)
     {
-        $data_provinsi = User::find($id);
+        $data_provinsi = User::findOrFail($id);
             if (empty($data_provinsi)) {
 
                 flash('Data not found');
 
             return redirect(route('monitoring.dataadminprovinsi'));
         }
+            $data_provinsi->update($request->all());
 
-            $data_provinsi->nama       = $request->nama;
-            $data_provinsi->alamat       = $request->alamat;
-            $data_provinsi->no_telpon    = $request->no_telpon;
-            $data_provinsi->email    = $request->email;
-            // $data_kecamatan->id_tps    = $request->id_tps;
-            $data_provinsi->foto    = $request->foto;
+            try {
 
-            $data_provinsi->update();
+                $detail_provinsi = AdminProvinsi::where('user_id', $id)->first();
+                $detail_provinsi->alamat = $request->alamat;
+                $detail_provinsi->foto = $request->foto;
+                $detail_provinsi->provinsi_id = $request->provinsi_id;
+                
+                $detail_provinsi->update();
+
+                    
+                }catch(\Exception $e){
+                echo $e->getMessage(); 
+            }
 
 
         flash('Data saved successfully')->success();
-        return redirect(route('monitoring.dataadminprovinsi.show', $data_provinsi));
+        return redirect(route('monitoring.dataadminprovinsi.show', compact('data_provinsi')));
 
     }
 

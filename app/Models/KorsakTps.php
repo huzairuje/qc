@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SaksiTps extends Model
+class KorsakTps extends Model
 {
-  public $table = 'saksi_tps';
+   public $table = 'korsak_tps';
 
   public $fillable = [
         'user_id', 'tps_id','kelurahan_id', 'alamat', 'foto'
@@ -31,5 +31,4 @@ class SaksiTps extends Model
   {
     return $this->belongsTo('App\Models\UserEvent');
   }
-
 }

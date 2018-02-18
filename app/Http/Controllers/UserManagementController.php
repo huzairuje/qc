@@ -220,6 +220,7 @@ class UserManagementController extends Controller
         $data = User::find($id);
         $currentRole = $data->roles()->first()->id;
         // $currentEvent = $data->UserEvent()->first()->id;
+        $currentEvent = $data->userEvent->first()->id;
         // dd($currentRole);
 
         if (empty($data)) {

@@ -137,16 +137,16 @@ class DataSaksiController extends Controller
 
 
             //insert to table saksi_tps
-            $data_saksi = new SaksiTps();
+            $detail_saksi = new SaksiTps();
             
-            $data_saksi->user_id = $insertedId;
-            $data_saksi->tps_id = $request->tps_id;
-            $data_saksi->kelurahan_id = $request->kelurahan_id;
-            $data_saksi->alamat = $request->alamat;
-            $data_saksi->foto = $request->foto;
+            $detail_saksi->user_id = $insertedId;
+            $detail_saksi->tps_id = $request->tps_id;
+            $detail_saksi->kelurahan_id = $request->kelurahan_id;
+            $detail_saksi->alamat = $request->alamat;
+            $detail_saksi->foto = $request->foto;
 
-            // dd($data_saksi);
-            $data_saksi->save();
+            // dd($detail_saksi);
+            $detail_saksi->save();
         }
         catch(\Exception $e){
             echo $e->getMessage();
@@ -158,9 +158,15 @@ class DataSaksiController extends Controller
 
     public function edit($id)
     {
-        $data_saksi = User::findOrFail($id);
-        $saksi_detail = SaksiTps::where('user_id', $id)->first();
-        $provinsi = Provinsi::pluck('nama','id')->all();
+        $user = User::findOrFail($id);
+
+        if (empty($user)) {
+            flash('Data Saksi not found')->error();
+
+            return redirect(route('monitoring.datasaksi'));
+        }
+
+        $provinsi  = Provinsi::pluck('nama','id')->all();
         // dd($provinsi);
 
         $kota = array();
@@ -172,7 +178,7 @@ class DataSaksiController extends Controller
 
         $tps = array();
 
-        $role = Sentinel::getUser()->roles()->first()->slug;
+        // $user = User::where('id' , '=', $id)->first();
 
         $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
         foreach ($userEvents as $key => $userEvent) {
@@ -184,17 +190,12 @@ class DataSaksiController extends Controller
         }
         else
         {
-            $eventList = Event::all()->where('id', 0);
+            $eventList = Event::all()->where('id', 0);  
         }
 
-        // $saksi_detail = SaksiTps::where('user_id', $id)->first();
-        // dd($data_saksi);
-        if (empty($data_saksi)) {
-            flash('Data Saksi Tidak Ada');
+        $saksi_tps = SaksiTps::where('user_id', $id)->first();
 
-            return redirect(route('monitoring.datasaksi'));
-        }
-        return view('layouts.monitoring.data_saksi.edit', compact('eventList','provinsi','kota','kecamatan','kelurahan','tps','data_saksi','saksi_detail'));
+        return view('layouts.monitoring.data_saksi.edit', compact('provinsi', 'kota', 'kecamatan', 'kelurahan', 'tps', 'user', 'eventList', 'saksi_tps'));
 
     }
     public function update(Request $request,$id)
@@ -206,23 +207,22 @@ class DataSaksiController extends Controller
 
             return redirect(route('monitoring.datasaksi'));
         }
+            $data_saksi->update($request->all());
+            // dd($request);
+            try{
+                $saksi_tps = SaksiTps::where('user_id', $id)->first();
+                $saksi_tps->alamat = $request->alamat;
+                $saksi_tps->foto = $request->foto;
+                $saksi_tps->tps_id = $request->tps_id;
+                $saksi_tps->kelurahan_id = $request->kelurahan_id;
+                
+                $saksi_tps->update();
 
-            $data_saksi->username       = $request->username;
-            // $data_saksi->alamat         = $request->alamat;
-            $data_saksi->phone          = $request->phone;
-            $data_saksi->email          = $request->email;
-
-            $data_saksi->update();
-
-            $saksi_tps = SaksiTps::where('user_id', $id)->first();
-            $saksi_tps->alamat = $request->alamat;
-            $saksi_tps->foto = $request->foto;
-            $saksi_tps->tps_id = $request->tps_id;
-            $saksi_tps->kelurahan_id = $request->kelurahan_id;
-            
-            $saksi_tps->update();
-
-
+                    
+                }catch(\Exception $e){
+                echo $e->getMessage(); 
+            }
+        
         flash('Data Saksi saved successfully')->success();
         return redirect(route('monitoring.datasaksi.show', $data_saksi));
 

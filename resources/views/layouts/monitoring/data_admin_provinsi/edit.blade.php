@@ -27,8 +27,32 @@
                     <div class="container">
                         <div class="body">
                             <div class="row clearfix">
-                                {!! Form::model($user, ['route' => ['monitoring.dataadminprovinsi.update', $user->id], 'method' => 'patch']) !!}
-
+                                {!! Form::model($user, ['route' => ['monitoring.dataadminprovinsi.update', $user->id], 'files' => 'true', 'method' => 'patch']) !!}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+                                                {!! Form::label('user_event', 'Pilih Event Saksi:') !!}
+                                                <select class="form-control show-tick" name="event" id="tahun" placeholder="Role" >
+                                                    <option value=''>User Event</option>
+                                                    @foreach( $eventList as $key => $val )
+                                                    <option value="{{ $val->id }}">{{ $val->nama }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+                                                {!! Form::label('provinsi_id', 'Pilih Provinsi:') !!}
+                                                {!! Form::select('provinsi_id', $provinsi,null, ['class' => 'form-control','id' => 'provinsi_id','placeholder' => 'Select Provinsi']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -76,12 +100,20 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <select class="form-control show-tick" name="event" id="tahun" placeholder="Role" >
-                                                <option value=''>User Event</option>
-                                                @foreach( $eventList as $key => $val )
-                                                <option value="{{ $val->id }}">{{ $val->nama }}</option>
-                                                @endforeach
-                                            </select>
+                                            <div class="form-line">
+                                                {!! Form::label('alamat', 'Alamat Saksi:') !!}
+                                                {{ Form::text('alamat', $data_provinsi->alamat,null, ['class' => 'form-control','placeholder' => 'Isi Alamat']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-line">
+                                                {!! Form::label('foto', 'Foto Saksi:') !!}
+                                                {{ Form::text('foto', $data_provinsi->foto,null, ['class' => 'form-control','placeholder' => 'pilih foto saksi']) }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

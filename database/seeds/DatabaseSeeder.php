@@ -36,5 +36,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersSeeder::class);
         $this->call(JenisSeeder::class);
         $this->call(TingkatsSeeder::class);
+        $this->call(SaksiTPSSeeder::class);
+        $this->call(KorsakTPSSeeder::class);
+        $this->call(AdminKecamatanSeeder::class);
+        $this->call(AdminKotaSeeder::class);
+        $this->call(AdminProvinsiSeeder::class);
     }
 }

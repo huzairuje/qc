@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Tabulasi;
+use App\Models\Tabulasi;
 
 class TabulasiAPIController extends Controller
 {

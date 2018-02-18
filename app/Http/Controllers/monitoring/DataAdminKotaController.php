@@ -127,16 +127,16 @@ class DataAdminKotaController extends Controller
 
 
             //insert to table admin_kecamatan
-            $data_kota = new AdminKota();
+            $detail_kota = new AdminKota();
             
-            $data_kota->user_id = $insertedId;
-            $data_kota->kota_id = $request->kota_id;
-            $data_kota->alamat = $request->alamat;
-            $data_kota->foto = $request->foto;
-            // $data_kota->tps_id = $request->tps_id;
+            $detail_kota->user_id = $insertedId;
+            $detail_kota->kota_id = $request->kota_id;
+            $detail_kota->alamat = $request->alamat;
+            $detail_kota->foto = $request->foto;
+            // $detail_kota->tps_id = $request->tps_id;
 
             // dd($data_saksi);
-            $data_kota->save();
+            $detail_kota->save();
         }
         catch(\Exception $e){
             echo $e->getMessage();
@@ -148,38 +148,65 @@ class DataAdminKotaController extends Controller
 
     public function edit($id)
     {
-        $data_kota = User::find($id);
+        $user = User::findOrFail($id);
 
-        if (empty($data_kota)) {
-            flash('Data Tidak Ada');
+        if (empty($user)) {
+            flash('Data Admin Kota not found')->error();
 
             return redirect(route('monitoring.dataadminkota'));
         }
-        return view('layouts.monitoring.data_admin_kota.edit', compact('data_saksi'));
 
+
+
+        $data_kota = AdminKota::where('user_id', $id)->first();
+
+        $provinsi  = Provinsi::pluck('nama','id')->all();
+        // dd($provinsi);
+
+        $kota = array();
+
+        $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
+        foreach ($userEvents as $key => $userEvent) {
+            $listEventId[$key] = $userEvent->event_id;
+        }
+        if(count($userEvents) != 0)
+        {
+            $eventList = Event::all()->whereIn('id', $listEventId);
+        }
+        else
+        {
+            $eventList = Event::all()->where('id', 0);  
+        }
+
+
+        return view('layouts.monitoring.data_admin_kota.edit', compact('provinsi', 'kota', 'user', 'eventList', 'data_kota'));
     }
     public function update(Request $request,$id)
     {
-        $data_kota = User::find($id);
+        $data_kota = User::findOrFail($id);
             if (empty($data_kota)) {
 
                 flash('Data not found');
 
             return redirect(route('monitoring.dataadminkota'));
         }
+            $data_kota->update($request->all());
+            // dd($request);
+            try{
+                $detail_kota = AdminKota::where('user_id', $id)->first();
+                $detail_kota->alamat = $request->alamat;
+                $detail_kota->foto = $request->foto;
+                $detail_kota->kota_id = $request->kota_id;
+                
+                $detail_kota->update();
 
-            $data_kota->nama       = $request->nama;
-            $data_kota->alamat       = $request->alamat;
-            $data_kota->no_telpon    = $request->no_telpon;
-            $data_kota->email    = $request->email;
-            // $data_kecamatan->id_tps    = $request->id_tps;
-            $data_kota->foto    = $request->foto;
-
-            $data_kota->update();
-
-
-        flash('Data saved successfully')->success();
-        return redirect(route('monitoring.dataadminkota.show', $data_kota));
+                    
+                }catch(\Exception $e){
+                echo $e->getMessage(); 
+            }
+        
+        flash('Data Saksi saved successfully')->success();
+        return redirect(route('monitoring.dataadminkota.show', compact('data_kota')));
 
     }
 
