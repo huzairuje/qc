@@ -24,6 +24,7 @@ use App\Models\Tps;
 use App\Models\Dapil;
 use App\Models\Calon;
 use App\Models\TpsFoto;
+use App\Models\Suara;
 use Charts;
 use Flash;
 
@@ -225,6 +226,12 @@ class TabulasiController extends Controller
                     'foto' => $url,
                     'event_id' => $request->event_id
                   ]);
+
+                  // insert to tabel suara so home dashboard graphic can see the data trough this
+                  // Suara::create([
+                  //   'tps_id' => $tps,
+                  //   'calon_id' => $
+                  // ]);
                 }
               }
             }
