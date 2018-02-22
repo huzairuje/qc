@@ -22,6 +22,7 @@ use App\Models\Event;
 use App\Models\Dapil;
 use App\Models\Partai;
 use App\Models\UserEvent;
+use App\Models\CalonPartai;
 use Sentinel;
 
 class CalonController extends Controller
@@ -124,19 +125,20 @@ class CalonController extends Controller
         }
         if(count($userEvents) != 0)
         {
-            $data['listEvent'] = Event::all()->whereIn('id', $listEventId);
+            $listEvent = Event::all()->whereIn('id', $listEventId);
         }
         else
         {
-            $data['listEvent'] = Event::all()->where('tahun', 1945);
+            $listEvent = Event::all()->where('tahun', 1945);
         }
 
-        $data['dapil'] = [];
+        $dapil = [];
 
 
-        $data['partai'] = Partai::pluck('nama','id')->all();
+        $partai = Partai::get()->all();
+        // dd($partai);
 
-        return view('layouts.data_master.calon.create', $data);
+        return view('layouts.data_master.calon.create', compact('listEvent', 'dapil', 'partai'));
     }
 
     public function store(Request $request)
@@ -145,7 +147,7 @@ class CalonController extends Controller
       $v = $this->validate($request,[
         // 'dapil_id' => 'required',
          // 'tingkat_id' => 'required',
-         'partai_id' => 'required',
+         // 'partai_id' => 'required',
          'nomor' => 'required',
          'nama' => 'required',
          'email' => 'required',
@@ -164,14 +166,34 @@ class CalonController extends Controller
         $input = $request->all();
         // dd($input);
         $calon = Calon::create($request->except('wakil'));
+        //dd($request);
           if ($request->has_wakil) {
             $temp = $request->wakil;
             $temp['calon_id'] = $calon->id;
             Wakil::create($temp);
           }
 
+    try
+        {
+            $calon_partai = new CalonPartai;
+            $calon_partai->calon_id = $calon->id;
+            $calon_partai->partai_id = $request->partai;
+            $calon_partai->save();
+        }
+        catch(\Exception $e){
+            echo $e->getMessage();
+        }
+
+        $partai = $request->partai;
+        $insertedId = $calon->id;
+
+        foreach($partai as $key => $partai){
+            $calonPartai[$key] = ['calon_id' => $insertedId, 'partai_id' => $partai];
+        }
+        CalonPartai::insert($calonPartai);
+
         flash('Data Calon created successfully')->success();
-        return redirect(route('datamaster.calon.show',$calon));
+        return redirect(route('datamaster.calon.show', compact('calon')));
     }
 
 
@@ -263,6 +285,10 @@ class CalonController extends Controller
                 return $result['message'] = 'Belum ada Dapil di event yang dipilih!';
             }
             break;
+
+            // case 'get-partai':
+            // $result = Jenis::where('event_id', $request->event_id)
+            // break;
 
             default:
             return $result['status'] = false;

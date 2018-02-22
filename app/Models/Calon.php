@@ -45,4 +45,8 @@ class Calon extends Model
       return $this->hasMany('App\Models\Suara');
   }
 
+  public function calonpartai()
+  {
+    return $this->hasMany('App\Models\CalonPartai');
+  }
 }

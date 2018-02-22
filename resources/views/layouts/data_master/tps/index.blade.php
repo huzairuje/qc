@@ -36,10 +36,10 @@
                                             <tr style="background-color: lightblue">
 
                                                 <th>Nomor TPS</th>
-                                                <th>Provinsi</th>
-                                                <th>Kota</th>
-                                                <th>Kecamatan</th>
                                                 <th>Kelurahan</th>
+                                                <th>Kecamatan</th>
+                                                <th>Kota</th>
+                                                <th>Provinsi</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -57,12 +57,11 @@
 
                                             columns:
                                             [
-                                                {data: 'id'},
                                                 {data: 'nomor'},
-                                                {data: 'provinsi'},
-                                                {data: 'kota'},
+                                                {data: 'kelurahan'},
                                                 {data: 'kecamatan'},
-                                                {data: 'kelurahan_id'},
+                                                {data: 'kota'},
+                                                {data: 'provinsi'},
                                                 {data: 'action'}
                                             ]
                                         } );

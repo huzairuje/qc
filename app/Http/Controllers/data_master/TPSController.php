@@ -67,7 +67,7 @@ class TPSController extends Controller
         ->addColumn('kecamatan', function ($tps) {
             return $tps->kelurahan->kecamatan->nama ? $tps->kelurahan->kecamatan->nama : 'Undefined';
         })
-        ->editColumn('kelurahan_id', function ($tps) {
+        ->editColumn('kelurahan', function ($tps) {
             return $tps->kelurahan->nama ? $tps->kelurahan->nama : 'Undefined';
         })
         ->addColumn('action', function ($tps) {
@@ -150,7 +150,7 @@ class TPSController extends Controller
         $provinsi = Provinsi::pluck('nama','id')->all();
         $kota = Kota::where('provinsi_id', $tps->provinsi_id)->pluck('nama','id')->all();
         $kecamatan = Kecamatan::where('kota_id', $tps->kota_id)->pluck('nama','id')->all();
-        $kelurahan = Kelurahan::where('kecamatan_id', $tps->kecamatan_id)->pluck('nama','id')->all();
+        $kelurahan = Kelurahan::where('kecamatan_id', $tps->kelurahan_id)->pluck('nama','id')->all();
         // dd($kota_kabupaten);
 
         if (empty($tps)) {

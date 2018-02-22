@@ -10,6 +10,33 @@
           </div>
       </div>
   </div>
+@if ($calon->partai_id == 0)
+<div class="form-group">
+      <div class="row">
+          <div class="col-md-4">
+              <div class="form-line">
+                    {!! Form::label('partai', 'Partai Pengusung :') !!}
+                    @foreach($calon->CalonPartai as $calonpartai)
+                        <li>
+                            {!! $calonpartai->partai->nama !!}
+                        </li>
+                    @endforeach
+                </div>
+          </div>
+      </div>
+  </div>
+@else 
+<div class="form-group">
+      <div class="row">
+          <div class="col-md-4">
+              <div class="form-line">
+                    {!! Form::label('partai', 'Partai Pengusung :') !!}
+                    {!! $calon->partai->nama !!}
+                </div>
+          </div>
+      </div>
+  </div>
+@endif
 
 <div class="form-group">
     <div class="row">

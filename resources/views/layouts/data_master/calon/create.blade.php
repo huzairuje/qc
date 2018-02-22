@@ -32,7 +32,7 @@
                                         <div class="col-md-8">
                                             <div class="form-line">
                                                 {!! Form::label('event', 'Pilih Event:') !!}
-                                                <select id="event_id" name="event" class="forrm-control show-tick">
+                                                <select id="event_id" name="event" class="form-control show-tick">
                                                     <option value="">Pilih Event</option>
                                                     @foreach($listEvent as $event)
                                                     <option value="{{ $event->id }}">{{ $event->nama }}</option>
@@ -68,16 +68,56 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group nama-form-container">
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
-                                                {!! Form::label('partai_id', 'Pilih Partai:') !!}
-                                                {!! Form::select('partai_id', $partai,null, ['class' => 'form-control','id' => 'partai_id','placeholder' => 'Pilih Partai']) !!}
+                                                {!! Form::label('has_wakil', 'Mempunyai Wakil:') !!}
+                                                <select id="has_wakil" name="has_wakil" class="form-control show-tick">
+                                                    <option value="0">Tidak</option>
+                                                    <option value="1">Ya</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                            <div class="partai-single">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+                                                {!! Form::label('partai', 'Pilih Partai:') !!}
+                                                <select id="partai_id" name="partai" class="form-control show-tick">
+                                                    <option value="">Pilih Partai</option>
+                                                    @foreach($partai as $partais)
+                                                    <option value="{{ $partais->id }}">{{ $partais->nama }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="partai-multiple" style="display:none">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-line">
+                                                {!! Form::label('partai', 'Pilih Partai Pengusung:') !!}
+                                                <select class="form-control show-tick" name="partai[]" id="partai" placeholder="Partai" multiple>
+                                                    <option value=''>Pilih Partai</option>
+                                                    @foreach( $partai as $partais )
+                                                    <option value="{{ $partais->id }}">{{ $partais->nama }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
                                 <div class="form-group nama-form-container">
                                     <div class="row">
@@ -88,16 +128,12 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group nama-form-container">
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-line">
-                                                {!! Form::label('has_wakil', 'Mempunyai Wakil:') !!}
-                                                <select id="has_wakil" name="has_wakil" class="form-control show-tick">
-                                                    <option value="0">Tidak</option>
-                                                    <option value="1">Ya</option>
-                                                </select>
+                                                {!! Form::label('nomor', 'Nomor Urut:') !!}
+                                                {{ Form::text('nomor',null, ['class' => 'form-control','placeholder' => 'Nomor Urut']) }}
                                             </div>
                                         </div>
                                     </div>
@@ -116,16 +152,6 @@
 
 
 
-                                <div class="form-group nama-form-container">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <div class="form-line">
-                                                {!! Form::label('nomor', 'Nomor Urut:') !!}
-                                                {{ Form::text('nomor',null, ['class' => 'form-control','placeholder' => 'Nomor Urut']) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div class="form-group">
                                     <div class="row">
@@ -178,7 +204,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-wakil" style="display:none">
+                            <div class="form-wakil" style="display:none">
                                 <div class="form-group wakil-form-container">
                                     <div class="row">
                                         <div class="col-md-10">
@@ -278,14 +304,16 @@
         var _val = $(this).val();
         if(_val == 0){
             $('.nama-form-container').hide();
-
+            $('.partai-multiple').hide();
             $('.form-wakil').hide();
         }
         else {
             $('.nama-form-container').show();
 
             if ($('#has_wakil').val() == 1) {
-              $('.form-wakil').show();
+                $('.form-wakil').show();
+                $('.partai-multiple').show();
+                $('.partai-single').hide();
             }
         }
     });
@@ -294,10 +322,14 @@
         var _val = $(this).val();
         if(_val == 0){
             $('.form-wakil').hide();
+            $('.partai-multiple').hide();
+            $('.partai-single').show();
+
         }
         else {
             $('.form-wakil').show();
-
+            $('.partai-multiple').show();
+            $('.partai-single').hide();
         }
     });
 
