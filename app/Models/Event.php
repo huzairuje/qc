@@ -60,13 +60,6 @@ class Event extends Model
 
     public static function chart()
     {
-
-        // return DB::select('select "event"."nama" as event_nama, "calon"."nama" as calon_nama, "suara"."jumlah" as jumlah_suara
-        //     from "event"
-        //     left join dapil on dapil.event_id = event.id
-        //     left join calon on calon.dapil_id = dapil.id
-        //     left join suara on suara.calon_id = calon.id
-        //     where event.id = '.$event_id);
         $dapil = new Dapil;
         $query = self::leftJoin("dapil", "dapil.event_id", "=", "event.id")
                  ->leftJoin("calon", "calon.dapil_id", "=", "dapil.id")

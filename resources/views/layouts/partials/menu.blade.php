@@ -58,7 +58,7 @@
                 @endif
             </ul>
         </li>
-        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
+        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' || Sentinel::getUser()->roles->first()->slug == 'admin-event')
         <li>
             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block {{Route::is('monitoring*')? 'toggled':''}}" >
                 <i class="material-icons">remove_red_eye</i>

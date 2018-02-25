@@ -193,7 +193,7 @@ class DapilController extends Controller
         $data = $request->data;
 
         $deletes = array_diff($currentDataList, $data);
-        debug($deletes, true);
+        // debug($deletes, true);
         $adds = array_diff($data, $currentDataList);
         
         if (count($deletes) != 0) {

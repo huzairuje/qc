@@ -25,9 +25,12 @@
                                             <i class="material-icons">autorenew</i>
                                         </h2>
 
+                                        @if( Sentinel::getUser()->roles->first()->slug == 'admin-pusat' )
                                         <div class="body">
                                             <a href="{{ route('event.create') }}" class ="btn btn-primary waves-effect">Buat Data</a>
                                         </div>
+                                        @endif
+
 
                                     </div>
 

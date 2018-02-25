@@ -63,12 +63,18 @@ class DataAdminKotaController extends Controller
     }
 
     public function get_datatable()
-    {
-         // $tabulasi = Tabulasi::query();
-        $data_kota = Sentinel::findRoleById(4)->users()->with('roles');
-        // $restaurants = restaurants::where('res_id', 1);
-        // $dataTable = Datatables::eloquent($tabulasi);
-        // return $dataTable->make(true);
+    {        
+        $logged_user = Sentinel::getUser();
+        $logged_user_role = $logged_user->role_user->role->slug;
+        $users = Sentinel::findRoleBySlug('admin-kota')->users();
+        switch ($logged_user_role) {
+            case 'admin-pusat':
+                $data_kota = $users->with('roles');
+                break;
+            default:
+                $data_kota = $users->where('parent_id', $logged_user->id)->with('roles');
+                break;
+        }
 
         return Datatables::eloquent($data_kota)
 

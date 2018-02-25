@@ -64,11 +64,17 @@ class DataAdminKecamatanController extends Controller
 
     public function get_datatable()
     {
-         // $tabulasi = Tabulasi::query();
-        $data_kecamatan = Sentinel::findRoleById(5)->users()->with('roles');
-        // $restaurants = restaurants::where('res_id', 1);
-        // $dataTable = Datatables::eloquent($tabulasi);
-        // return $dataTable->make(true);
+        $logged_user = Sentinel::getUser();
+        $logged_user_role = $logged_user->role_user->role->slug;
+        $users = Sentinel::findRoleBySlug('admin-kecamatan')->users();
+        switch ($logged_user_role) {
+            case 'admin-pusat':
+                $data_kecamatan = $users->with('roles');
+                break;
+            default:
+                $data_kecamatan = $users->where('parent_id', $logged_user->id)->with('roles');
+                break;
+        }
 
         return Datatables::eloquent($data_kecamatan)
 

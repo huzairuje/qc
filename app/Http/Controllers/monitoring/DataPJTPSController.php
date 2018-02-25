@@ -69,10 +69,18 @@ class DataPJTPSController extends Controller
 
     public function get_datatable()
     {
-        // $tabulasi = Tabulasi::query();
-        $data_korsak = Sentinel::findRoleById(6)->users()->with('roles');
-        // $dataTable = Datatables::eloquent($tabulasi);
-        // return $dataTable->make(true);
+
+        $logged_user = Sentinel::getUser();
+        $logged_user_role = $logged_user->role_user->role->slug;
+        $users = Sentinel::findRoleBySlug('korsak')->users();
+        switch ($logged_user_role) {
+            case 'admin-pusat':
+                $data_korsak = $users->with('roles');
+                break;
+            default:
+                $data_korsak = $users->where('parent_id', $logged_user->id)->with('roles');
+                break;
+        }
 
         return Datatables::eloquent($data_korsak)
         ->addColumn('action', function ($data_korsak) {

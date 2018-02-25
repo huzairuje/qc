@@ -25,6 +25,8 @@ use App\Models\Dapil;
 use App\Models\Calon;
 use App\Models\TpsFoto;
 use App\Models\Suara;
+use App\Models\UserEvent;
+use Sentinel;
 use Charts;
 use Flash;
 
@@ -56,10 +58,22 @@ class TabulasiController extends Controller
     }
     public function get_datatable()
     {
-         // $tabulasi = Tabulasi::query();
-        $tabulasi = Tabulasi::select(['id','dokumen', 'provinsi_id', 'kota_id', 'kecamatan_id', 'kelurahan_id','data_suara','event_id']);
-        // $dataTable = Datatables::eloquent($tabulasi);
-        // return $dataTable->make(true);
+      $userEvents = UserEvent::all()->where('user_id', Sentinel::getUser()->id);
+        foreach ($userEvents as $key => $userEvent) {
+            $listEventId[$key] = $userEvent->event_id;
+        }
+
+        if(count($userEvents) != 0)
+        {
+            $tabulasi = Tabulasi::select(['id','dokumen', 'provinsi_id', 'kota_id', 'kecamatan_id', 'kelurahan_id','data_suara','event_id'])->whereIn('event_id', $listEventId);
+          
+        }
+        else
+        {
+            $tabulasi = Tabulasi::select(['id','dokumen', 'provinsi_id', 'kota_id', 'kecamatan_id', 'kelurahan_id','data_suara','event_id'])->where('event_id', 0);
+        }
+
+        // $tabulasi = Tabulasi::select(['id','dokumen', 'provinsi_id', 'kota_id', 'kecamatan_id', 'kelurahan_id','data_suara','event_id']);
 
         return Datatables::eloquent($tabulasi)
 
@@ -146,7 +160,7 @@ class TabulasiController extends Controller
 
         if ($dapil) {
             $calon = Calon::whereIn('dapil_id',$dapil)->get();
-        }
+          }
         }
           // $result['status'] = true;
         // }
@@ -180,7 +194,23 @@ class TabulasiController extends Controller
 
         $kelurahan = array();
 
-        $event = Event::dropdown();
+        // $event = ;
+
+        $logged_user = Sentinel::getUser();
+        $logged_user_role = $logged_user->role_user->role->slug;
+        switch ($logged_user_role) {
+            case 'admin-pusat':
+                $event = Event::pluck('nama', 'id')->all();
+                break;
+            default:
+                $userEvents = UserEvent::where('user_id', Sentinel::getUser()->id)->first();
+                $event = $userEvents->events()->pluck('nama', 'id')->all(); 
+                break;
+        }
+
+
+        // $event = Event::pluck('nama', 'id')->all();
+
 
         return view('layouts.tabulasi.create', compact('provinsi','kota','kecamatan','kelurahan','event'));
     }

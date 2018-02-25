@@ -72,6 +72,7 @@ class CalonController extends Controller
         }
 
         return Datatables::eloquent($calon)
+        
         ->addColumn('nama_wakil', function ($calon){
             return $calon->wakil && $calon->wakil->nama ? $calon->wakil->nama : 'Tidak Ada';
         })

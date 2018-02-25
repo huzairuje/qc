@@ -39,6 +39,11 @@ class User extends EloquentUser
         return $this->belongsTo('App\Models\User', 'parent_id');
     }
 
+    public function role_user()
+    {
+        return $this->belongsTo('App\Models\RoleUser', 'id', 'user_id');
+    }
+
     public function userEvent()
     {
         return $this->hasMany('App\Models\UserEvent','user_id');
