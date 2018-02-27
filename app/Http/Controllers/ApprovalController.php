@@ -160,6 +160,7 @@ class ApprovalController extends Controller
       $input = $request->all();
 
       $approval = Approval::create($input);
+      
 
       flash('Data Approval created successfully')->success();
       return redirect(route('approval.show',compact('approval')));
