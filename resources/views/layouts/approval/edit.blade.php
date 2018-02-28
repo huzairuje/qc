@@ -62,6 +62,13 @@
 									{!! Form::select('user_id', $user,null, ['class' => 'form-control','id' => 'user_id','placeholder' => 'Pilih Saksi']) !!}
 								</div>
 
+								<div class="switch col-sm-6">
+									<label>Belum di Approve
+										<input type="checkbox" name="is_approved" value="{{ $approval->is_approved ? true : false }}">
+									<span class="lever"></span>
+									Sudah di Approve
+									</label>
+								</div>
 								<!-- END Content Create-->
 
 								<!-- Modal -->
