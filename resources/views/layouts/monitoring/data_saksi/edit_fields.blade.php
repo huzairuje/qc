@@ -112,7 +112,7 @@
         <div class="col-md-4">
             <div class="form-line">
                 {!! Form::label('alamat', 'Alamat Saksi:') !!}
-                {{ Form::text('alamat', $saksi_tps->alamat,null, ['class' => 'form-control','placeholder' => 'Isi Alamat']) }}
+                {{ Form::text('alamat',null, ['class' => 'form-control','placeholder' => 'Isi Alamat']) }}
             </div>
         </div>
     </div>
@@ -122,7 +122,7 @@
         <div class="col-md-4">
             <div class="form-line">
                 {!! Form::label('foto', 'Foto Saksi:') !!}
-                {{ Form::text('foto', $saksi_tps->foto,null, ['class' => 'form-control','placeholder' => 'pilih foto saksi']) }}
+                {{ Form::text('foto',null, ['class' => 'form-control','placeholder' => 'pilih foto saksi']) }}
             </div>
         </div>
     </div>

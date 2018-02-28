@@ -30,7 +30,6 @@ use Sentinel;
 use Charts;
 use Flash;
 
-
 class TabulasiController extends Controller
 {
    /**
@@ -127,10 +126,16 @@ class TabulasiController extends Controller
 
     public function show($id)
     {
-       
-       $tps_all = Tps::all();
-       
        $tabulasi = Tabulasi::find($id);
+       $cek_user = \Sentinel::getUser()->roles[0]->slug;
+          if ($cek_user == 'saksi') {
+              $tps_all = Tps::where('saksi_tps.kelurahan_id', $tabulasi->kelurahan_id)
+              ->where('saksi_tps.user_id', '=', \Sentinel::getUser()->id)
+              ->join('saksi_tps', 'saksi_tps.tps_id','=','tps.id')
+              ->get();
+          } else {
+            $tps_all = Tps::where('kelurahan_id', $tabulasi->kelurahan_id)->get();
+          }
      //  dd($tabulasi);
        // $eventchart = Event::chart()->where("event.id", $event_id)->get()->toJson();
         // dd($tabulasi);
@@ -217,59 +222,68 @@ class TabulasiController extends Controller
 
     public function store(Request $request)
     {
-      $v = $this->validate($request,[
-        'dokumen' => 'required',
-         // 'tingkat_id' => 'required',
-         'provinsi_id' => 'required',
-         'kota_id' => 'required',
-         'kecamatan_id' => 'required',
-         'kelurahan_id' => 'required|unique:tabulasi,kelurahan_id,NULL,id,event_id,'.$request->event_id,
-         'event_id' => 'required',
-
-          ],
-          [
-            'kelurahan_id' => 'Tabulasi untuk kelurahan ini sudah terdaftar.'
-          ]);
-
-
-        $input = $request->all();
-        // dd($request);
-
-        if ($request->tabulasi) {
-          $input['data_suara'] = json_encode($request->tabulasi);
-        }
-        $tabulasi = Tabulasi::create($input);
-        // dd($tabulasi);
-
-        if ($request->images) {
-          foreach ($request->images as $tps => $images) {
-            if ($images) {
-              foreach ($images as $key => $image) {
-                if ($request->file('images')[$tps][$key]->isValid()) {
-                  $pathname = check_dir('images');
-                  $filename = time() . number_random(10) . '.' . $request->file('images')[$tps][$key]->getClientOriginalExtension();
-                  $uploaded = $request->file('images')[$tps][$key]->move($pathname, $filename);
-                  $url = $uploaded->getPathName();
-
-                  TpsFoto::create([
-                    'tps_id' => $tps,
-                    'foto' => $url,
-                    'event_id' => $request->event_id
+        DB::beginTransaction();
+        try {
+            $v = $this->validate($request,[
+                'dokumen' => 'required',
+                 // 'tingkat_id' => 'required',
+                 'provinsi_id' => 'required',
+                 'kota_id' => 'required',
+                 'kecamatan_id' => 'required',
+                 'kelurahan_id' => 'required|unique:tabulasi,kelurahan_id,NULL,id,event_id,'.$request->event_id,
+                 'event_id' => 'required',
+        
+                  ],
+                  [
+                    'kelurahan_id' => 'Tabulasi untuk kelurahan ini sudah terdaftar.'
                   ]);
-
-                  // insert to tabel suara so home dashboard graphic can see the data trough this
-                  // Suara::create([
-                  //   'tps_id' => $tps,
-                  //   'calon_id' => $
-                  // ]);
+        
+        
+                $input = $request->all();
+                // dd($input);
+        
+                if ($request->tabulasi) {
+                  $input['data_suara'] = json_encode($request->tabulasi);
                 }
-              }
-            }
-          } 
-        }
+                $tabulasi = Tabulasi::create($input);
+                // dd($tabulasi);
+        
+                if ($request->images) {
+                  foreach ($request->images as $tps => $images) {
+                    if ($images) {
+                      foreach ($images as $key => $image) {
+                        if ($request->file('images')[$tps][$key]->isValid()) {
+                          $pathname = check_dir('images');
+                          $filename = time() . number_random(10) . '.' . $request->file('images')[$tps][$key]->getClientOriginalExtension();
+                          $uploaded = $request->file('images')[$tps][$key]->move($pathname, $filename);
+                          $url = $uploaded->getPathName();
+        
+                          TpsFoto::create([
+                            'tps_id' => $tps,
+                            'foto' => $url,
+                            'event_id' => $request->event_id
+                          ]);
+        
+                          // insert to tabel suara so home dashboard graphic can see the data trough this
+                          // Suara::create([
+                          //   'tps_id' => $tps,
+                          //   'calon_id' => $
+                          // ]);
+                        }
+                      }
+                    }
+                  } 
+                }
+            DB::commit();
 
-        flash('Data Tabulasi created successfully')->success();
-        return redirect(route('tabulasi.show',$tabulasi));
+            flash('Data Tabulasi created successfully')->success();
+            return redirect(route('tabulasi.show',$tabulasi));
+        } catch(\Exception $e) {
+            DB::rollback();
+            flash($e->getMessage())->error();
+            return redirect()->back();
+        }
+      
     }
 
 
@@ -288,7 +302,15 @@ class TabulasiController extends Controller
 
         // dd($data_suara);
         $tps = Tps::where('kelurahan_id', $tabulasi->kelurahan_id)->orderBy('nomor', 'ASC')->pluck('nomor', 'id')->all();
-        $tps_all = Tps::all();
+        $cek_user = \Sentinel::getUser()->roles[0]->slug;
+        if ($cek_user == 'saksi') {
+            $tps_all = Tps::where('saksi_tps.kelurahan_id', $tabulasi->kelurahan_id)
+            ->where('saksi_tps.user_id', '=', \Sentinel::getUser()->id)
+            ->join('saksi_tps', 'saksi_tps.tps_id','=','tps.id')
+            ->get();
+        } else {
+          $tps_all = Tps::where('kelurahan_id', $tabulasi->kelurahan_id)->get();
+        }
 
         $calon = array();
         if ($tabulasi->event_id) {
@@ -429,7 +451,15 @@ class TabulasiController extends Controller
 
           $result['status'] = false;
           $tps = Tps::where('kelurahan_id', $request->kelurahan_id)->orderBy('nomor', 'ASC')->pluck('nomor', 'id')->all();
-          $tps_ids = Tps::where('kelurahan_id', $request->kelurahan_id)->get();
+          $cek_user = \Sentinel::getUser()->roles[0]->slug;
+          if ($cek_user == 'saksi') {
+              $tps_ids = Tps::where('saksi_tps.kelurahan_id', $request->kelurahan_id)
+              ->where('saksi_tps.user_id', '=', \Sentinel::getUser()->id)
+              ->join('saksi_tps', 'saksi_tps.tps_id','=','tps.id')
+              ->get();
+          } else {
+            $tps_ids = Tps::where('kelurahan_id', $request->kelurahan_id)->get();
+          }
 
           $calon = array();
           if ($request->event_id) {

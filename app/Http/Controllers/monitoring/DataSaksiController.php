@@ -217,13 +217,16 @@ class DataSaksiController extends Controller
             // dd($request);
             try{
                 $saksi_tps = SaksiTps::where('user_id', $id)->first();
+                if (!$saksi_tps) {
+                    $saksi_tps = new SaksiTps();
+                    $saksi_tps->user_id = $id;
+                }
                 $saksi_tps->alamat = $request->alamat;
                 $saksi_tps->foto = $request->foto;
                 $saksi_tps->tps_id = $request->tps_id;
                 $saksi_tps->kelurahan_id = $request->kelurahan_id;
                 
-                $saksi_tps->update();
-
+                $saksi_tps->save();
                     
                 }catch(\Exception $e){
                 echo $e->getMessage(); 
